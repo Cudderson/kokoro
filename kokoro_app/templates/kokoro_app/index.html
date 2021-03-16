@@ -2,10 +2,4 @@
 
 {% block content %}
 <p>Find Balance.</p>
-
-<form action="{% url 'kokoro_app:index' %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button name="Submit">Add Activity</button>
-</form>
 {% endblock content %}

@@ -7,7 +7,13 @@ from .forms import ActivityForm
 
 
 def index(request):
-    """Main Page for Kokoro"""
+    """Landing Page for Kokoro"""
+
+    return render(request, 'kokoro_app/index.html', {})
+
+
+def home(request):
+    """Home Page for Kokoro users"""
 
     form = ActivityForm()
 
@@ -18,4 +24,5 @@ def index(request):
             form = ActivityForm()
 
     context = {'form': form}
-    return render(request, 'kokoro_app/index.html', context)
+
+    return render(request, 'kokoro_app/home.html', context)

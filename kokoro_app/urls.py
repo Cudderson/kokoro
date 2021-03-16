@@ -6,6 +6,9 @@ from . import views
 
 app_name = 'kokoro_app'
 urlpatterns = [
-    # Main Page
-    path('', views.index, name='index')
+    # Landing Page
+    path('', views.index, name='index'),
+
+    # Home Page
+    path('home/', views.home, name='home'),
 ]

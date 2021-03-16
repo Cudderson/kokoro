@@ -1,0 +1,11 @@
+{% extends 'kokoro_app/base.html' %}
+
+{% block content %}
+
+<form action="{% url 'kokoro_app:home' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="Submit">Add Activity</button>
+</form>
+
+{% endblock content %}
