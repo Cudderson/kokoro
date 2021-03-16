@@ -41,6 +41,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # My Apps
     'kokoro_app',
+    'users',
 
     # django default apps
     'django.contrib.admin',
