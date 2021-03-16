@@ -5,7 +5,15 @@
 </head>
 <body>
   <p>
-    <a href="{% url 'kokoro_app:index' %}">kokoro</a>
+    <a href="{% url 'kokoro_app:index' %}">kokoro</a> -
+    <a href="{% url 'kokoro_app:index' %}">kokoro2</a> -
+    {% if user.is_authenticated %}
+      Hello, {{ user.username }}.
+      <a href="{% url 'users:logout' %}">Log Out</a>
+    {% else %}
+      <a href="{% url 'users:register' %}">Register</a>
+      <a href="{% url 'users:login' %}">Log In</a>
+    {% endif %}
   </p>
   {% block content %}{% endblock content %}
 </body>
