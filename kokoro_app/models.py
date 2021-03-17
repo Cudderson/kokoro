@@ -30,4 +30,4 @@ class Activity(models.Model):
         :return: string representation of model
         """
 
-        return self.description
+        return self.activity.title() + ": " + self.description.title()
