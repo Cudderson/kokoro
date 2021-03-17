@@ -5,8 +5,8 @@
 </head>
 <body>
   <p>
-    <a href="{% url 'kokoro_app:index' %}">kokoro</a> -
-    <a href="{% url 'kokoro_app:index' %}">kokoro2</a> -
+    <a href="{% url 'kokoro_app:home' %}">kokoro</a> -
+    <a href="{% url 'kokoro_app:home' %}">kokoro2</a> -
     {% if user.is_authenticated %}
       Hello, {{ user.username }}.
       <a href="{% url 'users:logout' %}">Log Out</a>
