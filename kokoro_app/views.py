@@ -12,6 +12,7 @@ def index(request):
 
     return render(request, 'kokoro_app/index.html', {})
 
+
 @login_required()
 def home(request):
     """Home Page for Kokoro users"""
