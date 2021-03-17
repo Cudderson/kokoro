@@ -2,6 +2,15 @@
 
 {% block content %}
 
+<h3>Your Activities</h3>
+<ul>
+    {% for act in activities %}
+      <li>{{ act }}</li>
+    {% empty %}
+      <li>No activities added yet.</li>
+    {% endfor %}
+</ul>
+
 <form action="{% url 'kokoro_app:home' %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}

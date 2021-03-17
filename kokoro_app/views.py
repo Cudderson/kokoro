@@ -22,9 +22,16 @@ def home(request):
     if request.method == "POST":
         form = ActivityForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            new_form = form.save(commit=False)
+            new_form.owner = request.user
+            new_form.save()
             form = ActivityForm()
 
-    context = {'form': form}
+    activities = Activity.objects.filter(owner=request.user).order_by('date_added')
+
+    context = {
+        'form': form,
+        'activities': activities,
+    }
 
     return render(request, 'kokoro_app/home.html', context)
