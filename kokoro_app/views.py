@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Activity
 from .forms import ActivityForm
 
-# Create your views here.
+from . import balance
 
 
 def index(request):
@@ -29,9 +29,12 @@ def home(request):
 
     activities = Activity.objects.filter(owner=request.user).order_by('date_added')
 
+    daily_mind = balance.balance(request)
+
     context = {
         'form': form,
         'activities': activities,
+        "daily_mind": daily_mind,
     }
 
     return render(request, 'kokoro_app/home.html', context)
