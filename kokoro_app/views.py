@@ -29,12 +29,16 @@ def home(request):
 
     activities = Activity.objects.filter(owner=request.user).order_by('date_added')
 
-    daily_mind = balance.balance(request)
+    daily_mind = balance.daily_mind(request)
+    daily_body = balance.daily_body(request)
+    daily_soul = balance.daily_soul(request)
 
     context = {
         'form': form,
         'activities': activities,
-        "daily_mind": daily_mind,
+        'daily_mind': daily_mind,
+        'daily_body': daily_body,
+        'daily_soul': daily_soul,
     }
 
     return render(request, 'kokoro_app/home.html', context)

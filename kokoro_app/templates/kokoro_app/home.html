@@ -12,7 +12,8 @@
 </ul>
 <h3>Balance feature:</h3>
 <h2>{{ daily_mind.0 }}</h2>
-
+<h2>{{ daily_body.0 }}</h2>
+<h2>{{ daily_soul.0 }}</h2>
 <form action="{% url 'kokoro_app:home' %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
