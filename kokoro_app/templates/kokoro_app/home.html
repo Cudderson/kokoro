@@ -2,16 +2,7 @@
 
 {% block content %}
 
-<h3>Your Activities</h3>
-<ul>
-    {% for act in activities %}
-      <li>{{ act }}</li>
-    {% empty %}
-      <li>No activities added yet.</li>
-    {% endfor %}
-</ul>
-
-<h3>Balance feature:</h3>
+<h3>Today:</h3>
 <h2>{{ daily_mind.0 }}</h2>
 <h2>{{ daily_body.0 }}</h2>
 <h2>{{ daily_soul.0 }}</h2>
@@ -29,8 +20,5 @@
     {{ form.as_p }}
     <button name="Submit">Add Activity</button>
 </form>
-
-<h3>Here are your mind activites submitted today:</h3>
-{{ daily_mind }}
 
 {% endblock content %}
