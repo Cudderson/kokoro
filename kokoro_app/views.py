@@ -3,8 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Activity
 from .forms import ActivityForm
-
-# Create your views here.
+from . import balance
 
 
 def index(request):
@@ -29,9 +28,21 @@ def home(request):
 
     activities = Activity.objects.filter(owner=request.user).order_by('date_added')
 
+    # Returns all activities submitted today for user
+    daily_mind = balance.daily_mind(request)
+    daily_body = balance.daily_body(request)
+    daily_soul = balance.daily_soul(request)
+
+    # Returns boolean indicating if user has submitted at least 1 mind, body, and soul activity today
+    found_balance = balance.balance(request)
+
     context = {
         'form': form,
         'activities': activities,
+        'daily_mind': daily_mind,
+        'daily_body': daily_body,
+        'daily_soul': daily_soul,
+        'balance_bool': found_balance,
     }
 
     return render(request, 'kokoro_app/home.html', context)

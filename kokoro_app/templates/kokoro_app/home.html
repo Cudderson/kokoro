@@ -2,14 +2,18 @@
 
 {% block content %}
 
-<h3>Your Activities</h3>
-<ul>
-    {% for act in activities %}
-      <li>{{ act }}</li>
-    {% empty %}
-      <li>No activities added yet.</li>
-    {% endfor %}
-</ul>
+<h3>Today:</h3>
+<h2>{{ daily_mind.0 }}</h2>
+<h2>{{ daily_body.0 }}</h2>
+<h2>{{ daily_soul.0 }}</h2>
+
+<!--Evaluate string representation of Python bool-->
+{% if balance_bool == 'True' %}
+    <p>You have found balance today.</p>
+{% endif %}
+{% if balance_bool == 'False' %}
+    <p>Still finding balance...</p>
+{% endif %}
 
 <form action="{% url 'kokoro_app:home' %}" method="post">
     {% csrf_token %}
