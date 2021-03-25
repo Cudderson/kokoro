@@ -16,31 +16,27 @@
 {% endif %}
 
 <form action="{% url 'kokoro_app:home' %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button name="Submit">Add Activity</button>
-</form>
+  {% csrf_token %}
+  <div class="btn-group btn-group-toggle btn-group-md w-50" data-toggle="collapse" data-target="#add">
+    <label class="btn btn-info" for="id_activity_1">
+      <input type="radio" name="activity" value="mind" class="form-control" required="" id="id_activity_1">{{ form.activity.1 }}
+    </label>
 
-<!-- new activity form -->
-<div class="btn-group btn-group-toggle btn-group-md w-50" data-toggle="collapse" data-target="#qwert">
-  <label class="btn btn-info">
-    <input type="radio" name="options" id="option1" checked> Mind
-  </label>
-  <label class="btn btn-danger">
-    <input type="radio" name="options" id="option2"> Body
-  </label>
-  <label class="btn btn-warning">
-    <input type="radio" name="options" id="option3"> Soul
-  </label>
-</div>
+    <label class="btn btn-danger" for="id_activity_2">
+      <input type="radio" name="activity" value="body" class="form-control" required="" id="id_activity_2">{{ form.activity.2 }}
+    </label>
 
-<div class="input-group mb-3 w-50 collapse" id="qwert">
-  <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
-  <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button">Button</button>
+    <label class="btn btn-warning" for="id_activity_3">
+      <input type="radio" name="activity" value="soul" class="form-control" required="" id="id_activity_3">{{ form.activity.3 }}
+    </label>
   </div>
-</div>
 
-
+  <div class="input-group mb-3 w-50 collapse" id="add">
+      <input type="text" name="description" class="form-control" maxlength="100" required="" id="id_description" placeholder="Describe your activity...">
+      <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="submit" name="submit">Add Activity</button>
+      </div>
+  </div>
+</form>
 
 {% endblock content %}
