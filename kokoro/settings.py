@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import warnings
 
 # Access env variables
 load_dotenv()
@@ -137,3 +138,9 @@ STATIC_URL = '/static/'
 
 # My settings
 LOGIN_URL = 'users:login'
+
+
+warnings.filterwarnings(
+    'error', r"DateTimeField .* received a naive datetime",
+    RuntimeWarning, r'django\.db\.models\.fields',
+)
