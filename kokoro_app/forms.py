@@ -8,4 +8,16 @@ class ActivityForm(forms.ModelForm):
         model = Activity
         fields = ['activity', 'description']
         labels = {'description': ''}
+        widgets = {
+            'activity': forms.RadioSelect(
+                attrs={
+                    'class': 'form-control'
+                }
+            ),
 
+            'description': forms.TextInput(
+                attrs={
+                    'class': 'form-control'
+                }
+            ),
+        }
