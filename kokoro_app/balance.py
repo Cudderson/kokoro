@@ -7,7 +7,10 @@ import pytz
 
 # Define start of current day for queries
 def get_start_of_today():
-    """Returns the beginning of today (midnight) as an aware datetime"""
+    """
+    Returns the beginning of today (midnight) as an aware datetime
+    :return: aware datetime object
+    """
 
     # pytz timezone definition
     tz = pytz.timezone('UTC')
