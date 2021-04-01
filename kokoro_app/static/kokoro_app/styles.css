@@ -13,3 +13,7 @@ svg text {
     fill: white;
     pointer-events: none;
 }
+
+.profile:hover {
+    font-size: 200%;
+}
