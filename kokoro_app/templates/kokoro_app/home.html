@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h3>Today:</h3>
+<h3 class="weller">Today:</h3>
 <h2>{{ daily_mind.0 }}</h2>
 <h2>{{ daily_body.0 }}</h2>
 <h2>{{ daily_soul.0 }}</h2>
@@ -21,11 +21,9 @@
     <label class="btn btn-info" for="id_activity_1">
       <input type="radio" name="activity" value="mind" class="form-control" required="" id="id_activity_1">{{ form.activity.1 }}
     </label>
-
     <label class="btn btn-danger" for="id_activity_2">
       <input type="radio" name="activity" value="body" class="form-control" required="" id="id_activity_2">{{ form.activity.2 }}
     </label>
-
     <label class="btn btn-warning" for="id_activity_3">
       <input type="radio" name="activity" value="soul" class="form-control" required="" id="id_activity_3">{{ form.activity.3 }}
     </label>
@@ -43,20 +41,19 @@
     <svg viewBox="0 0 900 901">
         <rect x="0" y="0" height="301" width="300" stroke="goldenrod" stroke-width="2" fill="none"></rect>
 
-        <polygon fill="silver" points="0,300 300,300 150,40.1925"></polygon>
+        <polygon fill="yellow" points="0,300 300,300 150,40.1925"></polygon>
 
         <!--make smaller triangles overlay-->
-        <polygon fill="gold" stroke="black" stroke-width="1" points="0,300 150,300 75,170.01"></polygon>
+        <polygon class="tri1" fill="black" stroke="black" stroke-width="1" points="0,300 150,300 75,170.01"></polygon>
 
-        <polygon fill="gold" stroke="black" stroke-width="1" points="150,300 300,300 225,170.01"></polygon>
+        <polygon class="tri2" fill="black" stroke="black" stroke-width="1" points="150,300 300,300 225,170.01"></polygon>
 
-        <polygon fill="gold" stroke="black" stroke-width="1" points="75,170.01 225,170.01 150,40.1925"></polygon>
+        <polygon class="tri3" fill="black" stroke="black" stroke-width="1" points="75,170.01 225,170.01 150,40.1925"></polygon>
 
-        <text x="123" y="135">Mind</text>
-        <text x="48" y="265">Body</text>
-        <text x="200" y="265">Soul</text>
+        <text x="130" y="135">Mind</text>
+        <text x="54" y="265">Body</text>
+        <text x="209" y="265">Soul</text>
     </svg>
-
 </div>
 
 {% endblock content %}

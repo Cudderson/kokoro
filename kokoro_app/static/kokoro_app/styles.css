@@ -1,3 +1,15 @@
-.weller {
-    color: red;
+.tri1:hover {
+    fill: yellow;
+}
+.tri2:hover {
+    fill: yellow;
+}
+.tri3:hover {
+    fill: yellow;
+}
+
+/* make svg text non-responsive */
+svg text {
+    fill: white;
+    pointer-events: none;
 }
