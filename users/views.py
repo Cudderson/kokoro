@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from kokoro_app.forms import PerfectBalanceForm
 
 
 def register(request):
@@ -33,6 +34,14 @@ def profile(request):
     # Identify User
     user = request.user
 
-    context = {'user': user}
+    # *** add form-submission logic ***
+    form = PerfectBalanceForm()
+
+    # *** add logic so that form can only be submitted if all 3 (MBS) specified ***
+
+    context = {
+        'user': user,
+        'form': form,
+    }
 
     return render(request, 'user/profile.html', context)
