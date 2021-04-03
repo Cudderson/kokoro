@@ -11,4 +11,7 @@ urlpatterns = [
 
     # Home Page
     path('home/', views.home, name='home'),
+
+    # User-Profile Page
+    path('profile/', views.profile, name='profile'),
 ]

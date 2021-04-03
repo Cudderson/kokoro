@@ -26,22 +26,3 @@ def register(request):
     context = {'form': form}
 
     return render(request, 'registration/register.html', context)
-
-
-@login_required
-def profile(request):
-
-    # Identify User
-    user = request.user
-
-    # *** add form-submission logic ***
-    form = PerfectBalanceForm()
-
-    # *** add logic so that form can only be submitted if all 3 (MBS) specified ***
-
-    context = {
-        'user': user,
-        'form': form,
-    }
-
-    return render(request, 'user/profile.html', context)

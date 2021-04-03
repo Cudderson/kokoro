@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 from .models import Activity
-from .forms import ActivityForm
+from .forms import ActivityForm, PerfectBalanceForm
 from . import balance
 
 
@@ -46,3 +46,22 @@ def home(request):
     }
 
     return render(request, 'kokoro_app/home.html', context)
+
+
+@login_required
+def profile(request):
+
+    # Identify User
+    user = request.user
+
+    # *** add form-submission logic ***
+    form = PerfectBalanceForm()
+
+    # *** add logic so that form can only be submitted if all 3 (MBS) specified ***
+
+    context = {
+        'user': user,
+        'form': form,
+    }
+
+    return render(request, 'kokoro_app/profile.html', context)
