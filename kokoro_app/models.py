@@ -45,12 +45,12 @@ class PerfectBalance(models.Model):
     perfect_body = models.CharField(max_length=100)
     perfect_soul = models.CharField(max_length=100)
 
-    # package preferences for admin-panel (will need to parse-string for template)
-    perfect_balance = f'M:{perfect_mind}, B:{perfect_body}, S:{perfect_soul}'
-
     def __str__(self):
         """
         :return: string representation of user's 'perfect balance' preferences
         """
 
-        return self.perfect_balance
+        # package activities for admin-panel and template
+        perfect_balance = f'M:{self.perfect_mind}, B:{self.perfect_body}, S:{self.perfect_soul}'
+
+        return perfect_balance

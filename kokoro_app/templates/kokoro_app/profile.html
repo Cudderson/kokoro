@@ -4,6 +4,15 @@
 <h5>This is <span class="profile">{{ user }}'s</span> profile.</h5>
 
 <div>
-    {{form.as_p}}
+    <p>Here is {{ user }}'s perfect balance:</p>
+    {{ p_b.0 }}
+</div>
+
+<div>
+    <form action="{% url 'kokoro_app:profile' %}" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Submit activity" style="background-color: red">
+    </form>
 </div>
 {% endblock content %}
