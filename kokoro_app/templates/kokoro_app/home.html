@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h3 class="weller">Today:</h3>
+<h3>Today:</h3>
 <h2>{{ daily_mind.0 }}</h2>
 <h2>{{ daily_body.0 }}</h2>
 <h2>{{ daily_soul.0 }}</h2>
@@ -10,8 +10,7 @@
 <!--Evaluate string representation of Python bool-->
 {% if balance_bool == 'True' %}
     <p>You have found balance today.</p>
-{% endif %}
-{% if balance_bool == 'False' %}
+{% elif balance_bool == 'False' %}
     <p>Still finding balance...</p>
 {% endif %}
 

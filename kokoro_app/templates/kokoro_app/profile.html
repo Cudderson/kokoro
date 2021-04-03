@@ -5,7 +5,11 @@
 
 <div>
     <p>Here is {{ user }}'s perfect balance:</p>
-    {{ p_b.0 }}
+    {% if perfect_balance == 'False' %}
+     <p>NO DATA</p>
+    {% else %}
+        {{ perfect_balance.0 }}
+    {% endif %}
 </div>
 
 <div>

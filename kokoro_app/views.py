@@ -51,6 +51,8 @@ def home(request):
 @login_required
 def profile(request):
 
+    # move most logic to helper file 'perfect.py' or similar
+
     # querying for certain fields still returns the __str__ response:
     # q = PB.objects.filter(perfect_mind__icontains='alice')
     # print(q)
@@ -59,29 +61,32 @@ def profile(request):
     # Identify User
     user = request.user
 
-    # *** add form-submission logic ***
-    # Site should display 'none' if user doesn't have a perfect balance.
-    # If they do, display it.
-    p_b = PerfectBalance.objects.filter(owner=request.user)
-
     # but first, have a user submit some data
     form = PerfectBalanceForm()
 
+    # * when a user submits a new form, the old objects should first be deleted (only 1 perfect balance per user)
     if request.method == "POST":
         form = PerfectBalanceForm(data=request.POST)
         if form.is_valid():
+            # delete old perfect balance (working)
+            PerfectBalance.objects.all().delete()
             new_form = form.save(commit=False)
             new_form.owner = request.user
             new_form.save()
             form = PerfectBalanceForm()
 
+    # set perfect_balance to false if user hasn't created one yet (empty querySet)
+    perfect_balance = PerfectBalance.objects.filter(owner=request.user)
+    if not perfect_balance:
+        # Convert boolean to string for template comparison
+        perfect_balance = str(False)
 
     # *** add logic so that form can only be submitted if all 3 (MBS) specified *** (django did this for me)
 
     context = {
         'user': user,
         'form': form,
-        'p_b': p_b,
+        'perfect_balance': perfect_balance,
     }
 
     return render(request, 'kokoro_app/profile.html', context)
