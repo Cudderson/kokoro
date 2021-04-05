@@ -31,3 +31,26 @@ class Activity(models.Model):
         """
 
         return self.activity.title() + ": " + self.description.title()
+
+
+class PerfectBalance(models.Model):
+    """
+    A user's 'perfect balance' section on profile page
+    """
+
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    # a user's favorite mind, body, and soul activities
+    perfect_mind = models.CharField(max_length=100)
+    perfect_body = models.CharField(max_length=100)
+    perfect_soul = models.CharField(max_length=100)
+
+    def __str__(self):
+        """
+        :return: string representation of user's 'perfect balance' preferences
+        """
+
+        # package activities for admin-panel and template
+        perfect_balance = f'M:{self.perfect_mind}, B:{self.perfect_body}, S:{self.perfect_soul}'
+
+        return perfect_balance

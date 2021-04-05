@@ -1,0 +1,22 @@
+{% extends 'kokoro_app/base.html' %}
+
+{% block content %}
+<h5>This is <span class="profile">{{ user }}'s</span> profile.</h5>
+
+<div>
+    <p>Here is {{ user }}'s perfect balance:</p>
+    {% if perfect_balance == 'False' %}
+     <p>NO DATA</p>
+    {% else %}
+        {{ perfect_balance.0 }}
+    {% endif %}
+</div>
+
+<div>
+    <form action="{% url 'kokoro_app:profile' %}" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Submit activity" style="background-color: red">
+    </form>
+</div>
+{% endblock content %}

@@ -28,7 +28,7 @@
           {% if user.is_authenticated %}
             <span class="navbar-text">Hello, {{ user.username }}.</span>
             <a class="nav-link active" aria-current="page" href="{% url 'kokoro_app:home' %}">Home</a>
-            <a class="nav-link" href="{% url 'users:profile' %}">My Profile</a>
+            <a class="nav-link" href="{% url 'kokoro_app:profile' %}">My Profile</a>
             <a class="nav-link" href="{% url 'users:logout' %}">Log Out</a>
           {% else %}
             <a class="nav-link active" aria-current="page" href="{% url 'kokoro_app:home' %}">Home</a>

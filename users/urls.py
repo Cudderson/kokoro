@@ -11,7 +11,4 @@ urlpatterns = [
 
     # Registration page for new users
     path('register/', views.register, name='register'),
-
-    # User-Profile Page
-    path('profile/', views.profile, name='profile'),
 ]
