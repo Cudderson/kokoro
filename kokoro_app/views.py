@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Activity, PerfectBalance
 from .forms import ActivityForm, PerfectBalanceForm
-from . import balance
+from . import balance, perfect
 
 
 def index(request):
@@ -50,15 +50,11 @@ def home(request):
 
 @login_required
 def profile(request):
-
-    # move most logic to helper file 'perfect.py' or similar
-
-    # querying for certain fields still returns the __str__ response:
-    # q = PB.objects.filter(perfect_mind__icontains='alice')
-    # print(q)
-    # QuerySet[<PerfectBalance: M:alice, B:rebecca, S:sage>]>
-
-    # Identify User
+    """
+    Profile page for kokoro users
+    :param request: request data
+    :return: HttpResponse
+    """
     user = request.user
 
     # but first, have a user submit some data
@@ -75,11 +71,7 @@ def profile(request):
             new_form.save()
             form = PerfectBalanceForm()
 
-    # set perfect_balance to false if user hasn't created one yet (empty querySet)
-    perfect_balance = PerfectBalance.objects.filter(owner=request.user)
-    if not perfect_balance:
-        # Convert boolean to string for template comparison
-        perfect_balance = str(False)
+    perfect_balance = perfect.get_perfect_balance_data(request)
 
     # *** add logic so that form can only be submitted if all 3 (MBS) specified *** (django did this for me)
 
