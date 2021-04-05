@@ -55,4 +55,15 @@
     </svg>
 </div>
 
+<script>
+    let x = document.querySelector('.tri1');
+    {% for val in daily_mind %}
+        let color = 'red';
+        x.style.fill = color;
+    {% empty %}
+        let color2 = 'green';
+        x.style.fill = color2;
+    {% endfor %}
+</script>
+
 {% endblock content %}
