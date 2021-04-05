@@ -1,7 +1,19 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
+<!--works-->
+<h5>test using False boolean:</h5>
+{% if daily_mind %}
+    <p>yo</p>
+{% else %}
+    <p>empty queryset</p>
+{% endif %}
 
+<!--works-->
+<h4>test for daily mind:</h4>
+<p>{{ all_daily.daily_mind }}</p>
+
+<!--works-->
 <h3>Today:</h3>
 <h2>{{ daily_mind.0 }}</h2>
 <h2>{{ daily_body.0 }}</h2>
@@ -43,11 +55,11 @@
         <polygon fill="yellow" points="0,300 300,300 150,40.1925"></polygon>
 
         <!--make smaller triangles overlay-->
-        <polygon class="tri1" fill="black" stroke="black" stroke-width="1" points="0,300 150,300 75,170.01"></polygon>
+        <polygon class="tri tri-1" fill="black" stroke="black" stroke-width="1" points="0,300 150,300 75,170.01"></polygon>
 
-        <polygon class="tri2" fill="black" stroke="black" stroke-width="1" points="150,300 300,300 225,170.01"></polygon>
+        <polygon class="tri tri-2" fill="black" stroke="black" stroke-width="1" points="150,300 300,300 225,170.01"></polygon>
 
-        <polygon class="tri3" fill="black" stroke="black" stroke-width="1" points="75,170.01 225,170.01 150,40.1925"></polygon>
+        <polygon class="tri tri-3" fill="black" stroke="black" stroke-width="1" points="75,170.01 225,170.01 150,40.1925"></polygon>
 
         <text x="130" y="135">Mind</text>
         <text x="54" y="265">Body</text>
@@ -55,15 +67,14 @@
     </svg>
 </div>
 
+<!--don't use in-line styles in final-->
+<!--cannot mix JS variables with python/jinja variables,
+    Instead, loop over all_daily at same index as x[i]-->
 <script>
-    let x = document.querySelector('.tri1');
-    {% for val in daily_mind %}
-        let color = 'red';
-        x.style.fill = color;
-    {% empty %}
-        let color2 = 'green';
-        x.style.fill = color2;
-    {% endfor %}
+    let x = document.getElementsByClassName('tri');
+    x[0].style.fill = 'darkred';
+    x[1].style.fill = 'darkgreen';
+    x[2].style.fill = 'khaki';
 </script>
 
 {% endblock content %}
