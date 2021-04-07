@@ -62,28 +62,40 @@ def profile(request):
     """
     user = request.user
 
-    # but first, have a user submit some data
-    form = PerfectBalanceForm()
+    perfect_form = PerfectBalanceForm()
 
     # * when a user submits a new form, the old objects should first be deleted (only 1 perfect balance per user)
-    if request.method == "POST":
-        form = PerfectBalanceForm(data=request.POST)
-        if form.is_valid():
+    if request.method == "POST" and 'perfect_form' in request.POST:
+        perfect_form = PerfectBalanceForm(data=request.POST)
+        if perfect_form.is_valid():
             # delete old perfect balance (working)
             PerfectBalance.objects.all().delete()
-            new_form = form.save(commit=False)
+            new_form = perfect_form.save(commit=False)
             new_form.owner = request.user
             new_form.save()
-            form = PerfectBalanceForm()
+            perfect_form = PerfectBalanceForm()
 
     perfect_balance = perfect.get_perfect_balance_data(request)
+
+    # Returns all activities submitted today for user
+    daily_mind = balance.daily_mind(request)
+    daily_body = balance.daily_body(request)
+    daily_soul = balance.daily_soul(request)
+
+    # Package daily activities
+    all_daily = {
+        'daily_mind': daily_mind,
+        'daily_body': daily_body,
+        'daily_soul': daily_soul
+    }
 
     # *** add logic so that form can only be submitted if all 3 (MBS) specified *** (django did this for me)
 
     context = {
         'user': user,
-        'form': form,
+        'perfect_form': perfect_form,
         'perfect_balance': perfect_balance,
+        'all_daily': all_daily,
     }
 
     return render(request, 'kokoro_app/profile.html', context)
