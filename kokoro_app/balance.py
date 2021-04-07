@@ -46,9 +46,6 @@ def daily_mind(request):
         date_added__gt=start_of_today,
     )
 
-    # apply to others if this method is desirable
-    if len(daily_mind_activities) == 0:
-        return []
     return daily_mind_activities
 
 

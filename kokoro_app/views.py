@@ -46,9 +46,6 @@ def home(request):
     context = {
         'form': form,
         'activities': activities,
-        'daily_mind': daily_mind,
-        'daily_body': daily_body,
-        'daily_soul': daily_soul,
         'all_daily': all_daily,
         'balance_bool': found_balance,
     }

@@ -1,35 +1,11 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
-<!--test all_daily-->
-{% if all_daily.daily_mind %}
-    true
-{% else %}
-    false
-{% endif %}
 
-{% if daily_mind %}
-    daily_mind isn't empty!
-{% else %}
-    daily_mind is empty.
-{% endif %}
-<!--works-->
-<h5>test using False boolean:</h5>
-{% if daily_mind %}
-    <p>yo</p>
-{% else %}
-    <p>empty queryset</p>
-{% endif %}
-
-<!--works-->
-<h4>test for daily mind:</h4>
-<p>{{ all_daily.daily_mind }}</p>
-
-<!--works-->
 <h3>Today:</h3>
-<h2>{{ daily_mind.0 }}</h2>
-<h2>{{ daily_body.0 }}</h2>
-<h2>{{ daily_soul.0 }}</h2>
+<h2>{{ all_daily.daily_mind.0 }}</h2>
+<h2>{{ all_daily.daily_body.0 }}</h2>
+<h2>{{ all_daily.daily_soul.0 }}</h2>
 
 <!--Evaluate string representation of Python bool-->
 {% if balance_bool == 'True' %}
@@ -85,13 +61,13 @@
 <script>
     let x = document.getElementsByClassName('tri');
     {% if all_daily.daily_mind %}
-        x[0].style.fill = 'red';
-    {% if daily_body %}
-        x[1].style.fill = 'red';
-    {% if daily_soul %}
-        x[2].style.fill = 'red';
+        x[0].classList.add("completed_act");
     {% endif %}
+    {% if all_daily.daily_body %}
+        x[1].classList.add("completed_act");
     {% endif %}
+    {% if all_daily.daily_soul %}
+        x[2].classList.add("completed_act");
     {% endif %}
 </script>
     {% endblock content %}

@@ -7,7 +7,12 @@
 .tri-3:hover {
     fill: yellow;
 }
-
+.completed_act {
+    fill: yellow;
+}
+.completed_act:hover {
+    fill: orange;
+}
 /* make svg text non-responsive */
 svg text {
     fill: white;
