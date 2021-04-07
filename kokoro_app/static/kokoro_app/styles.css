@@ -1,13 +1,18 @@
-.tri1:hover {
+.tri-1:hover {
     fill: yellow;
 }
-.tri2:hover {
+.tri-2:hover {
     fill: yellow;
 }
-.tri3:hover {
+.tri-3:hover {
     fill: yellow;
 }
-
+.completed_act {
+    fill: yellow;
+}
+.completed_act:hover {
+    fill: orange;
+}
 /* make svg text non-responsive */
 svg text {
     fill: white;

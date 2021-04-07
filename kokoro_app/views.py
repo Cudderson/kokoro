@@ -33,15 +33,20 @@ def home(request):
     daily_body = balance.daily_body(request)
     daily_soul = balance.daily_soul(request)
 
+    # Package daily activities
+    all_daily = {
+        'daily_mind': daily_mind,
+        'daily_body': daily_body,
+        'daily_soul': daily_soul
+    }
+
     # Returns boolean indicating if user has submitted at least 1 mind, body, and soul activity today
     found_balance = balance.balance(request)
 
     context = {
         'form': form,
         'activities': activities,
-        'daily_mind': daily_mind,
-        'daily_body': daily_body,
-        'daily_soul': daily_soul,
+        'all_daily': all_daily,
         'balance_bool': found_balance,
     }
 

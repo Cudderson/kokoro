@@ -3,9 +3,9 @@
 {% block content %}
 
 <h3>Today:</h3>
-<h2>{{ daily_mind.0 }}</h2>
-<h2>{{ daily_body.0 }}</h2>
-<h2>{{ daily_soul.0 }}</h2>
+<h2>{{ all_daily.daily_mind.0 }}</h2>
+<h2>{{ all_daily.daily_body.0 }}</h2>
+<h2>{{ all_daily.daily_soul.0 }}</h2>
 
 <!--Evaluate string representation of Python bool-->
 {% if balance_bool == 'True' %}
@@ -43,11 +43,11 @@
         <polygon fill="yellow" points="0,300 300,300 150,40.1925"></polygon>
 
         <!--make smaller triangles overlay-->
-        <polygon class="tri1" fill="black" stroke="black" stroke-width="1" points="0,300 150,300 75,170.01"></polygon>
+        <polygon class="tri tri-1" fill="black" stroke="black" stroke-width="1" points="75,170.01 225,170.01 150,40.1925"></polygon>
 
-        <polygon class="tri2" fill="black" stroke="black" stroke-width="1" points="150,300 300,300 225,170.01"></polygon>
+        <polygon class="tri tri-2" fill="black" stroke="black" stroke-width="1" points="0,300 150,300 75,170.01"></polygon>
 
-        <polygon class="tri3" fill="black" stroke="black" stroke-width="1" points="75,170.01 225,170.01 150,40.1925"></polygon>
+        <polygon class="tri tri-3" fill="black" stroke="black" stroke-width="1" points="150,300 300,300 225,170.01"></polygon>
 
         <text x="130" y="135">Mind</text>
         <text x="54" y="265">Body</text>
@@ -55,4 +55,22 @@
     </svg>
 </div>
 
-{% endblock content %}
+<!--apply new css class to triangles referencing fulfilled activities-->
+<script>
+    let tri = document.getElementsByClassName('tri');
+
+    var mind = "{{ all_daily.daily_mind.0|safe }}";
+    var body = "{{ all_daily.daily_body.0|safe }}";
+    var soul = "{{ all_daily.daily_soul.0|safe }}";
+
+    let activities = [mind, body, soul];
+
+    for (var i = 0; i < 3; i++)
+    {
+        if (activities[i])
+        {
+            tri[i].classList.add("completed_act");
+        }
+    }
+</script>
+    {% endblock content %}
