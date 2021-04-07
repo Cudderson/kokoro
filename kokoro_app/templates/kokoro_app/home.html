@@ -55,19 +55,22 @@
     </svg>
 </div>
 
-<!--don't use in-line styles in final-->
-<!--cannot mix JS variables with python/jinja variables-->
-<!--instead, apply new class when daily activity exists-->
+<!--apply new css class to triangles referencing fulfilled activities-->
 <script>
-    let x = document.getElementsByClassName('tri');
-    {% if all_daily.daily_mind %}
-        x[0].classList.add("completed_act");
-    {% endif %}
-    {% if all_daily.daily_body %}
-        x[1].classList.add("completed_act");
-    {% endif %}
-    {% if all_daily.daily_soul %}
-        x[2].classList.add("completed_act");
-    {% endif %}
+    let tri = document.getElementsByClassName('tri');
+
+    var mind = "{{ all_daily.daily_mind.0|safe }}";
+    var body = "{{ all_daily.daily_body.0|safe }}";
+    var soul = "{{ all_daily.daily_soul.0|safe }}";
+
+    let activities = [mind, body, soul];
+
+    for (var i = 0; i < 3; i++)
+    {
+        if (activities[i])
+        {
+            tri[i].classList.add("completed_act");
+        }
+    }
 </script>
     {% endblock content %}
