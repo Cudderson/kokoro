@@ -15,8 +15,45 @@
 <div>
     <form action="{% url 'kokoro_app:profile' %}" method="post">
         {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Submit activity" style="background-color: red">
+        {{ perfect_form.as_p }}
+        <input type="submit" name="perfect_form" value="Submit activity" style="background-color: red">
+    </form>
+</div>
+<div>
+    <h5>{{ user }}'s activities today:</h5>
+    <form action="{% url 'kokoro_app:profile' %}" method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>MIND</th>
+            </tr>
+            {% for mind_act in all_daily.daily_mind %}
+                <tr>
+                    <td><input type="checkbox" name="{{ mind_act.id }}" id="{{ mind_act.id }}"> {{ mind_act }}///{{ mind_act.id }}///{{ mind_act.pk }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <table>
+            <tr>
+                <th>BODY</th>
+            </tr>
+            {% for body_act in all_daily.daily_body %}
+                <tr>
+                    <td><input type="checkbox" name="{{ body_act.id }}" id="{{ body_act.id }}"> {{ body_act }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <table>
+            <tr>
+                <th>SOUL</th>
+            </tr>
+            {% for soul_act in all_daily.daily_soul %}
+                <tr>
+                    <td><input type="checkbox" name="{{ soul_act.id }}" id="{{ soul_act.id }}"> {{ soul_act }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" name="manage_form" value="Delete Selected Activities">
     </form>
 </div>
 {% endblock content %}
