@@ -70,7 +70,7 @@ def profile(request):
             perfect_form = PerfectBalanceForm(data=request.POST)
             if perfect_form.is_valid():
                 # delete old perfect balance (working)
-                PerfectBalance.objects.all().delete()
+                PerfectBalance.objects.filter(owner__exact=request.user).delete()
                 new_form = perfect_form.save(commit=False)
                 new_form.owner = request.user
                 new_form.save()
