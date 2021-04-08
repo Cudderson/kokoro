@@ -29,9 +29,9 @@
             </tr>
             {% for mind_act in all_daily.daily_mind %}
                 <tr>
-                    <td><input type="checkbox" id="{{ mind_act.id }}"> {{ mind_act }}///{{ mind_act.id }}///{{ mind_act.pk }}</td>
+                    <td><input type="checkbox" name="{{ mind_act.id }}" id="{{ mind_act.id }}"> {{ mind_act }}///{{ mind_act.id }}///{{ mind_act.pk }}</td>
                 </tr>
-                        {% endfor %}
+            {% endfor %}
         </table>
         <table>
             <tr>
@@ -39,7 +39,7 @@
             </tr>
             {% for body_act in all_daily.daily_body %}
                 <tr>
-                    <td><input type="checkbox" id="{{ body_act.id }}"> {{ body_act }}</td>
+                    <td><input type="checkbox" name="{{ body_act.id }}" id="{{ body_act.id }}"> {{ body_act }}</td>
                 </tr>
             {% endfor %}
         </table>
@@ -49,11 +49,11 @@
             </tr>
             {% for soul_act in all_daily.daily_soul %}
                 <tr>
-                    <td><input type="checkbox" id="{{ soul_act.id }}"> {{ soul_act }}</td>
+                    <td><input type="checkbox" name="{{ soul_act.id }}" id="{{ soul_act.id }}"> {{ soul_act }}</td>
                 </tr>
             {% endfor %}
         </table>
-        <input type="submit" value="Delete Selected Activities">
+        <input type="submit" name="manage_form" value="Delete Selected Activities">
     </form>
 </div>
 {% endblock content %}

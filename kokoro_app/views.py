@@ -65,15 +65,28 @@ def profile(request):
     perfect_form = PerfectBalanceForm()
 
     # * when a user submits a new form, the old objects should first be deleted (only 1 perfect balance per user)
-    if request.method == "POST" and 'perfect_form' in request.POST:
-        perfect_form = PerfectBalanceForm(data=request.POST)
-        if perfect_form.is_valid():
-            # delete old perfect balance (working)
-            PerfectBalance.objects.all().delete()
-            new_form = perfect_form.save(commit=False)
-            new_form.owner = request.user
-            new_form.save()
-            perfect_form = PerfectBalanceForm()
+    if request.method == "POST":
+        if 'perfect_form' in request.POST:
+            perfect_form = PerfectBalanceForm(data=request.POST)
+            if perfect_form.is_valid():
+                # delete old perfect balance (working)
+                PerfectBalance.objects.all().delete()
+                new_form = perfect_form.save(commit=False)
+                new_form.owner = request.user
+                new_form.save()
+                perfect_form = PerfectBalanceForm()
+        elif 'manage_form' in request.POST:
+
+            # could move some logic to helper file
+            result = request.POST
+            # checkbox attrs are key=id_of_entry, value=on/off
+            # By retrieving the key(s), we know what values to delete from database
+            # '[1:len(result) - 1]' removes the csrf_token and button name from result
+            result = list(result.keys())[1:len(result) - 1]
+
+            # Delete objects based on their 'id' obtained from the queryDict/QueryList
+            acts_to_delete = Activity.objects.filter(id__in=result)
+            acts_to_delete.delete()
 
     perfect_balance = perfect.get_perfect_balance_data(request)
 
