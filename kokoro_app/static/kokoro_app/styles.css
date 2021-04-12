@@ -107,6 +107,31 @@ nav a:hover {
     align-items: center;
 }
 
+.nav-toggle-label span,
+.nav-toggle-label span::before,
+.nav-toggle-label span::after {
+    display: block;
+    background: white;
+    height: 2px;
+    width: 2em;
+    border-radius: 2px;
+    position: relative;
+}
+
+.nav-toggle-label span::before,
+.nav-toggle-label span::after {
+    content: ''; /* required to make elements appear. (default = none) */
+    position: absolute;
+}
+
+.nav-toggle-label span::before {
+    bottom: 7px;
+}
+
+.nav-toggle-label span::after {
+    top: 7px;
+}
+
 .qwerty {
     /* need to fix content under navbar */
 }
