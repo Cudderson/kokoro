@@ -17,13 +17,15 @@
     <input type="checkbox" id="nav-toggle" class="nav-toggle">
     <nav>
       <ul>
-          <li><a href="{% url 'kokoro_app:home' %}">kokoro</a></li>
+
         {% if user.is_authenticated %}
-          <span>Hello, {{ user.username }}.</span>
+          <li><a>Hello, {{ user.username }}.</a></li>
+          <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
           <li><a href="{% url 'kokoro_app:profile' %}">Profile</a></li>
           <li><a href="{% url 'users:logout' %}">Log Out</a></li>
-          <li><a href="#">Home</a></li>
+          <li><a href="#">something...</a></li>
         {% else %}
+          <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
           <li><a href="{% url 'users:register' %}">Register</a></li>
           <li><a href="{% url 'users:login' %}">Log In</a></li>
         {% endif %}
