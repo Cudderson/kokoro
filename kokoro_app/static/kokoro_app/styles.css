@@ -62,7 +62,7 @@ nav {
     left: 0;
     background: var(--background);
     width: 100%;
-    display: none; /* shouldn't need to be !important (could be bootstrap) */
+    transform: scale(1, 0);
 }
 
 nav ul {
@@ -88,7 +88,7 @@ nav a:hover {
 }
 
 .nav-toggle:checked ~ nav {
-    display: block;
+    transform: scale(1, 1);
 }
 
 /* don't display checkbox */
