@@ -1,3 +1,22 @@
+/* starting with grid for home page (nav excluded) */
+.home-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+/* place items in grid */
+.svg-container {
+    width: 400px;
+    grid-column: 2 / 3;
+    grid-row: 1 /2;
+    justify-self: center;
+}
+
+.grid-form, .grid-item-daily, .grid-balance {
+    grid-column: 1 / 2;
+}
+
+/* svg hover effects */
+
 .tri-1:hover {
     fill: yellow;
 }
