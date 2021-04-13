@@ -144,3 +144,63 @@ nav a:hover {
 .qwerty {
     /* need to fix content under navbar */
 }
+
+/* change screen size if needed */
+@media screen and (min-width: 1200px) {
+    .nav-toggle-label {
+        display: none;
+    }
+    /* make header a grid */
+    header {
+        display: grid;
+        grid-template-columns: .75fr auto minmax(600px, 2.25fr) .75fr;
+    }
+
+    .logo {
+        grid-column: 2 / 3; /* place logo in header grid */
+    }
+
+    nav {
+        all: unset;
+        grid-column: 3 / 4; /* holds our <ul> elements */
+        /* center nav elements within grid using flexbox */
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    nav ul {
+        display: flex; /* make <li> elements appear side-by-side rather than vertically using flex */
+    }
+
+    nav li {
+        /* turn off bottom margin of <li> elements and space them with left margin */
+        margin-left: 3em;
+        margin-bottom: 0;
+    }
+
+    nav a {
+        /* restore <a> elements' opacity */
+        opacity: 1;
+        position: relative;
+    }
+
+    /* hover effect */
+    nav a::before {
+        content: '';
+        display: block;
+        height: 5px;
+        position: absolute;
+        background: black;
+        border-radius: 4px;
+        top: -.75em;
+        left: 0;
+        right: 0;
+        transform: scale(0, 1);
+        transition: transform ease-in-out 250ms;
+    }
+
+    nav a:hover::before {
+        transform: scale(1, 1);
+    }
+}
