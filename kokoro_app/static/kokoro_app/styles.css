@@ -25,9 +25,9 @@ svg text {
 
 /* new navbar styles */
 
-
 body {
     margin: 0;
+    padding-top: 90px; /* header height = 80px (depends on logo size)*/
 }
 
 
@@ -139,10 +139,6 @@ nav a:hover {
 
 .nav-toggle-label span::after {
     top: 7px;
-}
-
-.qwerty {
-    /* need to fix content under navbar */
 }
 
 /* change screen size if needed */
