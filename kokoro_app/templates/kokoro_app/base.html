@@ -1,5 +1,3 @@
-{% load bootstrap4 %}
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,34 +9,32 @@
   {% load static %}
   <link rel="stylesheet" type="text/css" href="\static\kokoro_app\styles.css">
 
-  {% bootstrap_css %}
-  {% bootstrap_javascript jquery='full' %}
-
 </head>
 <body>
+  <!--new navbar-->
+  <header>
+    <h1 class="logo">kokoro</h1>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <nav>
+      <ul>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'kokoro_app:home' %}">kokoro</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <div class="navbar-nav">
-          {% if user.is_authenticated %}
-            <span class="navbar-text">Hello, {{ user.username }}.</span>
-            <a class="nav-link active" aria-current="page" href="{% url 'kokoro_app:home' %}">Home</a>
-            <a class="nav-link" href="{% url 'kokoro_app:profile' %}">My Profile</a>
-            <a class="nav-link" href="{% url 'users:logout' %}">Log Out</a>
-          {% else %}
-            <a class="nav-link active" aria-current="page" href="{% url 'kokoro_app:home' %}">Home</a>
-            <a class="nav-link" href="{% url 'users:register' %}">Register</a>
-            <a class="nav-link" href="{% url 'users:login' %}">Log In</a>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-  </nav>
+        {% if user.is_authenticated %}
+          <li><a>Hello, {{ user.username }}.</a></li>
+          <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
+          <li><a href="{% url 'kokoro_app:profile' %}">Profile</a></li>
+          <li><a href="{% url 'users:logout' %}">Log Out</a></li>
+          <li><a href="#">something...</a></li>
+        {% else %}
+          <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
+          <li><a href="{% url 'users:register' %}">Register</a></li>
+          <li><a href="{% url 'users:login' %}">Log In</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+    <label for="nav-toggle" class="nav-toggle-label">
+        <span></span>
+    </label>
+  </header>
 {% block content %}{% endblock content %}
 </body>
 </html>

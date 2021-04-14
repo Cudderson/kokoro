@@ -8,19 +8,6 @@ class ActivityForm(forms.ModelForm):
         model = Activity
         fields = ['activity', 'description']
         labels = {'description': ''}
-        widgets = {
-            'activity': forms.RadioSelect(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-
-            'description': forms.TextInput(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-        }
 
 
 class PerfectBalanceForm(forms.ModelForm):
@@ -34,12 +21,3 @@ class PerfectBalanceForm(forms.ModelForm):
         #     'perfect_body': '',
         #     'perfect_soul': '',
         # }
-
-        # example of bootstrap text-input field
-        widgets = {
-            'perfect_mind': forms.TextInput(
-                attrs={
-                    'class': 'form-control'
-                }
-            )
-        }
