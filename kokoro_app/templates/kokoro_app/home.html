@@ -1,6 +1,14 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
+<!--     BOOKMARK TAB FOR RADIO IDEAS      -->
+<!--test custom radio button-->
+<div>
+    <input class="test-radio" type="radio" name="activity" value="spirit" required="" id="id_activity_4">
+    <label class="test-label" for="id_activity_4">Spirit</label>
+    <input class="test-radio" type="radio" name="activity" value="sauna" required="" id="id_activity_5">
+    <label class="test-label" for="id_activity_5">Sauna</label>
+</div>
 
 <div class="home-grid">
     <div class="grid-item-daily">
@@ -31,9 +39,6 @@
             <label for="id_activity_3">
               <input type="radio" name="activity" value="soul" required="" id="id_activity_3">{{ form.activity.3 }}
             </label>
-            <label for="id_activity_4"></label>
-              <!--test custom radio button-->
-              <input type="radio" name="activity" value="spirit" required="" id="id_activity_4">Spirit
           </div>
 
 
