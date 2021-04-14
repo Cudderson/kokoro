@@ -1,19 +1,19 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
-<!--     BOOKMARK TAB FOR RADIO IDEAS      -->
-
-<!--testing flexbox to avoid unwanted gaps-->
-<div class="test-group-2">
-    <input class="test-radio-2" type="radio" name="activity" value="spirit" required="" id="id_activity_7">
-    <label class="test-label-2" for="id_activity_7">Spirit</label>
-    <input class="test-radio-2" type="radio" name="activity" value="sauna" required="" id="id_activity_8">
-    <label class="test-label-2" for="id_activity_8">Sauna</label>
-    <input class="test-radio-2" type="radio" name="activity" value="sauna" required="" id="id_activity_9">
-    <label class="test-label-2" for="id_activity_9">Sushi</label>
-</div>
 
 <div class="home-grid">
+    <!--testing flexbox to avoid unwanted gaps-->
+    <div class="grid-form-test">
+        <div class="test-group-2">
+            <input class="test-radio-2" type="radio" name="activity" value="spirit" required="" id="id_activity_7">
+            <label class="test-label-2" for="id_activity_7">Spirit</label>
+            <input class="test-radio-2" type="radio" name="activity" value="sauna" required="" id="id_activity_8">
+            <label class="test-label-2" for="id_activity_8">Sauna</label>
+            <input class="test-radio-2" type="radio" name="activity" value="sauna" required="" id="id_activity_9">
+            <label class="test-label-2" for="id_activity_9">Sushi</label>
+        </div>
+    </div>
     <div class="grid-item-daily">
         <h3>Today:</h3>
         <h2>{{ all_daily.daily_mind.0 }}</h2>
