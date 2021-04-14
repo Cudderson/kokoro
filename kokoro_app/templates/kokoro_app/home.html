@@ -21,7 +21,7 @@
     <div class="grid-form">
         <form action="{% url 'kokoro_app:home' %}" method="post">
           {% csrf_token %}
-          <div data-toggle="collapse" data-target="#add">
+          <div class="grid-form-items" data-toggle="collapse" data-target="#add">
             <label for="id_activity_1">
               <input type="radio" name="activity" value="mind" required="" id="id_activity_1">{{ form.activity.1 }}
             </label>
@@ -31,6 +31,9 @@
             <label for="id_activity_3">
               <input type="radio" name="activity" value="soul" required="" id="id_activity_3">{{ form.activity.3 }}
             </label>
+            <label for="id_activity_4"></label>
+              <!--test custom radio button-->
+              <input type="radio" name="activity" value="spirit" required="" id="id_activity_4">Spirit
           </div>
 
 

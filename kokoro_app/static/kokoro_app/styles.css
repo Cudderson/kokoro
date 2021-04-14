@@ -15,6 +15,12 @@
     grid-column: 1 / 2;
 }
 
+.grid-form-items {
+    /* wrap radio-selects side-by-side */
+    display: flex;
+    flex-wrap: wrap;
+}
+
 /* svg hover effects */
 
 .tri-1:hover {
