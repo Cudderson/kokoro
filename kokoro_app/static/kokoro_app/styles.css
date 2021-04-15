@@ -59,21 +59,26 @@
 }
 
 .activity-submit {
-    display: flex;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    /* grid contains text input + submit button */
     width: 500px;
     margin-left: 20px;
     margin-right: 20px;
 }
 
 .activity-submit input {
-    width: 100%;
+    grid-column: 1 / 2;
+    height: 3em;
     border: 4px solid black;
     border-radius: 5px;
     border-top: 0;
     background-color: var(--background);
 }
 
-.activity-submit div button {
+.activity-submit button {
+    grid-column: 2 / 3;
+
     color: black;
     border: 4px solid black;
     border-radius: 5px;
