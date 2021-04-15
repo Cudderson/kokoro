@@ -106,6 +106,8 @@ h2, h3 {
     grid-row: 1 / 2;
     justify-self: center;
     margin-top: 2em;
+    width: 100%;
+    word-wrap: break-word;
 }
 
 /* clean order later */
