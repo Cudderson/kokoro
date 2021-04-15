@@ -59,6 +59,8 @@
 </div>
 
 <!--apply new css class to triangles referencing fulfilled activities-->
+<!--*** ACTIVITIES WITH QUOTES ("") BREAK THE JS ***-->
+<!--also, tell user to select an option (MBS) if none was selected-->
 <script>
     let tri = document.getElementsByClassName('tri');
 
@@ -73,6 +75,7 @@
         if (activities[i])
         {
             tri[i].classList.add("completed_act");
+            console.log("hmmm..")
         }
     }
 </script>

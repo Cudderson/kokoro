@@ -4,6 +4,11 @@
     grid-template-columns: repeat(12, 1fr);
 }
 
+/* test for home page daily activities */
+h2, h3 {
+    text-align: center;
+}
+
 /* place new test form within grid */
 .activity-form {
     grid-column: 2 / 7;
@@ -64,6 +69,7 @@
     /* grid contains text input + submit button */
     margin-left: 20px;
     margin-right: 20px;
+    z-index: 777; /* this is a cop-out, fix appropriately */
 }
 
 .activity-submit input {
@@ -90,9 +96,15 @@
 
 /* ^ end activity form ^ */
 
-.grid-item-daily, .grid-balance {
+.grid-balance {
     grid-column: 1 / 2;
     grid-row: 2 / 3;
+}
+
+.grid-item-daily {
+    grid-column: 2 / 7;
+    grid-row: 1 / 2;
+    justify-self: center;
 }
 
 /* clean order later */
