@@ -9,11 +9,11 @@
             {% csrf_token %}
             <div class="activity-select"> <!--flexbox-->
                 <input class="activity-radio" type="radio" name="activity" value="mind" required="" id="id_activity_1">
-                <label class="activity-label" for="id_activity_1">{{ form.activity.1 }}</label>
+                <label class="activity-label" onclick="collapse()" for="id_activity_1">{{ form.activity.1 }}</label>
                 <input class="activity-radio" type="radio" name="activity" value="body" required="" id="id_activity_2">
-                <label class="activity-label" for="id_activity_2">{{ form.activity.2 }}</label>
+                <label class="activity-label" onclick="collapse()" for="id_activity_2">{{ form.activity.2 }}</label>
                 <input class="activity-radio" type="radio" name="activity" value="soul" required="" id="id_activity_3">
-                <label class="activity-label" for="id_activity_3">{{ form.activity.3 }}</label>
+                <label class="activity-label" onclick="collapse()" for="id_activity_3">{{ form.activity.3 }}</label>
             </div>
             <div class="activity-submit">
                   <input type="text" name="description" maxlength="100" required="" id="id_description" placeholder="Describe your activity...">
@@ -56,18 +56,6 @@
             <text x="209" y="265">Soul</text>
         </svg>
     </div>
-    <div class="test-group">
-        <div class="test-select">
-            <input class="test-input" type="radio" name="activity" value="soul" required="" id="id_activity_t">
-            <label class="test-label" onclick="func()" for="id_activity_t">Testing</label>
-            <input class="test-input" type="radio" name="activity" value="soul" required="" id="id_activity_t2">
-            <label class="test-label" for="id_activity_t2">Testing</label>
-        </div>
-        <div class="test-submit">
-            <input type="text" name="description" maxlength="100" required="" id="id-test" placeholder="Describe your activity...">
-            <button type="submit" name="submit">Add Activity</button>
-        </div>
-    </div>
 </div>
 
 <!--apply new css class to triangles referencing fulfilled activities-->
@@ -91,17 +79,11 @@
         }
     }
 
-    // test
-    var test_label = document.getElementsByClassName("test-label")[0];
-    var test_sub = document.getElementsByClassName("test-submit")[0];
-    var test_inp = document.getElementsByClassName("test-input")[0];
-    console.log(test_label);
-    console.log(test_sub);
-    console.log(test_inp);
+    // activity-submit class addition
+    var activitySubmit = document.getElementsByClassName('activity-submit')[0];
 
-    function func() {
-        test_sub.classList.toggle("collapse");
+    function collapse() {
+        activitySubmit.classList.toggle("collapse");
     }
-
 </script>
 {% endblock content %}
