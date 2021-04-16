@@ -47,19 +47,21 @@ h2, h3 {
     flex-grow: 1; /* all items same size */
     text-align: center;
     color: green;
+    background: white;
     padding: 5px 30px;
     font-weight: bold;
     cursor: pointer;
 }
 
 .activity-label:hover {
-    background-color: darkgreen;
+    background-color: darkgreen !important; /* this makes hover work even after selection */
 }
-
+/* might not need (javascript handles it)
 .activity-radio:checked + .activity-label {
-    color:#bfb !important;
-    background: #4c4;
+    color:#bfb;
+    background: blue;
 }
+*/
 
 .activity-label + .activity-radio + .activity-label {
     border-left: solid 5px black;

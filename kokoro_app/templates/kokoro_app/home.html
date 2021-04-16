@@ -79,11 +79,27 @@
         }
     }
 
-    // activity-submit class addition
-    var activitySubmit = document.getElementsByClassName('activity-submit')[0];
-
     function collapse() {
         activitySubmit.classList.toggle("collapse");
     }
+
+    // change label color depending if activitySubmit has 'collapse' applied or not
+    function revertColor() {
+        if (activitySubmit.classList.contains("collapse")) {
+            // change to selection color
+            actLabel.style.background = "blue";
+        } else {
+            // label should return to original color
+            actLabel.style.background = "white";
+        }
+    }
+
+    var actLabel = document.getElementsByClassName("activity-label")[0];
+    var actRadio = document.getElementsByClassName("activity-radio")[0];
+    var activitySubmit = document.getElementsByClassName('activity-submit')[0];
+
+    // listen for click, then call revert color
+    actLabel.addEventListener('click', revertColor, false);
+
 </script>
 {% endblock content %}
