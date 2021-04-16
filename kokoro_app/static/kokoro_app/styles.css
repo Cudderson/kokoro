@@ -4,22 +4,6 @@
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: auto auto auto;
 }
-/* testing activity-submit collapsible */
-
-/* 1. make textinput + button invisible with transform: scale(1,0)  (test-submit) #
-   2. restore display when test-label is checked (javascript # )
-        - am using '!important' :(
-   3. hopefully remove !important
-   4. use either JS or CSS for clean transition animation (CSS transform preferred)
-*/
-
-/*class for restoring submit appearance*/
-/* no need to use !important because of the specificity of this selector: */
-.test-submit.restore {
-    transform: scale(1, 1);
-    transform-origin: top;
-    transition: transform 300ms ease-in-out 100ms;
-}
 
 .test-group {
     grid-row: 4 / 5;
@@ -78,6 +62,9 @@
     margin-left: 20px;
     margin-right: 20px;
     transform: scale(1, 0); /* 1 start with no height */
+    /* closing transition after collapsed toggled-off */
+    transform-origin: top;
+    transition: transform 300ms ease-in-out 100ms;
 }
 
 .test-submit input {
@@ -99,6 +86,23 @@
     background-color: var(--background);
 }
 
+/* testing activity-submit collapsible */
+
+/* 1. make textinput + button invisible with transform: scale(1,0)  (test-submit) (#)
+   2. restore display when test-label is checked (javascript # )
+        - am using '!important' :(
+   3. hopefully remove !important (#)
+   4. use either JS or CSS for clean transition animation (CSS transform preferred) (#)
+   5. make transformation work both ways ()
+*/
+
+/*class for restoring submit appearance*/
+/* no need to use !important because of the specificity of this selector: */
+.test-submit.collapse {
+    transform: scale(1, 1);
+    transform-origin: top;
+    transition: transform 300ms ease-in-out 100ms;
+}
 /* end test */
 
 /* test for home page daily activities */
