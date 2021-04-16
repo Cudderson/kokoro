@@ -4,6 +4,113 @@
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: auto auto auto;
 }
+/* testing activity-submit collapsible */
+
+/* 1. make textinput + button invisible with transform: scale(1,0)  (test-submit) #
+   2. restore display when test-label is checked (javascript # )
+        - am using '!important' :(
+   3. hopefully remove !important
+   4. use either JS or CSS for clean transition animation (CSS transform preferred)
+*/
+
+/*class for restoring submit appearance*/
+.restore {
+    transform: scale(1, 1) !important;
+    transform-origin: top;
+    transition: transform 300ms ease-in-out 100ms;
+}
+
+/* maybe using an id I won't need !important */
+#r {
+    transform: scale(1, 1);
+    transform-origin: top;
+    transition: transform 300ms ease-in-out 100ms;
+}
+
+/* both of the above methods work:
+    - can toggle classes, but need to use !important (maybe not if classes were structured differently)
+    - applying an id to the element will override the old id, also works, and don't need !important (not sure if good practice)
+*/
+
+.test-group {
+    grid-row: 4 / 5;
+    grid-column: 2 / 7;
+    justify-self: center;
+}
+.test-select {
+    display: flex;
+    justify-content: center;
+    width: 500px;
+    /* the above ^, plus the properties in label, allow
+    a flex-radio-layout with centered text.
+    Removing width will make it responsive without losing any
+    flexibility.
+    */
+    border: solid 4px black;
+    margin: 20px;
+    margin-bottom: 0;
+    border-radius: 5px;
+    overflow: hidden;
+
+}
+/*radio/label stuff*/
+.test-input {
+    position: absolute;
+    visibility: hidden;
+    display: none;
+}
+
+.test-label {
+    flex-grow: 1; /* all items same size */
+    text-align: center;
+    color: green;
+    padding: 5px 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.test-label:hover {
+    background-color: red;
+}
+
+.test-input:checked + .test-label {
+    color:#bfb !important;
+    background: purple;
+}
+
+.test-label + .test-input + .test-label {
+    border-left: solid 5px black;
+}
+
+.test-submit {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    /* grid contains text input + submit button */
+    margin-left: 20px;
+    margin-right: 20px;
+    transform: scale(1, 0); /* 1 start with no height */
+}
+
+.test-submit input {
+    grid-column: 1 / 2;
+    height: 3em;
+    border: 4px solid black;
+    border-radius: 5px;
+    border-top: 0;
+    background-color: var(--background);
+}
+
+.test-submit button {
+    grid-column: 2 / 3;
+
+    color: black;
+    border: 4px solid black;
+    border-radius: 5px;
+    border-top: 0;
+    background-color: var(--background);
+}
+
+/* end test */
 
 /* test for home page daily activities */
 h2, h3 {

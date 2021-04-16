@@ -56,6 +56,18 @@
             <text x="209" y="265">Soul</text>
         </svg>
     </div>
+    <div class="test-group">
+        <div class="test-select">
+            <input class="test-input" type="radio" name="activity" value="soul" required="" id="id_activity_t">
+            <label class="test-label" onclick="func()" for="id_activity_t">Testing</label>
+            <input class="test-input" type="radio" name="activity" value="soul" required="" id="id_activity_t2">
+            <label class="test-label" for="id_activity_t2">Testing</label>
+        </div>
+        <div class="test-submit" id="q">
+            <input type="text" name="description" maxlength="100" required="" id="id-test" placeholder="Describe your activity...">
+            <button type="submit" name="submit">Add Activity</button>
+        </div>
+    </div>
 </div>
 
 <!--apply new css class to triangles referencing fulfilled activities-->
@@ -78,5 +90,19 @@
             console.log("hmmm..")
         }
     }
+
+    // test
+    var test_label = document.getElementsByClassName("test-label")[0];
+    var test_sub = document.getElementsByClassName("test-submit")[0];
+    var test_inp = document.getElementsByClassName("test-input")[0];
+    console.log(test_label);
+    console.log(test_sub);
+    console.log(test_inp);
+
+    function func() {
+        test_sub.classList.toggle("restore");
+        test_sub.id = "r";
+    }
+
 </script>
 {% endblock content %}
