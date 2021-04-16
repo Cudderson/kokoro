@@ -14,23 +14,12 @@
 */
 
 /*class for restoring submit appearance*/
-.restore {
-    transform: scale(1, 1) !important;
-    transform-origin: top;
-    transition: transform 300ms ease-in-out 100ms;
-}
-
-/* maybe using an id I won't need !important */
-#r {
+/* no need to use !important because of the specificity of this selector: */
+.test-submit.restore {
     transform: scale(1, 1);
     transform-origin: top;
     transition: transform 300ms ease-in-out 100ms;
 }
-
-/* both of the above methods work:
-    - can toggle classes, but need to use !important (maybe not if classes were structured differently)
-    - applying an id to the element will override the old id, also works, and don't need !important (not sure if good practice)
-*/
 
 .test-group {
     grid-row: 4 / 5;
