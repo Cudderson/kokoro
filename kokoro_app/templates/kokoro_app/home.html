@@ -9,7 +9,7 @@
             {% csrf_token %}
             <div class="activity-select"> <!--flexbox-->
                 <input class="activity-radio" type="radio" name="activity" value="mind" required="" id="id_activity_1">
-                <label class="activity-label" onclick="collapse()" for="id_activity_1">{{ form.activity.1 }}</label>
+                <label value="0" class="activity-label" onclick="collapse()" for="id_activity_1">{{ form.activity.1 }}</label>
                 <input class="activity-radio" type="radio" name="activity" value="body" required="" id="id_activity_2">
                 <label class="activity-label" onclick="collapse()" for="id_activity_2">{{ form.activity.2 }}</label>
                 <input class="activity-radio" type="radio" name="activity" value="soul" required="" id="id_activity_3">
@@ -62,6 +62,8 @@
 <!--*** ACTIVITIES WITH QUOTES ("") BREAK THE JS ***-->
 <!--also, tell user to select an option (MBS) if none was selected-->
 <script>
+    // svg scripts
+
     let tri = document.getElementsByClassName('tri');
 
     var mind = "{{ all_daily.daily_mind.0|safe }}";
@@ -75,31 +77,42 @@
         if (activities[i])
         {
             tri[i].classList.add("completed_act");
-            console.log("hmmm..")
         }
     }
+
+    // activity-form scripts/logic
 
     function collapse() {
         activitySubmit.classList.toggle("collapse");
     }
 
-    // change label color depending if activitySubmit has 'collapse' applied or not
-    function revertColor() {
-        if (activitySubmit.classList.contains("collapse")) {
-            // change to selection color
-            actLabel.style.background = "blue";
-        } else {
-            // label should return to original color
-            actLabel.style.background = "white";
-        }
-    }
-
-    var actLabel = document.getElementsByClassName("activity-label")[0];
+    let activityLabel = document.getElementsByClassName("activity-label");
     var actRadio = document.getElementsByClassName("activity-radio")[0];
     var activitySubmit = document.getElementsByClassName('activity-submit')[0];
 
-    // listen for click, then call revert color
-    actLabel.addEventListener('click', revertColor, false);
+    function revertColor() {
+        for (let i = 0; i < 3; i++) {
+            activityLabel[i].style.background = "white";
+        }
+    }
 
+    for (let i = 0; i < 3; i++) {
+
+        activityLabel[i].addEventListener("click", function () {
+
+            let labelSelected = false;
+
+            for (let j = 0; j < 3; j++) {
+                if (activityLabel[j].style.background == "blue") {
+                    labelSelected = true;
+                    revertColor();
+                    break;
+                }
+            }
+            if (labelSelected != true) {
+                activityLabel[i].style.background = "blue";
+            }
+        }, false);
+    }
 </script>
 {% endblock content %}
