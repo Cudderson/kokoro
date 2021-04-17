@@ -89,6 +89,8 @@
     let activityLabel = document.getElementsByClassName("activity-label");
     var actRadio = document.getElementsByClassName("activity-radio")[0];
     var activitySubmit = document.getElementsByClassName('activity-submit')[0];
+    var activityInput = document.getElementById("id_description");
+    let activityTypes = ["Mind", "Body", "Soul"];
 
     function revertColor() {
         for (let i = 0; i < 3; i++) {
@@ -111,6 +113,8 @@
             }
             if (labelSelected != true) {
                 activityLabel[i].style.background = "blue";
+                console.log(activityInput);
+                activityInput.placeholder = `Describe Your ${activityTypes[i]} Activity..`;
             }
         }, false);
     }
