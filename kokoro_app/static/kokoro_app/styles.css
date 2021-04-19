@@ -11,6 +11,10 @@ h2, h3 {
     text-align: center;
 }
 
+html {
+    font-family: 'Open Sans', sans-serif;
+}
+
 /* place new test form within grid */
 .activity-form {
     width: 100%;
@@ -47,7 +51,7 @@ h2, h3 {
     color: black;
     background: #eee;
     /*padding: 5px 30px;*/
-    padding: 8px 0px 8px 0px;
+    padding: 9px 0px 9px 0px;
     font-weight: bold;
     font-size: 1vw; /* label text responsive */
     cursor: pointer;
@@ -82,15 +86,15 @@ h2, h3 {
     transform: scale(1, 0);
     transform-origin: top;
     transition: transform 300ms ease-in-out 100ms;
+    border: none;
+    border-radius: 4px;
 }
 
 .activity-submit input {
     grid-column: 1 / 2;
     height: 3em;
     /*border: 4px solid black;*/
-    border: none;
-    border-radius: 5px;
-    border-top: 0;
+    border: 0;
     /*background-color: var(--background);*/
     background-color: #eee;
     padding: 0;
@@ -107,6 +111,10 @@ h2, h3 {
     border-top: 0;
     background-color: #eee;
     font-size: 1vw;
+}
+
+.activity-submit button:hover {
+    background-color: gray;
 }
 
 .activity-submit.collapse {
