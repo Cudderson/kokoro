@@ -7,8 +7,8 @@
 
 /* test for home page daily activities */
 h2, h3 {
-    font-size: 1.75vw;
-    text-align: center;
+    font-size: 1.5vw;
+    text-align: left;
 }
 
 html {
@@ -34,7 +34,6 @@ html {
     /*border: solid 4px black;*/
     margin: 20px;
     margin-bottom: 0;
-    border-radius: 5px;
     overflow: hidden;
 
 }
@@ -57,6 +56,14 @@ html {
     cursor: pointer;
 }
 
+.mind-label {
+    border-radius: 4px 0px 0px 0px;
+}
+
+.soul-label {
+    border-radius: 0px 4px 0px 0px;
+}
+
 .activity-label:hover {
     background-color: gray !important; /* this makes hover work even after selection */
 }
@@ -68,7 +75,7 @@ html {
 */
 
 .activity-label + .activity-radio + .activity-label {
-    border-left: solid 1px black;
+    border-left: solid 1px gray;
 }
 
 .activity-label option {
@@ -78,7 +85,7 @@ html {
 
 .activity-submit {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     /* grid contains text input + submit button */
     margin-left: 20px;
     margin-right: 20px;
@@ -87,34 +94,38 @@ html {
     transform-origin: top;
     transition: transform 300ms ease-in-out 100ms;
     border: none;
-    border-radius: 4px;
+    border-top: 4px solid gray;
+    /*border-radius: 4px;*/
 }
 
 .activity-submit input {
-    grid-column: 1 / 2;
+    grid-column: 1 / 3;
     height: 3em;
     /*border: 4px solid black;*/
     border: 0;
+    border-radius: 0px 0px 0px 4px;
     /*background-color: var(--background);*/
     background-color: #eee;
     padding: 0;
-    padding-left: 10px; /* gives placeholder text padding */
+    padding-left: 15px; /* gives placeholder text padding */
     font-size: 1vw; /* keeps element responsive */
+    outline: none;
 }
 
 .activity-submit button {
-    grid-column: 2 / 3;
+    grid-column: 3 / 4;
     color: black;
     /*border: 4px solid black;*/
     border: none;
-    border-radius: 5px;
+    border-radius: 0px 0px 4px 0px;
     border-top: 0;
     background-color: #eee;
     font-size: 1vw;
+    padding: 0;
 }
 
 .activity-submit button:hover {
-    background-color: gray;
+    background-color: lightgreen;
 }
 
 .activity-submit.collapse {
@@ -126,12 +137,16 @@ html {
 /* ^ end activity form ^ */
 
 .grid-balance {
-    grid-column: 1 / 2;
+    grid-column: 1 / 13;
     grid-row: 3 / 4;
+    text-align: center;
+    font-size: 1.25vw;
+    padding-top: 4em;
+    padding-bottom: 4em;
 }
 
 .grid-item-daily {
-    grid-column: 2 / 7;
+    grid-column: 3 / 6;
     grid-row: 1 / 2;
     justify-self: center;
     margin-top: 2em;
