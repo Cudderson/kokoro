@@ -9,7 +9,7 @@
             {% csrf_token %}
             <div class="activity-select"> <!--flexbox-->
                 <input class="activity-radio" type="radio" name="activity" value="mind" required="" id="id_activity_1">
-                <label value="0" class="activity-label" onclick="collapse()" for="id_activity_1">{{ form.activity.1 }}</label>
+                <label class="activity-label" onclick="collapse()" for="id_activity_1">{{ form.activity.1 }}</label>
                 <input class="activity-radio" type="radio" name="activity" value="body" required="" id="id_activity_2">
                 <label class="activity-label" onclick="collapse()" for="id_activity_2">{{ form.activity.2 }}</label>
                 <input class="activity-radio" type="radio" name="activity" value="soul" required="" id="id_activity_3">
@@ -40,16 +40,16 @@
 
     <div class="svg-container">
         <svg id="svg" viewBox="0 0 300 301">
-            <rect x="0" y="0" height="301" width="300" stroke="black" stroke-width="2" fill="none"></rect>
+            <rect x="0" y="0" height="301" width="300" stroke="black" stroke-width="0" fill="none"></rect>
 
-            <polygon fill="black" points="0,300 300,300 150,40.1925"></polygon>
+            <polygon fill="gray" stroke="none" points="0,300 300,300 150,40.1925"></polygon>
 
             <!--make smaller triangles overlay-->
-            <polygon class="tri tri-1" fill="white" stroke="black" stroke-width="1" points="75,170.01 225,170.01 150,40.1925"></polygon>
+            <polygon class="tri tri-1" fill="white" stroke="black" stroke-width=".2" points="75,170.01 225,170.01 150,40.1925"></polygon>
 
-            <polygon class="tri tri-2" fill="white" stroke="black" stroke-width="1" points="0,300 150,300 75,170.01"></polygon>
+            <polygon class="tri tri-2" fill="white" stroke="black" stroke-width=".2" points="0,300 150,300 75,170.01"></polygon>
 
-            <polygon class="tri tri-3" fill="white" stroke="black" stroke-width="1" points="150,300 300,300 225,170.01"></polygon>
+            <polygon class="tri tri-3" fill="white" stroke="black" stroke-width=".2" points="150,300 300,300 225,170.01"></polygon>
 
             <text x="130" y="135">Mind</text>
             <text x="54" y="265">Body</text>
@@ -94,7 +94,7 @@
 
     function revertColor() {
         for (let i = 0; i < 3; i++) {
-            activityLabel[i].style.background = "white";
+            activityLabel[i].style.background = "#eee";
         }
     }
 
