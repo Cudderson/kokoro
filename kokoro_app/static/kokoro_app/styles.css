@@ -66,6 +66,7 @@ html {
 
 .activity-label:hover {
     background-color: gray !important; /* this makes hover work even after selection */
+    transition: .5s;
 }
 /* might not need (javascript handles it)
 .activity-radio:checked + .activity-label {
@@ -92,7 +93,7 @@ html {
     /* closing transition */
     transform: scale(1, 0);
     transform-origin: top;
-    transition: transform 300ms ease-in-out 100ms;
+    transition: transform 500ms ease-in-out 10ms;
     border: none;
     border-top: 4px solid gray;
     /*border-radius: 4px;*/
@@ -126,13 +127,14 @@ html {
 
 .activity-submit button:hover {
     background-color: lightgreen;
+    transition: .7s;
 }
 
 .activity-submit.collapse {
     /* transition for un-collapsing activity-submit */
     transform: scale(1, 1);
     transform-origin: top;
-    transition: transform 300ms ease-in-out 100ms;
+    transition: transform 500ms ease-in-out 10ms;
 }
 /* ^ end activity form ^ */
 
@@ -181,6 +183,9 @@ html {
 }
 .tri-3:hover {
     fill: gray;
+}
+.tri {
+    transition: .7s;
 }
 .completed_act {
     fill: gray;
