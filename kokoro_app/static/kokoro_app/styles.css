@@ -9,7 +9,14 @@
 h2, h3 {
     font-size: 1.5vw;
     text-align: left;
+    opacity: 0;
+    transition: opacity .7s ease-in-out;
 }
+
+h2.text-fade {
+    opacity: 1;
+}
+/*end test*/
 
 html {
     font-family: 'Open Sans', sans-serif;
@@ -68,12 +75,6 @@ html {
     background-color: gray !important; /* this makes hover work even after selection */
     transition: .5s;
 }
-/* might not need (javascript handles it)
-.activity-radio:checked + .activity-label {
-    color:#bfb;
-    background: blue;
-}
-*/
 
 .activity-label + .activity-radio + .activity-label {
     border-left: solid 1px gray;
