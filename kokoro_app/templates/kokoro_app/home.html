@@ -117,5 +117,13 @@
             }
         }, false);
     }
+
+    var h2 = document.getElementsByTagName("H2");
+
+    for (let i = 0; i < 3; i++) {
+        if (h2[i].innerHTML) {
+            h2[i].classList.toggle("text-fade");
+        }
+    }
 </script>
 {% endblock content %}
