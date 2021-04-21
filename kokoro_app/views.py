@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Activity, PerfectBalance
 from .forms import ActivityForm, PerfectBalanceForm
-from . import balance, perfect
+from . import balance, perfect, profile_utils
 
 
 def index(request):
@@ -103,13 +103,15 @@ def profile(request):
         'daily_soul': daily_soul
     }
 
-    # *** add logic so that form can only be submitted if all 3 (MBS) specified *** (django did this for me)
+    # we need to get the users biography
+    biography = profile_utils.get_biography(request)
 
     context = {
         'user': user,
         'perfect_form': perfect_form,
         'perfect_balance': perfect_balance,
         'all_daily': all_daily,
+        'biography': biography
     }
 
     return render(request, 'kokoro_app/profile.html', context)
