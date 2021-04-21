@@ -40,11 +40,18 @@
         <span>My journey through the Amazon</span>
     </div>
 </div>
-<div class="profile-bio">{{ biography.0 }}</div>
-<div>
+
+<div class="profile-bio">
+    {{ biography.0 }}
+    <!--use javascript to determine if button clicked. If clicked, display form-->
+    <!--make form invisible, but apply class to make it appear when clicked-->
+</div>
+<button name="change-bio" value="Update Biography">Update Biography</button>
+
+<div class="bio-form-container">
     <form action="{% url 'kokoro_app:profile' %}" method="post">
         {% csrf_token %}
-        {{ bio_form.as_p }}
+        <div>{{ bio_form.biography }}</div>
         <input type="submit" name="bio_form" value="Submit Biography">
     </form>
 </div>

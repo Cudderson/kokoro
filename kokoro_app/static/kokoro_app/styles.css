@@ -298,6 +298,41 @@ svg text {
     margin: 5vw;
     border: 1px solid black;
 }
+
+.bio-form-container {
+    display: none;
+    /* ^^^ turn this setting off when button clicked ^^^*/
+    /* and toggle below: */
+    /*display: flex;*/
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+}
+
+.bio-form-container form {
+    width: 50%;
+}
+.bio-form-container input[type=text] {
+    width: 100%;
+    padding: 15px 0px;
+    margin: 0;
+    line-height: 1.5vw;
+    font-size: 1.25vw;
+}
+.bio-form-container input[type=submit] {
+    width: 100%;
+    padding: 10px 0px;
+    background: lightgreen;
+}
 /* profile page styles end */
 
 /* new navbar styles */
