@@ -237,7 +237,6 @@ svg text {
 
 /* profile photo will replace this */
 .profile-placeholder {
-    display: block;
     grid-column: 1 / 3;
     width: 100%;
     height: 0;
@@ -267,6 +266,8 @@ svg text {
     /* test-block grid */
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    font-size: 1.25vw; /* override on individual items */
     /* profile grid */
     grid-column: 3 / 13;
     grid-row: 1 / 2;
@@ -275,15 +276,32 @@ svg text {
     border-radius: 4px;
 }
 .perfect-title {
-    text-align: center;
+    grid-row: 1 / 2;
     text-decoration: underline;
-    padding-bottom: .25em;
+    font-size: 1.5vw;
+    padding: .25em;
+
+}
+
+.perfect-activities {
+    grid-row: 2 / 3;
 }
 
 .perfect-activity {
     margin: 0;
     padding-left: .5em;
-    grid-column: 1 / 2;
+}
+
+.test-bio {
+    margin: 0;
+    grid-column: 2 / 5;
+}
+
+.bio-title {
+    grid-column: 2 / 5;
+    text-align: center;
+    text-decoration: underline;
+    font-size: 1.5vw;
 }
 
 .extra-block {
@@ -293,6 +311,16 @@ svg text {
     background: white;
     border: 1px solid black;
     border-radius: 4px;
+}
+
+.something-title {
+    text-align: center;
+    text-decoration: underline;
+    font-size: 1.5vw;
+}
+
+.something-content {
+    padding: .5em;
 }
 /* profile page styles end */
 

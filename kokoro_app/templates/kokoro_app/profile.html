@@ -8,18 +8,25 @@
         <h4 class="profile-username">Parker Johnny Smith</h4>
     </div>
     <div class="test-block">
-        <div class="perfect-balance">
-            <div class="perfect-title">Perfect Balance</div>
+        <div class="perfect-title"><b>Perfect Balance</b></div>
             {% if perfect_balance == 'False' %}
                 <h4>User doesn't have a perfect balance yet..</h4>
             {% else %}
+                <div class="perfect-activities">
                 {% for perfect_activity in perfect_balance %}
                     <div class="perfect-activity">{{ perfect_activity }}</div>
                 {% endfor %}
+                </div>
             {% endif %}
-        </div>
+        <div class="bio-title"><b>About Me</b></div>
+        <div class="test-bio">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam dolorum et illo minus optio praesentium, saepe similique sint tempora vel voluptates voluptatum! Illo, molestias.</div>
     </div>
-    <div class="extra-block"></div>
+    <div class="extra-block">
+        <div class="something-title"><b>Something</b></div>
+            <div class="something-content">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur at commodi corporis culpa dicta dolorem dolorum eaque earum eum ex facere id in, inventore labore magnam, minus modi molestiae nihil odio omnis quis quos, ratione rerum sequi sit suscipit voluptatem.
+            </div>
+    </div>
 </div>
 <!--
 <h5 class="acts">This is <span class="profile">{{ user }}'s</span> profile.</h5>
