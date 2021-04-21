@@ -41,6 +41,13 @@
     </div>
 </div>
 <div class="profile-bio">{{ biography.0 }}</div>
+<div>
+    <form action="{% url 'kokoro_app:profile' %}" method="post">
+        {% csrf_token %}
+        {{ bio_form.as_p }}
+        <input type="submit" name="bio_form" value="Submit Biography">
+    </form>
+</div>
     <!--
     <div class="test-block">
         <div class="perfect-title"><b>Perfect Balance</b></div>

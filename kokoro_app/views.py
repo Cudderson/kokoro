@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
-from .models import Activity, PerfectBalance
-from .forms import ActivityForm, PerfectBalanceForm
+from .models import Activity, PerfectBalance, ProfileBio
+from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm
 from . import balance, perfect, profile_utils
 
 
@@ -64,6 +64,10 @@ def profile(request):
 
     perfect_form = PerfectBalanceForm()
 
+    # we now need a form that the user can update their biography with (move to profile_utils after)
+    # we can use the submit button's name in the POST request to determine which form the user is submitting
+    bio_form = ProfileBioForm()
+
     # * when a user submits a new form, the old objects should first be deleted (only 1 perfect balance per user)
     if request.method == "POST":
         if 'perfect_form' in request.POST:
@@ -88,6 +92,17 @@ def profile(request):
             acts_to_delete = Activity.objects.filter(id__in=result)
             acts_to_delete.delete()
 
+        elif 'bio_form' in request.POST:
+            # user is submitting a biography
+            bio_form = ProfileBioForm(data=request.POST)
+            if bio_form.is_valid():
+                # delete old biography
+                ProfileBio.objects.filter(owner__exact=request.user).delete()
+                new_bio_form = bio_form.save(commit=False)
+                new_bio_form.owner = request.user
+                new_bio_form.save()
+                bio_form = ProfileBioForm()
+
     # Returns a list
     perfect_balance = perfect.get_perfect_balance_data(request)
 
@@ -111,6 +126,7 @@ def profile(request):
         'perfect_form': perfect_form,
         'perfect_balance': perfect_balance,
         'all_daily': all_daily,
+        'bio_form': bio_form,
         'biography': biography
     }
 
