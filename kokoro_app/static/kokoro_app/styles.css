@@ -290,6 +290,14 @@ svg text {
     justify-content: center;
     font-size: 1.25vw;
 }
+
+.profile-bio {
+    display: flex;
+    width: 20vw;
+    height: 20vw;
+    margin: 5vw;
+    border: 1px solid black;
+}
 /* profile page styles end */
 
 /* new navbar styles */

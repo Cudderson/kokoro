@@ -54,3 +54,23 @@ class PerfectBalance(models.Model):
         perfect_balance = f'{self.perfect_mind}, {self.perfect_body}, {self.perfect_soul}'
 
         return perfect_balance
+
+
+class ProfileBio(models.Model):
+    """
+    A user's biography section on their profile
+    """
+
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    biography = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name_plural = 'biographies'
+
+    def __str__(self):
+        """
+        :return: string representation of a user's biography
+        """
+
+        return self.biography
