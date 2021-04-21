@@ -88,6 +88,7 @@ def profile(request):
             acts_to_delete = Activity.objects.filter(id__in=result)
             acts_to_delete.delete()
 
+    # Returns a list
     perfect_balance = perfect.get_perfect_balance_data(request)
 
     # Returns all activities submitted today for user

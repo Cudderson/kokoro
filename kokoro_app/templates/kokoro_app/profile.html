@@ -7,7 +7,18 @@
     <div class="test-contact">
         <h4 class="profile-username">Parker Johnny Smith</h4>
     </div>
-    <div class="test-block"></div>
+    <div class="test-block">
+        <div class="perfect-balance">
+            <div class="perfect-title">Perfect Balance</div>
+            {% if perfect_balance == 'False' %}
+                <h4>User doesn't have a perfect balance yet..</h4>
+            {% else %}
+                {% for perfect_activity in perfect_balance %}
+                    <div class="perfect-activity">{{ perfect_activity }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
     <div class="extra-block"></div>
 </div>
 <!--
