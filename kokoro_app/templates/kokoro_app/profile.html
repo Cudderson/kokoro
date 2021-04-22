@@ -9,14 +9,22 @@
         <span>@cudderson</span>
         <span>Balance Streak: 7</span>
         <span>----------</span>
-        <!--form-->
-        <span>{{ biography.0 }}<div style="width: .75em; height: .75em; display: inline-block; vertical-align: top;"><img src='\static\kokoro_app\setting_svg_2.svg' alt="fuck" height="auto" width="100%" class="bio-form-toggle" onclick="displayBioForm()" style="cursor: pointer;"></div></span>
-        <span>----------</span>
         <!--form (done)-->
-        <span>Perfect Balance</span>
-        <span>M- Reading Sci-Fi Books</span>
-        <span>B- Summer Bike Rides</span>
-        <span>S- Shri Yantra Meditation</span>
+        <span>{{ biography.0 }}
+            <span style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+                <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" height="auto" width="100%" onclick="displayBioForm()" style="cursor: pointer;">
+            </span>
+        </span>
+        <span>----------</span>
+        <!--form (almost done)-->
+        <span>Perfect Balance
+            <span style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+                <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" height="auto" width="100%" onclick="displayPerfectForm()" style="cursor: pointer;">
+            </span>
+        </span>
+        {% for perfect_activity in perfect_balance %}
+            <span class="perfect-activity">{{ perfect_activity }}</span>
+        {% endfor %}
         <span>----------</span>
         <span style="text-decoration: underline">Contact</span>
         <!--form/s-->
@@ -47,6 +55,17 @@
         {% csrf_token %}
         <div>{{ bio_form.biography }}</div>
         <input type="submit" name="bio_form" value="Submit Biography">
+    </form>
+</div>
+<div class="perfect-form-container">
+    <div class="close-form" onclick="closePerfectForm()"><div>&times;</div></div>
+
+    <form action="{% url 'kokoro_app:profile' %}" method="post">
+        {% csrf_token %}
+        <div>{{ perfect_form.perfect_mind }}</div>
+        <div>{{ perfect_form.perfect_body }}</div>
+        <div>{{ perfect_form.perfect_soul }}</div>
+        <input type="submit" name="perfect_form" value="Submit Perfect Balance">
     </form>
 </div>
     <!--
@@ -132,12 +151,27 @@
 -->
 <script>
     // toggle biography form on button click
-    biographyForm = document.getElementsByClassName("bio-form-container")[0];
+    var biographyForm = document.getElementsByClassName("bio-form-container")[0];
     function displayBioForm () {
-        biographyForm.style.display = "flex";
+        //biographyForm.style.display = "flex";
+        //try applying a class to make more reusable
+        biographyForm.classList.toggle("show-form");
+        console.log("show form added to bio");
     }
     function closeBioForm () {
-        biographyForm.style.display = "none";
+        biographyForm.classList.toggle("show-form");
+        console.log("show form removed from bio");
+    }
+    // toggle perfect balance form on button click
+    var perfectForm = document.getElementsByClassName("perfect-form-container")[0];
+    function displayPerfectForm () {
+        //perfectForm.style.display = "flex";
+        perfectForm.classList.toggle("show-form");
+        console.log("show form added to perfect");
+    }
+    function closePerfectForm () {
+        perfectForm.classList.toggle("show-form");
+        console.log("show form removed from perfect");
     }
 </script>
 {% endblock content %}

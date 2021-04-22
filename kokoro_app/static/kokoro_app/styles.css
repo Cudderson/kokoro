@@ -342,6 +342,42 @@ svg text {
     font-size: 4vw;
     font-weight: bold;
 }
+.perfect-form-container {
+    display: none;
+    /* javascript changes display value on button click */
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    border: 1px solid white;
+    z-index: 999;
+}
+
+.perfect-form-container form {
+    margin-top: 30vh;
+    width: 50%;
+}
+.perfect-form-container input[type=text] {
+    width: 100%;
+    padding: 15px 0px;
+    margin: 0;
+    line-height: 1.5vw;
+    font-size: 1.25vw;
+}
+.perfect-form-container input[type=submit] {
+    width: 100%;
+    padding: 10px 0px;
+    background: lightgreen;
+}
+
+.show-form {
+    display: flex;
+}
 /* profile page styles end */
 
 /* new navbar styles */
