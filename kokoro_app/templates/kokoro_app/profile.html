@@ -48,7 +48,7 @@
         <span>My journey through the Amazon</span>
     </div>
 </div>
-<div class="bio-form-container">
+<div class="bio-form-container form-container">
     <div class="close-form" onclick="closeBioForm()"><div>&times;</div></div>
 
     <form action="{% url 'kokoro_app:profile' %}" method="post">
@@ -57,7 +57,7 @@
         <input type="submit" name="bio_form" value="Submit Biography">
     </form>
 </div>
-<div class="perfect-form-container">
+<div class="perfect-form-container form-container">
     <div class="close-form" onclick="closePerfectForm()"><div>&times;</div></div>
 
     <form action="{% url 'kokoro_app:profile' %}" method="post">
@@ -152,9 +152,8 @@
 <script>
     // toggle biography form on button click
     var biographyForm = document.getElementsByClassName("bio-form-container")[0];
+
     function displayBioForm () {
-        //biographyForm.style.display = "flex";
-        //try applying a class to make more reusable
         biographyForm.classList.toggle("show-form");
         console.log("show form added to bio");
     }
@@ -162,10 +161,11 @@
         biographyForm.classList.toggle("show-form");
         console.log("show form removed from bio");
     }
+
     // toggle perfect balance form on button click
     var perfectForm = document.getElementsByClassName("perfect-form-container")[0];
+
     function displayPerfectForm () {
-        //perfectForm.style.display = "flex";
         perfectForm.classList.toggle("show-form");
         console.log("show form added to perfect");
     }
