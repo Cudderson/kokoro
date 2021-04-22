@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Activity, PerfectBalance, ProfileBio
+from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName
 
 
 class ActivityForm(forms.ModelForm):
@@ -27,3 +27,9 @@ class ProfileBioForm(forms.ModelForm):
     class Meta:
         model = ProfileBio
         fields = ['biography']
+
+
+class ProfileDisplayNameForm(forms.ModelForm):
+    class Meta:
+        model = ProfileDisplayName
+        fields = ['display_name']
