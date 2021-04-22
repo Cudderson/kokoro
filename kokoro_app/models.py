@@ -74,3 +74,20 @@ class ProfileBio(models.Model):
         """
 
         return self.biography
+
+
+class ProfileDisplayName(models.Model):
+    """
+    A user's display name on their profile
+    """
+
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    display_name = models.CharField(max_length=40)
+
+    def __str__(self):
+        """
+        :return: string representation of a user's display name
+        """
+
+        return self.display_name
