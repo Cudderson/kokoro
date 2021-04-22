@@ -10,7 +10,7 @@
         <span>Balance Streak: 7</span>
         <span>----------</span>
         <!--form-->
-        <span>Founder of kokoro, friend, lover of guitar. Not much else to say, I enjoy long walks on the beach and even spending time with my cats.</span>
+        <span>{{ biography.0 }}<div style="width: .75em; height: .75em; display: inline-block; vertical-align: top;"><img src='\static\kokoro_app\setting_svg_2.svg' alt="fuck" height="auto" width="100%" class="bio-form-toggle" onclick="displayBioForm()" style="cursor: pointer;"></div></span>
         <span>----------</span>
         <!--form (done)-->
         <span>Perfect Balance</span>
@@ -40,15 +40,9 @@
         <span>My journey through the Amazon</span>
     </div>
 </div>
-
-<div class="profile-bio">
-    {{ biography.0 }}
-    <!--use javascript to determine if button clicked. If clicked, display form-->
-    <!--make form invisible, but apply class to make it appear when clicked-->
-</div>
-<button name="change-bio" value="Update Biography">Update Biography</button>
-
 <div class="bio-form-container">
+    <div class="close-form" onclick="closeBioForm()"><div>&times;</div></div>
+
     <form action="{% url 'kokoro_app:profile' %}" method="post">
         {% csrf_token %}
         <div>{{ bio_form.biography }}</div>
@@ -136,4 +130,14 @@
     </form>
 </div>
 -->
+<script>
+    // toggle biography form on button click
+    biographyForm = document.getElementsByClassName("bio-form-container")[0];
+    function displayBioForm () {
+        biographyForm.style.display = "flex";
+    }
+    function closeBioForm () {
+        biographyForm.style.display = "none";
+    }
+</script>
 {% endblock content %}

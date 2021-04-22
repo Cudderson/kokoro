@@ -291,34 +291,24 @@ svg text {
     font-size: 1.25vw;
 }
 
-.profile-bio {
-    display: flex;
-    width: 20vw;
-    height: 20vw;
-    margin: 5vw;
-    border: 1px solid black;
-}
-
 .bio-form-container {
     display: none;
-    /* ^^^ turn this setting off when button clicked ^^^*/
-    /* and toggle below: */
-    /*display: flex;*/
-    flex-direction: row;
+    /* javascript changes display value on button click */
+    flex-direction: column;
+    align-items: center;
     height: 100%;
     width: 100%;
     position: fixed;
-    z-index: 999;
     top: 0;
     left: 0;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0, 0.9);
-    justify-content: center;
-    align-items: center;
     border: 1px solid white;
+    z-index: 999;
 }
 
 .bio-form-container form {
+    margin-top: 30vh;
     width: 50%;
 }
 .bio-form-container input[type=text] {
@@ -332,6 +322,25 @@ svg text {
     width: 100%;
     padding: 10px 0px;
     background: lightgreen;
+}
+
+.close-form {
+    align-self: flex-end;
+    width: 3vw;
+    height: 3vw;
+    background: white;
+    border-radius: 4px;
+    margin: .5em .5em .5em .5em;
+    cursor: pointer;
+}
+.close-form div {
+    /* for the 'x' close symbol */
+    width: 3vw;
+    height: 3vw;
+    line-height: 3vw; /* match div height to vertically center */
+    text-align: center;
+    font-size: 4vw;
+    font-weight: bold;
 }
 /* profile page styles end */
 
