@@ -62,9 +62,9 @@
 
     <form action="{% url 'kokoro_app:profile' %}" method="post">
         {% csrf_token %}
-        <div>{{ perfect_form.perfect_mind }}</div>
-        <div>{{ perfect_form.perfect_body }}</div>
-        <div>{{ perfect_form.perfect_soul }}</div>
+        <label>Perfect Mind Activity<div>{{ perfect_form.perfect_mind }}</div></label>
+        <label>Perfect Body Activity<div>{{ perfect_form.perfect_body }}</div></label>
+        <label>Perfect Soul Activity<div>{{ perfect_form.perfect_soul }}</div></label>
         <input type="submit" name="perfect_form" value="Submit Perfect Balance">
     </form>
 </div>
