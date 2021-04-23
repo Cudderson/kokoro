@@ -91,3 +91,23 @@ class ProfileDisplayName(models.Model):
         """
 
         return self.display_name
+
+
+class ProfileQuote(models.Model):
+    """
+    A user's displayed quote & author on their profile
+    """
+
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    quote = models.CharField(max_length=180)
+
+    quote_author = models.CharField(max_length=40)
+
+    def __str__(self):
+        """
+        :return: string representation of user's quote & author
+        """
+
+        # 3-comma separator for reliable string-splitting (do for perfect too)
+        return f'{self.quote},,, {self.quote_author}'
