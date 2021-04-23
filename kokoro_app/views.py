@@ -98,26 +98,23 @@ def profile(request):
 
         elif 'bio_form' in request.POST:
             # user is submitting a biography
-            bio_form = ProfileBioForm(data=request.POST)
-            if bio_form.is_valid():
+            bio_form_submitted = ProfileBioForm(data=request.POST)
+            if bio_form_submitted.is_valid():
                 # delete old biography
                 ProfileBio.objects.filter(owner__exact=request.user).delete()
                 # save new biography
-                profile_utils.save_new_biography(request, bio_form)
+                profile_utils.save_new_biography(request, bio_form_submitted)
 
-        # Starting with this, split functionality to helper file
         elif 'display_name_form' in request.POST:
-            # user submitting a new display name
             # get submitted form data
-            display_name_form = ProfileDisplayNameForm(data=request.POST)
-            if display_name_form.is_valid():
+            display_name_form_submitted = ProfileDisplayNameForm(data=request.POST)
+            if display_name_form_submitted.is_valid():
                 # delete old display name
                 ProfileDisplayName.objects.filter(owner__exact=request.user).delete()
                 # save new display name with helper function
-                profile_utils.save_new_display_name(request, display_name_form)
+                profile_utils.save_new_display_name(request, display_name_form_submitted)
 
         elif 'quote_form' in request.POST:
-            # user submitting a quote & author
             # get form data
             quote_form_submitted = ProfileQuoteForm(data=request.POST)
             # check validity
@@ -125,11 +122,7 @@ def profile(request):
                 # delete old quote & author
                 ProfileQuote.objects.filter(owner__exact=request.user).delete()
                 # save new quote & author (before committing, add owner)
-                new_quote = quote_form_submitted.save(commit=False)
-                new_quote.owner = request.user
-                new_quote.save()
-                quote_form = ProfileQuoteForm()
-
+                profile_utils.save_new_biography(request, quote_form_submitted)
 
     # Returns a list
     perfect_balance = perfect.get_perfect_balance_data(request)

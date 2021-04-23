@@ -45,3 +45,19 @@ def save_new_biography(request, bio_form):
         new_bio_form.save()
     except Exception:
         raise Http404(f"Something went wrong while saving your biography.")
+
+
+def save_new_quote(request, quote_form):
+    """
+    :param request: http post data
+    :param quote_form: a validated form for changing user's profile quote
+    :return: n/a
+    """
+
+    try:
+        new_quote = quote_form.save(commit=False)
+        new_quote.owner = request.user
+        new_quote.save()
+    except Exception:
+        raise Http404("Something went wrong while saving your quote.")
+
