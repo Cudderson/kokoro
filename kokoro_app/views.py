@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.db.models import F
 
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote
 from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, ProfileQuoteForm
@@ -109,6 +108,7 @@ def profile(request):
                 new_bio_form.save()
                 bio_form = ProfileBioForm()
 
+        # Starting with this, split functionality to helper file
         elif 'display_name_form' in request.POST:
             # user submitting a new display name
             # get submitted form data
@@ -116,11 +116,8 @@ def profile(request):
             if display_name_form.is_valid():
                 # delete old display name
                 ProfileDisplayName.objects.filter(owner__exact=request.user).delete()
-                # save new display name
-                new_display_name = display_name_form.save(commit=False)
-                new_display_name.owner = request.user
-                new_display_name.save()
-                display_name_form = ProfileDisplayNameForm()
+                # save new display name with helper function
+                profile_utils.save_new_display_name(request, display_name_form)
 
         elif 'quote_form' in request.POST:
             # user submitting a quote & author
@@ -156,7 +153,7 @@ def profile(request):
     biography = profile_utils.get_biography(request)
 
     # We'll also get the user's display name
-    display_name = profile_utils.get_display_name(request)
+    display_name = ProfileDisplayName.objects.filter(owner__exact=request.user)
 
     # get user's profile quote (move to util file later)
     quote_data = ProfileQuote.objects.filter(owner__exact=request.user)
