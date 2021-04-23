@@ -20,17 +20,28 @@ def save_new_display_name(request, display_name_form):
     """
     :param request: http post data
     :param display_name_form: a validated form for changing user's display name
-    :return: ...
+    :return: n/a
     """
 
     try:
         new_display_name = display_name_form.save(commit=False)
         new_display_name.owner = request.user
         new_display_name.save()
-    except Exception as e:
-        print(e)
+    except Exception:
         raise Http404("Something went wrong while saving your display name.")
 
-    return True
 
 # repeat the above for saving the other forms
+def save_new_biography(request, bio_form):
+    """
+    :param request: http post data
+    :param bio_form: a validated form for changing user's biography
+    :return: n/a
+    """
+
+    try:
+        new_bio_form = bio_form.save(commit=False)
+        new_bio_form.owner = request.user
+        new_bio_form.save()
+    except Exception:
+        raise Http404(f"Something went wrong while saving your biography.")

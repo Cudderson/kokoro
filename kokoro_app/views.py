@@ -103,10 +103,7 @@ def profile(request):
                 # delete old biography
                 ProfileBio.objects.filter(owner__exact=request.user).delete()
                 # save new biography
-                new_bio_form = bio_form.save(commit=False)
-                new_bio_form.owner = request.user
-                new_bio_form.save()
-                bio_form = ProfileBioForm()
+                profile_utils.save_new_biography(request, bio_form)
 
         # Starting with this, split functionality to helper file
         elif 'display_name_form' in request.POST:
@@ -166,7 +163,6 @@ def profile(request):
         'quote': quote_data_parsed[0],
         'quote_author': quote_data_parsed[1]
     }
-    print(quote_data)
 
     context = {
         'user': user,
