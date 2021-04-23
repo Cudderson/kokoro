@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
 
-from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName
-from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm
+from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote
+from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, ProfileQuoteForm
 from . import balance, perfect, profile_utils
 
 
@@ -71,6 +71,8 @@ def profile(request):
 
     display_name_form = ProfileDisplayNameForm()
 
+    quote_form = ProfileQuoteForm()
+
     # * when a user submits a new form, the old objects should first be deleted (only 1 perfect balance per user)
     if request.method == "POST":
         if 'perfect_form' in request.POST:
@@ -115,10 +117,25 @@ def profile(request):
                 # delete old display name
                 ProfileDisplayName.objects.filter(owner__exact=request.user).delete()
                 # save new display name
-                new_display_name_form = display_name_form.save(commit=False)
-                new_display_name_form.owner = request.user
-                new_display_name_form.save()
+                new_display_name = display_name_form.save(commit=False)
+                new_display_name.owner = request.user
+                new_display_name.save()
                 display_name_form = ProfileDisplayNameForm()
+
+        elif 'quote_form' in request.POST:
+            # user submitting a quote & author
+            # get form data
+            quote_form_submitted = ProfileQuoteForm(data=request.POST)
+            # check validity
+            if quote_form_submitted.is_valid():
+                # delete old quote & author
+                ProfileQuote.objects.filter(owner__exact=request.user).delete()
+                # save new quote & author (before committing, add owner)
+                new_quote = quote_form_submitted.save(commit=False)
+                new_quote.owner = request.user
+                new_quote.save()
+                quote_form = ProfileQuoteForm()
+
 
     # Returns a list
     perfect_balance = perfect.get_perfect_balance_data(request)
@@ -141,6 +158,19 @@ def profile(request):
     # We'll also get the user's display name
     display_name = profile_utils.get_display_name(request)
 
+    # get user's profile quote (move to util file later)
+    quote_data = ProfileQuote.objects.filter(owner__exact=request.user)
+    # convert to string
+    quote_data_string = str(quote_data[0])
+    # parse string to list
+    quote_data_parsed = quote_data_string.split(',,, ')
+    # convert to dict for template readability
+    quote_data = {
+        'quote': quote_data_parsed[0],
+        'quote_author': quote_data_parsed[1]
+    }
+    print(quote_data)
+
     context = {
         'user': user,
         'perfect_form': perfect_form,
@@ -149,7 +179,9 @@ def profile(request):
         'display_name_form': display_name_form,
         'display_name': display_name,
         'bio_form': bio_form,
-        'biography': biography
+        'biography': biography,
+        'quote_data': quote_data,
+        'quote_form': quote_form
     }
 
     return render(request, 'kokoro_app/profile.html', context)
