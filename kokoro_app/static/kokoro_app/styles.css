@@ -256,12 +256,14 @@ svg text {
 }
 
 .profile-contact span {
-    font-size: 1vw;
+    /*font-size: 1vw;*/
+    /* set font-sizes in this div manually */
 }
 
-.profile-username {
+.profile-display-name {
     margin: 0;
     font-size: 1.5vw;
+    font-weight: bold;
 }
 
 .profile-header {
