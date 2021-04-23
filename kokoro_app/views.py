@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
 
-from .models import Activity, PerfectBalance, ProfileBio
-from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm
+from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName
+from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm
 from . import balance, perfect, profile_utils
 
 
@@ -68,6 +69,8 @@ def profile(request):
     # we can use the submit button's name in the POST request to determine which form the user is submitting
     bio_form = ProfileBioForm()
 
+    display_name_form = ProfileDisplayNameForm()
+
     # * when a user submits a new form, the old objects should first be deleted (only 1 perfect balance per user)
     if request.method == "POST":
         if 'perfect_form' in request.POST:
@@ -79,8 +82,8 @@ def profile(request):
                 new_form.owner = request.user
                 new_form.save()
                 perfect_form = PerfectBalanceForm()
-        elif 'manage_form' in request.POST:
 
+        elif 'manage_form' in request.POST:
             # could move some logic to helper file
             result = request.POST
             # checkbox attrs are key=id_of_entry, value=on/off
@@ -98,10 +101,24 @@ def profile(request):
             if bio_form.is_valid():
                 # delete old biography
                 ProfileBio.objects.filter(owner__exact=request.user).delete()
+                # save new biography
                 new_bio_form = bio_form.save(commit=False)
                 new_bio_form.owner = request.user
                 new_bio_form.save()
                 bio_form = ProfileBioForm()
+
+        elif 'display_name_form' in request.POST:
+            # user submitting a new display name
+            # get submitted form data
+            display_name_form = ProfileDisplayNameForm(data=request.POST)
+            if display_name_form.is_valid():
+                # delete old display name
+                ProfileDisplayName.objects.filter(owner__exact=request.user).delete()
+                # save new display name
+                new_display_name_form = display_name_form.save(commit=False)
+                new_display_name_form.owner = request.user
+                new_display_name_form.save()
+                display_name_form = ProfileDisplayNameForm()
 
     # Returns a list
     perfect_balance = perfect.get_perfect_balance_data(request)
@@ -121,11 +138,16 @@ def profile(request):
     # we need to get the users biography
     biography = profile_utils.get_biography(request)
 
+    # We'll also get the user's display name
+    display_name = profile_utils.get_display_name(request)
+
     context = {
         'user': user,
         'perfect_form': perfect_form,
         'perfect_balance': perfect_balance,
         'all_daily': all_daily,
+        'display_name_form': display_name_form,
+        'display_name': display_name,
         'bio_form': bio_form,
         'biography': biography
     }

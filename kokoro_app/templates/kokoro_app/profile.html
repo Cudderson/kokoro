@@ -5,7 +5,11 @@
     <div class="profile-placeholder"></div>
     <div class="profile-contact">
         <!--form-->
-        <span class="profile-username">Cudi Wells</span>
+        <span class="profile-username">{{ display_name.0 }}
+            <span style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+                <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" height="auto" width="100%" onclick="displayDisplayNameForm()" style="cursor: pointer;">
+            </span>
+        </span>
         <span>@cudderson</span>
         <span>Balance Streak: 7</span>
         <span>----------</span>
@@ -66,6 +70,15 @@
         <label>Perfect Body Activity<div>{{ perfect_form.perfect_body }}</div></label>
         <label>Perfect Soul Activity<div>{{ perfect_form.perfect_soul }}</div></label>
         <input type="submit" name="perfect_form" value="Submit Perfect Balance">
+    </form>
+</div>
+<div class="display-name-form-container form-container">
+    <div class="close-form" onclick="closeDisplayNameForm()"><div>&times;</div></div>
+
+    <form action="{% url 'kokoro_app:profile' %}" method="post">
+        {% csrf_token %}
+        <div>{{ display_name_form }}</div>
+        <input type="submit" name="display_name_form" value="Update Display Name">
     </form>
 </div>
     <!--
@@ -155,11 +168,9 @@
 
     function displayBioForm () {
         biographyForm.classList.toggle("show-form");
-        console.log("show form added to bio");
     }
     function closeBioForm () {
         biographyForm.classList.toggle("show-form");
-        console.log("show form removed from bio");
     }
 
     // toggle perfect balance form on button click
@@ -167,11 +178,19 @@
 
     function displayPerfectForm () {
         perfectForm.classList.toggle("show-form");
-        console.log("show form added to perfect");
     }
     function closePerfectForm () {
         perfectForm.classList.toggle("show-form");
-        console.log("show form removed from perfect");
+    }
+
+    // toggle display name form on button click
+    var displayNameForm = document.getElementsByClassName("display-name-form-container")[0];
+
+    function displayDisplayNameForm() {
+        displayNameForm.classList.toggle("show-form");
+    }
+    function closeDisplayNameForm () {
+        displayNameForm.classList.toggle("show-form");
     }
 </script>
 {% endblock content %}
