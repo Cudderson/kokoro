@@ -36,8 +36,8 @@
         <span>insta: @johnnyjohno</span>
     </div>
     <div class="profile-header">
-        <div class="profile-quote">"No man has the right to be an amateur in the matter of physical training. It is a shame for a man to grow old without seeing the beauty and strength of which his body is capable."</div>
-        <div class="profile-quote-author">- Socrates</div>
+        <div class="profile-quote">"{{ quote_data.quote }}"</div>
+        <div class="profile-quote-author">- {{ quote_data.quote_author }}</div>
     </div>
     <!-- these will be dynamically added via loop -->
     <div class="profile-post">
@@ -80,6 +80,14 @@
         {% csrf_token %}
         <div>{{ display_name_form }}</div>
         <input type="submit" name="display_name_form" value="Update Display Name">
+    </form>
+</div>
+
+<div class="quote-container">
+    <form action="{% url 'kokoro_app:profile' %}" method="post">
+        {% csrf_token %}
+        <div>{{ quote_form }}</div>
+        <input type="submit" name="quote_form" value="Update Quote">
     </form>
 </div>
     <!--
