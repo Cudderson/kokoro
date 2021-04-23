@@ -36,6 +36,9 @@
         <span>insta: @johnnyjohno</span>
     </div>
     <div class="profile-header">
+        <span style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+            <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" height="auto" width="100%" onclick="displayQuoteForm()" style="cursor: pointer;">
+        </span>
         <div class="profile-quote">"{{ quote_data.quote }}"</div>
         <div class="profile-quote-author">- {{ quote_data.quote_author }}</div>
     </div>
@@ -83,7 +86,9 @@
     </form>
 </div>
 
-<div class="quote-container">
+<div class="quote-form-container form-container">
+    <div class="close-form" onclick="closeQuoteForm()"><div>&times;</div></div>
+
     <form action="{% url 'kokoro_app:profile' %}" method="post">
         {% csrf_token %}
         <div>{{ quote_form }}</div>
@@ -200,6 +205,17 @@
     }
     function closeDisplayNameForm () {
         displayNameForm.classList.toggle("show-form");
+    }
+
+    // toggle quote form on button click
+    var quoteForm = document.getElementsByClassName("quote-form-container")[0];
+
+    function displayQuoteForm () {
+        quoteForm.classList.toggle("show-form");
+    }
+
+    function closeQuoteForm () {
+        quoteForm.classList.toggle("show-form");
     }
 </script>
 {% endblock content %}
