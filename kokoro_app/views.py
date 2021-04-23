@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote
 from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, ProfileQuoteForm
-from . import balance, perfect, profile_utils
+from . import balance, profile_utils
 
 
 def index(request):
