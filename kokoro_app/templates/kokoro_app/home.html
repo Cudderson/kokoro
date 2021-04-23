@@ -62,68 +62,69 @@
 <!--*** ACTIVITIES WITH QUOTES ("") BREAK THE JS ***-->
 <!--also, tell user to select an option (MBS) if none was selected-->
 <script>
-    // svg scripts
-
-    let tri = document.getElementsByClassName('tri');
-
-    var mind = "{{ all_daily.daily_mind.0|safe }}";
-    var body = "{{ all_daily.daily_body.0|safe }}";
-    var soul = "{{ all_daily.daily_soul.0|safe }}";
-
-    let activities = [mind, body, soul];
-
-    for (var i = 0; i < 3; i++)
-    {
-        if (activities[i])
-        {
-            tri[i].classList.add("completed_act");
-        }
-    }
-
-    // activity-form scripts/logic
-
     function collapse() {
         activitySubmit.classList.toggle("collapse");
     }
 
-    let activityLabel = document.getElementsByClassName("activity-label");
-    var actRadio = document.getElementsByClassName("activity-radio")[0];
-    var activitySubmit = document.getElementsByClassName('activity-submit')[0];
-    var activityInput = document.getElementById("id_description");
-    let activityTypes = ["Mind", "Body", "Soul"];
+    let activitySubmit = document.getElementsByClassName('activity-submit')[0];
 
-    function revertColor() {
+    window.addEventListener("load", function () {
+        // svg scripts
+
+        let tri = document.getElementsByClassName('tri');
+
+        var mind = "{{ all_daily.daily_mind.0|safe }}";
+        var body = "{{ all_daily.daily_body.0|safe }}";
+        var soul = "{{ all_daily.daily_soul.0|safe }}";
+
+        let activities = [mind, body, soul];
+
+        for (var i = 0; i < 3; i++)
+        {
+            if (activities[i])
+            {
+                tri[i].classList.add("completed_act");
+            }
+        }
+
+        // activity-form scripts/logic
+        let activityLabel = document.getElementsByClassName("activity-label");
+        var activityInput = document.getElementById("id_description");
+        let activityTypes = ["Mind", "Body", "Soul"];
+
+        function revertColor() {
+            for (let i = 0; i < 3; i++) {
+                activityLabel[i].style.background = "#eee";
+            }
+        }
+
         for (let i = 0; i < 3; i++) {
-            activityLabel[i].style.background = "#eee";
-        }
-    }
 
-    for (let i = 0; i < 3; i++) {
+            activityLabel[i].addEventListener("click", function () {
 
-        activityLabel[i].addEventListener("click", function () {
+                let labelSelected = false;
 
-            let labelSelected = false;
-
-            for (let j = 0; j < 3; j++) {
-                if (activityLabel[j].style.background == "gray") {
-                    labelSelected = true;
-                    revertColor();
-                    break;
+                for (let j = 0; j < 3; j++) {
+                    if (activityLabel[j].style.background == "gray") {
+                        labelSelected = true;
+                        revertColor();
+                        break;
+                    }
                 }
-            }
-            if (labelSelected != true) {
-                activityLabel[i].style.background = "gray";
-                activityInput.placeholder = `Describe Your ${activityTypes[i]} Activity..`;
-            }
-        }, false);
-    }
-
-    var h2 = document.getElementsByTagName("H2");
-
-    for (let i = 0; i < 3; i++) {
-        if (h2[i].innerHTML) {
-            h2[i].classList.toggle("text-fade");
+                if (labelSelected != true) {
+                    activityLabel[i].style.background = "gray";
+                    activityInput.placeholder = `Describe Your ${activityTypes[i]} Activity..`;
+                }
+            }, false);
         }
-    }
+
+        var h2 = document.getElementsByTagName("H2");
+
+        for (let i = 0; i < 3; i++) {
+            if (h2[i].innerHTML) {
+                h2[i].classList.toggle("text-fade");
+            }
+        }
+    });
 </script>
 {% endblock content %}

@@ -1,3 +1,24 @@
+/* global color */
+:root {
+    --background: rgba(100, 250, 100, 75);
+}
+
+html {
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding-top: 200px; /* header height = 80px (depends on logo size)*/
+    /* background-color: rgba(25, 225, 85, .7);  page bg color */
+    background-color: white;
+
+}
+/* reset box-sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 /* starting with grid for home page (nav excluded) */
 .home-grid {
     display: grid;
@@ -17,10 +38,6 @@ h2.text-fade {
     opacity: 1;
 }
 /*end test*/
-
-html {
-    font-family: 'Open Sans', sans-serif;
-}
 
 /* place new test form within grid */
 .activity-form {
@@ -201,29 +218,160 @@ svg text {
     pointer-events: none;
 }
 
+/* profile page styles start */
+
 .profile:hover {
     font-size: 200%;
 }
 
-/* new navbar styles */
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(16, minmax(0, 1fr));
+    grid-auto-rows: minmax(0, 1fr);
+    grid-row-gap: .25em;
+    grid-column-gap: .25em;
+    margin-bottom: 6vw;
+}
 
-body {
+/* profile photo will replace this */
+.profile-placeholder {
+    display: flex;
+    grid-column: 3 / 5;
+    width: 100%;
+    height: 0;
+    padding-top: 100%; /* this hack allows a responsive perfect square */
+    background: white;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+.profile-contact {
+    display: flex;
+    flex-direction: column;
+    grid-column: 3 / 6;
+    grid-row: 2 / 4;
+    background: white;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+.profile-contact span {
+    font-size: 1vw;
+    /* set font-sizes in this div manually */
+}
+
+.profile-display-name {
     margin: 0;
-    padding-top: 200px; /* header height = 80px (depends on logo size)*/
-    /* background-color: rgba(25, 225, 85, .7);  page bg color */
-    background-color: white;
-
+    font-size: 1.5vw;
+    font-weight: bold;
 }
 
-/* global color */
-:root {
-    --background: rgba(100, 250, 100, 75);
+.profile-header {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    grid-column: 5 / 15;
+    grid-row: 1 / 2;
+    background: white;
+    border: 1px solid black;
+    border-radius: 4px;
 }
 
-/* reset box-sizing */
-*, *::before, *::after {
-    box-sizing: border-box;
+.profile-quote {
+    font-size: 1.7vw;
+    margin: auto 2em .5em 2em;
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;
 }
+
+.profile-quote-author {
+    font-size: 1.25vw;
+    align-self: flex-end;
+    margin: 0 auto auto 55%; /* consumes all free-space to left of element */
+}
+
+.profile-post {
+    display: flex;
+    grid-column: 6 / 15;
+    grid-row: auto;
+    background: white;
+    border: 1px solid black;
+    border-radius: 4px;
+    justify-content: center;
+    font-size: 1.25vw;
+}
+/* forms on profile page */
+.form-container {
+    display: none;
+    /* javascript changes display value on button click */
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    border: 1px solid white;
+    z-index: 999;
+}
+
+.show-form {
+    /* class is added to form-containers on svg click */
+    display: flex;
+}
+
+.form-container form {
+    margin-top: 30vh;
+    width: 50%;
+}
+
+.form-container form label {
+    color: white;
+    display: flow-root; /* change context */
+    padding-top: 1em;
+    font-size: 1.25vw;
+}
+
+.form-container input[type=text] {
+    width: 100%;
+    padding: 15px 0px;
+    margin: 0;
+    line-height: 1.5vw;
+    font-size: 1.25vw;
+}
+.form-container input[type=submit] {
+    width: 100%;
+    padding: 10px 0px;
+    background: lightgreen;
+}
+.perfect-form-container form {
+    /* only for perfect form */
+    margin-top: 20vh;
+}
+.close-form {
+    align-self: flex-end;
+    width: 3vw;
+    height: 3vw;
+    background: white;
+    border-radius: 4px;
+    margin: .5em .5em .5em .5em;
+    cursor: pointer;
+}
+.close-form div {
+    /* for the 'x' close symbol */
+    width: 3vw;
+    height: 3vw;
+    line-height: 3vw; /* match div height to vertically center */
+    text-align: center;
+    font-size: 4vw;
+    font-weight: bold;
+}
+/* profile page styles end */
+
+/* new navbar styles */
 
 header {
     /*background: var(--background);*/

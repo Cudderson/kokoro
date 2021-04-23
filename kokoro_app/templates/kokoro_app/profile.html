@@ -1,6 +1,127 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
+<div class="profile-grid">
+    <div class="profile-placeholder"></div>
+    <div class="profile-contact">
+        <!--form-->
+        <span class="profile-display-name">{{ display_name.0 }}
+            <span style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+                <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" height="auto" width="100%" onclick="displayDisplayNameForm()" style="cursor: pointer;">
+            </span>
+        </span>
+        <span>@cudderson</span>
+        <span>Balance Streak: 7</span>
+        <span>----------</span>
+        <!--form (done)-->
+        <span>{{ biography.0 }}
+            <span style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+                <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" height="auto" width="100%" onclick="displayBioForm()" style="cursor: pointer;">
+            </span>
+        </span>
+        <span>----------</span>
+        <!--form (almost done)-->
+        <span>Perfect Balance
+            <span style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+                <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" height="auto" width="100%" onclick="displayPerfectForm()" style="cursor: pointer;">
+            </span>
+        </span>
+        {% for perfect_activity in perfect_balance %}
+            <span class="perfect-activity">{{ perfect_activity }}</span>
+        {% endfor %}
+        <span>----------</span>
+        <span style="text-decoration: underline">Contact</span>
+        <!--form/s-->
+        <span>twitter: @johnparkingson</span>
+        <span>insta: @johnnyjohno</span>
+    </div>
+    <div class="profile-header">
+        <div class="profile-quote">"{{ quote_data.quote }}"
+            <span style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+                <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" height="auto" width="100%" onclick="displayQuoteForm()" style="cursor: pointer;">
+            </span>
+        </div>
+        <div class="profile-quote-author">- {{ quote_data.quote_author }}</div>
+
+    </div>
+    <!-- these will be dynamically added via loop -->
+    <div class="profile-post">
+        <span>~ Parker Johnny Smith has no posts yet. ~</span>
+    </div>
+    <div class="profile-post">
+        <span>My day hiking the great Bluffs of Ontario</span>
+    </div>
+    <div class="profile-post">
+        <span>Why working out everyday is a must.</span>
+    </div>
+    <div class="profile-post">
+        <span>My journey through the Amazon</span>
+    </div>
+</div>
+<div class="bio-form-container form-container">
+    <div class="close-form" onclick="closeBioForm()"><div>&times;</div></div>
+
+    <form action="{% url 'kokoro_app:profile' %}" method="post">
+        {% csrf_token %}
+        <div>{{ bio_form.biography }}</div>
+        <input type="submit" name="bio_form" value="Submit Biography">
+    </form>
+</div>
+<div class="perfect-form-container form-container">
+    <div class="close-form" onclick="closePerfectForm()"><div>&times;</div></div>
+
+    <form action="{% url 'kokoro_app:profile' %}" method="post">
+        {% csrf_token %}
+        <label>Perfect Mind Activity<div>{{ perfect_form.perfect_mind }}</div></label>
+        <label>Perfect Body Activity<div>{{ perfect_form.perfect_body }}</div></label>
+        <label>Perfect Soul Activity<div>{{ perfect_form.perfect_soul }}</div></label>
+        <input type="submit" name="perfect_form" value="Submit Perfect Balance">
+    </form>
+</div>
+<div class="display-name-form-container form-container">
+    <div class="close-form" onclick="closeDisplayNameForm()"><div>&times;</div></div>
+
+    <form action="{% url 'kokoro_app:profile' %}" method="post">
+        {% csrf_token %}
+        <div>{{ display_name_form }}</div>
+        <input type="submit" name="display_name_form" value="Update Display Name">
+    </form>
+</div>
+
+<div class="quote-form-container form-container">
+    <div class="close-form" onclick="closeQuoteForm()"><div>&times;</div></div>
+
+    <form action="{% url 'kokoro_app:profile' %}" method="post">
+        {% csrf_token %}
+        <div>{{ quote_form }}</div>
+        <input type="submit" name="quote_form" value="Update Quote">
+    </form>
+</div>
+    <!--
+    <div class="test-block">
+        <div class="perfect-title"><b>Perfect Balance</b></div>
+            {% if perfect_balance == 'False' %}
+                <h4>User doesn't have a perfect balance yet..</h4>
+            {% else %}
+                <div class="perfect-activities">
+                {% for perfect_activity in perfect_balance %}
+                    <div class="perfect-activity">{{ perfect_activity }}</div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        <div class="test-block-2">
+            <div class="bio-title"><b>About Me</b></div>
+            <div class="test-bio">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam dolorum et illo minus optio praesentium, saepe similique sint tempora vel voluptates voluptatum! Illo, molestias.</div>
+        </div>
+    <div class="extra-block">
+        <div class="something-title"><b>Something</b></div>
+            <div class="something-content">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur at commodi corporis culpa dicta dolorem dolorum eaque earum eum ex facere id in, inventore labore magnam, minus modi molestiae nihil odio omnis quis quos, ratione rerum sequi sit suscipit voluptatem.
+            </div>
+    </div>
+</div>
+-->
+<!--
 <h5 class="acts">This is <span class="profile">{{ user }}'s</span> profile.</h5>
 
 <div>
@@ -56,4 +177,47 @@
         <input type="submit" name="manage_form" value="Delete Selected Activities">
     </form>
 </div>
+-->
+<script>
+    // toggle biography form on button click
+    var biographyForm = document.getElementsByClassName("bio-form-container")[0];
+
+    function displayBioForm () {
+        biographyForm.classList.toggle("show-form");
+    }
+    function closeBioForm () {
+        biographyForm.classList.toggle("show-form");
+    }
+
+    // toggle perfect balance form on button click
+    var perfectForm = document.getElementsByClassName("perfect-form-container")[0];
+
+    function displayPerfectForm () {
+        perfectForm.classList.toggle("show-form");
+    }
+    function closePerfectForm () {
+        perfectForm.classList.toggle("show-form");
+    }
+
+    // toggle display name form on button click
+    var displayNameForm = document.getElementsByClassName("display-name-form-container")[0];
+
+    function displayDisplayNameForm() {
+        displayNameForm.classList.toggle("show-form");
+    }
+    function closeDisplayNameForm () {
+        displayNameForm.classList.toggle("show-form");
+    }
+
+    // toggle quote form on button click
+    var quoteForm = document.getElementsByClassName("quote-form-container")[0];
+
+    function displayQuoteForm () {
+        quoteForm.classList.toggle("show-form");
+    }
+
+    function closeQuoteForm () {
+        quoteForm.classList.toggle("show-form");
+    }
+</script>
 {% endblock content %}

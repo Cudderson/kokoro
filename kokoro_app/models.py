@@ -51,6 +51,63 @@ class PerfectBalance(models.Model):
         """
 
         # package activities for admin-panel and template
-        perfect_balance = f'M:{self.perfect_mind}, B:{self.perfect_body}, S:{self.perfect_soul}'
+        perfect_balance = f'{self.perfect_mind},,, {self.perfect_body},,, {self.perfect_soul}'
 
         return perfect_balance
+
+
+class ProfileBio(models.Model):
+    """
+    A user's biography section on their profile
+    """
+
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    biography = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name_plural = 'biographies'
+
+    def __str__(self):
+        """
+        :return: string representation of a user's biography
+        """
+
+        return self.biography
+
+
+class ProfileDisplayName(models.Model):
+    """
+    A user's display name on their profile
+    """
+
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    display_name = models.CharField(max_length=40)
+
+    def __str__(self):
+        """
+        :return: string representation of a user's display name
+        """
+
+        return self.display_name
+
+
+class ProfileQuote(models.Model):
+    """
+    A user's displayed quote & author on their profile
+    """
+
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    quote = models.CharField(max_length=180)
+
+    quote_author = models.CharField(max_length=40)
+
+    def __str__(self):
+        """
+        :return: string representation of user's quote & author
+        """
+
+        # 3-comma separator for reliable string-splitting (do for perfect too)
+        return f'{self.quote},,, {self.quote_author}'

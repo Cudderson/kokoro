@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
-from .models import Activity, PerfectBalance
-from .forms import ActivityForm, PerfectBalanceForm
-from . import balance, perfect
+from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote
+from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, ProfileQuoteForm
+from . import balance, perfect, profile_utils
 
 
 def index(request):
@@ -60,23 +60,18 @@ def profile(request):
     :param request: request data
     :return: HttpResponse
     """
-    user = request.user
 
-    perfect_form = PerfectBalanceForm()
-
-    # * when a user submits a new form, the old objects should first be deleted (only 1 perfect balance per user)
     if request.method == "POST":
         if 'perfect_form' in request.POST:
-            perfect_form = PerfectBalanceForm(data=request.POST)
-            if perfect_form.is_valid():
+            perfect_form_submitted = PerfectBalanceForm(data=request.POST)
+            if perfect_form_submitted.is_valid():
                 # delete old perfect balance (working)
                 PerfectBalance.objects.filter(owner__exact=request.user).delete()
-                new_form = perfect_form.save(commit=False)
-                new_form.owner = request.user
-                new_form.save()
-                perfect_form = PerfectBalanceForm()
-        elif 'manage_form' in request.POST:
+                # save new perfect balance form with helper function
+                profile_utils.save_new_perfect_balance(request, perfect_form_submitted)
 
+        # *** Do this later if decide to include on profile page ***
+        elif 'manage_form' in request.POST: # this functionality isn't included yet (form to delete activities)
             # could move some logic to helper file
             result = request.POST
             # checkbox attrs are key=id_of_entry, value=on/off
@@ -88,7 +83,33 @@ def profile(request):
             acts_to_delete = Activity.objects.filter(id__in=result)
             acts_to_delete.delete()
 
-    perfect_balance = perfect.get_perfect_balance_data(request)
+        elif 'bio_form' in request.POST:
+            # user is submitting a biography
+            bio_form_submitted = ProfileBioForm(data=request.POST)
+            if bio_form_submitted.is_valid():
+                # delete old biography
+                ProfileBio.objects.filter(owner__exact=request.user).delete()
+                # save new biography
+                profile_utils.save_new_biography(request, bio_form_submitted)
+
+        elif 'display_name_form' in request.POST:
+            # get submitted form data
+            display_name_form_submitted = ProfileDisplayNameForm(data=request.POST)
+            if display_name_form_submitted.is_valid():
+                # delete old display name
+                ProfileDisplayName.objects.filter(owner__exact=request.user).delete()
+                # save new display name with helper function
+                profile_utils.save_new_display_name(request, display_name_form_submitted)
+
+        elif 'quote_form' in request.POST:
+            # get form data
+            quote_form_submitted = ProfileQuoteForm(data=request.POST)
+            # check validity
+            if quote_form_submitted.is_valid():
+                # delete old quote & author
+                ProfileQuote.objects.filter(owner__exact=request.user).delete()
+                # save new quote & author (before committing, add owner)
+                profile_utils.save_new_biography(request, quote_form_submitted)
 
     # Returns all activities submitted today for user
     daily_mind = balance.daily_mind(request)
@@ -102,13 +123,36 @@ def profile(request):
         'daily_soul': daily_soul
     }
 
-    # *** add logic so that form can only be submitted if all 3 (MBS) specified *** (django did this for me)
+    # user info for profile page
+    user = request.user
+    biography = ProfileBio.objects.filter(owner__exact=request.user)
+    display_name = ProfileDisplayName.objects.filter(owner__exact=request.user)
+
+    # 'quote_data' is 'quote_data_queryset' parsed to a dictionary
+    quote_data_queryset = ProfileQuote.objects.filter(owner__exact=request.user)
+    quote_data = profile_utils.parse_quote_data(quote_data_queryset)
+
+    # 'perfect_balance' is 'perfect_balance_queryset parsed into a list
+    perfect_balance_queryset = PerfectBalance.objects.filter(owner=request.user)
+    perfect_balance = profile_utils.get_perfect_balance_data(perfect_balance_queryset)
+
+    # forms for profile page
+    perfect_form = PerfectBalanceForm()
+    bio_form = ProfileBioForm()
+    display_name_form = ProfileDisplayNameForm()
+    quote_form = ProfileQuoteForm()
 
     context = {
         'user': user,
         'perfect_form': perfect_form,
         'perfect_balance': perfect_balance,
         'all_daily': all_daily,
+        'display_name_form': display_name_form,
+        'display_name': display_name,
+        'bio_form': bio_form,
+        'biography': biography,
+        'quote_data': quote_data,
+        'quote_form': quote_form
     }
 
     return render(request, 'kokoro_app/profile.html', context)
