@@ -60,19 +60,7 @@ def profile(request):
     :param request: request data
     :return: HttpResponse
     """
-    user = request.user
 
-    perfect_form = PerfectBalanceForm()
-
-    # we now need a form that the user can update their biography with (move to profile_utils after)
-    # we can use the submit button's name in the POST request to determine which form the user is submitting
-    bio_form = ProfileBioForm()
-
-    display_name_form = ProfileDisplayNameForm()
-
-    quote_form = ProfileQuoteForm()
-
-    # * when a user submits a new form, the old objects should first be deleted (only 1 perfect balance per user)
     if request.method == "POST":
         if 'perfect_form' in request.POST:
             perfect_form_submitted = PerfectBalanceForm(data=request.POST)
@@ -123,9 +111,6 @@ def profile(request):
                 # save new quote & author (before committing, add owner)
                 profile_utils.save_new_biography(request, quote_form_submitted)
 
-    # Returns a list
-    perfect_balance = perfect.get_perfect_balance_data(request)
-
     # Returns all activities submitted today for user
     daily_mind = balance.daily_mind(request)
     daily_body = balance.daily_body(request)
@@ -138,23 +123,24 @@ def profile(request):
         'daily_soul': daily_soul
     }
 
-    # we need to get the users biography
+    # user info for profile page
+    user = request.user
     biography = ProfileBio.objects.filter(owner__exact=request.user)
-
-    # We'll also get the user's display name
     display_name = ProfileDisplayName.objects.filter(owner__exact=request.user)
 
-    # get user's profile quote (move to util file later)
-    quote_data = ProfileQuote.objects.filter(owner__exact=request.user)
-    # convert to string
-    quote_data_string = str(quote_data[0])
-    # parse string to list
-    quote_data_parsed = quote_data_string.split(',,, ')
-    # convert to dict for template readability
-    quote_data = {
-        'quote': quote_data_parsed[0],
-        'quote_author': quote_data_parsed[1]
-    }
+    # 'quote_data' is 'quote_data_queryset' parsed to a dictionary
+    quote_data_queryset = ProfileQuote.objects.filter(owner__exact=request.user)
+    quote_data = profile_utils.parse_quote_data(quote_data_queryset)
+
+    # 'perfect_balance' is 'perfect_balance_queryset parsed into a list
+    perfect_balance_queryset = PerfectBalance.objects.filter(owner=request.user)
+    perfect_balance = profile_utils.get_perfect_balance_data(perfect_balance_queryset)
+
+    # forms for profile page
+    perfect_form = PerfectBalanceForm()
+    bio_form = ProfileBioForm()
+    display_name_form = ProfileDisplayNameForm()
+    quote_form = ProfileQuoteForm()
 
     context = {
         'user': user,

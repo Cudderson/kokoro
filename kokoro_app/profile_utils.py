@@ -2,8 +2,6 @@
 from django.http import Http404
 
 
-# attempting to use this file to take the load off of the view function
-# saving the form seems to be the bulk to remove
 def save_new_display_name(request, display_name_form):
     """
     Save a validated form submitted by user
@@ -53,6 +51,26 @@ def save_new_quote(request, quote_form):
         raise Http404("Something went wrong while saving your quote.")
 
 
+def parse_quote_data(quote_data_queryset):
+    """
+    Takes in a django queryset of a user's profile quote and converts to dictionary
+    :param quote_data_queryset: a django queryset
+    :return: parsed dictionary of the queryset
+    """
+
+    # convert to string
+    quote_data_string = str(quote_data_queryset[0])
+    # parse string to list
+    quote_data_parsed = quote_data_string.split(',,, ')
+    # convert to dict for template readability
+    quote_data = {
+        'quote': quote_data_parsed[0],
+        'quote_author': quote_data_parsed[1]
+    }
+
+    return quote_data
+
+
 def save_new_perfect_balance(request, perfect_form):
     """
     Save a validated form submitted by user
@@ -67,3 +85,22 @@ def save_new_perfect_balance(request, perfect_form):
         new_form.save()
     except Exception:
         raise Http404("Something went wrong while saving your perfect balance activities.")
+
+
+def get_perfect_balance_data(perfect_balance_queryset):
+    """
+    Takes in a django queryset of a user's perfect balance and converts it to a list
+    :param perfect_balance_queryset: a django queryset
+    :return: parsed list of the queryset
+    """
+
+    # convert queryset result to string, then to list, then capitalize for UI
+    perfect_balance = str(perfect_balance_queryset[0])
+    perfect_balance = perfect_balance.split(",,, ")
+    perfect_balance = [activity.capitalize() for activity in perfect_balance]
+
+    if not perfect_balance:
+        # Convert boolean to string for template comparison
+        perfect_balance = str(False)
+
+    return perfect_balance
