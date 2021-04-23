@@ -51,7 +51,7 @@ class PerfectBalance(models.Model):
         """
 
         # package activities for admin-panel and template
-        perfect_balance = f'{self.perfect_mind}, {self.perfect_body}, {self.perfect_soul}'
+        perfect_balance = f'{self.perfect_mind},,, {self.perfect_body},,, {self.perfect_soul}'
 
         return perfect_balance
 

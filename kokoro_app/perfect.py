@@ -15,7 +15,7 @@ def get_perfect_balance_data(request):
 
     # convert queryset result to string, then to list, then capitalize for UI
     perfect_balance = str(perfect_balance[0])
-    perfect_balance = perfect_balance.split(", ")
+    perfect_balance = perfect_balance.split(",,, ")
     perfect_balance = [activity.capitalize() for activity in perfect_balance]
 
     if not perfect_balance:
