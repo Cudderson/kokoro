@@ -36,11 +36,13 @@
         <span>insta: @johnnyjohno</span>
     </div>
     <div class="profile-header">
-        <span style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
-            <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" height="auto" width="100%" onclick="displayQuoteForm()" style="cursor: pointer;">
-        </span>
-        <div class="profile-quote">"{{ quote_data.quote }}"</div>
+        <div class="profile-quote">"{{ quote_data.quote }}"
+            <span style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+                <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" height="auto" width="100%" onclick="displayQuoteForm()" style="cursor: pointer;">
+            </span>
+        </div>
         <div class="profile-quote-author">- {{ quote_data.quote_author }}</div>
+
     </div>
     <!-- these will be dynamically added via loop -->
     <div class="profile-post">
