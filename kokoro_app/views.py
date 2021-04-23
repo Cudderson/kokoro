@@ -75,16 +75,15 @@ def profile(request):
     # * when a user submits a new form, the old objects should first be deleted (only 1 perfect balance per user)
     if request.method == "POST":
         if 'perfect_form' in request.POST:
-            perfect_form = PerfectBalanceForm(data=request.POST)
-            if perfect_form.is_valid():
+            perfect_form_submitted = PerfectBalanceForm(data=request.POST)
+            if perfect_form_submitted.is_valid():
                 # delete old perfect balance (working)
                 PerfectBalance.objects.filter(owner__exact=request.user).delete()
-                new_form = perfect_form.save(commit=False)
-                new_form.owner = request.user
-                new_form.save()
-                perfect_form = PerfectBalanceForm()
+                # save new perfect balance form with helper function
+                profile_utils.save_new_perfect_balance(request, perfect_form_submitted)
 
-        elif 'manage_form' in request.POST:
+        # *** Do this later if decide to include on profile page ***
+        elif 'manage_form' in request.POST: # this functionality isn't included yet (form to delete activities)
             # could move some logic to helper file
             result = request.POST
             # checkbox attrs are key=id_of_entry, value=on/off
@@ -140,7 +139,7 @@ def profile(request):
     }
 
     # we need to get the users biography
-    biography = profile_utils.get_biography(request)
+    biography = ProfileBio.objects.filter(owner__exact=request.user)
 
     # We'll also get the user's display name
     display_name = ProfileDisplayName.objects.filter(owner__exact=request.user)
