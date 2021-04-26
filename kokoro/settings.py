@@ -42,7 +42,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # My Apps
     'kokoro_app',
-    'users',
+    # Need to include config path for signals to work
+    'users.apps.UsersConfig',
 
     # django default apps
     'django.contrib.admin',
