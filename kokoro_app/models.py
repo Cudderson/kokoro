@@ -111,3 +111,17 @@ class ProfileQuote(models.Model):
 
         # 3-comma separator for reliable string-splitting (do for perfect too)
         return f'{self.quote},,, {self.quote_author}'
+
+
+class ProfileImage(models.Model):
+    """
+    A user's photo/avi on their profile
+    """
+
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    image = models.ImageField(default='default.jpg', upload_to='profile_images')
+
+    def __str__(self):
+
+        return f"{self.owner}'s Profile Image"
