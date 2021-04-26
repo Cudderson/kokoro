@@ -133,6 +133,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Location where uploaded media files will be located on file system
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Where to access in browser
+MEDIA_URL = '/media/'
+
 # My settings
 LOGIN_URL = 'users:login'
 
