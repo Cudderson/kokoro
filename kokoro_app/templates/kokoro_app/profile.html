@@ -99,6 +99,15 @@
         <input type="submit" name="quote_form" value="Update Quote">
     </form>
 </div>
+
+<div>
+    <form action="{% url 'kokoro_app:profile' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ profile_image_form.as_p }}
+        <input type="submit" name="profile_image_form" value="Update Profile Photo">
+    </form>
+</div>
+
     <!--
     <div class="test-block">
         <div class="perfect-title"><b>Perfect Balance</b></div>

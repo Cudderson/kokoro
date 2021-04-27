@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote
-from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, ProfileQuoteForm
+from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote, ProfileImage
+from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, ProfileQuoteForm, ProfileImageForm
 from . import balance, profile_utils
 
 
@@ -111,6 +111,19 @@ def profile(request):
                 # save new quote & author (before committing, add owner)
                 profile_utils.save_new_biography(request, quote_form_submitted)
 
+        elif 'profile_image_form' in request.POST:
+            # Make more robust (and entire function)
+            # get form data
+            profile_image_submitted = ProfileImageForm(request.POST, request.FILES, instance=request.user.profileimage)
+            # check validity
+            if profile_image_submitted.is_valid():
+                profile_image_submitted.save()
+                return redirect('/profile')
+
+
+    # testing what the image form looks like
+    profile_image_form = ProfileImageForm()
+
     # Returns all activities submitted today for user
     daily_mind = balance.daily_mind(request)
     daily_body = balance.daily_body(request)
@@ -152,7 +165,9 @@ def profile(request):
         'bio_form': bio_form,
         'biography': biography,
         'quote_data': quote_data,
-        'quote_form': quote_form
+        'quote_form': quote_form,
+        # testing
+        'profile_image_form': profile_image_form,
     }
 
     return render(request, 'kokoro_app/profile.html', context)
