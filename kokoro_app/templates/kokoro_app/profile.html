@@ -2,7 +2,9 @@
 
 {% block content %}
 <div class="profile-grid">
-    <div class="profile-placeholder"></div>
+    <div class="profile-placeholder">
+            <img class="profile-image" src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
+    </div>
     <div class="profile-contact">
         <!--form-->
         <span class="profile-display-name">{{ display_name.0 }}
@@ -10,7 +12,7 @@
                 <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" height="auto" width="100%" onclick="displayDisplayNameForm()" style="cursor: pointer;">
             </span>
         </span>
-        <span>@cudderson</span>
+        <span>@{{ user }}</span>
         <span>Balance Streak: 7</span>
         <span>----------</span>
         <!--form (done)-->
@@ -96,10 +98,6 @@
         <div>{{ quote_form }}</div>
         <input type="submit" name="quote_form" value="Update Quote">
     </form>
-</div>
-
-<div>
-    <img src="{{user.profileimage.image.url}}" alt="fuck">
 </div>
     <!--
     <div class="test-block">
