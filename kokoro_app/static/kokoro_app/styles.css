@@ -380,6 +380,10 @@ svg text {
     font-size: 4vw;
     font-weight: bold;
 }
+
+.svg-icon-hidden {
+    display: none !important;
+}
 /* profile page styles end */
 
 /* new navbar styles */

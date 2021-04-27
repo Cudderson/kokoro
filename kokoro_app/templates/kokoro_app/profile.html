@@ -1,17 +1,18 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
+<div onclick="testFunction()" style="cursor: pointer; border: 1px solid black; border-radius: 4px; width: 10%; text-align: center; margin: auto; margin-bottom: 2vw;">Edit Profile</div>
 <div class="profile-grid">
     <div class="profile-placeholder">
         <img class="profile-image" src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
-        <span style="position: absolute; width: 2vw; height: 2vw; z-index: 999; margin-left: 85%; align-self: flex-start;">
+        <span class="svg-edit-icon svg-icon-hidden" style="position: absolute; width: 2vw; height: 2vw; z-index: 999; margin-left: 85%; align-self: flex-start;">
             <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" data-form="profile-image-form-container" height="auto" width="100%" onclick="toggleFormDisplay(this)" style="cursor: pointer;">
         </span>
     </div>
     <div class="profile-contact">
         <!--form-->
         <span class="profile-display-name">{{ display_name.0 }}
-            <span for="display-name-form-container" style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+            <span class="svg-edit-icon svg-icon-hidden" style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
                 <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" data-form="display-name-form-container" height="auto" width="100%" onclick="toggleFormDisplay(this)" style="cursor: pointer;">
             </span>
         </span>
@@ -20,14 +21,14 @@
         <span>----------</span>
         <!--form (done)-->
         <span>{{ biography.0 }}
-            <span style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+            <span class="svg-edit-icon svg-icon-hidden" style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
                 <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" data-form="bio-form-container" height="auto" width="100%" onclick="toggleFormDisplay(this)" style="cursor: pointer;">
             </span>
         </span>
         <span>----------</span>
         <!--form (almost done)-->
         <span>Perfect Balance
-            <span style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+            <span class="svg-edit-icon svg-icon-hidden" style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
                 <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" data-form="perfect-form-container" height="auto" width="100%" onclick="toggleFormDisplay(this)" style="cursor: pointer;">
             </span>
         </span>
@@ -42,7 +43,7 @@
     </div>
     <div class="profile-header">
         <div class="profile-quote">"{{ quote_data.quote }}"
-            <span style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+            <span class="svg-edit-icon svg-icon-hidden" style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
                 <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" data-form="quote-form-container" height="auto" width="100%" onclick="toggleFormDisplay(this)" style="cursor: pointer;">
             </span>
         </div>
@@ -204,6 +205,15 @@
         var form = document.getElementsByClassName(formToDisplay)[0];
 
         form.classList.toggle("show-form");
+    }
+
+    // next, we'll make the svg's only appear when 'edit profile' clicked.
+    // make svg display: none;
+    function testFunction() {
+        var svgEdit = document.getElementsByClassName("svg-edit-icon");
+        for (var i = 0; i < svgEdit.length; i++) {
+            svgEdit[i].classList.toggle("svg-icon-hidden");
+        }
     }
 </script>
 {% endblock content %}
