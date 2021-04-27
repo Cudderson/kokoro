@@ -3,7 +3,10 @@
 {% block content %}
 <div class="profile-grid">
     <div class="profile-placeholder">
-            <img class="profile-image" src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
+        <img class="profile-image" src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
+        <span style="position: absolute; width: 2vw; height: 2vw; z-index: 999; margin-left: 85%; align-self: flex-start;">
+            <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" height="auto" width="100%" onclick="displayProfileImageForm()" style="cursor: pointer;">
+        </span>
     </div>
     <div class="profile-contact">
         <!--form-->
@@ -100,10 +103,12 @@
     </form>
 </div>
 
-<div>
+<div class="profile-image-form-container form-container">
+    <div class="close-form" onclick="closeProfileImageForm()"><div>&times;</div></div>
+
     <form action="{% url 'kokoro_app:profile' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ profile_image_form.as_p }}
+        {{ profile_image_form }}
         <input type="submit" name="profile_image_form" value="Update Profile Photo">
     </form>
 </div>
@@ -229,6 +234,16 @@
 
     function closeQuoteForm () {
         quoteForm.classList.toggle("show-form");
+    }
+
+    var profileImageForm = document.getElementsByClassName("profile-image-form-container")[0];
+
+    function displayProfileImageForm() {
+        profileImageForm.classList.toggle("show-form");
+    }
+
+    function closeProfileImageForm() {
+        profileImageForm.classList.toggle("show-form");
     }
 </script>
 {% endblock content %}
