@@ -42,7 +42,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # My Apps
     'kokoro_app',
-    'users',
+    # Need to include config path for signals to work
+    'users.apps.UsersConfig',
 
     # django default apps
     'django.contrib.admin',
@@ -132,6 +133,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Location where uploaded media files will be located on file system
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Where to access in browser
+MEDIA_URL = '/media/'
 
 # My settings
 LOGIN_URL = 'users:login'

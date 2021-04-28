@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote
-from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, ProfileQuoteForm
+from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote, ProfileImage
+from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, ProfileQuoteForm, ProfileImageForm
 from . import balance, profile_utils
 
 
@@ -24,7 +24,7 @@ def home(request):
             new_form = form.save(commit=False)
             new_form.owner = request.user
             new_form.save()
-            form = ActivityForm()
+            return redirect('/home')
 
     activities = Activity.objects.filter(owner=request.user).order_by('date_added')
 
@@ -69,6 +69,7 @@ def profile(request):
                 PerfectBalance.objects.filter(owner__exact=request.user).delete()
                 # save new perfect balance form with helper function
                 profile_utils.save_new_perfect_balance(request, perfect_form_submitted)
+                return redirect('/profile')
 
         # *** Do this later if decide to include on profile page ***
         elif 'manage_form' in request.POST: # this functionality isn't included yet (form to delete activities)
@@ -91,6 +92,7 @@ def profile(request):
                 ProfileBio.objects.filter(owner__exact=request.user).delete()
                 # save new biography
                 profile_utils.save_new_biography(request, bio_form_submitted)
+                return redirect('/profile')
 
         elif 'display_name_form' in request.POST:
             # get submitted form data
@@ -100,6 +102,7 @@ def profile(request):
                 ProfileDisplayName.objects.filter(owner__exact=request.user).delete()
                 # save new display name with helper function
                 profile_utils.save_new_display_name(request, display_name_form_submitted)
+                return redirect('/profile')
 
         elif 'quote_form' in request.POST:
             # get form data
@@ -109,7 +112,21 @@ def profile(request):
                 # delete old quote & author
                 ProfileQuote.objects.filter(owner__exact=request.user).delete()
                 # save new quote & author (before committing, add owner)
-                profile_utils.save_new_biography(request, quote_form_submitted)
+                profile_utils.save_new_quote(request, quote_form_submitted)
+                return redirect('/profile')
+
+        elif 'profile_image_form' in request.POST:
+            # Make more robust (and entire function)
+            # get form data
+            profile_image_submitted = ProfileImageForm(request.POST, request.FILES, instance=request.user.profileimage)
+            # check validity
+            if profile_image_submitted.is_valid():
+                profile_image_submitted.save()
+                return redirect('/profile')
+
+
+    # testing what the image form looks like
+    profile_image_form = ProfileImageForm()
 
     # Returns all activities submitted today for user
     daily_mind = balance.daily_mind(request)
@@ -152,7 +169,9 @@ def profile(request):
         'bio_form': bio_form,
         'biography': biography,
         'quote_data': quote_data,
-        'quote_form': quote_form
+        'quote_form': quote_form,
+        # testing
+        'profile_image_form': profile_image_form,
     }
 
     return render(request, 'kokoro_app/profile.html', context)

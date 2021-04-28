@@ -1,29 +1,35 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
+<div onclick="testFunction(this)" style="cursor: pointer; user-select: none; border: 1px solid black; border-radius: 4px; width: 10%; text-align: center; margin: auto; margin-bottom: 2vw;">Edit Profile</div>
 <div class="profile-grid">
-    <div class="profile-placeholder"></div>
+    <div class="profile-placeholder">
+        <img class="profile-image" src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
+        <span class="svg-edit-icon svg-icon-hidden" style="position: absolute; width: 2vw; height: 2vw; z-index: 999; margin-left: 85%; align-self: flex-start;">
+            <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" data-form="profile-image-form-container" height="auto" width="100%" onclick="toggleFormDisplay(this)" style="cursor: pointer;">
+        </span>
+    </div>
     <div class="profile-contact">
         <!--form-->
         <span class="profile-display-name">{{ display_name.0 }}
-            <span style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
-                <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" height="auto" width="100%" onclick="displayDisplayNameForm()" style="cursor: pointer;">
+            <span class="svg-edit-icon svg-icon-hidden" style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+                <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" data-form="display-name-form-container" height="auto" width="100%" onclick="toggleFormDisplay(this)" style="cursor: pointer;">
             </span>
         </span>
-        <span>@cudderson</span>
+        <span>@{{ user }}</span>
         <span>Balance Streak: 7</span>
         <span>----------</span>
         <!--form (done)-->
         <span>{{ biography.0 }}
-            <span style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
-                <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" height="auto" width="100%" onclick="displayBioForm()" style="cursor: pointer;">
+            <span class="svg-edit-icon svg-icon-hidden" style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+                <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" data-form="bio-form-container" height="auto" width="100%" onclick="toggleFormDisplay(this)" style="cursor: pointer;">
             </span>
         </span>
         <span>----------</span>
         <!--form (almost done)-->
         <span>Perfect Balance
-            <span style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
-                <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" height="auto" width="100%" onclick="displayPerfectForm()" style="cursor: pointer;">
+            <span class="svg-edit-icon svg-icon-hidden" style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+                <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" data-form="perfect-form-container" height="auto" width="100%" onclick="toggleFormDisplay(this)" style="cursor: pointer;">
             </span>
         </span>
         {% for perfect_activity in perfect_balance %}
@@ -37,8 +43,8 @@
     </div>
     <div class="profile-header">
         <div class="profile-quote">"{{ quote_data.quote }}"
-            <span style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
-                <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" height="auto" width="100%" onclick="displayQuoteForm()" style="cursor: pointer;">
+            <span class="svg-edit-icon svg-icon-hidden" style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+                <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" data-form="quote-form-container" height="auto" width="100%" onclick="toggleFormDisplay(this)" style="cursor: pointer;">
             </span>
         </div>
         <div class="profile-quote-author">- {{ quote_data.quote_author }}</div>
@@ -59,7 +65,7 @@
     </div>
 </div>
 <div class="bio-form-container form-container">
-    <div class="close-form" onclick="closeBioForm()"><div>&times;</div></div>
+    <div class="close-form" data-form="bio-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
 
     <form action="{% url 'kokoro_app:profile' %}" method="post">
         {% csrf_token %}
@@ -68,7 +74,7 @@
     </form>
 </div>
 <div class="perfect-form-container form-container">
-    <div class="close-form" onclick="closePerfectForm()"><div>&times;</div></div>
+    <div class="close-form" data-form="perfect-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
 
     <form action="{% url 'kokoro_app:profile' %}" method="post">
         {% csrf_token %}
@@ -79,7 +85,7 @@
     </form>
 </div>
 <div class="display-name-form-container form-container">
-    <div class="close-form" onclick="closeDisplayNameForm()"><div>&times;</div></div>
+    <div class="close-form" data-form="display-name-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
 
     <form action="{% url 'kokoro_app:profile' %}" method="post">
         {% csrf_token %}
@@ -89,7 +95,7 @@
 </div>
 
 <div class="quote-form-container form-container">
-    <div class="close-form" onclick="closeQuoteForm()"><div>&times;</div></div>
+    <div class="close-form" data-form="quote-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
 
     <form action="{% url 'kokoro_app:profile' %}" method="post">
         {% csrf_token %}
@@ -97,6 +103,17 @@
         <input type="submit" name="quote_form" value="Update Quote">
     </form>
 </div>
+
+<div class="profile-image-form-container form-container">
+    <div class="close-form" data-form="profile-image-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
+
+    <form action="{% url 'kokoro_app:profile' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ profile_image_form }}
+        <input type="submit" name="profile_image_form" value="Update Profile Photo">
+    </form>
+</div>
+
     <!--
     <div class="test-block">
         <div class="perfect-title"><b>Perfect Balance</b></div>
@@ -179,45 +196,31 @@
 </div>
 -->
 <script>
-    // toggle biography form on button click
-    var biographyForm = document.getElementsByClassName("bio-form-container")[0];
+    // Each svg has a 'data-form' attribute relating to the class of a form to display
+    // function grabs the 'data-form' value from the passed element, and toggles "show-form" class to the form
+    // that has className == data-form value of svg
 
-    function displayBioForm () {
-        biographyForm.classList.toggle("show-form");
-    }
-    function closeBioForm () {
-        biographyForm.classList.toggle("show-form");
-    }
+    function toggleFormDisplay(clickedSVG) {
+        var formToDisplay = clickedSVG.getAttribute("data-form");
+        var form = document.getElementsByClassName(formToDisplay)[0];
 
-    // toggle perfect balance form on button click
-    var perfectForm = document.getElementsByClassName("perfect-form-container")[0];
-
-    function displayPerfectForm () {
-        perfectForm.classList.toggle("show-form");
-    }
-    function closePerfectForm () {
-        perfectForm.classList.toggle("show-form");
+        form.classList.toggle("show-form");
     }
 
-    // toggle display name form on button click
-    var displayNameForm = document.getElementsByClassName("display-name-form-container")[0];
+    // Toggle edit-icon visibility and toggle text content of Edit Profile button
 
-    function displayDisplayNameForm() {
-        displayNameForm.classList.toggle("show-form");
-    }
-    function closeDisplayNameForm () {
-        displayNameForm.classList.toggle("show-form");
-    }
-
-    // toggle quote form on button click
-    var quoteForm = document.getElementsByClassName("quote-form-container")[0];
-
-    function displayQuoteForm () {
-        quoteForm.classList.toggle("show-form");
-    }
-
-    function closeQuoteForm () {
-        quoteForm.classList.toggle("show-form");
+    function testFunction(editProfileBtn) {
+        var svgEdit = document.getElementsByClassName("svg-edit-icon");
+        for (var i = 0; i < svgEdit.length; i++) {
+            svgEdit[i].classList.toggle("svg-icon-hidden");
+        }
+        if (editProfileBtn.innerHTML == "Edit Profile") {
+            editProfileBtn.innerHTML = "Done";
+        }
+        else {
+            editProfileBtn.innerHTML = "Edit Profile";
+        }
     }
 </script>
+
 {% endblock content %}

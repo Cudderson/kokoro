@@ -159,10 +159,20 @@ h2.text-fade {
 .grid-balance {
     grid-column: 1 / 13;
     grid-row: 3 / 4;
-    text-align: center;
     font-size: 1.25vw;
-    padding-top: 4em;
-    padding-bottom: 4em;
+    padding-top: 8vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.grid-balance h4, h6 {
+    padding: 0;
+    margin: 0;
+}
+
+.grid-balance h6 {
+    margin-top: 1vh;
 }
 
 .grid-item-daily {
@@ -233,14 +243,17 @@ svg text {
     margin-bottom: 6vw;
 }
 
-/* profile photo will replace this */
 .profile-placeholder {
     display: flex;
     grid-column: 3 / 5;
-    width: 100%;
-    height: 0;
-    padding-top: 100%; /* this hack allows a responsive perfect square */
-    background: white;
+    border-radius: 4px;
+    /*test for svg placement*/
+    position: relative;
+}
+
+.profile-image {
+    max-width: 100%;
+    height: auto;
     border: 1px solid black;
     border-radius: 4px;
 }
@@ -342,15 +355,22 @@ svg text {
     line-height: 1.5vw;
     font-size: 1.25vw;
 }
+
 .form-container input[type=submit] {
     width: 100%;
     padding: 10px 0px;
     background: lightgreen;
 }
+
 .perfect-form-container form {
     /* only for perfect form */
     margin-top: 20vh;
 }
+
+.profile-image-form-container input[type="file"] {
+    color: red;
+}
+
 .close-form {
     align-self: flex-end;
     width: 3vw;
@@ -360,6 +380,7 @@ svg text {
     margin: .5em .5em .5em .5em;
     cursor: pointer;
 }
+
 .close-form div {
     /* for the 'x' close symbol */
     width: 3vw;
@@ -368,6 +389,10 @@ svg text {
     text-align: center;
     font-size: 4vw;
     font-weight: bold;
+}
+
+.svg-icon-hidden {
+    visibility: hidden;
 }
 /* profile page styles end */
 

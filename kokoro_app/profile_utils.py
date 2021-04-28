@@ -58,15 +58,18 @@ def parse_quote_data(quote_data_queryset):
     :return: parsed dictionary of the queryset
     """
 
-    # convert to string
-    quote_data_string = str(quote_data_queryset[0])
-    # parse string to list
-    quote_data_parsed = quote_data_string.split(',,, ')
-    # convert to dict for template readability
-    quote_data = {
-        'quote': quote_data_parsed[0],
-        'quote_author': quote_data_parsed[1]
-    }
+    if len(quote_data_queryset) > 0:
+        # convert to string
+        quote_data_string = str(quote_data_queryset[0])
+        # parse string to list
+        quote_data_parsed = quote_data_string.split(',,, ')
+        # convert to dict for template readability
+        quote_data = {
+            'quote': quote_data_parsed[0],
+            'quote_author': quote_data_parsed[1]
+        }
+    else:
+        quote_data = {'quote': 'NO QUOTE', 'quote_author': 'NO AUTHOR'}
 
     return quote_data
 
@@ -94,13 +97,16 @@ def get_perfect_balance_data(perfect_balance_queryset):
     :return: parsed list of the queryset
     """
 
-    # convert queryset result to string, then to list, then capitalize for UI
-    perfect_balance = str(perfect_balance_queryset[0])
-    perfect_balance = perfect_balance.split(",,, ")
-    perfect_balance = [activity.capitalize() for activity in perfect_balance]
+    if len(perfect_balance_queryset) > 0:
+        # convert queryset result to string, then to list, then capitalize for UI
+        perfect_balance = str(perfect_balance_queryset[0])
+        perfect_balance = perfect_balance.split(",,, ")
+        perfect_balance = [activity.capitalize() for activity in perfect_balance]
 
-    if not perfect_balance:
+    else:
+        perfect_balance = ['none' for x in range(3)]
+    #if not perfect_balance:
         # Convert boolean to string for template comparison
-        perfect_balance = str(False)
+    #   perfect_balance = str(False)
 
     return perfect_balance
