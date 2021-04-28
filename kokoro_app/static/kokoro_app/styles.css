@@ -159,10 +159,20 @@ h2.text-fade {
 .grid-balance {
     grid-column: 1 / 13;
     grid-row: 3 / 4;
-    text-align: center;
     font-size: 1.25vw;
-    padding-top: 4em;
-    padding-bottom: 4em;
+    padding-top: 8vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.grid-balance h4, h6 {
+    padding: 0;
+    margin: 0;
+}
+
+.grid-balance h6 {
+    margin-top: 1vh;
 }
 
 .grid-item-daily {
