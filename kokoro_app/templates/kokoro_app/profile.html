@@ -1,7 +1,7 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
-<div onclick="testFunction()" style="cursor: pointer; border: 1px solid black; border-radius: 4px; width: 10%; text-align: center; margin: auto; margin-bottom: 2vw;">Edit Profile</div>
+<div onclick="testFunction(this)" style="cursor: pointer; user-select: none; border: 1px solid black; border-radius: 4px; width: 10%; text-align: center; margin: auto; margin-bottom: 2vw;">Edit Profile</div>
 <div class="profile-grid">
     <div class="profile-placeholder">
         <img class="profile-image" src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
@@ -207,13 +207,20 @@
         form.classList.toggle("show-form");
     }
 
-    // next, we'll make the svg's only appear when 'edit profile' clicked.
-    // make svg display: none;
-    function testFunction() {
+    // Toggle edit-icon visibility and toggle text content of Edit Profile button
+
+    function testFunction(editProfileBtn) {
         var svgEdit = document.getElementsByClassName("svg-edit-icon");
         for (var i = 0; i < svgEdit.length; i++) {
             svgEdit[i].classList.toggle("svg-icon-hidden");
         }
+        if (editProfileBtn.innerHTML == "Edit Profile") {
+            editProfileBtn.innerHTML = "Done";
+        }
+        else {
+            editProfileBtn.innerHTML = "Edit Profile";
+        }
     }
 </script>
+
 {% endblock content %}
