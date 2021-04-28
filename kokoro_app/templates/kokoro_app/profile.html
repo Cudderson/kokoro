@@ -2,7 +2,7 @@
 
 {% block content %}
 <div>
-    User's saved tz = {{ user_timezone.0 }}
+    User's local time: {{ user_timezone }}
 </div>
 <form action="{% url 'kokoro_app:profile' %}" method="POST">
     {% csrf_token %}
