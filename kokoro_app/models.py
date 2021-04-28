@@ -125,3 +125,17 @@ class ProfileImage(models.Model):
     def __str__(self):
 
         return f"{self.owner}'s Profile Image"
+
+
+class ProfileTimezone(models.Model):
+    """
+    A string of a user's timezone
+    """
+
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    user_timezone = models.CharField(default='UTC', max_length=50)
+
+    def __str__(self):
+
+        return self.user_timezone

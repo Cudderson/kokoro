@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
-from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote, ProfileImage
-from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, ProfileQuoteForm, ProfileImageForm
+from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote, ProfileImage, ProfileTimezone
+from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm
 from . import balance, profile_utils
+import pytz
 
 
 def index(request):
@@ -62,7 +64,20 @@ def profile(request):
     """
 
     if request.method == "POST":
-        if 'perfect_form' in request.POST:
+
+        # user timezone testing
+        if 'tz_form' in request.POST:
+            # timezone the user selected
+            user_timezone_form = ProfileTimezoneForm(request.POST, instance=request.user.profiletimezone)
+            # check validity
+            if user_timezone_form.is_valid():
+                print("VALID")
+                # save form (working)
+                user_timezone_form.save()
+
+            return redirect('/profile')
+
+        elif 'perfect_form' in request.POST:
             perfect_form_submitted = PerfectBalanceForm(data=request.POST)
             if perfect_form_submitted.is_valid():
                 # delete old perfect balance (working)
@@ -124,10 +139,6 @@ def profile(request):
                 profile_image_submitted.save()
                 return redirect('/profile')
 
-
-    # testing what the image form looks like
-    profile_image_form = ProfileImageForm()
-
     # Returns all activities submitted today for user
     daily_mind = balance.daily_mind(request)
     daily_body = balance.daily_body(request)
@@ -153,11 +164,15 @@ def profile(request):
     perfect_balance_queryset = PerfectBalance.objects.filter(owner=request.user)
     perfect_balance = profile_utils.get_perfect_balance_data(perfect_balance_queryset)
 
+    # user's timezone
+    user_timezone = ProfileTimezone.objects.filter(owner__exact=request.user)
+
     # forms for profile page
     perfect_form = PerfectBalanceForm()
     bio_form = ProfileBioForm()
     display_name_form = ProfileDisplayNameForm()
     quote_form = ProfileQuoteForm()
+    profile_image_form = ProfileImageForm()
 
     context = {
         'user': user,
@@ -170,8 +185,10 @@ def profile(request):
         'biography': biography,
         'quote_data': quote_data,
         'quote_form': quote_form,
-        # testing
         'profile_image_form': profile_image_form,
+        # testing tz
+        'timezones': pytz.common_timezones,
+        'user_timezone': user_timezone
     }
 
     return render(request, 'kokoro_app/profile.html', context)
