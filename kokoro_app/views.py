@@ -168,17 +168,15 @@ def profile(request):
     # get UTC time with offset
     utc_timezone = datetime.datetime.now(tz=pytz.UTC)
     print(f'utc time: {utc_timezone}')
-
     # get user's saved time zone
     user_timezone_object = ProfileTimezone.objects.filter(owner__exact=request.user)[0] # type= <class 'kokoro_app.models.ProfileTimezone'>
-
     # convert to string
     user_timezone_string = str(user_timezone_object)
     print(f'users saved TZ string: {user_timezone_string}')
-
     # convert utc_timezone to user timezone (with offset)
     user_timezone = utc_timezone.astimezone(pytz.timezone(user_timezone_string))
     print(f'user timezone: {user_timezone}')
+    print(f"Are these the same time? {user_timezone == utc_timezone}") # true
 
     # forms for profile page
     perfect_form = PerfectBalanceForm()

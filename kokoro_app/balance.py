@@ -1,24 +1,30 @@
 # File for 'balance' feature helper functions/queries
+# This file violates DRY methods. Consider making less database queries if possible
 
-from kokoro_app.models import Activity
+from kokoro_app.models import Activity, ProfileTimezone
 import datetime
 import pytz
 
 
 # Define start of current day for queries
-def get_start_of_today():
+def get_start_of_today(request):
     """
-    Returns the beginning of today (midnight) as an aware datetime
+    Returns the beginning of today (midnight) as an aware datetime with respect to user's timezone
     :return: aware datetime object
     """
 
-    # pytz timezone definition
-    tz = pytz.timezone('UTC')
+    # get UTC time with offset
+    utc_timezone = datetime.datetime.now(tz=pytz.UTC)
 
-    # Apply timezone info to make datetime aware
-    today = datetime.datetime.now(tz=tz)
+    # get user's saved time zone (type = queryset)
+    user_timezone_object = ProfileTimezone.objects.filter(owner__exact=request.user)[0]
 
-    # Replace current datetime values with midnight values
+    # convert to string
+    user_timezone_string = str(user_timezone_object)
+
+    # convert utc_timezone to user timezone (with offset)
+    today = utc_timezone.astimezone(pytz.timezone(user_timezone_string))
+
     start_of_day = today.replace(
         hour=0,
         minute=0,
@@ -37,7 +43,7 @@ def daily_mind(request):
     :return: django queryset
     """
 
-    start_of_today = get_start_of_today()
+    start_of_today = get_start_of_today(request)
 
     # Create queryset for activities submitted after start of today
     daily_mind_activities = Activity.objects.filter(
@@ -56,7 +62,7 @@ def daily_body(request):
     :return: django queryset
     """
 
-    start_of_today = get_start_of_today()
+    start_of_today = get_start_of_today(request)
 
     # Create queryset for activities submitted after start of today
     daily_body_activities = Activity.objects.filter(
@@ -75,7 +81,7 @@ def daily_soul(request):
     :return: django queryset
     """
 
-    start_of_today = get_start_of_today()
+    start_of_today = get_start_of_today(request)
 
     # Create queryset for activities submitted after start of today
     daily_soul_activities = Activity.objects.filter(
