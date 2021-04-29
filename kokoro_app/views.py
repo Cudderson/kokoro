@@ -44,13 +44,16 @@ def home(request):
     }
 
     # Returns boolean indicating if user has submitted at least 1 mind, body, and soul activity today
-    found_balance = balance.balance(request)
+    balance_data = balance.balance(request)
+    found_balance = balance_data[0]
+    balance_streak = balance_data[1]
 
     context = {
         'form': form,
         'activities': activities,
         'all_daily': all_daily,
         'balance_bool': found_balance,
+        'balance_streak': balance_streak
     }
 
     return render(request, 'kokoro_app/home.html', context)

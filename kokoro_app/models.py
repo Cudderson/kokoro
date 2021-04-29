@@ -42,7 +42,7 @@ class BalanceStreak(models.Model):
 
     balance_streak = models.PositiveSmallIntegerField(default=0)
 
-    date_last_incremented = models.DateTimeField(auto_now_add=True)
+    date_last_incremented = models.DateTimeField()
 
     expiration_date = models.DateTimeField()
 

@@ -108,49 +108,55 @@ def balance(request):
 
     # If all true, user has found balance
     if mind_fulfilled and body_fulfilled and soul_fulfilled:
+        # **********************************************
+        # Let's try to put it all together:
         found_balance = True
 
-        # this logic will be moved to helper file
-        # testing balance streak here because we have request data
-        # Might use signal to create initial streak of 0
-        increment_streak = BalanceStreak.objects.get(owner__exact=request.user)
-        print(f'increment streak for {request.user}: {increment_streak}')
-        increment_streak.balance_streak += 1
-        print(f'updated increment streak: {increment_streak}')
+        # determine if balance streak should be incremented
+        # get date of today and date of date_last_incremented
 
-        # add expiration date before saving
-        # this is the one
-        start_of_today_utc = datetime.datetime.now(tz=pytz.UTC).replace(hour=0, minute=0, second=0, microsecond=0)
-        print(f"start of today NO TZ: {start_of_today_utc}")
+        # today (user tz already applied)
+        today = get_start_of_today(request)
+        today_date = today.date()
 
-        start_of_tomorrow_utc = start_of_today_utc + datetime.timedelta(days=1)
+        # get date() of date_last_incremented
+        date_last_incremented_utc = BalanceStreak.objects.filter(owner__exact=request.user)[0].date_last_incremented
 
-        # this is the expiration date in utc
-        end_of_tomorrow_utc = start_of_tomorrow_utc + datetime.timedelta(hours=23, minutes=59, seconds=59, )
+        # get user's saved time zone (type = queryset)
+        user_timezone_object = ProfileTimezone.objects.filter(owner__exact=request.user)[0]
+        # convert to string
+        user_timezone_string = str(user_timezone_object)
 
-        expiration_date = end_of_tomorrow_utc
+        # convert date_last_incremented_utc to user TZ, get date
+        date_last_incremented_user_tz = date_last_incremented_utc.astimezone(pytz.timezone(user_timezone_string))
+        date_last_incremented_user_tz_date = date_last_incremented_user_tz.date()
 
-        increment_streak.expiration_date = expiration_date
-        increment_streak.save()
-        # show when streak incremented last
-        print(f'date last incremented: {increment_streak.date_last_incremented}')
-        print(f'Streak expiration date: {expiration_date}')
-        print(is_aware(increment_streak.date_last_incremented))
-        print(is_aware(expiration_date))
+        # check if streak incremented today:
+        if today_date > date_last_incremented_user_tz_date:
 
-        # let's now get the date_added and expiration date from database to prove that both are UTC and make sense
-        proof = BalanceStreak.objects.filter(owner__exact=request.user)
-        print(proof)
-        print(proof[0].date_last_incremented)
-        print(proof[0].expiration_date)
-        # all looks good!!
-        # at this point, we have a model that saves the user's balance streak, and we add our own expiration date
-        # the first problem is that the streak is incremented on every page load, rather than checking if streak was incremented today
-        # streak should not increment if date_last_incremented.day = today
+            # increment streak, set new expiration
+            balance_streak = BalanceStreak.objects.get(owner__exact=request.user)
+            balance_streak.balance_streak += 1
 
-        # a good question: when should the streak be checked?
+            # add expiration date before saving
+            start_of_today_utc = datetime.datetime.now(tz=pytz.UTC).replace(hour=0, minute=0, second=0, microsecond=0)
+            start_of_tomorrow_utc = start_of_today_utc + datetime.timedelta(days=1)
+            end_of_tomorrow_utc = start_of_tomorrow_utc + datetime.timedelta(hours=23, minutes=59, seconds=59)
+
+            expiration_date = end_of_tomorrow_utc
+            balance_streak.expiration_date = expiration_date
+
+            # add date_last_incremented too
+            balance_streak.date_last_incremented = datetime.datetime.now(tz=pytz.UTC)
+
+            balance_streak.save()
+        else:
+            ...
+            # don't increment streak
     else:
         found_balance = False
 
-    # Convert bool to string for template evaluation (Jinja2)
-    return str(found_balance)
+    # Convert bool to string for template evaluation (Jinja2), return user balance streak
+    balance_streak = BalanceStreak.objects.get(owner__exact=request.user)
+    balance_streak = balance_streak.balance_streak
+    return str(found_balance), balance_streak

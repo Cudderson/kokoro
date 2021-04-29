@@ -2,6 +2,8 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from kokoro_app.models import ProfileImage, ProfileTimezone, BalanceStreak
+import datetime
+import pytz
 
 # 'post_save' is a signal that fires after an object is saved
 # We want a 'post_save' signal when a user is created
@@ -21,7 +23,10 @@ def create_profile_defaults(sender, instance, created, **kwargs):
     if created:
         ProfileImage.objects.create(owner=instance)
         ProfileTimezone.objects.create(owner=instance)
-        BalanceStreak.objects.create(owner=instance)
+        # set an initial expiration date of now, date_last_incremented to 2 days ago to allow streak incrementation on day 1
+        BalanceStreak.objects.create(owner=instance,
+                                     date_last_incremented=(pytz.timezone('UTC').localize(datetime.datetime.now())) - datetime.timedelta(days=2),
+                                     expiration_date=pytz.timezone('UTC').localize(datetime.datetime.now()))
 
 
 @receiver(post_save, sender=User)
