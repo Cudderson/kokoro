@@ -165,9 +165,6 @@ def profile(request):
     perfect_balance_queryset = PerfectBalance.objects.filter(owner=request.user)
     perfect_balance = profile_utils.get_perfect_balance_data(perfect_balance_queryset)
 
-    # using user timezone, calculate current local time for user
-    # move to helper file later
-
     # get UTC time with offset
     utc_timezone = datetime.datetime.now(tz=pytz.UTC)
     print(f'utc time: {utc_timezone}')
@@ -182,7 +179,6 @@ def profile(request):
     # convert utc_timezone to user timezone (with offset)
     user_timezone = utc_timezone.astimezone(pytz.timezone(user_timezone_string))
     print(f'user timezone: {user_timezone}')
-    # template prints out the utc time, no offset applied. (fix)
 
     # forms for profile page
     perfect_form = PerfectBalanceForm()
@@ -206,7 +202,7 @@ def profile(request):
         # testing tz
         'timezones': pytz.common_timezones,
         'user_timezone_object': user_timezone_object,
-        'user_timezone': user_timezone
+        'user_timezone': user_timezone,
     }
 
     return render(request, 'kokoro_app/profile.html', context)

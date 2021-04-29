@@ -1,8 +1,12 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
+{% load tz %}
 <div>
-    User's local time: {{ user_timezone }}
+    {% localtime off %}
+        {{ user }}'s local time:
+        {{ user_timezone }}
+    {% endlocaltime %}
 </div>
 <form action="{% url 'kokoro_app:profile' %}" method="POST">
     {% csrf_token %}
