@@ -44,6 +44,7 @@ def home(request):
     }
 
     # Returns boolean indicating if user has submitted at least 1 mind, body, and soul activity today
+    # Also returns user balance streak
     balance_data = balance.balance(request)
     found_balance = balance_data[0]
     balance_streak = balance_data[1]

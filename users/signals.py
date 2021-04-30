@@ -25,8 +25,8 @@ def create_profile_defaults(sender, instance, created, **kwargs):
         ProfileTimezone.objects.create(owner=instance)
         # set an initial expiration date of now, date_last_incremented to 2 days ago to allow streak incrementation on day 1
         BalanceStreak.objects.create(owner=instance,
-                                     date_last_incremented=(pytz.timezone('UTC').localize(datetime.datetime.now())) - datetime.timedelta(days=2),
-                                     expiration_date=pytz.timezone('UTC').localize(datetime.datetime.now()))
+                                     date_last_incremented=datetime.datetime.now(tz=pytz.timezone('UTC')) - datetime.timedelta(days=2),
+                                     expiration_date=datetime.datetime.now(tz=pytz.timezone('UTC')))
 
 
 @receiver(post_save, sender=User)

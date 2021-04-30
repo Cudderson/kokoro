@@ -106,6 +106,35 @@ def balance(request):
     body_fulfilled = True if len(daily_body(request)) > 0 else False
     soul_fulfilled = True if len(daily_soul(request)) > 0 else False
 
+    # check expiration_date of balance streak
+    # If current time(UTC) is greater than expiration date(UTC), reset streak to 0
+    # get user's saved time zone (type = queryset)
+
+    user_timezone_object = ProfileTimezone.objects.filter(owner__exact=request.user)[0]
+    # convert to string
+    user_timezone_string = str(user_timezone_object)
+
+    current_time = datetime.datetime.now(tz=pytz.UTC)
+    print(f'current time utc: {current_time}')
+    balance_streak_expiration_date = BalanceStreak.objects.filter(owner__exact=request.user)[0].expiration_date
+    print(f'streak expiration date: {balance_streak_expiration_date}')
+
+    #convert to user TZ
+    current_time = current_time.astimezone(pytz.timezone(user_timezone_string))
+    balance_streak_expiration_date = balance_streak_expiration_date.astimezone(pytz.timezone(user_timezone_string))
+    print(f'current time user TZ: {current_time}')
+    print(f'streak expiration date user tz: {balance_streak_expiration_date}')
+    if current_time > balance_streak_expiration_date:
+        # add condition to check if streak == 0. If it does, no need to reset it.
+        ...
+        print("Streak reset to 0 (current time > expiration date)")
+        balance_streak_object = BalanceStreak.objects.filter(owner__exact=request.user)[0]
+
+        balance_streak_object.expiration_date = datetime.datetime.now(tz=pytz.timezone('UTC'))
+        balance_streak_object.balance_streak = 0
+
+        balance_streak_object.save()
+
     # If all true, user has found balance
     if mind_fulfilled and body_fulfilled and soul_fulfilled:
         # **********************************************
@@ -139,16 +168,24 @@ def balance(request):
             balance_streak.balance_streak += 1
 
             # add expiration date before saving
-            start_of_today_utc = datetime.datetime.now(tz=pytz.UTC).replace(hour=0, minute=0, second=0, microsecond=0)
-            start_of_tomorrow_utc = start_of_today_utc + datetime.timedelta(days=1)
-            end_of_tomorrow_utc = start_of_tomorrow_utc + datetime.timedelta(hours=23, minutes=59, seconds=59)
+            # *** should calculate user's local expiration time, then convert to utc
+            start_of_today_user_tz = datetime.datetime.now(tz=pytz.timezone(user_timezone_string)).replace(hour=0, minute=0, second=0, microsecond=0)
+            start_of_tomorrow_user_tz = start_of_today_user_tz + datetime.timedelta(days=1)
+            end_of_tomorrow_user_tz = start_of_tomorrow_user_tz + datetime.timedelta(hours=23, minutes=59, seconds=59)
 
+            # now convert to utc for database
+            end_of_tomorrow_utc = end_of_tomorrow_user_tz.astimezone(pytz.timezone('UTC'))
+
+            # add expiration date to database
             expiration_date = end_of_tomorrow_utc
             balance_streak.expiration_date = expiration_date
 
             # add date_last_incremented too
             balance_streak.date_last_incremented = datetime.datetime.now(tz=pytz.UTC)
 
+            print("These values were saved to db:")
+            print(f'expiration date: {expiration_date}')
+            print(f'date last incremented: {datetime.datetime.now(tz=pytz.UTC)}')
             balance_streak.save()
         else:
             ...
