@@ -1,4 +1,5 @@
 # File for 'balance' feature helper functions/queries
+# includes BalanceStreak help too
 # This file violates DRY methods. Consider making less database queries if possible
 
 from django.utils.timezone import is_aware
@@ -94,6 +95,53 @@ def daily_soul(request):
     return daily_soul_activities
 
 
+# defining helper functions for balance() below:
+def get_user_timezone(request):
+    """
+    :param request: http request data
+    :return: user's timezone (string)
+    """
+
+    user_timezone_object = ProfileTimezone.objects.filter(owner__exact=request.user)[0]
+    user_timezone_string = str(user_timezone_object)
+
+    return user_timezone_string
+
+
+def get_user_balance_streak_object(request):
+    """
+    :param request: http data
+    :return: user's BalanceStreak object from database
+    """
+
+    balance_streak_object = BalanceStreak.objects.filter(owner__exact=request.user)[0]
+
+    return balance_streak_object
+
+
+def convert_to_utc(datetime_to_convert):
+    """
+    :param datetime_to_convert: an aware datetime object
+    :return: an aware datetime object with UTC timezone configuration
+    """
+
+    utc_datetime_object = datetime_to_convert.astimezone(pytz.UTC)
+
+    return utc_datetime_object
+
+
+def convert_to_user_tz(datetime_to_convert, user_timezone):
+    """
+    :param datetime_to_convert: an aware datetime object
+    :param user_timezone: user's timezone from database (string)
+    :return: an aware datetime object with User TZ configuration
+    """
+
+    user_tz_datetime_object = datetime_to_convert.astimezone(pytz.timezone(user_timezone))
+
+    return user_tz_datetime_object
+
+
 def balance(request):
     """
     Returns a boolean indicating if user has at least 1 activity for mind, body and soul
@@ -132,7 +180,18 @@ def balance(request):
 
     ### Blocks 1 and 3 define variables for the conditions of Block 2 and 4.
     ### The goal is to take some of the load off of this function
-    ### I guess I can start with Block 1 and move along. (committing at this point in case I want ot go back to this point.
+    ### I guess I can start with Block 1 and move along. (committing at this point in case I want ot go back to this point.)
+
+    ### Function ideas that would be helpful:
+    ### - a function that retrieves user's ProfileTimezone object
+    ### - a function that retrieves user's BalanceStreak object
+    ### - a function that converts aware datetime objects to UTC
+    ### - a function that converts aware datetime objects to userTZ
+
+    ### I can start with those, and maybe can add some object saving functions afterwards.
+    ### I have created the above functions. In future, will be helpful to add type-checking handlers
+
+    ### Next, I will attempt to factor out logic from balance(), and call my new functions instead (committing here)
 
     # check expiration_date of balance streak
     # If current time(UTC) is greater than expiration date(UTC), reset streak to 0
