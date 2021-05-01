@@ -19,15 +19,30 @@ def index(request):
 def home(request):
     """Home Page for Kokoro users"""
 
-    form = ActivityForm()
-
     if request.method == "POST":
-        form = ActivityForm(data=request.POST)
-        if form.is_valid():
-            new_form = form.save(commit=False)
-            new_form.owner = request.user
-            new_form.save()
+        if 'activity_form' in request.POST:
+            activity_form = ActivityForm(data=request.POST)
+            if activity_form.is_valid():
+                new_form = activity_form.save(commit=False)
+                new_form.owner = request.user
+                new_form.save()
+                return redirect('/home')
+
+        elif 'manage_form' in request.POST:
+            raw_post_data = request.POST
+            # should probably move this logic to helper file
+            # checkbox attrs are key=id_of_entry, value=on/off
+            # By retrieving the key(s), we know what values to delete from database
+            # '[1:len(result) - 1]' removes the csrf_token and button name from result
+            post_data = list(raw_post_data.keys())[1:len(raw_post_data) - 1]
+
+            # Delete objects based on their 'id' obtained from the queryDict/QueryList
+            acts_to_delete = Activity.objects.filter(id__in=post_data)
+            acts_to_delete.delete()
             return redirect('/home')
+
+    # form for submitting daily activities
+    activity_form = ActivityForm()
 
     activities = Activity.objects.filter(owner=request.user).order_by('date_added')
 
@@ -50,7 +65,7 @@ def home(request):
     balance_streak = balance_data[1]
 
     context = {
-        'form': form,
+        'activity_form': activity_form,
         'activities': activities,
         'all_daily': all_daily,
         'balance_bool': found_balance,
@@ -90,19 +105,6 @@ def profile(request):
                 # save new perfect balance form with helper function
                 profile_utils.save_new_perfect_balance(request, perfect_form_submitted)
                 return redirect('/profile')
-
-        # *** Do this later if decide to include on profile page ***
-        elif 'manage_form' in request.POST: # this functionality isn't included yet (form to delete activities)
-            # could move some logic to helper file
-            result = request.POST
-            # checkbox attrs are key=id_of_entry, value=on/off
-            # By retrieving the key(s), we know what values to delete from database
-            # '[1:len(result) - 1]' removes the csrf_token and button name from result
-            result = list(result.keys())[1:len(result) - 1]
-
-            # Delete objects based on their 'id' obtained from the queryDict/QueryList
-            acts_to_delete = Activity.objects.filter(id__in=result)
-            acts_to_delete.delete()
 
         elif 'bio_form' in request.POST:
             # user is submitting a biography
@@ -201,7 +203,6 @@ def profile(request):
         'quote_data': quote_data,
         'quote_form': quote_form,
         'profile_image_form': profile_image_form,
-        # testing tz
         'timezones': pytz.common_timezones,
         'user_timezone_object': user_timezone_object,
         'user_timezone': user_timezone,
