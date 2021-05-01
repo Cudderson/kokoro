@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote, ProfileImage
+from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote, ProfileImage, ProfileTimezone
 
 
 class ActivityForm(forms.ModelForm):
@@ -50,3 +50,9 @@ class ProfileImageForm(forms.ModelForm):
         #labels = {
         #    'image': ''
         #}
+
+
+class ProfileTimezoneForm(forms.ModelForm):
+    class Meta:
+        model = ProfileTimezone
+        fields = ['user_timezone']

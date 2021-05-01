@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
-from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote, ProfileImage
-from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, ProfileQuoteForm, ProfileImageForm
+from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak
+from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm
 from . import balance, profile_utils
+import pytz
+import datetime
 
 
 def index(request):
@@ -41,13 +44,17 @@ def home(request):
     }
 
     # Returns boolean indicating if user has submitted at least 1 mind, body, and soul activity today
-    found_balance = balance.balance(request)
+    # Also returns user balance streak
+    balance_data = balance.balance(request)
+    found_balance = balance_data[0]
+    balance_streak = balance_data[1]
 
     context = {
         'form': form,
         'activities': activities,
         'all_daily': all_daily,
         'balance_bool': found_balance,
+        'balance_streak': balance_streak
     }
 
     return render(request, 'kokoro_app/home.html', context)
@@ -62,7 +69,20 @@ def profile(request):
     """
 
     if request.method == "POST":
-        if 'perfect_form' in request.POST:
+
+        # user timezone testing
+        if 'tz_form' in request.POST:
+            # timezone the user selected
+            user_timezone_form = ProfileTimezoneForm(request.POST, instance=request.user.profiletimezone)
+            # check validity
+            if user_timezone_form.is_valid():
+                print("VALID")
+                # save form (working)
+                user_timezone_form.save()
+
+            return redirect('/profile')
+
+        elif 'perfect_form' in request.POST:
             perfect_form_submitted = PerfectBalanceForm(data=request.POST)
             if perfect_form_submitted.is_valid():
                 # delete old perfect balance (working)
@@ -124,10 +144,6 @@ def profile(request):
                 profile_image_submitted.save()
                 return redirect('/profile')
 
-
-    # testing what the image form looks like
-    profile_image_form = ProfileImageForm()
-
     # Returns all activities submitted today for user
     daily_mind = balance.daily_mind(request)
     daily_body = balance.daily_body(request)
@@ -153,11 +169,25 @@ def profile(request):
     perfect_balance_queryset = PerfectBalance.objects.filter(owner=request.user)
     perfect_balance = profile_utils.get_perfect_balance_data(perfect_balance_queryset)
 
+    # get UTC time with offset
+    utc_timezone = datetime.datetime.now(tz=pytz.UTC)
+    print(f'utc time: {utc_timezone}')
+    # get user's saved time zone
+    user_timezone_object = ProfileTimezone.objects.filter(owner__exact=request.user)[0] # type= <class 'kokoro_app.models.ProfileTimezone'>
+    # convert to string
+    user_timezone_string = str(user_timezone_object)
+    print(f'users saved TZ string: {user_timezone_string}')
+    # convert utc_timezone to user timezone (with offset)
+    user_timezone = utc_timezone.astimezone(pytz.timezone(user_timezone_string))
+    print(f'user timezone: {user_timezone}')
+    print(f"Are these the same time? {user_timezone == utc_timezone}") # true
+
     # forms for profile page
     perfect_form = PerfectBalanceForm()
     bio_form = ProfileBioForm()
     display_name_form = ProfileDisplayNameForm()
     quote_form = ProfileQuoteForm()
+    profile_image_form = ProfileImageForm()
 
     context = {
         'user': user,
@@ -170,8 +200,11 @@ def profile(request):
         'biography': biography,
         'quote_data': quote_data,
         'quote_form': quote_form,
-        # testing
         'profile_image_form': profile_image_form,
+        # testing tz
+        'timezones': pytz.common_timezones,
+        'user_timezone_object': user_timezone_object,
+        'user_timezone': user_timezone,
     }
 
     return render(request, 'kokoro_app/profile.html', context)

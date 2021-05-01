@@ -33,6 +33,28 @@ class Activity(models.Model):
         return self.activity.title() + ": " + self.description.title()
 
 
+class BalanceStreak(models.Model):
+    """
+    A user's streak of the amount of successive days where balance was found
+    """
+
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    balance_streak = models.PositiveSmallIntegerField(default=0)
+
+    date_last_incremented = models.DateTimeField()
+
+    expiration_date = models.DateTimeField()
+
+    def __str__(self):
+        """
+        :return: string representation of the user's current balance streak
+        """
+
+        # convert int to string
+        return str(self.balance_streak)
+
+
 class PerfectBalance(models.Model):
     """
     A user's 'perfect balance' section on profile page
@@ -125,3 +147,17 @@ class ProfileImage(models.Model):
     def __str__(self):
 
         return f"{self.owner}'s Profile Image"
+
+
+class ProfileTimezone(models.Model):
+    """
+    A string of a user's timezone
+    """
+
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    user_timezone = models.CharField(default='UTC', max_length=50)
+
+    def __str__(self):
+
+        return self.user_timezone
