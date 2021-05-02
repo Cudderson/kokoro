@@ -170,7 +170,7 @@ class ContactInfo(models.Model):
 
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    user_email = models.EmailField()
+    user_email = models.EmailField(null=True)
 
     def __str__(self):
 

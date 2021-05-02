@@ -160,7 +160,7 @@ def profile(request):
                 # Create default ContactInfo instance for user, then override with POST data
                 print(e)
                 print(f'Creating ContactInfo for {request.user}...')
-                contact_info, created = ContactInfo.objects.get_or_create(owner=request.user, user_email='kokoro@kokoro.com')
+                contact_info = ContactInfo.objects.create(owner=request.user)
                 contact_info_submitted = ContactInfoForm(data=request.POST, instance=request.user.contactinfo)
             # check validity
             if contact_info_submitted.is_valid():
