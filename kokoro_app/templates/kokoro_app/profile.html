@@ -156,13 +156,25 @@
 <div>
     <p>{{ user }}'s Posts:</p>
     {% for post in posts %}
-        {{ post }}
-        {{ post.author }}
-        {{ post.date_published }}
-        {{ post.post_slug }}
+        {{ post.headline }}<br>
+        {{ post.content }}<br>
+        {{ post.author }}<br>
+        {{ post.date_published }}<br>
+        {{ post.post_slug }}<br>
+        <br>
+        <br>
         <br>
     {% endfor %}
 </div>
+<p>Profile Post Form:</p>
+<div>
+    <form action="{% url 'kokoro_app:profile' %}" method="post">
+    {{ profile_post_form.as_p }}
+    {% csrf_token %}
+    <input style="margin: 1rem;" type="submit" name="profile_post_form" value="Publish">
+</form>
+</div>
+
 <script>
     // Each svg has a 'data-form' attribute relating to the class of a form to display
     // function grabs the 'data-form' value from the passed element, and toggles "show-form" class to the form

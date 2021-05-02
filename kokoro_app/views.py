@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.utils.text import slugify
+from django.utils.crypto import get_random_string
+from django.db import IntegrityError
 
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName,\
                     ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost
 from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, \
-                   ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm
+                   ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm, ProfilePostForm
 from . import balance, profile_utils
 import pytz
 import datetime
@@ -169,6 +172,30 @@ def profile(request):
                 contact_info_submitted.save()
                 return redirect('/profile')
 
+        # testing profile posts
+        elif 'profile_post_form' in request.POST:
+            # get form data
+            post_submitted = ProfilePostForm(data=request.POST)
+
+            # check validity
+            if post_submitted.is_valid():
+                print('Valid Profile Post.')
+                new_post = post_submitted.save(commit=False)
+                # add author and unique slug to post
+                new_post.author = request.user
+                try:
+                    new_post.post_slug = slugify(new_post.headline)
+                    new_post.save()
+                except IntegrityError:
+                    # The generated slug was not unique
+                    new_slug = slugify(new_post.headline)
+                    new_slug_id = get_random_string(length=6)
+                    unique_slug = f'{new_slug}-{new_slug_id}'
+                    print(f'Generated unique slug: {unique_slug}')
+                    new_post.post_slug = unique_slug
+                    new_post.save()
+                return redirect('/profile')
+
     # Returns all activities submitted today for user
     daily_mind = balance.daily_mind(request)
     daily_body = balance.daily_body(request)
@@ -216,6 +243,7 @@ def profile(request):
     quote_form = ProfileQuoteForm()
     profile_image_form = ProfileImageForm()
     contact_info_form = ContactInfoForm()
+    profile_post_form = ProfilePostForm()
 
     # testing Profile Posts
     profile_posts = ProfilePost.objects.filter(author__exact=request.user)
@@ -239,6 +267,7 @@ def profile(request):
         'user_timezone': user_timezone,
         # testing profile posts
         'posts': profile_posts,
+        'profile_post_form': profile_post_form,
     }
 
     return render(request, 'kokoro_app/profile.html', context)

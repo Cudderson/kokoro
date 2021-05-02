@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote,\
-                    ProfileImage, ProfileTimezone, ContactInfo
+                    ProfileImage, ProfileTimezone, ContactInfo, ProfilePost
 
 
 class ActivityForm(forms.ModelForm):
@@ -63,3 +63,9 @@ class ContactInfoForm(forms.ModelForm):
     class Meta:
         model = ContactInfo
         fields = ['user_email']
+
+
+class ProfilePostForm(forms.ModelForm):
+    class Meta:
+        model = ProfilePost
+        fields = ['headline', 'content']
