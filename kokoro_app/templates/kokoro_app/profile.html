@@ -58,7 +58,11 @@
             <span class="perfect-activity">{{ perfect_activity }}</span>
         {% endfor %}
         <span>----------</span>
-        <span style="text-decoration: underline">Contact</span>
+        <span style="text-decoration: underline">Contact
+            <span class="svg-edit-icon svg-icon-hidden" style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+                    <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" data-form="contact-info-form-container" height="auto" width="100%" onclick="toggleFormDisplay(this)" style="cursor: pointer;">
+            </span>
+        </span>
         <!--form/s-->
         {% for info in contact_info %}
             <span>{{ info }}</span>
@@ -140,7 +144,8 @@
     </form>
 </div>
 
-<div>
+<div class="contact-info-form-container form-container">
+    <div class="close-form" data-form="contact-info-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
     <form action="{% url 'kokoro_app:profile' %}" method="post">
         {% csrf_token %}
         {{ contact_info_form }}
