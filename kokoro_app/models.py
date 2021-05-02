@@ -175,3 +175,26 @@ class ContactInfo(models.Model):
     def __str__(self):
 
         return f'{self.user_email}'
+
+
+class ProfilePost(models.Model):
+    """
+    A Profile Post/Blog for a user's profile
+    """
+
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    date_published = models.DateTimeField(auto_now_add=True)
+
+    headline = models.CharField(max_length=80)
+
+    content = models.TextField()
+
+    post_slug = models.SlugField(max_length=80, unique=True)
+
+    class Meta:
+        ordering = ['-date_published']
+
+    def __str__(self):
+
+        return self.headline
