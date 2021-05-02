@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName,\
-                    ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo
+                    ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost
 from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, \
                    ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm
 from . import balance, profile_utils
@@ -217,6 +217,9 @@ def profile(request):
     profile_image_form = ProfileImageForm()
     contact_info_form = ContactInfoForm()
 
+    # testing Profile Posts
+    profile_posts = ProfilePost.objects.filter(author__exact=request.user)
+
     context = {
         'user': user,
         'perfect_form': perfect_form,
@@ -234,6 +237,8 @@ def profile(request):
         'timezones': pytz.common_timezones,
         'user_timezone_object': user_timezone_object,
         'user_timezone': user_timezone,
+        # testing profile posts
+        'posts': profile_posts,
     }
 
     return render(request, 'kokoro_app/profile.html', context)

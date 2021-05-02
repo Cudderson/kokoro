@@ -152,6 +152,17 @@
         <input type="submit" name="contact_info_form" value="Update Contact Information">
     </form>
 </div>
+<!--testing profile posts-->
+<div>
+    <p>{{ user }}'s Posts:</p>
+    {% for post in posts %}
+        {{ post }}
+        {{ post.author }}
+        {{ post.date_published }}
+        {{ post.post_slug }}
+        <br>
+    {% endfor %}
+</div>
 <script>
     // Each svg has a 'data-form' attribute relating to the class of a form to display
     // function grabs the 'data-form' value from the passed element, and toggles "show-form" class to the form
