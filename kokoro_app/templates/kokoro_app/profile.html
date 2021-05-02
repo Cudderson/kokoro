@@ -60,6 +60,10 @@
         <span>----------</span>
         <span style="text-decoration: underline">Contact</span>
         <!--form/s-->
+        {% for info in contact_info %}
+            <span>{{ info }}</span>
+        {% endfor %}
+
         <span>twitter: @johnparkingson</span>
         <span>insta: @johnnyjohno</span>
     </div>
@@ -136,6 +140,13 @@
     </form>
 </div>
 
+<div>
+    <form action="{% url 'kokoro_app:profile' %}" method="post">
+        {% csrf_token %}
+        {{ contact_info_form }}
+        <input type="submit" name="contact_info_form" value="Update Contact Information">
+    </form>
+</div>
 <script>
     // Each svg has a 'data-form' attribute relating to the class of a form to display
     // function grabs the 'data-form' value from the passed element, and toggles "show-form" class to the form

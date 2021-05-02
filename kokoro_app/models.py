@@ -161,3 +161,17 @@ class ProfileTimezone(models.Model):
     def __str__(self):
 
         return self.user_timezone
+
+
+class ContactInfo(models.Model):
+    """
+    A user's contact information (email/social media)
+    """
+
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    user_email = models.EmailField()
+
+    def __str__(self):
+
+        return f'{self.user_email}'

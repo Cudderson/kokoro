@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
-from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak
-from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm
+from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName,\
+                    ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo
+from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, \
+                   ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm
 from . import balance, profile_utils
 import pytz
 import datetime
@@ -146,6 +148,27 @@ def profile(request):
                 profile_image_submitted.save()
                 return redirect('/profile')
 
+        elif 'contact_info_form' in request.POST: # move logic to helper
+            # get form data
+
+            # try to retrieve user's ContactInfo object with POST data
+            try:
+                contact_info_submitted = ContactInfoForm(data=request.POST, instance=request.user.contactinfo)
+
+            except Exception as e:
+                # User likely doesn't have ContactInfo yet.
+                # Create default ContactInfo instance for user, then override with POST data
+                print(e)
+                print(f'Creating ContactInfo for {request.user}...')
+                contact_info, created = ContactInfo.objects.get_or_create(owner=request.user, user_email='kokoro@kokoro.com')
+                contact_info_submitted = ContactInfoForm(data=request.POST, instance=request.user.contactinfo)
+            # check validity
+            if contact_info_submitted.is_valid():
+                contact_info_submitted.save(commit=False)
+                contact_info_submitted.owner = request.user
+                contact_info_submitted.save()
+                return redirect('/profile')
+
     # Returns all activities submitted today for user
     daily_mind = balance.daily_mind(request)
     daily_body = balance.daily_body(request)
@@ -162,6 +185,7 @@ def profile(request):
     user = request.user
     biography = ProfileBio.objects.filter(owner__exact=request.user)
     display_name = ProfileDisplayName.objects.filter(owner__exact=request.user)
+    contact_info = ContactInfo.objects.filter(owner__exact=request.user)
 
     # 'quote_data' is 'quote_data_queryset' parsed to a dictionary
     quote_data_queryset = ProfileQuote.objects.filter(owner__exact=request.user)
@@ -190,6 +214,7 @@ def profile(request):
     display_name_form = ProfileDisplayNameForm()
     quote_form = ProfileQuoteForm()
     profile_image_form = ProfileImageForm()
+    contact_info_form = ContactInfoForm()
 
     context = {
         'user': user,
@@ -203,6 +228,8 @@ def profile(request):
         'quote_data': quote_data,
         'quote_form': quote_form,
         'profile_image_form': profile_image_form,
+        'contact_info_form': contact_info_form,
+        'contact_info': contact_info,
         'timezones': pytz.common_timezones,
         'user_timezone_object': user_timezone_object,
         'user_timezone': user_timezone,
