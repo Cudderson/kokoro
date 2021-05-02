@@ -150,7 +150,6 @@ def profile(request):
 
         elif 'contact_info_form' in request.POST: # move logic to helper
             # get form data
-
             # try to retrieve user's ContactInfo object with POST data
             try:
                 contact_info_submitted = ContactInfoForm(data=request.POST, instance=request.user.contactinfo)
@@ -162,6 +161,7 @@ def profile(request):
                 print(f'Creating ContactInfo for {request.user}...')
                 ContactInfo.objects.create(owner=request.user)
                 contact_info_submitted = ContactInfoForm(data=request.POST, instance=request.user.contactinfo)
+
             # check validity
             if contact_info_submitted.is_valid():
                 contact_info_submitted.save(commit=False)
@@ -195,6 +195,7 @@ def profile(request):
     perfect_balance_queryset = PerfectBalance.objects.filter(owner=request.user)
     perfect_balance = profile_utils.get_perfect_balance_data(perfect_balance_queryset)
 
+    # *** MOVE to helper file
     # get UTC time with offset
     utc_timezone = datetime.datetime.now(tz=pytz.UTC)
     print(f'utc time: {utc_timezone}')
