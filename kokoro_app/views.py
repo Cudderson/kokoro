@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.utils.text import slugify
+from django.utils.crypto import get_random_string
+from django.db import IntegrityError
 
-from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak
-from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm
+from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName,\
+                    ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost
+from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, \
+                   ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm, ProfilePostForm
 from . import balance, profile_utils
 import pytz
 import datetime
@@ -19,15 +24,30 @@ def index(request):
 def home(request):
     """Home Page for Kokoro users"""
 
-    form = ActivityForm()
-
     if request.method == "POST":
-        form = ActivityForm(data=request.POST)
-        if form.is_valid():
-            new_form = form.save(commit=False)
-            new_form.owner = request.user
-            new_form.save()
+        if 'activity_form' in request.POST:
+            activity_form = ActivityForm(data=request.POST)
+            if activity_form.is_valid():
+                new_form = activity_form.save(commit=False)
+                new_form.owner = request.user
+                new_form.save()
+                return redirect('/home')
+
+        elif 'manage_form' in request.POST:
+            raw_post_data = request.POST
+            # should probably move this logic to helper file
+            # checkbox attrs are key=id_of_entry, value=on/off
+            # By retrieving the key(s), we know what values to delete from database
+            # '[1:len(result) - 1]' removes the csrf_token and button name from result
+            post_data = list(raw_post_data.keys())[1:len(raw_post_data) - 1]
+
+            # Delete objects based on their 'id' obtained from the queryDict/QueryList
+            acts_to_delete = Activity.objects.filter(id__in=post_data)
+            acts_to_delete.delete()
             return redirect('/home')
+
+    # form for submitting daily activities
+    activity_form = ActivityForm()
 
     activities = Activity.objects.filter(owner=request.user).order_by('date_added')
 
@@ -50,7 +70,7 @@ def home(request):
     balance_streak = balance_data[1]
 
     context = {
-        'form': form,
+        'activity_form': activity_form,
         'activities': activities,
         'all_daily': all_daily,
         'balance_bool': found_balance,
@@ -65,7 +85,7 @@ def profile(request):
     """
     Profile page for kokoro users
     :param request: request data
-    :return: HttpResponse
+    :return: render of a user's profile page
     """
 
     if request.method == "POST":
@@ -90,19 +110,6 @@ def profile(request):
                 # save new perfect balance form with helper function
                 profile_utils.save_new_perfect_balance(request, perfect_form_submitted)
                 return redirect('/profile')
-
-        # *** Do this later if decide to include on profile page ***
-        elif 'manage_form' in request.POST: # this functionality isn't included yet (form to delete activities)
-            # could move some logic to helper file
-            result = request.POST
-            # checkbox attrs are key=id_of_entry, value=on/off
-            # By retrieving the key(s), we know what values to delete from database
-            # '[1:len(result) - 1]' removes the csrf_token and button name from result
-            result = list(result.keys())[1:len(result) - 1]
-
-            # Delete objects based on their 'id' obtained from the queryDict/QueryList
-            acts_to_delete = Activity.objects.filter(id__in=result)
-            acts_to_delete.delete()
 
         elif 'bio_form' in request.POST:
             # user is submitting a biography
@@ -144,6 +151,27 @@ def profile(request):
                 profile_image_submitted.save()
                 return redirect('/profile')
 
+        elif 'contact_info_form' in request.POST: # move logic to helper
+            # get form data
+            # try to retrieve user's ContactInfo object with POST data
+            try:
+                contact_info_submitted = ContactInfoForm(data=request.POST, instance=request.user.contactinfo)
+
+            except Exception as e:
+                # User likely doesn't have ContactInfo yet.
+                # Create default ContactInfo instance for user, then override with POST data
+                print(e)
+                print(f'Creating ContactInfo for {request.user}...')
+                ContactInfo.objects.create(owner=request.user)
+                contact_info_submitted = ContactInfoForm(data=request.POST, instance=request.user.contactinfo)
+
+            # check validity
+            if contact_info_submitted.is_valid():
+                contact_info_submitted.save(commit=False)
+                contact_info_submitted.owner = request.user
+                contact_info_submitted.save()
+                return redirect('/profile')
+
     # Returns all activities submitted today for user
     daily_mind = balance.daily_mind(request)
     daily_body = balance.daily_body(request)
@@ -160,6 +188,7 @@ def profile(request):
     user = request.user
     biography = ProfileBio.objects.filter(owner__exact=request.user)
     display_name = ProfileDisplayName.objects.filter(owner__exact=request.user)
+    contact_info = ContactInfo.objects.filter(owner__exact=request.user)
 
     # 'quote_data' is 'quote_data_queryset' parsed to a dictionary
     quote_data_queryset = ProfileQuote.objects.filter(owner__exact=request.user)
@@ -169,6 +198,7 @@ def profile(request):
     perfect_balance_queryset = PerfectBalance.objects.filter(owner=request.user)
     perfect_balance = profile_utils.get_perfect_balance_data(perfect_balance_queryset)
 
+    # *** MOVE to helper file
     # get UTC time with offset
     utc_timezone = datetime.datetime.now(tz=pytz.UTC)
     print(f'utc time: {utc_timezone}')
@@ -188,6 +218,10 @@ def profile(request):
     display_name_form = ProfileDisplayNameForm()
     quote_form = ProfileQuoteForm()
     profile_image_form = ProfileImageForm()
+    contact_info_form = ContactInfoForm()
+
+    # testing Profile Posts
+    profile_posts = ProfilePost.objects.filter(author__exact=request.user)
 
     context = {
         'user': user,
@@ -201,10 +235,80 @@ def profile(request):
         'quote_data': quote_data,
         'quote_form': quote_form,
         'profile_image_form': profile_image_form,
-        # testing tz
+        'contact_info_form': contact_info_form,
+        'contact_info': contact_info,
         'timezones': pytz.common_timezones,
         'user_timezone_object': user_timezone_object,
         'user_timezone': user_timezone,
+        # testing profile posts
+        'posts': profile_posts,
     }
 
     return render(request, 'kokoro_app/profile.html', context)
+
+
+# consider if login should be required
+def post(request, post_slug):
+    """
+    A page for viewing a user's individual profile post
+    (post_slug is received via form action variable)
+    :param request: http request data
+    :param post_slug: a unique slug value for a profile post
+    :return: render of a 'post' page with unique post_slug for URL
+    """
+
+    # use unique slug to retrieve desired post
+    requested_post_data = ProfilePost.objects.filter(post_slug__exact=post_slug)
+
+    # get user's saved time zone
+    user_timezone_object = ProfileTimezone.objects.filter(owner__exact=request.user)[0]  # type= <class 'kokoro_app.models.ProfileTimezone'>
+    # convert to string
+    user_timezone_string = str(user_timezone_object)
+
+    # convert date_published from UTC to user timezone
+    date_published_utc = requested_post_data[0].date_published
+    date_published_user_tz = balance.convert_to_user_tz(date_published_utc, user_timezone_string)
+
+    context = {
+        'requested_post_data': requested_post_data,
+        'date_published_user_tz': date_published_user_tz,
+    }
+
+    return render(request, 'kokoro_app/post.html', context)
+
+
+def write_post(request):
+    """
+    Page for writing a new ProfilePost
+    :param request: http request data
+    :return: render of 'write post' page
+    """
+
+    # testing profile posts
+    if request.method == 'POST':
+        if 'profile_post_form' in request.POST:
+            # get form data
+            post_submitted = ProfilePostForm(data=request.POST)
+
+            # check validity
+            if post_submitted.is_valid():
+                print('Valid Profile Post.')
+                new_post = post_submitted.save(commit=False)
+                # add author and unique slug to post
+                new_post.author = request.user
+                new_post.post_slug = slugify(new_post.headline)
+                try:
+                    new_post.save()
+                except IntegrityError:
+                    # The generated slug was not unique
+                    new_slug_id = get_random_string(length=6)
+                    unique_slug = f'{new_post.post_slug}-{new_slug_id}'
+                    print(f'Generated unique slug: {unique_slug}')
+                    new_post.post_slug = unique_slug
+                    new_post.save()
+                return redirect('/profile')
+    else:
+        profile_post_form = ProfilePostForm()
+        context = {'profile_post_form': profile_post_form}
+
+        return render(request, 'kokoro_app/write_post.html', context)

@@ -22,6 +22,12 @@
 </form>
 
 </div>
+<!-- GET write_post.html form -->
+<div>
+    <form action="{% url 'kokoro_app:write_post' %}" method="get">
+        <button type="submit">Write a Post</button>
+    </form>
+</div>
 
 <div onclick="testFunction(this)" style="cursor: pointer; user-select: none; border: 1px solid black; border-radius: 4px; width: 10%; text-align: center; margin: auto; margin-bottom: 2vw;">Edit Profile</div>
 <div class="profile-grid">
@@ -58,8 +64,16 @@
             <span class="perfect-activity">{{ perfect_activity }}</span>
         {% endfor %}
         <span>----------</span>
-        <span style="text-decoration: underline">Contact</span>
+        <span style="text-decoration: underline">Contact
+            <span class="svg-edit-icon svg-icon-hidden" style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
+                    <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" data-form="contact-info-form-container" height="auto" width="100%" onclick="toggleFormDisplay(this)" style="cursor: pointer;">
+            </span>
+        </span>
         <!--form/s-->
+        {% for info in contact_info %}
+            <span>{{ info }}</span>
+        {% endfor %}
+
         <span>twitter: @johnparkingson</span>
         <span>insta: @johnnyjohno</span>
     </div>
@@ -70,21 +84,20 @@
             </span>
         </div>
         <div class="profile-quote-author">- {{ quote_data.quote_author }}</div>
-
     </div>
-    <!-- these will be dynamically added via loop -->
-    <div class="profile-post">
-        <span>~ Parker Johnny Smith has no posts yet. ~</span>
-    </div>
-    <div class="profile-post">
-        <span>My day hiking the great Bluffs of Ontario</span>
-    </div>
-    <div class="profile-post">
-        <span>Why working out everyday is a must.</span>
-    </div>
-    <div class="profile-post">
-        <span>My journey through the Amazon</span>
-    </div>
+    <!--new code for dynamic ProfilePost display-->
+    {% for post in posts %}
+        <form class="profile-post" action="{% url 'kokoro_app:post' post.post_slug %}" method="get">
+            <button type="submit">
+                <div class="profile-post-headline">{{ post.headline }}</div>
+                <div class="profile-post-author">- {{ post.author }}</div>
+            </button>
+        </form>
+    {% empty %}
+        <div class="profile-post">
+            <span>{{ user }} hasn't created a post yet.</span>
+        </div>
+    {% endfor %}
 </div>
 <div class="bio-form-container form-container">
     <div class="close-form" data-form="bio-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
@@ -136,85 +149,27 @@
     </form>
 </div>
 
-    <!--
-    <div class="test-block">
-        <div class="perfect-title"><b>Perfect Balance</b></div>
-            {% if perfect_balance == 'False' %}
-                <h4>User doesn't have a perfect balance yet..</h4>
-            {% else %}
-                <div class="perfect-activities">
-                {% for perfect_activity in perfect_balance %}
-                    <div class="perfect-activity">{{ perfect_activity }}</div>
-                {% endfor %}
-                </div>
-            {% endif %}
-        <div class="test-block-2">
-            <div class="bio-title"><b>About Me</b></div>
-            <div class="test-bio">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam dolorum et illo minus optio praesentium, saepe similique sint tempora vel voluptates voluptatum! Illo, molestias.</div>
-        </div>
-    <div class="extra-block">
-        <div class="something-title"><b>Something</b></div>
-            <div class="something-content">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur at commodi corporis culpa dicta dolorem dolorum eaque earum eum ex facere id in, inventore labore magnam, minus modi molestiae nihil odio omnis quis quos, ratione rerum sequi sit suscipit voluptatem.
-            </div>
-    </div>
-</div>
--->
-<!--
-<h5 class="acts">This is <span class="profile">{{ user }}'s</span> profile.</h5>
-
-<div>
-    <p>Here is {{ user }}'s perfect balance:</p>
-    {% if perfect_balance == 'False' %}
-     <p>NO DATA</p>
-    {% else %}
-        {{ perfect_balance.0 }}
-    {% endif %}
-</div>
-
-<div>
+<div class="contact-info-form-container form-container">
+    <div class="close-form" data-form="contact-info-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
     <form action="{% url 'kokoro_app:profile' %}" method="post">
         {% csrf_token %}
-        {{ perfect_form.as_p }}
-        <input type="submit" name="perfect_form" value="Submit activity" style="background-color: red">
+        {{ contact_info_form }}
+        <input type="submit" name="contact_info_form" value="Update Contact Information">
     </form>
 </div>
+<!--testing profile posts
 <div>
-    <h5>{{ user }}'s activities today:</h5>
-    <form action="{% url 'kokoro_app:profile' %}" method="post">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <th>MIND</th>
-            </tr>
-            {% for mind_act in all_daily.daily_mind %}
-                <tr>
-                    <td><input type="checkbox" name="{{ mind_act.id }}" id="{{ mind_act.id }}"> {{ mind_act }}///{{ mind_act.id }}///{{ mind_act.pk }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <table>
-            <tr>
-                <th>BODY</th>
-            </tr>
-            {% for body_act in all_daily.daily_body %}
-                <tr>
-                    <td><input type="checkbox" name="{{ body_act.id }}" id="{{ body_act.id }}"> {{ body_act }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <table>
-            <tr>
-                <th>SOUL</th>
-            </tr>
-            {% for soul_act in all_daily.daily_soul %}
-                <tr>
-                    <td><input type="checkbox" name="{{ soul_act.id }}" id="{{ soul_act.id }}"> {{ soul_act }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <input type="submit" name="manage_form" value="Delete Selected Activities">
-    </form>
+    <p>{{ user }}'s Posts:</p>
+    {% for post in posts %}
+        {{ post.headline }}<br>
+        {{ post.content }}<br>
+        {{ post.author }}<br>
+        {{ post.date_published }}<br>
+        {{ post.post_slug }}<br>
+        <br>
+        <br>
+        <br>
+    {% endfor %}
 </div>
 -->
 <script>

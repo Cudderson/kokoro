@@ -161,3 +161,40 @@ class ProfileTimezone(models.Model):
     def __str__(self):
 
         return self.user_timezone
+
+
+class ContactInfo(models.Model):
+    """
+    A user's contact information (email/social media)
+    """
+
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    user_email = models.EmailField(null=True)
+
+    def __str__(self):
+
+        return f'{self.user_email}'
+
+
+class ProfilePost(models.Model):
+    """
+    A Profile Post/Blog for a user's profile
+    """
+
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    date_published = models.DateTimeField(auto_now_add=True)
+
+    headline = models.CharField(max_length=80)
+
+    content = models.TextField()
+
+    post_slug = models.SlugField(max_length=80, unique=True)
+
+    class Meta:
+        ordering = ['-date_published']
+
+    def __str__(self):
+
+        return self.headline

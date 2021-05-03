@@ -306,13 +306,44 @@ svg text {
 
 .profile-post {
     display: flex;
+    flex-direction: column;
     grid-column: 6 / 15;
     grid-row: auto;
     background: white;
     border: 1px solid black;
     border-radius: 4px;
-    justify-content: center;
+    user-select: none;
+}
+
+.profile-post:hover {
+    cursor: pointer;
+    border: 3px solid black;
+    margin: -3px; /* negative margin keeps elements in place when border-size increases */
+}
+
+.profile-post button {
+    /* fit button to div (can style more later) */
+    width: auto;
+    height: 100%;
+    background: white;
+    border: none;
+    padding: 0;
+}
+
+.profile-post-headline {
+    /* place headline in middle-top */
+    text-align: center;
+    margin-right: auto;
     font-size: 1.25vw;
+    padding: 1.5vw;
+}
+
+.profile-post-author {
+    /* place author in bottom-right */
+    align-self: flex-end;
+    margin-top: auto;
+    padding: 1rem;
+    font-size: 1vw;
 }
 /* forms on profile page */
 .form-container {
@@ -349,6 +380,14 @@ svg text {
 }
 
 .form-container input[type=text] {
+    width: 100%;
+    padding: 15px 0px;
+    margin: 0;
+    line-height: 1.5vw;
+    font-size: 1.25vw;
+}
+
+.form-container input[type=email] {
     width: 100%;
     padding: 15px 0px;
     margin: 0;

@@ -9,15 +9,15 @@
             {% csrf_token %}
             <div class="activity-select"> <!--flexbox-->
                 <input class="activity-radio" type="radio" name="activity" value="mind" required="" id="id_activity_1">
-                <label class="activity-label mind-label" onclick="collapse()" for="id_activity_1">{{ form.activity.1 }}</label>
+                <label class="activity-label mind-label" onclick="collapse()" for="id_activity_1">{{ activity_form.activity.1 }}</label>
                 <input class="activity-radio" type="radio" name="activity" value="body" required="" id="id_activity_2">
-                <label class="activity-label" onclick="collapse()" for="id_activity_2">{{ form.activity.2 }}</label>
+                <label class="activity-label" onclick="collapse()" for="id_activity_2">{{ activity_form.activity.2 }}</label>
                 <input class="activity-radio" type="radio" name="activity" value="soul" required="" id="id_activity_3">
-                <label class="activity-label soul-label" onclick="collapse()" for="id_activity_3">{{ form.activity.3 }}</label>
+                <label class="activity-label soul-label" onclick="collapse()" for="id_activity_3">{{ activity_form.activity.3 }}</label>
             </div>
             <div class="activity-submit">
                   <input type="text" name="description" maxlength="100" required="" id="id_description" placeholder="Describe your activity...">
-                  <button type="submit" name="submit">Add</button>
+                  <button type="submit" name="activity_form">Add</button>
             </div>
         </form>
     </div>
@@ -36,7 +36,7 @@
             <h4>Still finding balance...</h4>
         {% endif %}
         <h6>Current Streak: {{ balance_streak }}</h6>
-        <h6>Manage Activities</h6>
+        <h6 data-form="manage-form-container" onclick="toggleFormDisplay(this)" style="cursor: pointer;">Manage Activities</h6>
 
     </div>
 
@@ -59,6 +59,45 @@
             <text x="209" y="265">Soul</text>
         </svg>
     </div>
+</div>
+<!-- Not In Grid -->
+<div class="manage-form-container form-container">
+    <div class="close-form" data-form="manage-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
+    <h5>{{ user }}'s activities today:</h5>
+    <form action="{% url 'kokoro_app:home' %}" method="post" style="background-color: white; padding: 2rem;">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>MIND</th>
+            </tr>
+            {% for mind_act in all_daily.daily_mind %}
+                <tr>
+                    <td><input type="checkbox" name="{{ mind_act.id }}" id="{{ mind_act.id }}"> {{ mind_act }}///{{ mind_act.id }}///{{ mind_act.pk }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <table>
+            <tr>
+                <th>BODY</th>
+            </tr>
+            {% for body_act in all_daily.daily_body %}
+                <tr>
+                    <td><input type="checkbox" name="{{ body_act.id }}" id="{{ body_act.id }}"> {{ body_act }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <table>
+            <tr>
+                <th>SOUL</th>
+            </tr>
+            {% for soul_act in all_daily.daily_soul %}
+                <tr>
+                    <td><input type="checkbox" name="{{ soul_act.id }}" id="{{ soul_act.id }}"> {{ soul_act }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" name="manage_form" value="Delete Selected Activities">
+    </form>
 </div>
 
 <!--apply new css class to triangles referencing fulfilled activities-->
@@ -129,5 +168,13 @@
             }
         }
     });
+
+    // testing manage-form functionality
+    function toggleFormDisplay(clickedBtn) {
+        var formToDisplay = clickedBtn.getAttribute("data-form");
+        var form = document.getElementsByClassName(formToDisplay)[0];
+
+        form.classList.toggle("show-form");
+    }
 </script>
 {% endblock content %}
