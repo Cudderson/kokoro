@@ -1,13 +1,19 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
+{% load tz %}
+
     <!--iterate over values in post-->
     <div style="text-align: center; margin-left: auto; margin-right: auto;">
-        {% for post in requested_post_data %}
-            <div>Here is a post from {{ post.author }}</div>
-            <div>{{ post.headline }}</div>
-            <div>{{ post.content }}</div>
-            <div>Published: {{ post.date_published }}</div>
-        {% endfor %}
+        {% localtime off %}
+            {% for post in requested_post_data %}
+                <div>Here is a post from {{ post.author }}</div>
+                <div>{{ post.headline }}</div>
+                <div>{{ post.content }}</div>
+                <!-- date_published converted to user TZ -->
+                <div>Published: {{ date_published_user_tz }}</div>
+            {% endfor %}
+        {% endlocaltime %}
     </div>
+
 {% endblock content %}

@@ -260,8 +260,18 @@ def post(request, post_slug):
     # use unique slug to retrieve desired post
     requested_post_data = ProfilePost.objects.filter(post_slug__exact=post_slug)
 
+    # get user's saved time zone
+    user_timezone_object = ProfileTimezone.objects.filter(owner__exact=request.user)[0]  # type= <class 'kokoro_app.models.ProfileTimezone'>
+    # convert to string
+    user_timezone_string = str(user_timezone_object)
+
+    # convert date_published from UTC to user timezone
+    date_published_utc = requested_post_data[0].date_published
+    date_published_user_tz = balance.convert_to_user_tz(date_published_utc, user_timezone_string)
+
     context = {
         'requested_post_data': requested_post_data,
+        'date_published_user_tz': date_published_user_tz,
     }
 
     return render(request, 'kokoro_app/post.html', context)
@@ -286,14 +296,13 @@ def write_post(request):
                 new_post = post_submitted.save(commit=False)
                 # add author and unique slug to post
                 new_post.author = request.user
+                new_post.post_slug = slugify(new_post.headline)
                 try:
-                    new_post.post_slug = slugify(new_post.headline)
                     new_post.save()
                 except IntegrityError:
                     # The generated slug was not unique
-                    new_slug = slugify(new_post.headline)
                     new_slug_id = get_random_string(length=6)
-                    unique_slug = f'{new_slug}-{new_slug_id}'
+                    unique_slug = f'{new_post.post_slug}-{new_slug_id}'
                     print(f'Generated unique slug: {unique_slug}')
                     new_post.post_slug = unique_slug
                     new_post.save()
