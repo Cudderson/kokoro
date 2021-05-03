@@ -15,5 +15,6 @@ urlpatterns = [
     # User-Profile Page
     path('profile/', views.profile, name='profile'),
 
-    path('post/', views.post, name='post')
+    # Page for viewing a single post
+    path('post/<slug:post_slug>/', views.post, name='post')
 ]

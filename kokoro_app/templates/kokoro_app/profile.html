@@ -81,10 +81,13 @@
     </div>
     <!--new code for dynamic ProfilePost display-->
     {% for post in posts %}
-        <div class="profile-post">
-            <div class="profile-post-headline">{{ post.headline }}</div>
-            <div class="profile-post-author">- {{ post.author }}</div>
-        </div>
+        <form class="profile-post" action="{% url 'kokoro_app:post' post.post_slug %}" method="post">
+            {% csrf_token %}
+            <button type="submit">
+                <div class="profile-post-headline">{{ post.headline }}</div>
+                <div class="profile-post-author">- {{ post.author }}</div>
+            </button>
+        </form>
     {% empty %}
         <div class="profile-post">
             <span>{{ user }} hasn't created a post yet.</span>

@@ -273,18 +273,21 @@ def profile(request):
     return render(request, 'kokoro_app/profile.html', context)
 
 
-# consider if log should be required
-def post(request):
+# consider if login should be required
+def post(request, post_slug):
     """
     A page for viewing a user's individual profile post
+    (post_slug is received via form action variable)
     :param request: http request data
-    :return: render of a 'posts' page with required context
+    :param post_slug: a unique slug value for a profile post
+    :return: render of a 'post' page with unique post_slug for URL
     """
 
-    # if this view is called, there is a post a user wants to view
-    # the post information will come from 'profile()' view
-    # when a post is clicked, it's information should be sent here
+    # use unique slug to retrieve desired post
+    requested_post_data = ProfilePost.objects.filter(post_slug__exact=post_slug)
 
-    context = {}
+    context = {
+        'requested_post_data': requested_post_data,
+    }
 
     return render(request, 'kokoro_app/post.html', context)
