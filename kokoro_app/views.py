@@ -85,7 +85,7 @@ def profile(request):
     """
     Profile page for kokoro users
     :param request: request data
-    :return: HttpResponse
+    :return: render of a user's profile page
     """
 
     if request.method == "POST":
@@ -271,3 +271,20 @@ def profile(request):
     }
 
     return render(request, 'kokoro_app/profile.html', context)
+
+
+# consider if log should be required
+def post(request):
+    """
+    A page for viewing a user's individual profile post
+    :param request: http request data
+    :return: render of a 'posts' page with required context
+    """
+
+    # if this view is called, there is a post a user wants to view
+    # the post information will come from 'profile()' view
+    # when a post is clicked, it's information should be sent here
+
+    context = {}
+
+    return render(request, 'kokoro_app/post.html', context)

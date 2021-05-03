@@ -312,6 +312,13 @@ svg text {
     background: white;
     border: 1px solid black;
     border-radius: 4px;
+    user-select: none;
+}
+
+.profile-post:hover {
+    cursor: pointer;
+    border: 3px solid black;
+    margin: -3px; /* negative margin keeps elements in place when border-size increases */
 }
 
 .profile-post-headline {

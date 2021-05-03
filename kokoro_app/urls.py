@@ -14,4 +14,6 @@ urlpatterns = [
 
     # User-Profile Page
     path('profile/', views.profile, name='profile'),
+
+    path('post/', views.post, name='post')
 ]
