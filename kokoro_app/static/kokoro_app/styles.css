@@ -306,13 +306,28 @@ svg text {
 
 .profile-post {
     display: flex;
+    flex-direction: column;
     grid-column: 6 / 15;
     grid-row: auto;
     background: white;
     border: 1px solid black;
     border-radius: 4px;
-    justify-content: center;
+}
+
+.profile-post-headline {
+    /* place headline in middle-top */
+    text-align: center;
+    margin-right: auto;
     font-size: 1.25vw;
+    padding: 1.5vw;
+}
+
+.profile-post-author {
+    /* place author in bottom-right */
+    align-self: flex-end;
+    margin-top: auto;
+    padding: 1rem;
+    font-size: 1vw;
 }
 /* forms on profile page */
 .form-container {

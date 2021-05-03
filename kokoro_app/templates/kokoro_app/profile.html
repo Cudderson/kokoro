@@ -78,21 +78,18 @@
             </span>
         </div>
         <div class="profile-quote-author">- {{ quote_data.quote_author }}</div>
-
     </div>
-    <!-- these will be dynamically added via loop -->
-    <div class="profile-post">
-        <span>~ Parker Johnny Smith has no posts yet. ~</span>
-    </div>
-    <div class="profile-post">
-        <span>My day hiking the great Bluffs of Ontario</span>
-    </div>
-    <div class="profile-post">
-        <span>Why working out everyday is a must.</span>
-    </div>
-    <div class="profile-post">
-        <span>My journey through the Amazon</span>
-    </div>
+    <!--new code for dynamic ProfilePost display-->
+    {% for post in posts %}
+        <div class="profile-post">
+            <div class="profile-post-headline">{{ post.headline }}</div>
+            <div class="profile-post-author">- {{ post.author }}</div>
+        </div>
+    {% empty %}
+        <div class="profile-post">
+            <span>{{ user }} hasn't created a post yet.</span>
+        </div>
+    {% endfor %}
 </div>
 <div class="bio-form-container form-container">
     <div class="close-form" data-form="bio-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
@@ -152,7 +149,7 @@
         <input type="submit" name="contact_info_form" value="Update Contact Information">
     </form>
 </div>
-<!--testing profile posts-->
+<!--testing profile posts
 <div>
     <p>{{ user }}'s Posts:</p>
     {% for post in posts %}
@@ -166,6 +163,7 @@
         <br>
     {% endfor %}
 </div>
+-->
 <p>Profile Post Form:</p>
 <div>
     <form action="{% url 'kokoro_app:profile' %}" method="post">
