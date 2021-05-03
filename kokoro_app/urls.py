@@ -16,5 +16,8 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
 
     # Page for viewing a single post
-    path('post/<slug:post_slug>/', views.post, name='post')
+    path('post/<slug:post_slug>/', views.post, name='post'),
+
+    # Page for writing a new ProfilePost
+    path('write_post/', views.write_post, name='write_post')
 ]

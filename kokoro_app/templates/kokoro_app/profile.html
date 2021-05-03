@@ -22,6 +22,12 @@
 </form>
 
 </div>
+<!-- GET write_post.html form -->
+<div>
+    <form action="{% url 'kokoro_app:write_post' %}" method="get">
+        <button type="submit">Write a Post</button>
+    </form>
+</div>
 
 <div onclick="testFunction(this)" style="cursor: pointer; user-select: none; border: 1px solid black; border-radius: 4px; width: 10%; text-align: center; margin: auto; margin-bottom: 2vw;">Edit Profile</div>
 <div class="profile-grid">
@@ -167,15 +173,6 @@
     {% endfor %}
 </div>
 -->
-<p>Profile Post Form:</p>
-<div>
-    <form action="{% url 'kokoro_app:profile' %}" method="post">
-    {{ profile_post_form.as_p }}
-    {% csrf_token %}
-    <input style="margin: 1rem;" type="submit" name="profile_post_form" value="Publish">
-</form>
-</div>
-
 <script>
     // Each svg has a 'data-form' attribute relating to the class of a form to display
     // function grabs the 'data-form' value from the passed element, and toggles "show-form" class to the form

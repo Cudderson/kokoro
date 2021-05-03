@@ -172,30 +172,6 @@ def profile(request):
                 contact_info_submitted.save()
                 return redirect('/profile')
 
-        # testing profile posts
-        elif 'profile_post_form' in request.POST:
-            # get form data
-            post_submitted = ProfilePostForm(data=request.POST)
-
-            # check validity
-            if post_submitted.is_valid():
-                print('Valid Profile Post.')
-                new_post = post_submitted.save(commit=False)
-                # add author and unique slug to post
-                new_post.author = request.user
-                try:
-                    new_post.post_slug = slugify(new_post.headline)
-                    new_post.save()
-                except IntegrityError:
-                    # The generated slug was not unique
-                    new_slug = slugify(new_post.headline)
-                    new_slug_id = get_random_string(length=6)
-                    unique_slug = f'{new_slug}-{new_slug_id}'
-                    print(f'Generated unique slug: {unique_slug}')
-                    new_post.post_slug = unique_slug
-                    new_post.save()
-                return redirect('/profile')
-
     # Returns all activities submitted today for user
     daily_mind = balance.daily_mind(request)
     daily_body = balance.daily_body(request)
@@ -243,7 +219,6 @@ def profile(request):
     quote_form = ProfileQuoteForm()
     profile_image_form = ProfileImageForm()
     contact_info_form = ContactInfoForm()
-    profile_post_form = ProfilePostForm()
 
     # testing Profile Posts
     profile_posts = ProfilePost.objects.filter(author__exact=request.user)
@@ -267,7 +242,6 @@ def profile(request):
         'user_timezone': user_timezone,
         # testing profile posts
         'posts': profile_posts,
-        'profile_post_form': profile_post_form,
     }
 
     return render(request, 'kokoro_app/profile.html', context)
@@ -291,3 +265,41 @@ def post(request, post_slug):
     }
 
     return render(request, 'kokoro_app/post.html', context)
+
+
+def write_post(request):
+    """
+    Page for writing a new ProfilePost
+    :param request: http request data
+    :return: render of 'write post' page
+    """
+
+    # testing profile posts
+    if request.method == 'POST':
+        if 'profile_post_form' in request.POST:
+            # get form data
+            post_submitted = ProfilePostForm(data=request.POST)
+
+            # check validity
+            if post_submitted.is_valid():
+                print('Valid Profile Post.')
+                new_post = post_submitted.save(commit=False)
+                # add author and unique slug to post
+                new_post.author = request.user
+                try:
+                    new_post.post_slug = slugify(new_post.headline)
+                    new_post.save()
+                except IntegrityError:
+                    # The generated slug was not unique
+                    new_slug = slugify(new_post.headline)
+                    new_slug_id = get_random_string(length=6)
+                    unique_slug = f'{new_slug}-{new_slug_id}'
+                    print(f'Generated unique slug: {unique_slug}')
+                    new_post.post_slug = unique_slug
+                    new_post.save()
+                return redirect('/profile')
+    else:
+        profile_post_form = ProfilePostForm()
+        context = {'profile_post_form': profile_post_form}
+
+        return render(request, 'kokoro_app/write_post.html', context)
