@@ -6,7 +6,7 @@ from django.utils.crypto import get_random_string
 from django.db import IntegrityError
 
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName,\
-                    ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost
+                    ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User
 from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, \
                    ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm, ProfilePostForm
 from . import balance, profile_utils
@@ -312,3 +312,29 @@ def write_post(request):
         context = {'profile_post_form': profile_post_form}
 
         return render(request, 'kokoro_app/write_post.html', context)
+
+
+# consider a new app
+
+def search(request):
+    """
+    Search kokoro user-base based on user-input and display results
+    :param request: http request data
+    :return:
+    """
+
+    # returns text entered into search box
+    search_input = request.GET.get('search')
+
+    # returns queryset of User(s) with username value of search_input
+    users_queryset = User.objects.filter(username__icontains=f'{search_input}')
+    print(users_queryset)
+
+    # Now that we have the requested user(s), we should pass the results to new template
+    # can pass additional needed data later
+
+    context = {
+        'search_results': users_queryset,
+    }
+
+    return render(request, 'kokoro_app/search.html', context)

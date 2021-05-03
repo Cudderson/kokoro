@@ -25,7 +25,12 @@
           <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
           <li><a href="{% url 'kokoro_app:profile' %}">Profile</a></li>
           <li><a href="{% url 'users:logout' %}">Log Out</a></li>
-          <li><a href="#">something...</a></li>
+          <!--search bar-->
+          <li>
+            <form action="{% url 'kokoro_app:search' %}" method="get">
+              <input type="text" name="search" placeholder="Search users" style="border: none; border-radius: 4px; padding: 4px;"><input style="border: none; border-radius: 4px; padding: 4px;" type="submit" value="Go">
+            </form>
+          </li>
         {% else %}
           <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
           <li><a href="{% url 'users:register' %}">Register</a></li>

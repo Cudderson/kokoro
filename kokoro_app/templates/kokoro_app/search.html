@@ -1,0 +1,11 @@
+{% extends 'kokoro_app/base.html' %}
+
+{% block content %}
+
+    <div style="text-align: center;">Search Results:</div>
+    <br>
+    {% for user in search_results %}
+        <div style="text-align: center;">{{ user }}</div>
+    {% endfor %}
+
+{% endblock content %}
