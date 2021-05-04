@@ -220,7 +220,6 @@ def profile(request):
         biography = ProfileBio.objects.filter(owner__exact=user.id)
         display_name = ProfileDisplayName.objects.filter(owner__exact=user.id)
         contact_info = ContactInfo.objects.filter(owner__exact=user.id)
-        profile_posts = ProfilePost.objects.filter(author__exact=user.id)
 
         # 'quote_data' is 'quote_data_queryset' parsed to a dictionary
         quote_data_queryset = ProfileQuote.objects.filter(owner__exact=user.id)
@@ -252,12 +251,25 @@ def profile(request):
         profile_image_form = ProfileImageForm()
         contact_info_form = ContactInfoForm()
 
-        # testing pinned posts (working example)
+        # User ProfilePost's
+        profile_posts = ProfilePost.objects.filter(author__exact=user.id)
+        print(f'Profile Posts from {request.user}: {profile_posts}\n')
+
+        # Pinned Posts
         pinned_posts = PinnedProfilePost.objects.filter(pinned_by__exact=user.id)
-        print(f'Pinned Posts for {user}: {pinned_posts}')
-        original_posts = PinnedProfilePost.objects.filter(pinned_by__exact=user.id)
-        for posting in original_posts:
-            print(posting.original.author)
+        print(f'Pinned Posts for {request.user}: {pinned_posts}\n')
+        for pinned_post in pinned_posts:
+            print(f'Pinned Post date_published: {pinned_post.original.date_published}\n')
+
+        # At this point, users can successfully pin posts from another profile (have to check that a post can be pinned more than once)
+        # I also have collected both ProfilePost and PinnedProfilePost objects for the request.user
+        # Because pinned posts are referencing ProfilePosts, they already have a date_published.
+        # If I combine both ProfilePosts & PinnedProfilePosts, I should be able to display them in order of date_published
+            # That's not what I want though. I want a PinnedPost to have a 'date_pinned' so that a user's
+            # pinned post will appear at the top of their profile.
+
+        # Add 'date_pinned' to the PinnedProfilePost model.
+        # After that, we can combine the two Models, and sort by date_published/date_pinned
 
         context = {
             'user': user,
