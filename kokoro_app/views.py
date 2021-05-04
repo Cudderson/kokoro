@@ -270,6 +270,48 @@ def profile(request):
 
         # Add 'date_pinned' to the PinnedProfilePost model.
         # After that, we can combine the two Models, and sort by date_published/date_pinned
+        # posts == profile_posts + pinned_posts
+        print(type(pinned_posts))
+        print(type(profile_posts))
+        print(list(profile_posts))
+        posts = list(profile_posts)
+        for pinned_post in pinned_posts:
+            posts.append(pinned_post)
+
+        # now have one list containing objects from both profile_posts and pinned_posts
+        print(posts)
+
+        # need to sort them by date_published / date_pinned
+        # profile_posts is already sorted
+        # Apparently ContentTypes in django can solve this problem, but I'm going to try to get it to work with
+        # chain/itertools first
+        # This will require that both post types have a field of the same name
+
+        # Changed both field names to 'date_published'
+        #   - Will need logic on template to display posts by 'date_published', but when viewing a post you see the OG pub_date
+
+        # our 2 querysets to sort together are pinned_posts and profile_posts
+        print("Sorted profile posts & pinned posts by date_published:")
+        from itertools import chain
+        posts = sorted(
+            chain(profile_posts, pinned_posts),
+            key=lambda post_or_pinned: post_or_pinned.date_published, reverse=True
+        )
+
+        print(posts)
+        # This works, and objects in the list still have type=queryset object
+        for p in posts:
+            print(type(p))
+        # Types of objects in list:
+        # <class 'kokoro_app.models.PinnedProfilePost'>
+        # <class 'kokoro_app.models.ProfilePost'>
+
+        # Okay, now our two querysets are combined to a list, sorted by 'date_published'.
+        # Note that pinned_post(date_published) does not reflect the date the OG author published, but the date it was pinned.
+        # Now, we have a correctly sorted list of objects in the order we want to display them
+        # Also note that this approach isn't efficient as queryset sizes grow larger
+
+        # let's attempt passing 'posts': posts to template and seeing if everything is displayed correctly
 
         context = {
             'user': user,
@@ -288,7 +330,7 @@ def profile(request):
             'user_timezone_object': user_timezone_object,
             'user_timezone': user_timezone,
             # testing profile posts
-            'posts': profile_posts,
+            'posts': posts,
         }
 
         return render(request, 'kokoro_app/profile.html', context)

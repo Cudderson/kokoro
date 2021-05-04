@@ -211,7 +211,7 @@ class PinnedProfilePost(models.Model):
 
     pinned_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    date_pinned = models.DateTimeField(auto_now_add=True)
+    date_published = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
 
