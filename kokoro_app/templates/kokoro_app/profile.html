@@ -1,35 +1,43 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
-{% load tz %}
-<div style="margin-left: 35vw; margin-right: auto; margin-bottom: 2vw;">
-    {% localtime off %}
-        {{ user }}'s local time:
-        {{ user_timezone }}
-        {{ user_timezone_object }}
-    {% endlocaltime %}
 
-<form action="{% url 'kokoro_app:profile' %}" method="POST">
-    {% csrf_token %}
-    <label>Time zone:</label>
-    <select name="user_timezone">
-        <option disabled selected value="">Select Timezone</option>
-        {% for tz in timezones %}
-        <option value="{{ tz }}">{{ tz }}</option>
-        {% endfor %}
-    </select>
-    <input type="submit" name="tz_form" value="Set Timezone">
-</form>
+<!-- for user's viewing their own profile only -->
+{% if user == request.user %}
+    {% load tz %}
+    Hello, world!
+    <div style="margin-left: 35vw; margin-right: auto; margin-bottom: 2vw;">
+        {% localtime off %}
+            {{ user }}'s local time:
+            {{ user_timezone }}
+            {{ user_timezone_object }}
+        {% endlocaltime %}
 
-</div>
-<!-- GET write_post.html form -->
-<div>
-    <form action="{% url 'kokoro_app:write_post' %}" method="get">
-        <button type="submit">Write a Post</button>
+    <form action="{% url 'kokoro_app:profile' %}" method="POST">
+        {% csrf_token %}
+        <label>Time zone:</label>
+        <select name="user_timezone">
+            <option disabled selected value="">Select Timezone</option>
+            {% for tz in timezones %}
+            <option value="{{ tz }}">{{ tz }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" name="tz_form" value="Set Timezone">
     </form>
-</div>
 
-<div onclick="testFunction(this)" style="cursor: pointer; user-select: none; border: 1px solid black; border-radius: 4px; width: 10%; text-align: center; margin: auto; margin-bottom: 2vw;">Edit Profile</div>
+    </div>
+    <!-- GET write_post.html form -->
+    <div>
+        <form action="{% url 'kokoro_app:write_post' %}" method="get">
+            <button type="submit">Write a Post</button>
+        </form>
+    </div>
+
+    <div onclick="testFunction(this)" style="cursor: pointer; user-select: none; border: 1px solid black; border-radius: 4px; width: 10%; text-align: center; margin: auto; margin-bottom: 2vw;">Edit Profile</div>
+
+{% endif %}
+<!-- everything above this is for a user viewing their own profile only -->
+
 <div class="profile-grid">
     <div class="profile-placeholder">
         <img class="profile-image" src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
