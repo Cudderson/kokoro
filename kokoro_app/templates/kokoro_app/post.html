@@ -12,8 +12,16 @@
                 <div>{{ post.content }}</div>
                 <!-- date_published converted to user TZ -->
                 <div>Published: {{ date_published_user_tz }}</div>
+                <form action="{% url 'kokoro_app:profile' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="pin_post_form" value="{{ post.post_slug }}" style="padding: .75rem; background: white; margin-top: 2rem;">
+                        Pin This Post to My Profile
+                    </button>
+                </form>
                 <form action="{% url 'kokoro_app:profile' %}" method="get">
-                    <button style="padding: .75rem; background: white; margin-top: 2rem;" type="submit" name="profile_to_visit" value="{{ post.author }}">Return to {{ post.author }}'s Profile</button>
+                    <button type="submit" name="profile_to_visit" value="{{ post.author }}" style="padding: .75rem; background: white; margin-top: 1rem;">
+                        Return to {{ post.author }}'s Profile
+                    </button>
                 </form>
             {% endfor %}
         {% endlocaltime %}

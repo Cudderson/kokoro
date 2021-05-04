@@ -198,3 +198,20 @@ class ProfilePost(models.Model):
     def __str__(self):
 
         return self.headline
+
+
+class PinnedProfilePost(models.Model):
+    """
+    A Profile Post/Blog for a user's profile that belongs to another user
+    """
+
+    # using this method, A pinned post is indeed deleted when OG is deleted
+
+    original = models.ForeignKey(ProfilePost, on_delete=models.CASCADE)
+
+    pinned_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+
+        return f'Original: {self.original} Pinned By: {self.pinned_by}'
+

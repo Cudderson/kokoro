@@ -7,7 +7,7 @@ from django.db import IntegrityError
 from django.http import Http404
 
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName,\
-                    ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User
+                    ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User, PinnedProfilePost
 from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, \
                    ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm, ProfilePostForm
 from . import balance, profile_utils
@@ -152,6 +152,26 @@ def profile(request):
                 profile_image_submitted.save()
                 return redirect('/profile')
 
+        elif 'pin_post_form' in request.POST:
+            # Could this be in a different view, that simply redirects to profile()? try after working proof, would change everything
+            # get form data
+
+            # returns unique slug
+            post_to_pin_data = request.POST.get('pin_post_form')
+
+            # get post with matching slug
+            post_to_pin = ProfilePost.objects.get(post_slug__exact=post_to_pin_data)
+
+            # Create new PinnedProfilePost
+            new_pinned_post = PinnedProfilePost()
+
+            # Apply necessary fields and save
+            new_pinned_post.original = post_to_pin
+            new_pinned_post.pinned_by = request.user
+            new_pinned_post.save()
+
+            return redirect('/profile')
+
         elif 'contact_info_form' in request.POST: # move logic to helper
             # get form data
             # try to retrieve user's ContactInfo object with POST data
@@ -231,6 +251,13 @@ def profile(request):
         quote_form = ProfileQuoteForm()
         profile_image_form = ProfileImageForm()
         contact_info_form = ContactInfoForm()
+
+        # testing pinned posts (working example)
+        pinned_posts = PinnedProfilePost.objects.filter(pinned_by__exact=user.id)
+        print(f'Pinned Posts for {user}: {pinned_posts}')
+        original_posts = PinnedProfilePost.objects.filter(pinned_by__exact=user.id)
+        for posting in original_posts:
+            print(posting.original.author)
 
         context = {
             'user': user,
