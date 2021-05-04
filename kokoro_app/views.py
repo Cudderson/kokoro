@@ -172,79 +172,90 @@ def profile(request):
                 contact_info_submitted.save()
                 return redirect('/profile')
 
-    # Returns all activities submitted today for user
-    daily_mind = balance.daily_mind(request)
-    daily_body = balance.daily_body(request)
-    daily_soul = balance.daily_soul(request)
+    elif request.method == 'GET':
 
-    # Package daily activities
-    all_daily = {
-        'daily_mind': daily_mind,
-        'daily_body': daily_body,
-        'daily_soul': daily_soul
-    }
+        if 'profile_to_visit' in request.GET:
+            # User is requesting the profile of a different user (search form)
+            # redefine user to grab their data rather than logged in user
+            user = request.GET.get('profile_to_visit')
+            print(user)
+        else:
+            user = request.user
+            print(user)
 
-    # user info for profile page
-    user = request.user
-    biography = ProfileBio.objects.filter(owner__exact=request.user)
-    display_name = ProfileDisplayName.objects.filter(owner__exact=request.user)
-    contact_info = ContactInfo.objects.filter(owner__exact=request.user)
+        # Returns all activities submitted today for user
+        daily_mind = balance.daily_mind(request)
+        daily_body = balance.daily_body(request)
+        daily_soul = balance.daily_soul(request)
 
-    # 'quote_data' is 'quote_data_queryset' parsed to a dictionary
-    quote_data_queryset = ProfileQuote.objects.filter(owner__exact=request.user)
-    quote_data = profile_utils.parse_quote_data(quote_data_queryset)
+        # Package daily activities
+        all_daily = {
+            'daily_mind': daily_mind,
+            'daily_body': daily_body,
+            'daily_soul': daily_soul
+        }
 
-    # 'perfect_balance' is 'perfect_balance_queryset parsed into a list
-    perfect_balance_queryset = PerfectBalance.objects.filter(owner=request.user)
-    perfect_balance = profile_utils.get_perfect_balance_data(perfect_balance_queryset)
+        # user info for profile page
+        user = request.user
+        biography = ProfileBio.objects.filter(owner__exact=request.user)
+        display_name = ProfileDisplayName.objects.filter(owner__exact=request.user)
+        contact_info = ContactInfo.objects.filter(owner__exact=request.user)
 
-    # *** MOVE to helper file
-    # get UTC time with offset
-    utc_timezone = datetime.datetime.now(tz=pytz.UTC)
-    print(f'utc time: {utc_timezone}')
-    # get user's saved time zone
-    user_timezone_object = ProfileTimezone.objects.filter(owner__exact=request.user)[0] # type= <class 'kokoro_app.models.ProfileTimezone'>
-    # convert to string
-    user_timezone_string = str(user_timezone_object)
-    print(f'users saved TZ string: {user_timezone_string}')
-    # convert utc_timezone to user timezone (with offset)
-    user_timezone = utc_timezone.astimezone(pytz.timezone(user_timezone_string))
-    print(f'user timezone: {user_timezone}')
-    print(f"Are these the same time? {user_timezone == utc_timezone}") # true
+        # 'quote_data' is 'quote_data_queryset' parsed to a dictionary
+        quote_data_queryset = ProfileQuote.objects.filter(owner__exact=request.user)
+        quote_data = profile_utils.parse_quote_data(quote_data_queryset)
 
-    # forms for profile page
-    perfect_form = PerfectBalanceForm()
-    bio_form = ProfileBioForm()
-    display_name_form = ProfileDisplayNameForm()
-    quote_form = ProfileQuoteForm()
-    profile_image_form = ProfileImageForm()
-    contact_info_form = ContactInfoForm()
+        # 'perfect_balance' is 'perfect_balance_queryset parsed into a list
+        perfect_balance_queryset = PerfectBalance.objects.filter(owner=request.user)
+        perfect_balance = profile_utils.get_perfect_balance_data(perfect_balance_queryset)
 
-    # testing Profile Posts
-    profile_posts = ProfilePost.objects.filter(author__exact=request.user)
+        # *** MOVE to helper file
+        # get UTC time with offset
+        utc_timezone = datetime.datetime.now(tz=pytz.UTC)
+        print(f'utc time: {utc_timezone}')
+        # get user's saved time zone
+        user_timezone_object = ProfileTimezone.objects.filter(owner__exact=request.user)[0] # type= <class 'kokoro_app.models.ProfileTimezone'>
+        # convert to string
+        user_timezone_string = str(user_timezone_object)
+        print(f'users saved TZ string: {user_timezone_string}')
+        # convert utc_timezone to user timezone (with offset)
+        user_timezone = utc_timezone.astimezone(pytz.timezone(user_timezone_string))
+        print(f'user timezone: {user_timezone}')
+        print(f"Are these the same time? {user_timezone == utc_timezone}") # true
 
-    context = {
-        'user': user,
-        'perfect_form': perfect_form,
-        'perfect_balance': perfect_balance,
-        'all_daily': all_daily,
-        'display_name_form': display_name_form,
-        'display_name': display_name,
-        'bio_form': bio_form,
-        'biography': biography,
-        'quote_data': quote_data,
-        'quote_form': quote_form,
-        'profile_image_form': profile_image_form,
-        'contact_info_form': contact_info_form,
-        'contact_info': contact_info,
-        'timezones': pytz.common_timezones,
-        'user_timezone_object': user_timezone_object,
-        'user_timezone': user_timezone,
-        # testing profile posts
-        'posts': profile_posts,
-    }
+        # forms for profile page
+        perfect_form = PerfectBalanceForm()
+        bio_form = ProfileBioForm()
+        display_name_form = ProfileDisplayNameForm()
+        quote_form = ProfileQuoteForm()
+        profile_image_form = ProfileImageForm()
+        contact_info_form = ContactInfoForm()
 
-    return render(request, 'kokoro_app/profile.html', context)
+        # testing Profile Posts
+        profile_posts = ProfilePost.objects.filter(author__exact=request.user)
+
+        context = {
+            'user': user,
+            'perfect_form': perfect_form,
+            'perfect_balance': perfect_balance,
+            'all_daily': all_daily,
+            'display_name_form': display_name_form,
+            'display_name': display_name,
+            'bio_form': bio_form,
+            'biography': biography,
+            'quote_data': quote_data,
+            'quote_form': quote_form,
+            'profile_image_form': profile_image_form,
+            'contact_info_form': contact_info_form,
+            'contact_info': contact_info,
+            'timezones': pytz.common_timezones,
+            'user_timezone_object': user_timezone_object,
+            'user_timezone': user_timezone,
+            # testing profile posts
+            'posts': profile_posts,
+        }
+
+        return render(request, 'kokoro_app/profile.html', context)
 
 
 # consider if login should be required
