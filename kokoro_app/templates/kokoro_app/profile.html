@@ -13,7 +13,7 @@
             {{ user_timezone_object }}
         {% endlocaltime %}
 
-    <form action="{% url 'kokoro_app:profile' %}" method="POST">
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="POST">
         {% csrf_token %}
         <label>Time zone:</label>
         <select name="user_timezone">
@@ -133,7 +133,7 @@
 <div class="perfect-form-container form-container">
     <div class="close-form" data-form="perfect-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
 
-    <form action="{% url 'kokoro_app:profile' %}" method="post">
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
         {% csrf_token %}
         <label>Perfect Mind Activity<div>{{ perfect_form.perfect_mind }}</div></label>
         <label>Perfect Body Activity<div>{{ perfect_form.perfect_body }}</div></label>
@@ -144,7 +144,7 @@
 <div class="display-name-form-container form-container">
     <div class="close-form" data-form="display-name-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
 
-    <form action="{% url 'kokoro_app:profile' %}" method="post">
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
         {% csrf_token %}
         <div>{{ display_name_form }}</div>
         <input type="submit" name="display_name_form" value="Update Display Name">
@@ -154,7 +154,7 @@
 <div class="quote-form-container form-container">
     <div class="close-form" data-form="quote-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
 
-    <form action="{% url 'kokoro_app:profile' %}" method="post">
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
         {% csrf_token %}
         <div>{{ quote_form }}</div>
         <input type="submit" name="quote_form" value="Update Quote">
@@ -164,7 +164,7 @@
 <div class="profile-image-form-container form-container">
     <div class="close-form" data-form="profile-image-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
 
-    <form action="{% url 'kokoro_app:profile' %}" method="post" enctype="multipart/form-data">
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ profile_image_form }}
         <input type="submit" name="profile_image_form" value="Update Profile Photo">
@@ -173,27 +173,13 @@
 
 <div class="contact-info-form-container form-container">
     <div class="close-form" data-form="contact-info-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
-    <form action="{% url 'kokoro_app:profile' %}" method="post">
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
         {% csrf_token %}
         {{ contact_info_form }}
         <input type="submit" name="contact_info_form" value="Update Contact Information">
     </form>
 </div>
-<!--testing profile posts
-<div>
-    <p>{{ user }}'s Posts:</p>
-    {% for post in posts %}
-        {{ post.headline }}<br>
-        {{ post.content }}<br>
-        {{ post.author }}<br>
-        {{ post.date_published }}<br>
-        {{ post.post_slug }}<br>
-        <br>
-        <br>
-        <br>
-    {% endfor %}
-</div>
--->
+
 <script>
     // Each svg has a 'data-form' attribute relating to the class of a form to display
     // function grabs the 'data-form' value from the passed element, and toggles "show-form" class to the form
