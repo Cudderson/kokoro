@@ -90,145 +90,7 @@ def profile(request):
     """
 
     if request.method == "POST":
-
-        # user timezone testing
-        if 'tz_form' in request.POST:
-            # timezone the user selected
-            user_timezone_form = ProfileTimezoneForm(request.POST, instance=request.user.profiletimezone)
-            # check validity
-            if user_timezone_form.is_valid():
-                print("VALID")
-                # save form (working)
-                user_timezone_form.save()
-
-            return redirect('/profile')
-
-        elif 'perfect_form' in request.POST:
-            perfect_form_submitted = PerfectBalanceForm(data=request.POST)
-            if perfect_form_submitted.is_valid():
-                # delete old perfect balance (working)
-                PerfectBalance.objects.filter(owner__exact=request.user).delete()
-                # save new perfect balance form with helper function
-                profile_utils.save_new_perfect_balance(request, perfect_form_submitted)
-                return redirect('/profile')
-
-        elif 'bio_form' in request.POST:
-            # user is submitting a biography
-            bio_form_submitted = ProfileBioForm(data=request.POST)
-            if bio_form_submitted.is_valid():
-                # delete old biography
-                ProfileBio.objects.filter(owner__exact=request.user).delete()
-                # save new biography
-                profile_utils.save_new_biography(request, bio_form_submitted)
-                return redirect('/profile')
-
-        elif 'display_name_form' in request.POST:
-            # get submitted form data
-            display_name_form_submitted = ProfileDisplayNameForm(data=request.POST)
-            if display_name_form_submitted.is_valid():
-                # delete old display name
-                ProfileDisplayName.objects.filter(owner__exact=request.user).delete()
-                # save new display name with helper function
-                profile_utils.save_new_display_name(request, display_name_form_submitted)
-                return redirect('/profile')
-
-        elif 'quote_form' in request.POST:
-            # get form data
-            quote_form_submitted = ProfileQuoteForm(data=request.POST)
-            # check validity
-            if quote_form_submitted.is_valid():
-                # delete old quote & author
-                ProfileQuote.objects.filter(owner__exact=request.user).delete()
-                # save new quote & author (before committing, add owner)
-                profile_utils.save_new_quote(request, quote_form_submitted)
-                return redirect('/profile')
-
-        elif 'profile_image_form' in request.POST:
-            # Make more robust (and entire function)
-            # get form data
-            profile_image_submitted = ProfileImageForm(request.POST, request.FILES, instance=request.user.profileimage)
-            # check validity
-            if profile_image_submitted.is_valid():
-                profile_image_submitted.save()
-                return redirect('/profile')
-
-        elif 'pin_post_form' in request.POST:
-            # Could this be in a different view, that simply redirects to profile()? try after working proof, would change everything
-            # get form data
-
-            # returns unique slug
-            post_to_pin_slug = request.POST.get('pin_post_form')
-
-            # get post with matching slug
-            post_to_pin = ProfilePost.objects.get(post_slug__exact=post_to_pin_slug)
-
-            # Create new PinnedProfilePost
-            new_pinned_post = PinnedProfilePost()
-
-            # Apply necessary fields and save
-            new_pinned_post.original = post_to_pin
-            new_pinned_post.pinned_by = request.user
-            new_pinned_post.save()
-
-            return redirect('/profile')
-
-        elif 'unpin_post_form' in request.POST:
-            # Could this be in a different view, that simply redirects to profile()? try after working proof, would change everything
-            # get form data
-            post_to_unpin_slug = request.POST.get('unpin_post_form')
-
-            try:
-                # get post with matching slug
-                post_to_unpin = PinnedProfilePost.objects.get(
-                    pinned_by__exact=request.user,
-                    original__exact=ProfilePost.objects.get(post_slug__exact=post_to_unpin_slug)
-                )
-
-                # Delete PinnedProfilePost object
-                post_to_unpin.delete()
-                print('Post successfully un-pinned!')
-
-            except Exception as e:
-                print(e)
-                print('Something went wrong while un-pinning the post.')
-
-            return redirect('/profile')
-
-        elif 'delete_post_form' in request.POST:
-            # put in own view
-            # get form data (post_slug)
-            try:
-                post_to_delete_slug = request.POST.get('delete_post_form')
-                post_to_delete = ProfilePost.objects.get(post_slug__exact=post_to_delete_slug)
-                post_to_delete.delete()
-                print('Post Deleted.')
-            except Exception as e:
-                print(e)
-                return Http404("Something went wrong while deleting your post.")
-
-            return redirect('/profile')
-
-        elif 'contact_info_form' in request.POST:
-            # move logic to helper
-            # get form data
-            # try to retrieve user's ContactInfo object with POST data
-            try:
-                contact_info_submitted = ContactInfoForm(data=request.POST, instance=request.user.contactinfo)
-
-            except Exception as e:
-                # User likely doesn't have ContactInfo yet.
-                # Create default ContactInfo instance for user, then override with POST data
-                print(e)
-                print(f'Creating ContactInfo for {request.user}...')
-                ContactInfo.objects.create(owner=request.user)
-                contact_info_submitted = ContactInfoForm(data=request.POST, instance=request.user.contactinfo)
-
-            # check validity
-            if contact_info_submitted.is_valid():
-                contact_info_submitted.save(commit=False)
-                contact_info_submitted.owner = request.user
-                contact_info_submitted.save()
-                return redirect('/profile')
+        print("This shouldn't happen.")
 
     elif request.method == 'GET':
 
@@ -248,10 +110,6 @@ def profile(request):
         else:
             # Logged in user is requesting their own profile
             user = request.user
-
-        # ----------------------
-        # now for the real trick
-        # anywhere 'request.user' is referred to, replace with 'user.id', which is now a dynamic variable
 
         # user info for profile page
         biography = ProfileBio.objects.filter(owner__exact=user.id)
@@ -287,9 +145,6 @@ def profile(request):
         quote_form = ProfileQuoteForm()
         profile_image_form = ProfileImageForm()
         contact_info_form = ContactInfoForm()
-
-        # *** Move this logic after ProfilePost logic complete
-        # Mark what each block is for
 
         # ***** Create list of queryset objects for template *****
         # our 2 querysets to sort together are pinned_posts and profile_posts
@@ -332,36 +187,13 @@ def profile(request):
         return render(request, 'kokoro_app/profile.html', context)
 
 
+@login_required
 def profile_form_handler(request):
     """
     Helper function for processing forms submitted from profile.html template
     :param request: http request data
     :return: A redirect to profile() view
     """
-
-    # *** Before deleting this logic from profile(), we must prove that it all works ***
-    # List the forms that are proven working (x == working):
-    # tz_form [x]
-    # perfect_form [x]
-    # bio_form [x]
-    # display_name_form [x]
-    # quote_form [x]
-    # profile_image_form [x]
-    # pin_post_form [] # should be in a post_form_handler
-    # unpin_post_form [] # should be in a post_form handler
-    # delete_post_form [] # should be in a post_form_handler
-    # contact_info_form [x]
-
-    # Nice, everything working so far
-    # I think it would be valuable/correct to keep the pattern, and create a view for handling ProfilePost-forms too
-    # post() and write_post() should just provide the info needed for template display, but submitted forms should go elsewhere, and
-    # then redirect back to profile()
-
-    # Next, create posts_form_handler() and route the following forms to it:
-    #   - pin_post_form
-    #   - unpin_post_form
-    #   - delete_post_form
-    #   - profile_post_form (maybe rename, this form is for writing a new ProfilePost, (write_post_form?))
 
     if request.method == "POST":
 
@@ -371,10 +203,9 @@ def profile_form_handler(request):
             user_timezone_form = ProfileTimezoneForm(request.POST, instance=request.user.profiletimezone)
             # check validity
             if user_timezone_form.is_valid():
-                print("VALID")
+                print("VALID TZ")
                 # save form (working)
                 user_timezone_form.save()
-                print("Processed by form-handler")
 
             return redirect('/profile')
 
@@ -385,7 +216,7 @@ def profile_form_handler(request):
                 PerfectBalance.objects.filter(owner__exact=request.user).delete()
                 # save new perfect balance form with helper function
                 profile_utils.save_new_perfect_balance(request, perfect_form_submitted)
-                print("Processed by form-handler")
+
                 return redirect('/profile')
 
         elif 'bio_form' in request.POST:
@@ -396,7 +227,7 @@ def profile_form_handler(request):
                 ProfileBio.objects.filter(owner__exact=request.user).delete()
                 # save new biography
                 profile_utils.save_new_biography(request, bio_form_submitted)
-                print("Processed by form-handler")
+
                 return redirect('/profile')
 
         elif 'display_name_form' in request.POST:
@@ -407,7 +238,7 @@ def profile_form_handler(request):
                 ProfileDisplayName.objects.filter(owner__exact=request.user).delete()
                 # save new display name with helper function
                 profile_utils.save_new_display_name(request, display_name_form_submitted)
-                print("Processed by form-handler")
+
                 return redirect('/profile')
 
         elif 'quote_form' in request.POST:
@@ -419,82 +250,20 @@ def profile_form_handler(request):
                 ProfileQuote.objects.filter(owner__exact=request.user).delete()
                 # save new quote & author (before committing, add owner)
                 profile_utils.save_new_quote(request, quote_form_submitted)
-                print("Processed by form-handler")
+
                 return redirect('/profile')
 
         elif 'profile_image_form' in request.POST:
-            # Make more robust (and entire function)
+            # Make more robust
             # get form data
             profile_image_submitted = ProfileImageForm(request.POST, request.FILES, instance=request.user.profileimage)
             # check validity
             if profile_image_submitted.is_valid():
                 profile_image_submitted.save()
-                print("Processed by form-handler")
+
                 return redirect('/profile')
 
-        # moving to posts_form_handler, can delete when working
-        elif 'pin_post_form' in request.POST:
-            # Could this be in a different view, that simply redirects to profile()? try after working proof, would change everything
-            # get form data
-
-            # returns unique slug
-            post_to_pin_slug = request.POST.get('pin_post_form')
-
-            # get post with matching slug
-            post_to_pin = ProfilePost.objects.get(post_slug__exact=post_to_pin_slug)
-
-            # Create new PinnedProfilePost
-            new_pinned_post = PinnedProfilePost()
-
-            # Apply necessary fields and save
-            new_pinned_post.original = post_to_pin
-            new_pinned_post.pinned_by = request.user
-            new_pinned_post.save()
-
-            print("Processed by form-handler")
-
-            return redirect('/profile')
-
-        elif 'unpin_post_form' in request.POST:
-            # Could this be in a different view, that simply redirects to profile()? try after working proof, would change everything
-            # get form data
-            post_to_unpin_slug = request.POST.get('unpin_post_form')
-
-            try:
-                # get post with matching slug
-                post_to_unpin = PinnedProfilePost.objects.get(
-                    pinned_by__exact=request.user,
-                    original__exact=ProfilePost.objects.get(post_slug__exact=post_to_unpin_slug)
-                )
-
-                # Delete PinnedProfilePost object
-                post_to_unpin.delete()
-                print('Post successfully un-pinned!')
-
-            except Exception as e:
-                print(e)
-                print('Something went wrong while un-pinning the post.')
-
-            print("Processed by form-handler")
-            return redirect('/profile')
-
-        elif 'delete_post_form' in request.POST:
-            # put in own view
-            # get form data (post_slug)
-            try:
-                post_to_delete_slug = request.POST.get('delete_post_form')
-                post_to_delete = ProfilePost.objects.get(post_slug__exact=post_to_delete_slug)
-                post_to_delete.delete()
-                print('Post Deleted.')
-            except Exception as e:
-                print(e)
-                return Http404("Something went wrong while deleting your post.")
-
-            print("Processed by form-handler")
-            return redirect('/profile')
-
         elif 'contact_info_form' in request.POST:
-            # move logic to helper
             # get form data
             # try to retrieve user's ContactInfo object with POST data
             try:
@@ -513,7 +282,7 @@ def profile_form_handler(request):
                 contact_info_submitted.save(commit=False)
                 contact_info_submitted.owner = request.user
                 contact_info_submitted.save()
-                print("Processed by form-handler")
+
                 return redirect('/profile')
 
 
@@ -563,6 +332,7 @@ def post(request, post_slug):
     return render(request, 'kokoro_app/post.html', context)
 
 
+@login_required
 def write_post(request):
     """
     Page for writing a new ProfilePost
@@ -572,27 +342,7 @@ def write_post(request):
 
     # testing profile posts
     if request.method == 'POST':
-        if 'profile_post_form' in request.POST:
-            # get form data
-            post_submitted = ProfilePostForm(data=request.POST)
-
-            # check validity
-            if post_submitted.is_valid():
-                print('Valid Profile Post.')
-                new_post = post_submitted.save(commit=False)
-                # add author and unique slug to post
-                new_post.author = request.user
-                new_post.post_slug = slugify(new_post.headline)
-                try:
-                    new_post.save()
-                except IntegrityError:
-                    # The generated slug was not unique
-                    new_slug_id = get_random_string(length=6)
-                    unique_slug = f'{new_post.post_slug}-{new_slug_id}'
-                    print(f'Generated unique slug: {unique_slug}')
-                    new_post.post_slug = unique_slug
-                    new_post.save()
-                return redirect('/profile')
+        print("this shouldn't happen.")
     else:
         profile_post_form = ProfilePostForm()
         context = {'profile_post_form': profile_post_form}
@@ -607,19 +357,6 @@ def posts_form_handler(request):
     :return: A redirect to profile()
     """
 
-    # Next, create posts_form_handler() and route the following forms to it:
-    #   - pin_post_form [x]
-    #   - unpin_post_form [x]
-    #   - delete_post_form [x]
-    #   - profile_post_form [x] (maybe rename, this form is for writing a new ProfilePost, (write_post_form?))
-    #   - rename to write_post_form [x] (working) (note that the form sent to template is called ProfilePostForm())
-
-    # Steps:
-    #   - copy logic from current location
-    #   - change template to post to this view
-
-    # I think it's all working!!
-    # The next step is to delete all form processing code not in the handler views we made. (commit first)
     if request.method == 'POST':
 
         if 'write_post_form' in request.POST:
@@ -643,13 +380,10 @@ def posts_form_handler(request):
                     new_post.post_slug = unique_slug
                     new_post.save()
 
-                print("processed by posts-form-handler")
                 return redirect('/profile')
 
         elif 'pin_post_form' in request.POST:
-            # Could this be in a different view, that simply redirects to profile()? try after working proof, would change everything
             # get form data
-
             # returns unique slug
             post_to_pin_slug = request.POST.get('pin_post_form')
 
@@ -664,12 +398,9 @@ def posts_form_handler(request):
             new_pinned_post.pinned_by = request.user
             new_pinned_post.save()
 
-            print("Processed by posts-form-handler")
-
             return redirect('/profile')
 
         elif 'unpin_post_form' in request.POST:
-            # Could this be in a different view, that simply redirects to profile()? try after working proof, would change everything
             # get form data
             post_to_unpin_slug = request.POST.get('unpin_post_form')
 
@@ -688,11 +419,9 @@ def posts_form_handler(request):
                 print(e)
                 return Http404('Something went wrong while un-pinning the post.')
 
-            print("Processed by posts-form-handler")
             return redirect('/profile')
 
         elif 'delete_post_form' in request.POST:
-            # put in own view
             # get form data (post_slug)
             try:
                 post_to_delete_slug = request.POST.get('delete_post_form')
@@ -703,7 +432,6 @@ def posts_form_handler(request):
                 print(e)
                 return Http404("Something went wrong while deleting your post.")
 
-            print("Processed by posts-form-handler")
             return redirect('/profile')
 
 
