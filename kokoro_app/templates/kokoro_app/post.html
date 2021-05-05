@@ -12,12 +12,17 @@
             <!-- date_published converted to user TZ -->
             <div>Published: {{ date_published_user_tz }}</div>
             {% if post.author != request.user %}
-                <form action="{% url 'kokoro_app:profile' %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" name="pin_post_form" value="{{ post.post_slug }}" style="padding: .75rem; background: white; margin-top: 2rem;">
-                        Pin This Post to My Profile
-                    </button>
-                </form>
+                {% if pinned %}
+                    <!--add form to unpin from profile here (will pass to profile() for now since that's where 'pin_post_form' is currently handled)-->
+                    <div>*Form to unpin post here*</div>
+                {% else %}
+                    <form action="{% url 'kokoro_app:profile' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" name="pin_post_form" value="{{ post.post_slug }}" style="padding: .75rem; background: white; margin-top: 2rem;">
+                            Pin This Post to My Profile
+                        </button>
+                    </form>
+                {% endif %}
             {% endif %}
             <form action="{% url 'kokoro_app:profile' %}" method="get">
                 <button type="submit" name="profile_to_visit" value="{{ post.author }}" style="padding: .75rem; background: white; margin-top: 1rem;">
@@ -30,5 +35,4 @@
             </form>
         {% endlocaltime %}
     </div>
-
 {% endblock content %}

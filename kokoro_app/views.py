@@ -305,6 +305,27 @@ def post(request, post_slug):
     # use unique slug to retrieve desired post
     requested_post = ProfilePost.objects.get(post_slug__exact=post_slug)
 
+    # We should also determine if user has already pinned the post their viewing.
+    # If so, we should display 'un-pin post' rather than 'pin post'.
+    # This would also solve the double-pinning issue
+    # Check if this post already pinned by user
+    # This query may be a little too complex (think how it could be easier)
+    # It says: pinned == PinnedProfilePost object where pinned_by = request.user,
+    #          and FK original = ProfilePost object with post_slug passed from template (post clicked on)
+    try:
+        pinned_post = PinnedProfilePost.objects.get(
+            pinned_by__exact=request.user,
+            original__exact=requested_post
+        )
+        # If query executes without exception, post is already pinned
+        pinned = True
+    except Exception as e:
+        pinned = False
+        print(e)
+
+    # 'pinned' variable working in template
+    # Next, I should remove the 'pin to my profile' if pinned == true, and replace it with 'unpin from my profile'
+
     # get user's saved time zone (outsource to helper?)
     user_timezone_object = ProfileTimezone.objects.filter(owner__exact=request.user)[0]  # type= <class 'kokoro_app.models.ProfileTimezone'>
     # convert to string
@@ -316,6 +337,7 @@ def post(request, post_slug):
 
     context = {
         'post': requested_post,
+        'pinned': pinned,
         'date_published_user_tz': date_published_user_tz,
     }
 
