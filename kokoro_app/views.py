@@ -194,7 +194,22 @@ def profile(request):
 
             return redirect('/profile')
 
-        elif 'contact_info_form' in request.POST: # move logic to helper
+        elif 'delete_post_form' in request.POST:
+            # put in own view
+            # get form data (post_slug)
+            try:
+                post_to_delete_slug = request.POST.get('delete_post_form')
+                post_to_delete = ProfilePost.objects.get(post_slug__exact=post_to_delete_slug)
+                post_to_delete.delete()
+                print('Post Deleted.')
+            except Exception as e:
+                print(e)
+                return Http404("Something went wrong while deleting your post.")
+
+            return redirect('/profile')
+
+        elif 'contact_info_form' in request.POST:
+            # move logic to helper
             # get form data
             # try to retrieve user's ContactInfo object with POST data
             try:
