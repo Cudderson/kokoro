@@ -1,0 +1,13 @@
+{% extends 'kokoro_app/base.html' %}
+
+{% block content %}
+
+    <div style="text-align: center;">Search Results:</div>
+    <br>
+    {% for user in search_results %}
+        <form action="{% url 'kokoro_app:profile' %}" method="get">
+            <div style="text-align: center;"><input type="submit" name="profile_to_visit" value="{{ user }}"></div>
+        </form>
+    {% endfor %}
+
+{% endblock content %}

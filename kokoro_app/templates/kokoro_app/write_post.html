@@ -4,10 +4,10 @@
 
     <p>Profile Post Form:</p>
     <div>
-        <form action="{% url 'kokoro_app:write_post' %}" method="post">
+        <form action="{% url 'kokoro_app:posts_form_handler' %}" method="post">
         {% csrf_token %}
         {{ profile_post_form.as_p }}
-        <input style="margin: 1rem;" type="submit" name="profile_post_form" value="Publish">
+        <input style="margin: 1rem;" type="submit" name="write_post_form" value="Publish">
     </form>
     </div>
 

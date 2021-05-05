@@ -19,5 +19,14 @@ urlpatterns = [
     path('post/<slug:post_slug>/', views.post, name='post'),
 
     # Page for writing a new ProfilePost
-    path('write_post/', views.write_post, name='write_post')
+    path('write_post/', views.write_post, name='write_post'),
+
+    # Page to display search results
+    path('search/', views.search, name='search'),
+
+    # Called when forms submitted from profile.html, redirects to profile()
+    path('profile_form_handler/', views.profile_form_handler, name='profile_form_handler'),
+
+    # Called when forms submitted from post.html & write_post.html, redirects to profile()
+    path('posts_form_handler/', views.posts_form_handler, name='posts_form_handler'),
 ]

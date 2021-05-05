@@ -1,35 +1,43 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
-{% load tz %}
-<div style="margin-left: 35vw; margin-right: auto; margin-bottom: 2vw;">
-    {% localtime off %}
-        {{ user }}'s local time:
-        {{ user_timezone }}
-        {{ user_timezone_object }}
-    {% endlocaltime %}
 
-<form action="{% url 'kokoro_app:profile' %}" method="POST">
-    {% csrf_token %}
-    <label>Time zone:</label>
-    <select name="user_timezone">
-        <option disabled selected value="">Select Timezone</option>
-        {% for tz in timezones %}
-        <option value="{{ tz }}">{{ tz }}</option>
-        {% endfor %}
-    </select>
-    <input type="submit" name="tz_form" value="Set Timezone">
-</form>
+<!-- for user's viewing their own profile only -->
+{% if user == request.user %}
+    {% load tz %}
+    Hello, world!
+    <div style="margin-left: 35vw; margin-right: auto; margin-bottom: 2vw;">
+        {% localtime off %}
+            {{ user }}'s local time:
+            {{ user_timezone }}
+            {{ user_timezone_object }}
+        {% endlocaltime %}
 
-</div>
-<!-- GET write_post.html form -->
-<div>
-    <form action="{% url 'kokoro_app:write_post' %}" method="get">
-        <button type="submit">Write a Post</button>
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="POST">
+        {% csrf_token %}
+        <label>Time zone:</label>
+        <select name="user_timezone">
+            <option disabled selected value="">Select Timezone</option>
+            {% for tz in timezones %}
+            <option value="{{ tz }}">{{ tz }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" name="tz_form" value="Set Timezone">
     </form>
-</div>
 
-<div onclick="testFunction(this)" style="cursor: pointer; user-select: none; border: 1px solid black; border-radius: 4px; width: 10%; text-align: center; margin: auto; margin-bottom: 2vw;">Edit Profile</div>
+    </div>
+    <!-- GET write_post.html form -->
+    <div>
+        <form action="{% url 'kokoro_app:write_post' %}" method="get">
+            <button type="submit">Write a Post</button>
+        </form>
+    </div>
+
+    <div onclick="testFunction(this)" style="cursor: pointer; user-select: none; border: 1px solid black; border-radius: 4px; width: 10%; text-align: center; margin: auto; margin-bottom: 2vw;">Edit Profile</div>
+
+{% endif %}
+<!-- everything above this is for a user viewing their own profile only -->
+
 <div class="profile-grid">
     <div class="profile-placeholder">
         <img class="profile-image" src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
@@ -45,9 +53,9 @@
             </span>
         </span>
         <span>@{{ user }}</span>
-        <span>Balance Streak: 7</span>
+        <span>Balance Streak: {{ balance_streak }}</span>
         <span>----------</span>
-        <!--form (done)-->
+        <!--change .filter() to .get() so this doesn't need an index-->
         <span>{{ biography.0 }}
             <span class="svg-edit-icon svg-icon-hidden" style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
                 <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" data-form="bio-form-container" height="auto" width="100%" onclick="toggleFormDisplay(this)" style="cursor: pointer;">
@@ -85,24 +93,38 @@
         </div>
         <div class="profile-quote-author">- {{ quote_data.quote_author }}</div>
     </div>
+
     <!--new code for dynamic ProfilePost display-->
     {% for post in posts %}
-        <form class="profile-post" action="{% url 'kokoro_app:post' post.post_slug %}" method="get">
-            <button type="submit">
-                <div class="profile-post-headline">{{ post.headline }}</div>
-                <div class="profile-post-author">- {{ post.author }}</div>
-            </button>
-        </form>
+        {% if post.post_slug %}
+            <!-- post == ProfilePost object -->
+            <form class="profile-post" action="{% url 'kokoro_app:post' post.post_slug %}" method="get">
+                <button type="submit">
+                    <span class="profile-post-headline">{{ post.headline }}</span>
+                    <span class="profile-post-author">- {{ post.author }}</span>
+                </button>
+            </form>
+        {% else %}
+            <!-- post == PinnedProfilePost object -->
+            <form class="profile-post" action="{% url 'kokoro_app:post' post.original.post_slug %}" method="get">
+                <button type="submit">
+                    <span class="profile-post-headline">{{ post.original.headline }}</span>
+                    <span class="profile-post-author">- {{ post.original.author }}</span>
+                    <span>*pinned</span>
+                </button>
+            </form>
+        {% endif %}
     {% empty %}
         <div class="profile-post">
             <span>{{ user }} hasn't created a post yet.</span>
         </div>
     {% endfor %}
 </div>
+
 <div class="bio-form-container form-container">
     <div class="close-form" data-form="bio-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
 
-    <form action="{% url 'kokoro_app:profile' %}" method="post">
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
         {% csrf_token %}
         <div>{{ bio_form.biography }}</div>
         <input type="submit" name="bio_form" value="Submit Biography">
@@ -111,7 +133,7 @@
 <div class="perfect-form-container form-container">
     <div class="close-form" data-form="perfect-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
 
-    <form action="{% url 'kokoro_app:profile' %}" method="post">
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
         {% csrf_token %}
         <label>Perfect Mind Activity<div>{{ perfect_form.perfect_mind }}</div></label>
         <label>Perfect Body Activity<div>{{ perfect_form.perfect_body }}</div></label>
@@ -122,7 +144,7 @@
 <div class="display-name-form-container form-container">
     <div class="close-form" data-form="display-name-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
 
-    <form action="{% url 'kokoro_app:profile' %}" method="post">
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
         {% csrf_token %}
         <div>{{ display_name_form }}</div>
         <input type="submit" name="display_name_form" value="Update Display Name">
@@ -132,7 +154,7 @@
 <div class="quote-form-container form-container">
     <div class="close-form" data-form="quote-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
 
-    <form action="{% url 'kokoro_app:profile' %}" method="post">
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
         {% csrf_token %}
         <div>{{ quote_form }}</div>
         <input type="submit" name="quote_form" value="Update Quote">
@@ -142,7 +164,7 @@
 <div class="profile-image-form-container form-container">
     <div class="close-form" data-form="profile-image-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
 
-    <form action="{% url 'kokoro_app:profile' %}" method="post" enctype="multipart/form-data">
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ profile_image_form }}
         <input type="submit" name="profile_image_form" value="Update Profile Photo">
@@ -151,27 +173,13 @@
 
 <div class="contact-info-form-container form-container">
     <div class="close-form" data-form="contact-info-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
-    <form action="{% url 'kokoro_app:profile' %}" method="post">
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
         {% csrf_token %}
         {{ contact_info_form }}
         <input type="submit" name="contact_info_form" value="Update Contact Information">
     </form>
 </div>
-<!--testing profile posts
-<div>
-    <p>{{ user }}'s Posts:</p>
-    {% for post in posts %}
-        {{ post.headline }}<br>
-        {{ post.content }}<br>
-        {{ post.author }}<br>
-        {{ post.date_published }}<br>
-        {{ post.post_slug }}<br>
-        <br>
-        <br>
-        <br>
-    {% endfor %}
-</div>
--->
+
 <script>
     // Each svg has a 'data-form' attribute relating to the class of a form to display
     // function grabs the 'data-form' value from the passed element, and toggles "show-form" class to the form
