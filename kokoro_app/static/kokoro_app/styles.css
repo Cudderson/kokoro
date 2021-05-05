@@ -332,6 +332,7 @@ svg text {
 
 .profile-post-headline {
     /* place headline in middle-top */
+    display: block; /* give span same display as div */
     text-align: center;
     margin-right: auto;
     font-size: 1.25vw;
@@ -340,6 +341,7 @@ svg text {
 
 .profile-post-author {
     /* place author in bottom-right */
+    display: block; /* give span same display as div */
     align-self: flex-end;
     margin-top: auto;
     padding: 1rem;
