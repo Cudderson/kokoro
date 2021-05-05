@@ -157,10 +157,10 @@ def profile(request):
             # get form data
 
             # returns unique slug
-            post_to_pin_data = request.POST.get('pin_post_form')
+            post_to_pin_slug = request.POST.get('pin_post_form')
 
             # get post with matching slug
-            post_to_pin = ProfilePost.objects.get(post_slug__exact=post_to_pin_data)
+            post_to_pin = ProfilePost.objects.get(post_slug__exact=post_to_pin_slug)
 
             # Create new PinnedProfilePost
             new_pinned_post = PinnedProfilePost()
@@ -169,6 +169,28 @@ def profile(request):
             new_pinned_post.original = post_to_pin
             new_pinned_post.pinned_by = request.user
             new_pinned_post.save()
+
+            return redirect('/profile')
+
+        elif 'unpin_post_form' in request.POST:
+            # Could this be in a different view, that simply redirects to profile()? try after working proof, would change everything
+            # get form data
+            post_to_unpin_slug = request.POST.get('unpin_post_form')
+
+            try:
+                # get post with matching slug
+                post_to_unpin = PinnedProfilePost.objects.get(
+                    pinned_by__exact=request.user,
+                    original__exact=ProfilePost.objects.get(post_slug__exact=post_to_unpin_slug)
+                )
+
+                # Delete PinnedProfilePost object
+                post_to_unpin.delete()
+                print('Post successfully un-pinned!')
+
+            except Exception as e:
+                print(e)
+                print('Something went wrong while un-pinning the post.')
 
             return redirect('/profile')
 
@@ -262,7 +284,6 @@ def profile(request):
         # Pinned Posts
         pinned_posts = PinnedProfilePost.objects.filter(pinned_by__exact=user.id)
 
-        print("Sorted profile posts & pinned posts by date_published:")
         from itertools import chain
         posts = sorted(
             chain(profile_posts, pinned_posts),
@@ -305,9 +326,6 @@ def post(request, post_slug):
     # use unique slug to retrieve desired post
     requested_post = ProfilePost.objects.get(post_slug__exact=post_slug)
 
-    # We should also determine if user has already pinned the post their viewing.
-    # If so, we should display 'un-pin post' rather than 'pin post'.
-    # This would also solve the double-pinning issue
     # Check if this post already pinned by user
     # This query may be a little too complex (think how it could be easier)
     # It says: pinned == PinnedProfilePost object where pinned_by = request.user,
@@ -322,9 +340,6 @@ def post(request, post_slug):
     except Exception as e:
         pinned = False
         print(e)
-
-    # 'pinned' variable working in template
-    # Next, I should remove the 'pin to my profile' if pinned == true, and replace it with 'unpin from my profile'
 
     # get user's saved time zone (outsource to helper?)
     user_timezone_object = ProfileTimezone.objects.filter(owner__exact=request.user)[0]  # type= <class 'kokoro_app.models.ProfileTimezone'>

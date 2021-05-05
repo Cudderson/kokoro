@@ -14,7 +14,12 @@
             {% if post.author != request.user %}
                 {% if pinned %}
                     <!--add form to unpin from profile here (will pass to profile() for now since that's where 'pin_post_form' is currently handled)-->
-                    <div>*Form to unpin post here*</div>
+                    <form action="{% url 'kokoro_app:profile' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" name="unpin_post_form" value="{{ post.post_slug }}" style="padding: .75rem; background: white; margin-top: 2rem;">
+                            Un-Pin This Post From My Profile
+                        </button>
+                    </form>
                 {% else %}
                     <form action="{% url 'kokoro_app:profile' %}" method="post">
                         {% csrf_token %}
