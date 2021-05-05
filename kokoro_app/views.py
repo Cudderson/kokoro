@@ -305,6 +305,10 @@ def profile(request):
             key=lambda post_or_pinned: post_or_pinned.date_published, reverse=True
         )
 
+        # Let's also pass BalanceStreak data to template
+        balance_streak_object = BalanceStreak.objects.get(owner__exact=request.user)
+        balance_streak = balance_streak_object.balance_streak
+
         context = {
             'user': user,
             'perfect_form': perfect_form,
@@ -321,8 +325,8 @@ def profile(request):
             'timezones': pytz.common_timezones,
             'user_timezone_object': user_timezone_object,
             'user_timezone': user_timezone,
-            # testing profile posts
             'posts': posts,
+            'balance_streak': balance_streak,
         }
 
         return render(request, 'kokoro_app/profile.html', context)
