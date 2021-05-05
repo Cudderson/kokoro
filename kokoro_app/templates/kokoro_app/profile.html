@@ -55,7 +55,7 @@
         <span>@{{ user }}</span>
         <span>Balance Streak: {{ balance_streak }}</span>
         <span>----------</span>
-        <!--form (done)-->
+        <!--change .filter() to .get() so this doesn't need an index-->
         <span>{{ biography.0 }}
             <span class="svg-edit-icon svg-icon-hidden" style="width: .75em; height: .75em; display: inline-block; vertical-align: top;">
                 <img src='\static\kokoro_app\setting_svg_2.svg' alt="settings" data-form="bio-form-container" height="auto" width="100%" onclick="toggleFormDisplay(this)" style="cursor: pointer;">
@@ -124,7 +124,7 @@
 <div class="bio-form-container form-container">
     <div class="close-form" data-form="bio-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
 
-    <form action="{% url 'kokoro_app:profile' %}" method="post">
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
         {% csrf_token %}
         <div>{{ bio_form.biography }}</div>
         <input type="submit" name="bio_form" value="Submit Biography">

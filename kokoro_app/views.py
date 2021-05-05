@@ -332,6 +332,27 @@ def profile(request):
         return render(request, 'kokoro_app/profile.html', context)
 
 
+def profile_form_handler(request):
+    """
+    Helper function for processing forms submitted from profile.html template
+    :param request: http request data
+    :return: A redirect to profile() view
+    """
+
+    if request.method == 'POST':
+        # Let's start basic and try to handle the biography form
+        if 'bio_form' in request.POST:
+            # user is submitting a biography
+            bio_form_submitted = ProfileBioForm(data=request.POST)
+            if bio_form_submitted.is_valid():
+                # delete old biography
+                ProfileBio.objects.filter(owner__exact=request.user).delete()
+                # save new biography
+                profile_utils.save_new_biography(request, bio_form_submitted)
+                print("It's working!!")
+                return redirect('/profile')
+
+
 # consider if login should be required
 def post(request, post_slug):
     """

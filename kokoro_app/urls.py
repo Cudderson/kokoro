@@ -22,5 +22,8 @@ urlpatterns = [
     path('write_post/', views.write_post, name='write_post'),
 
     # Page to display search results
-    path('search/', views.search, name='search')
+    path('search/', views.search, name='search'),
+
+    # Called when forms submitted on profile page, redirects to profile()
+    path('profile_form_handler/', views.profile_form_handler, name='profile_form_handler'),
 ]
