@@ -432,6 +432,7 @@ def profile_form_handler(request):
                 print("Processed by form-handler")
                 return redirect('/profile')
 
+        # moving to posts_form_handler, can delete when working
         elif 'pin_post_form' in request.POST:
             # Could this be in a different view, that simply redirects to profile()? try after working proof, would change everything
             # get form data
@@ -607,16 +608,106 @@ def posts_form_handler(request):
     """
 
     # Next, create posts_form_handler() and route the following forms to it:
-    #   - pin_post_form
-    #   - unpin_post_form
-    #   - delete_post_form
-    #   - profile_post_form (maybe rename, this form is for writing a new ProfilePost, (write_post_form?))
+    #   - pin_post_form [x]
+    #   - unpin_post_form [x]
+    #   - delete_post_form [x]
+    #   - profile_post_form [x] (maybe rename, this form is for writing a new ProfilePost, (write_post_form?))
+    #   - rename to write_post_form [x] (working) (note that the form sent to template is called ProfilePostForm())
 
-    return redirect('/profile')
+    # Steps:
+    #   - copy logic from current location
+    #   - change template to post to this view
+
+    # I think it's all working!!
+    # The next step is to delete all form processing code not in the handler views we made. (commit first)
+    if request.method == 'POST':
+
+        if 'write_post_form' in request.POST:
+            # get form data
+            post_submitted = ProfilePostForm(data=request.POST)
+
+            # check validity
+            if post_submitted.is_valid():
+                print('Valid Profile Post.')
+                new_post = post_submitted.save(commit=False)
+                # add author and unique slug to post
+                new_post.author = request.user
+                new_post.post_slug = slugify(new_post.headline)
+                try:
+                    new_post.save()
+                except IntegrityError:
+                    # The generated slug was not unique
+                    new_slug_id = get_random_string(length=6)
+                    unique_slug = f'{new_post.post_slug}-{new_slug_id}'
+                    print(f'Generated unique slug: {unique_slug}')
+                    new_post.post_slug = unique_slug
+                    new_post.save()
+
+                print("processed by posts-form-handler")
+                return redirect('/profile')
+
+        elif 'pin_post_form' in request.POST:
+            # Could this be in a different view, that simply redirects to profile()? try after working proof, would change everything
+            # get form data
+
+            # returns unique slug
+            post_to_pin_slug = request.POST.get('pin_post_form')
+
+            # get post with matching slug
+            post_to_pin = ProfilePost.objects.get(post_slug__exact=post_to_pin_slug)
+
+            # Create new PinnedProfilePost
+            new_pinned_post = PinnedProfilePost()
+
+            # Apply necessary fields and save
+            new_pinned_post.original = post_to_pin
+            new_pinned_post.pinned_by = request.user
+            new_pinned_post.save()
+
+            print("Processed by posts-form-handler")
+
+            return redirect('/profile')
+
+        elif 'unpin_post_form' in request.POST:
+            # Could this be in a different view, that simply redirects to profile()? try after working proof, would change everything
+            # get form data
+            post_to_unpin_slug = request.POST.get('unpin_post_form')
+
+            try:
+                # get post with matching slug
+                post_to_unpin = PinnedProfilePost.objects.get(
+                    pinned_by__exact=request.user,
+                    original__exact=ProfilePost.objects.get(post_slug__exact=post_to_unpin_slug)
+                )
+
+                # Delete PinnedProfilePost object
+                post_to_unpin.delete()
+                print('Post successfully un-pinned!')
+
+            except Exception as e:
+                print(e)
+                return Http404('Something went wrong while un-pinning the post.')
+
+            print("Processed by posts-form-handler")
+            return redirect('/profile')
+
+        elif 'delete_post_form' in request.POST:
+            # put in own view
+            # get form data (post_slug)
+            try:
+                post_to_delete_slug = request.POST.get('delete_post_form')
+                post_to_delete = ProfilePost.objects.get(post_slug__exact=post_to_delete_slug)
+                post_to_delete.delete()
+                print('Post Deleted.')
+            except Exception as e:
+                print(e)
+                return Http404("Something went wrong while deleting your post.")
+
+            print("Processed by posts-form-handler")
+            return redirect('/profile')
 
 
 # consider a new app
-
 def search(request):
     """
     Search kokoro user-base based on user-input and display results
