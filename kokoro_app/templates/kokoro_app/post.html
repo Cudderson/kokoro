@@ -6,24 +6,28 @@
     <!--iterate over values in post-->
     <div style="text-align: center; margin-left: auto; margin-right: auto;">
         {% localtime off %}
-            {% for post in requested_post_data %}
-                <div>Here is a post from {{ post.author }}</div>
-                <div>{{ post.headline }}</div>
-                <div>{{ post.content }}</div>
-                <!-- date_published converted to user TZ -->
-                <div>Published: {{ date_published_user_tz }}</div>
+            <div>Here is a post from {{ post.author }}</div>
+            <div>{{ post.headline }}</div>
+            <div>{{ post.content }}</div>
+            <!-- date_published converted to user TZ -->
+            <div>Published: {{ date_published_user_tz }}</div>
+            {% if post.author != request.user %}
                 <form action="{% url 'kokoro_app:profile' %}" method="post">
                     {% csrf_token %}
                     <button type="submit" name="pin_post_form" value="{{ post.post_slug }}" style="padding: .75rem; background: white; margin-top: 2rem;">
                         Pin This Post to My Profile
                     </button>
                 </form>
-                <form action="{% url 'kokoro_app:profile' %}" method="get">
-                    <button type="submit" name="profile_to_visit" value="{{ post.author }}" style="padding: .75rem; background: white; margin-top: 1rem;">
-                        Return to {{ post.author }}'s Profile
-                    </button>
-                </form>
-            {% endfor %}
+            {% endif %}
+            <form action="{% url 'kokoro_app:profile' %}" method="get">
+                <button type="submit" name="profile_to_visit" value="{{ post.author }}" style="padding: .75rem; background: white; margin-top: 1rem;">
+                    {% if post.author != request.user %}
+                        {{ post.author }}'s Profile
+                    {% else %}
+                        Return to My Profile
+                    {% endif %}
+                </button>
+            </form>
         {% endlocaltime %}
     </div>
 

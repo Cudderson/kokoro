@@ -303,19 +303,19 @@ def post(request, post_slug):
     """
 
     # use unique slug to retrieve desired post
-    requested_post_data = ProfilePost.objects.filter(post_slug__exact=post_slug)
+    requested_post = ProfilePost.objects.get(post_slug__exact=post_slug)
 
-    # get user's saved time zone
+    # get user's saved time zone (outsource to helper?)
     user_timezone_object = ProfileTimezone.objects.filter(owner__exact=request.user)[0]  # type= <class 'kokoro_app.models.ProfileTimezone'>
     # convert to string
     user_timezone_string = str(user_timezone_object)
 
     # convert date_published from UTC to user timezone
-    date_published_utc = requested_post_data[0].date_published
+    date_published_utc = requested_post.date_published
     date_published_user_tz = balance.convert_to_user_tz(date_published_utc, user_timezone_string)
 
     context = {
-        'requested_post_data': requested_post_data,
+        'post': requested_post,
         'date_published_user_tz': date_published_user_tz,
     }
 
