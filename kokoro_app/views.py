@@ -170,6 +170,7 @@ def profile(request):
         balance_streak_object = BalanceStreak.objects.get(owner__exact=request.user)
         balance_streak = balance_streak_object.balance_streak
 
+        # Will shrink context later as we define new User model
         context = {
             'user': user,
             'perfect_form': perfect_form,
@@ -508,3 +509,22 @@ def send_friend_request(request, sending_to):
         print(e)
         messages.success(request, 'Friend Request Sent!')
         return redirect('/profile')
+
+
+def view_friend_requests(request):
+    """
+    Page for viewing user's pending friend requests
+    :param request: http request data
+    :return: render of template for viewing friend requests
+    """
+
+    # get pending friend requests
+    pending_requests_from_user = FriendRequest.objects.filter(from_user__exact=request.user)
+    pending_requests_to_user = FriendRequest.objects.filter(to_user__exact=request.user)
+
+    context = {
+        'requests_from_user': pending_requests_from_user,
+        'requests_to_user': pending_requests_to_user,
+    }
+
+    return render(request, 'kokoro_app/friend_requests.html', context)

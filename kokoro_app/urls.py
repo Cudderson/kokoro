@@ -32,4 +32,6 @@ urlpatterns = [
 
     # Called when send_friend_request_form submitted
     path('send_friend_request/<sending_to>/', views.send_friend_request, name='send_friend_request'),
+
+    path('view_friend_requests', views.view_friend_requests, name='view_friend_requests')
 ]

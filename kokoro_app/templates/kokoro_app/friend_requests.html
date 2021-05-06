@@ -1,0 +1,12 @@
+{% extends 'kokoro_app/base.html' %}
+
+{% block content %}
+
+    {% for request in requests_from_user %}
+        <div>{{ request }}</div>
+    {% endfor %}
+    {% for request in requests_to_user %}
+        <div>{{ request }}</div>
+    {% endfor %}
+
+{% endblock content %}
