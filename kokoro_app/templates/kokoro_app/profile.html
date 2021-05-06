@@ -2,6 +2,15 @@
 
 {% block content %}
 
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>
+                {{ message }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
 <!-- for user's viewing their own profile only -->
 {% if user == request.user %}
     {% load tz %}
@@ -37,6 +46,16 @@
 
 {% endif %}
 <!-- everything above this is for a user viewing their own profile only -->
+
+<!-- user is defined as the profile we're visiting via profile() view -->
+<div>
+    <form action="{% url 'kokoro_app:send_friend_request' sending_to=user %}" method="post">
+        {% csrf_token %}
+        <button type="submit" name="send_friendship_request_form" value="{{ user }}">
+            Send Friend Request to {{ user }}
+        </button>
+    </form>
+</div>
 
 <div class="profile-grid">
     <div class="profile-placeholder">

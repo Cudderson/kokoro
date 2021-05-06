@@ -3,7 +3,8 @@ from django.contrib import admin
 # Register your models here.
 
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote, \
-                    ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, PinnedProfilePost
+                    ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, PinnedProfilePost,\
+                    Friendship, FriendRequest
 
 admin.site.register(Activity)
 admin.site.register(PerfectBalance)
@@ -16,6 +17,10 @@ admin.site.register(BalanceStreak)
 admin.site.register(ContactInfo)
 # testing pinned posts
 admin.site.register(PinnedProfilePost)
+
+# testing Friendship & FriendRequest
+admin.site.register(Friendship)
+admin.site.register(FriendRequest)
 
 
 class ProfilePostAdmin(admin.ModelAdmin):

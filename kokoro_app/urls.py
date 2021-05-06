@@ -29,4 +29,7 @@ urlpatterns = [
 
     # Called when forms submitted from post.html & write_post.html, redirects to profile()
     path('posts_form_handler/', views.posts_form_handler, name='posts_form_handler'),
+
+    # Called when send_friend_request_form submitted
+    path('send_friend_request/<sending_to>/', views.send_friend_request, name='send_friend_request'),
 ]

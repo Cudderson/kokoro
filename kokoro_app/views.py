@@ -7,12 +7,18 @@ from django.db import IntegrityError
 from django.http import Http404
 
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName,\
-                    ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User, PinnedProfilePost
+                    ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User, PinnedProfilePost, \
+                    Friendship, FriendRequest
 from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, \
                    ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm, ProfilePostForm
 from . import balance, profile_utils
 import pytz
 import datetime
+
+# testing returning to same page after sending friend request
+from django.http import HttpResponseRedirect
+# success messages
+from django.contrib import messages
 
 
 def index(request):
@@ -105,7 +111,7 @@ def profile(request):
             except Exception as e:
                 # Handle the case of MultipleObjectsReturned & DoesNotExist
                 print(e)
-                return Http404('Something went wrong while retrieving the profile you requested.')
+                raise Http404('Something went wrong while retrieving the profile you requested.')
 
         else:
             # Logged in user is requesting their own profile
@@ -417,7 +423,7 @@ def posts_form_handler(request):
 
             except Exception as e:
                 print(e)
-                return Http404('Something went wrong while un-pinning the post.')
+                raise Http404('Something went wrong while un-pinning the post.')
 
             return redirect('/profile')
 
@@ -430,7 +436,7 @@ def posts_form_handler(request):
                 print('Post Deleted.')
             except Exception as e:
                 print(e)
-                return Http404("Something went wrong while deleting your post.")
+                raise Http404("Something went wrong while deleting your post.")
 
             return redirect('/profile')
 
@@ -458,3 +464,47 @@ def search(request):
     }
 
     return render(request, 'kokoro_app/search.html', context)
+
+
+# Testing Friendship & FriendRequests
+def send_friend_request(request, sending_to):
+    """
+    Sending a friend request from current user to another user
+    :param request: http request data
+    :param sending_to: the User the request is being sent to
+    :return: a message indicating that the friend request sent successfully or 404
+    """
+
+    # logged in user
+    from_user = request.user
+
+    try:
+        # get User object of user to send friend request to
+        sending_to = User.objects.get(username__exact=sending_to)
+        to_user = sending_to
+    except Exception as e:
+        print(e)
+        raise Http404(f"Couldn't retrieve user: {sending_to}")
+
+    print(f'It appears that {from_user} is sending a friend request to {to_user.username}')
+
+    try:
+        # create FriendRequest object and save
+        new_friend_request = FriendRequest.objects.create(from_user=from_user, to_user=to_user)
+        new_friend_request.save()
+        print("Friend Request Sent!")
+
+    except Exception as e:
+        print(e)
+        raise Http404("Something went wrong while processing your friend request.")
+
+    # Bring user back to profile they were viewing with success message
+    try:
+        messages.success(request, 'Friend Request Sent!')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    except Exception as e:
+        # user/browser may not have 'HTTP_REFERER' turned on
+        # Bring user back to own profile with a success message
+        print(e)
+        messages.success(request, 'Friend Request Sent!')
+        return redirect('/profile')

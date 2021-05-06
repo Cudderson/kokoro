@@ -217,3 +217,25 @@ class PinnedProfilePost(models.Model):
 
         return f'Original: {self.original} Pinned By: {self.pinned_by}'
 
+
+class Friendship(models.Model):
+    """
+    Represents a User's friendship with other Users
+    """
+
+    friends = models.ManyToManyField(User, blank=True)
+
+
+class FriendRequest(models.Model):
+    """
+    Represents a friend request between two users
+    """
+
+    from_user = models.ForeignKey(User, related_name='from_user', on_delete=models.CASCADE)
+
+    to_user = models.ForeignKey(User, related_name='to_user', on_delete=models.CASCADE)
+
+    # Consider 'status' field if it makes more sense here than in view
+
+    def __str__(self):
+        return f'Pending Request from {self.from_user} to {self.to_user}'
