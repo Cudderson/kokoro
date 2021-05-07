@@ -7,6 +7,11 @@
         {% for friendship in friendships %}
         <div>
             {{ friendship }}
+            <form action="{% url 'kokoro_app:profile' %}" method="get" style="display: inline-block;">
+                <button type="submit" name="profile_to_visit" value="{{ friendship }}">
+                    {{ friendship }}'s Profile
+                </button>
+            </form>
             <!-- form to delete/remove friendship with user -->
             <form action="{% url 'kokoro_app:remove_friendship' friendship_to_remove_id=friendship.id %}" method="post" style="display: inline-block;">
                 {% csrf_token %}
