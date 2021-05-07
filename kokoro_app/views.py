@@ -170,18 +170,6 @@ def profile(request):
         balance_streak_object = BalanceStreak.objects.get(owner__exact=request.user)
         balance_streak = balance_streak_object.balance_streak
 
-        # *** move logic to different view, don't want to view all friends on profile
-        # get user friendships (user, not profile visiting)
-        # return type = <class 'kokoro_app.models.Friendships'> (ManyRelatedManager object)
-        friendships, created = Friendships.objects.get_or_create(owner=request.user)
-
-        # convert ManyRelatedManager object into Queryset
-        friendships = friendships.friendships.all()
-
-        # print user's friends
-        for friend in friendships:
-            print(f'{request.user} has a friendship with {friend}!')
-
         # Will shrink context later as we define new User model
         context = {
             'user': user,
@@ -584,3 +572,30 @@ def accept_friendship_request(request, sent_by):
         raise Http404("Something went wrong deleting the friendship request. Friendship still established.")
 
     return redirect('/profile')
+
+
+@login_required
+def view_friendships(request):
+    """
+    Page for viewing a user's friendships
+    :param request: http request data
+    :return: render of view_friendships.html
+    """
+
+    # *** move logic to different view, don't want to view all friends on profile
+    # get user friendships (user, not profile visiting)
+    # return type = <class 'kokoro_app.models.Friendships'> (ManyRelatedManager object)
+    friendships, created = Friendships.objects.get_or_create(owner=request.user)
+
+    # convert ManyRelatedManager object into Queryset
+    friendships = friendships.friendships.all()
+
+    # print user's friends
+    for friend in friendships:
+        print(f'{request.user} has a friendship with {friend}!')
+
+    context = {
+        'friendships': friendships,
+    }
+
+    return render(request, 'kokoro_app/view_friendships.html', context)

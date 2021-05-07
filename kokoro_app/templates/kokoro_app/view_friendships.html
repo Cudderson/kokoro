@@ -1,0 +1,12 @@
+{% extends 'kokoro_app/base.html' %}
+
+{% block content %}
+
+    <h1 style="text-align: center;">{{ request.user }}'s Friendships:</h1>
+    <div style="text-align: center;">
+        {% for friendship in friendships %}
+        <div>{{ friendship }}</div>
+        {% endfor %}
+    </div>
+
+{% endblock content %}

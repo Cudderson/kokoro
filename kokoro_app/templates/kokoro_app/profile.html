@@ -22,6 +22,13 @@
             </button>
         </form>
     </div>
+    <div>
+        <form action="{% url 'kokoro_app:view_friendships' %}" method="get">
+            <button type="submit" name="view_friendships_form">
+                View Friendships
+            </button>
+        </form>
+    </div>
 
     {% load tz %}
     <div style="margin-left: 35vw; margin-right: auto; margin-bottom: 2vw;">
