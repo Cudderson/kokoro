@@ -218,12 +218,20 @@ class PinnedProfilePost(models.Model):
         return f'Original: {self.original} Pinned By: {self.pinned_by}'
 
 
-class Friendship(models.Model):
+class Friendships(models.Model):
     """
     Represents a User's friendship with other Users
     """
 
-    friends = models.ManyToManyField(User, blank=True)
+    owner = models.OneToOneField(User, on_delete=models.CASCADE, related_name='owner')
+
+    friendships = models.ManyToManyField(User, blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Friendships'
+
+    def __str__(self):
+        return f'{self.owner}'
 
 
 class FriendshipRequest(models.Model):

@@ -7,8 +7,8 @@ from django.db import IntegrityError
 from django.http import Http404
 
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName,\
-                    ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User, PinnedProfilePost, \
-                    Friendship, FriendshipRequest
+                    ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User, PinnedProfilePost,\
+                    FriendshipRequest, Friendships
 from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, \
                    ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm, ProfilePostForm
 from . import balance, profile_utils
@@ -169,6 +169,18 @@ def profile(request):
         # Let's also pass BalanceStreak data to template
         balance_streak_object = BalanceStreak.objects.get(owner__exact=request.user)
         balance_streak = balance_streak_object.balance_streak
+
+        # *** move logic to different view, don't want to view all friends on profile
+        # get user friendships (user, not profile visiting)
+        # return type = <class 'kokoro_app.models.Friendships'> (ManyRelatedManager object)
+        friendships, created = Friendships.objects.get_or_create(owner=request.user)
+
+        # convert ManyRelatedManager object into Queryset
+        friendships = friendships.friendships.all()
+
+        # print user's friends
+        for friend in friendships:
+            print(f'{request.user} has a friendship with {friend}!')
 
         # Will shrink context later as we define new User model
         context = {
@@ -538,21 +550,37 @@ def accept_friendship_request(request, sent_by):
     :return:
     """
 
-    # Get friendship request object by 'from_user'
-    friendship_request = FriendshipRequest.objects.get(from_user__exact=sent_by)
+    # get id of sender from template form
+    sent_by_id = int(sent_by)
 
-    # type=int
-    new_friend = sent_by
-    print(new_friend)
+    # get User object of the friend to add
+    new_friend = User.objects.get(id__exact=sent_by_id)
 
-    new_friend = User.objects.get(id__exact=int(new_friend))
+    try:
+        # create Friendship instance for current user
+        # 'get_or_create' returns tuple containing the object, and if object was created or not
+        user_friendships, created_for_user = Friendships.objects.get_or_create(owner=request.user)
+        new_friend_friendships, created_for_friend = Friendships.objects.get_or_create(owner=new_friend)
+    except Exception as e:
+        print(e)
+        raise Http404("Something went wrong while retrieving friendships.")
 
-    # Create new Friendship object
-    # new_friendship = request.user.friends_set.add(new_friend)
+    try:
+        # add new friend to user's friendships (Friendship.friendships (MTMField)
+        user_friendships.friendships.add(new_friend)
 
-    instance = Friendship.objects.create()
-    instance.set(request.user)
+        # add user to new friend's friendships
+        new_friend_friendships.friendships.add(request.user)
 
-    print("New friends! Yay!")
+        print(f'{request.user} is now friends with {new_friend}')
+    except Exception as e:
+        raise Http404("Something went wrong while establishing friendship.")
+
+    try:
+        # Get friendship request object to delete
+        friendship_request = FriendshipRequest.objects.get(from_user=new_friend, to_user=request.user)
+        friendship_request.delete()
+    except Exception as e:
+        raise Http404("Something went wrong deleting the friendship request. Friendship still established.")
 
     return redirect('/profile')

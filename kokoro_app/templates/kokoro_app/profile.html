@@ -57,7 +57,7 @@
 {% else %}
 <!-- user is defined as the profile we're visiting via profile() view -->
     <div>
-        <form action="{% url 'kokoro_app:send_friend_request' sending_to=user %}" method="post">
+        <form action="{% url 'kokoro_app:send_friendship_request' sending_to=user %}" method="post">
             {% csrf_token %}
             <button type="submit" name="send_friendship_request_form" value="{{ user }}">
                 Send Friend Request to {{ user }}
