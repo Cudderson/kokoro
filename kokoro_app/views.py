@@ -528,3 +528,31 @@ def view_friendship_requests(request):
     }
 
     return render(request, 'kokoro_app/friendship_requests.html', context)
+
+
+def accept_friendship_request(request, sent_by):
+    """
+
+    :param sent_by: a unique id (int) of the user who sent the friendship request to the current user
+    :param request: http post data
+    :return:
+    """
+
+    # Get friendship request object by 'from_user'
+    friendship_request = FriendshipRequest.objects.get(from_user__exact=sent_by)
+
+    # type=int
+    new_friend = sent_by
+    print(new_friend)
+
+    new_friend = User.objects.get(id__exact=int(new_friend))
+
+    # Create new Friendship object
+    # new_friendship = request.user.friends_set.add(new_friend)
+
+    instance = Friendship.objects.create()
+    instance.set(request.user)
+
+    print("New friends! Yay!")
+
+    return redirect('/profile')
