@@ -47,4 +47,7 @@ urlpatterns = [
 
     # Page for viewing user's friendships
     path('view_friendships', views.view_friendships, name='view_friendships'),
+
+    # Called when user wants to remove a friendship with another user
+    path('remove_friendship/<friendship_to_remove_id>/', views.remove_friendship, name='remove_friendship')
 ]
