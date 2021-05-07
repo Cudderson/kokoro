@@ -8,7 +8,7 @@ from django.http import Http404
 
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName,\
                     ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User, PinnedProfilePost, \
-                    Friendship, FriendRequest
+                    Friendship, FriendshipRequest
 from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, \
                    ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm, ProfilePostForm
 from . import balance, profile_utils
@@ -468,12 +468,12 @@ def search(request):
 
 
 # Testing Friendship & FriendRequests
-def send_friend_request(request, sending_to):
+def send_friendship_request(request, sending_to):
     """
-    Sending a friend request from current user to another user
+    Sending a friendship request from current user to another user
     :param request: http request data
     :param sending_to: the User the request is being sent to
-    :return: a message indicating that the friend request sent successfully or 404
+    :return: a message indicating that the friendship request sent successfully or 404
     """
 
     # logged in user
@@ -487,44 +487,44 @@ def send_friend_request(request, sending_to):
         print(e)
         raise Http404(f"Couldn't retrieve user: {sending_to}")
 
-    print(f'It appears that {from_user} is sending a friend request to {to_user.username}')
+    print(f'It appears that {from_user} is sending a friendship request to {to_user.username}')
 
     try:
         # create FriendRequest object and save
-        new_friend_request = FriendRequest.objects.create(from_user=from_user, to_user=to_user)
-        new_friend_request.save()
-        print("Friend Request Sent!")
+        new_friendship_request = FriendshipRequest.objects.create(from_user=from_user, to_user=to_user)
+        new_friendship_request.save()
+        print("Friendship Request Sent!")
 
     except Exception as e:
         print(e)
-        raise Http404("Something went wrong while processing your friend request.")
+        raise Http404("Something went wrong while processing your friendship request.")
 
     # Bring user back to profile they were viewing with success message
     try:
-        messages.success(request, 'Friend Request Sent!')
+        messages.success(request, 'Friendship Request Sent!')
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     except Exception as e:
         # user/browser may not have 'HTTP_REFERER' turned on
         # Bring user back to own profile with a success message
         print(e)
-        messages.success(request, 'Friend Request Sent!')
+        messages.success(request, 'Friendship Request Sent!')
         return redirect('/profile')
 
 
-def view_friend_requests(request):
+def view_friendship_requests(request):
     """
-    Page for viewing user's pending friend requests
+    Page for viewing user's pending friendship requests
     :param request: http request data
-    :return: render of template for viewing friend requests
+    :return: render of template for viewing friendship requests
     """
 
     # get pending friend requests
-    pending_requests_from_user = FriendRequest.objects.filter(from_user__exact=request.user)
-    pending_requests_to_user = FriendRequest.objects.filter(to_user__exact=request.user)
+    pending_requests_from_user = FriendshipRequest.objects.filter(from_user__exact=request.user)
+    pending_requests_to_user = FriendshipRequest.objects.filter(to_user__exact=request.user)
 
     context = {
         'requests_from_user': pending_requests_from_user,
         'requests_to_user': pending_requests_to_user,
     }
 
-    return render(request, 'kokoro_app/friend_requests.html', context)
+    return render(request, 'kokoro_app/friendship_requests.html', context)

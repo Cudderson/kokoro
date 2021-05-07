@@ -14,11 +14,11 @@
 <!-- for user's viewing their own profile only -->
 {% if user == request.user %}
 
-    <!-- allow user to view their pending friend requests -->
+    <!-- allow user to view their pending friendship requests -->
     <div>
-        <form action="{% url 'kokoro_app:view_friend_requests' %}" method="get">
-            <button type="submit" name="view_friend_requests_form">
-                View Pending Friend Requests
+        <form action="{% url 'kokoro_app:view_friendship_requests' %}" method="get">
+            <button type="submit" name="view_friendship_requests_form">
+                View Pending Friendship Requests
             </button>
         </form>
     </div>

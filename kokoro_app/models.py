@@ -226,9 +226,9 @@ class Friendship(models.Model):
     friends = models.ManyToManyField(User, blank=True)
 
 
-class FriendRequest(models.Model):
+class FriendshipRequest(models.Model):
     """
-    Represents a friend request between two users
+    Represents a friendship request between two users
     """
 
     from_user = models.ForeignKey(User, related_name='from_user', on_delete=models.CASCADE)
