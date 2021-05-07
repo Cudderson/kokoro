@@ -19,11 +19,20 @@
     <div>Sent to {{ request.user }}:</div>
     {% for friendship_request in requests_to_user %}
         <div>
+            {{ friendship_request }}
             <!-- form sends the unique id of the user whom sent the friendship request -->
-            <form action="{% url 'kokoro_app:accept_friendship_request' sent_by=friendship_request.from_user.id %}" method="post">
+            <form action="{% url 'kokoro_app:accept_friendship_request' sent_by=friendship_request.from_user.id %}" method="post" style="display:inline-block;">
                 {% csrf_token %}
-                {{ friendship_request }}
-                <button type="submit" name="accept_friendship_form" value="{{ friendship_request }}">Accept Friendship Request</button>
+                <button type="submit" name="accept_friendship_form" value="{{ friendship_request }}">
+                    Accept
+                </button>
+            </form>
+        <!-- Decline a friendship request sent to user -->
+            <form action="{% url 'kokoro_app:decline_friendship_request' friendship_request=friendship_request.id %}" method="post" style="display:inline-block;">
+                {% csrf_token %}
+                <button type="submit" name="decline_friendship_request_form">
+                    Decline
+                </button>
             </form>
         </div>
     {% endfor %}

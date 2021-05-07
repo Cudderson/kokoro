@@ -42,6 +42,9 @@ urlpatterns = [
     # Called when a user wants to cancel a friendship request that they sent
     path('cancel_friendship_request/<friendship_request>/', views.cancel_friendship_request, name='cancel_friendship_request'),
 
+    # Called when a user wants to decline a friendship request that was sent to them
+    path('decline_friendship_request/<friendship_request>/', views.decline_friendship_request, name='decline_friendship_request'),
+
     # Page for viewing user's friendships
     path('view_friendships', views.view_friendships, name='view_friendships'),
 ]
