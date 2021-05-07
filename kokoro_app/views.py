@@ -488,9 +488,9 @@ def send_friendship_request(request, sending_to_id):
         to_user = sending_to
     except Exception as e:
         print(e)
-        raise Http404(f"Couldn't retrieve user: {sending_to}")
+        raise Http404(f"Couldn't retrieve user.")
 
-    print(f'It appears that {from_user} is sending a friendship request to {to_user.username}')
+    print(f'It appears that {from_user} is sending a friendship request to {to_user}')
 
     try:
         # create FriendRequest object and save
@@ -698,8 +698,8 @@ def friendship_form_handler(request):
     # This function will accept form info relating to friendships, then dish out the work to other functions defined in friendship_utils.py
     # Can't forget that some of the form pass an extra variable, so we should define what those are right now.
 
-    # send_friendship_request (sending_to == username of a User object)
-    # view_friendship_request (none)
+    # send_friendship_request (sending_to_id == id of a User object)
+    # view_friendship_requests (none)
     # accept_friendship_request (sent_by == id of a User object)
     # cancel_friendship_request (friendship_request == id of a FriendshipRequest object)
     # decline_friendship_request (friendship_request == id of a FriendshipRequest object)
@@ -707,6 +707,16 @@ def friendship_form_handler(request):
     # remove_friendship (friendship_to_remove_id == id of a User object)
 
     # I should first change send_friendship_request to pass an id rather than username [x]
-    # make sure we can still send friend requests properly
+    # make sure we can still send friend requests properly [x] (fixed & committed)
+
+    # Next, identify similarities
+    # send_friendship_request, accept_friendship_request, and remove friendship all take in a User id
+
+    # cancel_friendship_request & decline_friendship_request take in a FriendshipRequest id
+
+    # view_friendship_requests & view_friendships have no parameters
+
+    # We should also break down the functions so that db operations happen in a helper too
+
 
     return redirect('/profile')
