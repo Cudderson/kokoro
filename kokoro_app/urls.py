@@ -31,7 +31,7 @@ urlpatterns = [
     path('posts_form_handler/', views.posts_form_handler, name='posts_form_handler'),
 
     # Called when send_friend_request_form submitted
-    path('send_friendship_request/<sending_to>/', views.send_friendship_request, name='send_friendship_request'),
+    path('send_friendship_request/<sending_to_id>/', views.send_friendship_request, name='send_friendship_request'),
 
     # Page to view pending friendship requests to and from user
     path('view_friendship_requests', views.view_friendship_requests, name='view_friendship_requests'),

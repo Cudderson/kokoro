@@ -468,11 +468,11 @@ def search(request):
 
 
 # Testing Friendship & FriendRequests
-def send_friendship_request(request, sending_to):
+def send_friendship_request(request, sending_to_id):
     """
     Sending a friendship request from current user to another user
     :param request: http request data
-    :param sending_to: the User the request is being sent to
+    :param sending_to_id: a unique id (str) of a User object
     :return: a message indicating that the friendship request sent successfully or 404
     """
 
@@ -480,8 +480,11 @@ def send_friendship_request(request, sending_to):
     from_user = request.user
 
     try:
+        # convert str of id to int
+        sending_to_id = int(sending_to_id)
+
         # get User object of user to send friend request to
-        sending_to = User.objects.get(username__exact=sending_to)
+        sending_to = User.objects.get(id__exact=sending_to_id)
         to_user = sending_to
     except Exception as e:
         print(e)
@@ -491,7 +494,7 @@ def send_friendship_request(request, sending_to):
 
     try:
         # create FriendRequest object and save
-        new_friendship_request = FriendshipRequest.objects.create(from_user=from_user, to_user=to_user)
+        new_friendship_request, created = FriendshipRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
         new_friendship_request.save()
         print("Friendship Request Sent!")
 
@@ -533,7 +536,7 @@ def view_friendship_requests(request):
 def accept_friendship_request(request, sent_by):
     """
 
-    :param sent_by: a unique id (int) of the user who sent the friendship request to the current user
+    :param sent_by: a unique id (str) of the user who sent the friendship request to the current user
     :param request: http post data
     :return:
     """
@@ -687,3 +690,23 @@ def remove_friendship(request, friendship_to_remove_id):
 
     print('Friendship removed successfully.')
     return redirect('/view_friendships')
+
+
+def friendship_form_handler(request):
+
+
+    # This function will accept form info relating to friendships, then dish out the work to other functions defined in friendship_utils.py
+    # Can't forget that some of the form pass an extra variable, so we should define what those are right now.
+
+    # send_friendship_request (sending_to == username of a User object)
+    # view_friendship_request (none)
+    # accept_friendship_request (sent_by == id of a User object)
+    # cancel_friendship_request (friendship_request == id of a FriendshipRequest object)
+    # decline_friendship_request (friendship_request == id of a FriendshipRequest object)
+    # view_friendships (none)
+    # remove_friendship (friendship_to_remove_id == id of a User object)
+
+    # I should first change send_friendship_request to pass an id rather than username [x]
+    # make sure we can still send friend requests properly
+
+    return redirect('/profile')
