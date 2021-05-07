@@ -571,7 +571,33 @@ def accept_friendship_request(request, sent_by):
     except Exception as e:
         raise Http404("Something went wrong deleting the friendship request. Friendship still established.")
 
+    # could return dynamic message where "Cancel" was
     return redirect('/profile')
+
+
+@login_required
+def cancel_friendship_request(request, friendship_request):
+    """
+    Cancel a friendship request sent by user
+    :param friendship_request: unique id of a FriendshipRequest object
+    :param request: http post data
+    :return: redirect to friendship_requests.html
+    """
+
+    # convert from str >> int
+    friendship_request_id = int(friendship_request)
+
+    try:
+        # get matching FriendRequest object
+        request_to_cancel = FriendshipRequest.objects.get(id__exact=friendship_request_id)
+
+        # delete request
+        request_to_cancel.delete()
+
+    except Exception as e:
+        raise Http404("Something went wrong cancelling your friendship request.")
+
+    return redirect('/view_friendship_requests')
 
 
 @login_required

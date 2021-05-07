@@ -4,7 +4,15 @@
 
     <div>Sent by {{ request.user }}:</div>
     {% for friendship_request in requests_from_user %}
-        <div>{{ friendship_request }}</div>
+        <div>
+            <form action="{% url 'kokoro_app:cancel_friendship_request' friendship_request=friendship_request.id %}" method="post">
+                {% csrf_token %}
+                {{ friendship_request }}
+                <button type="submit" name="cancel_friendship_request_form">
+                    Cancel
+                </button>
+            </form>
+        </div>
     {% endfor %}
     <br>
     <br>
