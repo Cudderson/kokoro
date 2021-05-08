@@ -104,3 +104,28 @@ def cancel_friendship_request(request, friendship_request):
 
     # return True if no Exception raised
     return True
+
+
+def decline_friendship_request(request, friendship_request):
+    """
+    Decline a friendship request sent to the user (Delete FriendshipRequest object)
+    :param request: http post data
+    :param friendship_request: unique id of a FriendshipRequest object
+    :return: boolean indicating success or failure
+    """
+
+    # convert from str >> int
+    friendship_request_id = int(friendship_request)
+
+    try:
+        # get matching FriendRequest object
+        request_to_decline = FriendshipRequest.objects.get(id__exact=friendship_request_id)
+
+        # delete request
+        request_to_decline.delete()
+
+    except Exception as e:
+        raise Http404("Something went wrong cancelling your friendship request.")
+
+    # Return True if no Exceptions raised
+    return True

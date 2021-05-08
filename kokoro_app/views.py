@@ -543,28 +543,20 @@ def cancel_friendship_request_handler(request, friendship_request):
 
 
 @login_required
-def decline_friendship_request(request, friendship_request):
+def decline_friendship_request_handler(request, friendship_request):
     """
-    Decline a friendship request sent to the user
+    Handler for declining(deleting) a FriendshipRequest object
     :param request: http post data
-    :param friendship_request: unique id of a FriendshipRequest object
-    :return: redirect to friendship_requests.html
+    :param friendship_request: unique id (str) of a FriendshipRequest object
+    :return: HttpResponseRedirect
     """
 
-    # convert from str >> int
-    friendship_request_id = int(friendship_request)
+    successful = friendship_utils.decline_friendship_request(request, friendship_request)
 
-    try:
-        # get matching FriendRequest object
-        request_to_decline = FriendshipRequest.objects.get(id__exact=friendship_request_id)
-
-        # delete request
-        request_to_decline.delete()
-
-    except Exception as e:
-        raise Http404("Something went wrong cancelling your friendship request.")
-
-    return redirect('/view_friendship_requests')
+    if successful:
+        return redirect('/view_friendship_requests')
+    else:
+        raise Http404("There was an error redirecting you to page. Friendship request declined.")
 
 
 @login_required
@@ -655,6 +647,6 @@ def friendship_form_handler(request):
     # view_friendship_requests [the logic for this one is just a db query, hold-off for now]
     # accept_friendship_request [x]
     # cancel_friendship_request [x]
-    # decline_friendship_request []
+    # decline_friendship_request [x]
 
     return redirect('/profile')

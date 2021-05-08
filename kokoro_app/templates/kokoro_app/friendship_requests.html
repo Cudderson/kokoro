@@ -28,7 +28,7 @@
                 </button>
             </form>
         <!-- Decline a friendship request sent to user -->
-            <form action="{% url 'kokoro_app:decline_friendship_request' friendship_request=friendship_request.id %}" method="post" style="display:inline-block;">
+            <form action="{% url 'kokoro_app:decline_friendship_request_handler' friendship_request=friendship_request.id %}" method="post" style="display:inline-block;">
                 {% csrf_token %}
                 <button type="submit" name="decline_friendship_request_form">
                     Decline
