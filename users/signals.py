@@ -27,10 +27,6 @@ def create_profile_defaults(sender, instance, created, **kwargs):
         BalanceStreak.objects.create(owner=instance,
                                      date_last_incremented=datetime.datetime.now(tz=pytz.timezone('UTC')) - datetime.timedelta(days=2),
                                      expiration_date=datetime.datetime.now(tz=pytz.timezone('UTC')))
-
-
-@receiver(post_save, sender=User)
-def save_profile_defaults(sender, instance, **kwargs):
-    instance.profileimage.save()
-    instance.profiletimezone.save()
-    instance.balancestreak.save()
+        instance.profileimage.save()
+        instance.profiletimezone.save()
+        instance.balancestreak.save()
