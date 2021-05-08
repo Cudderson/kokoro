@@ -357,6 +357,7 @@ def write_post(request):
         return render(request, 'kokoro_app/write_post.html', context)
 
 
+@login_required
 def posts_form_handler(request):
     """
     Helper function for processing forms submitted from post.html and write_post.html templates
@@ -467,7 +468,7 @@ def search(request):
     return render(request, 'kokoro_app/search.html', context)
 
 
-# Testing Friendship & FriendRequests
+@login_required
 def send_friendship_request_handler(request, sending_to_id):
     """
     Handler for sending a friendship request from current user to another user
@@ -490,6 +491,7 @@ def send_friendship_request_handler(request, sending_to_id):
             return redirect('/profile')
 
 
+@login_required
 def view_friendship_requests(request):
     """
     Page for viewing user's pending friendship requests
@@ -509,6 +511,7 @@ def view_friendship_requests(request):
     return render(request, 'kokoro_app/friendship_requests.html', context)
 
 
+@login_required
 def accept_friendship_request_handler(request, sent_by):
     """
     Handler for accepting(saving) a Friendships object, and deleting the corresponding FriendshipRequest object
@@ -597,33 +600,3 @@ def remove_friendship_handler(request, friendship_to_remove_id):
         return redirect('/view_friendships')
     else:
         raise Http404("There was an error redirecting you to page. Friendship Removed.")
-
-
-def friendship_form_handler(request):
-
-    # send_friendship_request (sending_to_id == id of a User object)
-    # view_friendship_requests (none)
-    # accept_friendship_request (sent_by == id of a User object)
-    # cancel_friendship_request (friendship_request == id of a FriendshipRequest object)
-    # decline_friendship_request (friendship_request == id of a FriendshipRequest object)
-    # view_friendships (none)
-    # remove_friendship (friendship_to_remove_id == id of a User object)
-
-    # I should first change send_friendship_request to pass an id rather than username [x]
-    # make sure we can still send friend requests properly [x] (fixed & committed)
-
-    # New plan: Delete this when done.
-    # Basically, keep the way the urls are defined and the functions they call.
-    # All we're doing is moving the meat of the view functions into friendship_utils
-    # We will also have to change function names
-    # remove url args where it makes sense when done.
-
-    # check when done:
-    # send_friendship_request_form [x]
-    # view_friendship_requests [the logic for this one is just a db query, hold-off for now]
-    # accept_friendship_request [x]
-    # cancel_friendship_request [x]
-    # decline_friendship_request [x]
-    # remove_friendship [x]
-
-    return redirect('/profile')
