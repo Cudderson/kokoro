@@ -509,7 +509,7 @@ def view_friendship_requests(request):
     return render(request, 'kokoro_app/friendship_requests.html', context)
 
 
-def accept_friendship_request(request, sent_by):
+def accept_friendship_request_handler(request, sent_by):
     """
 
     :param sent_by: a unique id (str) of the user who sent the friendship request to the current user
@@ -517,41 +517,11 @@ def accept_friendship_request(request, sent_by):
     :return:
     """
 
-    # get id of sender from template form
-    sent_by_id = int(sent_by)
+    successful = friendship_utils.accept_friendship_request(request, sent_by)
 
-    # get User object of the friend to add
-    new_friend = User.objects.get(id__exact=sent_by_id)
-
-    try:
-        # create Friendship instance for current user
-        # 'get_or_create' returns tuple containing the object, and if object was created or not
-        user_friendships, created_for_user = Friendships.objects.get_or_create(owner=request.user)
-        new_friend_friendships, created_for_friend = Friendships.objects.get_or_create(owner=new_friend)
-    except Exception as e:
-        print(e)
-        raise Http404("Something went wrong while retrieving friendships.")
-
-    try:
-        # add new friend to user's friendships (Friendship.friendships (MTMField)
-        user_friendships.friendships.add(new_friend)
-
-        # add user to new friend's friendships
-        new_friend_friendships.friendships.add(request.user)
-
-        print(f'{request.user} is now friends with {new_friend}')
-    except Exception as e:
-        raise Http404("Something went wrong while establishing friendship.")
-
-    try:
-        # Get friendship request object to delete
-        friendship_request = FriendshipRequest.objects.get(from_user=new_friend, to_user=request.user)
-        friendship_request.delete()
-    except Exception as e:
-        raise Http404("Something went wrong deleting the friendship request. Friendship still established.")
-
-    # could return dynamic message where "Cancel" was
-    return redirect('/profile')
+    if successful:
+        # could return dynamic message where "Cancel" was
+        return redirect('/profile')
 
 
 @login_required
@@ -689,5 +659,8 @@ def friendship_form_handler(request):
 
     # check when done:
     # send_friendship_request_form [x]
+    # view_friendship_requests [the logic for this one is just a db query, hold-off for now]
+    # accept_friendship_request []
+
 
     return redirect('/profile')
