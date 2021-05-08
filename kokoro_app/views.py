@@ -9,6 +9,9 @@ from django.http import Http404
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName,\
                     ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User, PinnedProfilePost,\
                     FriendshipRequest, Friendships
+
+from notifications.models import Notification
+
 from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, \
                    ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm, ProfilePostForm
 from . import balance, profile_utils, friendship_utils

@@ -21,6 +21,7 @@
       <ul>
 
         {% if user.is_authenticated %}
+          <li><a>{{ notifications }}</a></li>
           <li><a>Hello, {{ request.user.username }}.</a></li>
           <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
           <li><a href="{% url 'kokoro_app:profile' %}">Profile</a></li>
