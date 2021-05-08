@@ -106,19 +106,28 @@ def profile(request):
         if 'profile_to_visit' in request.GET:
             # User is requesting the profile of a different user (search form)
             # redefine user to grab their data rather than logged in user
-            user = request.GET.get('profile_to_visit')
+            user_id = request.GET.get('profile_to_visit')
 
             try:
                 # Objects.get() returns 1 object rather than queryset of objects (objects.filter())
-                user = User.objects.get(id__exact=user)
+                user = User.objects.get(id__exact=user_id)
             except Exception as e:
                 # Handle the case of MultipleObjectsReturned & DoesNotExist
                 print(e)
                 raise Http404('Something went wrong while retrieving the profile you requested.')
 
+            # determine if current user is already friends with the user that we're visiting
+            try:
+                already_friends = Friendships.objects.get(owner=request.user, friendships__id=user.id)
+                already_friends = True
+                print("FRIENDS")
+            except Exception as e:
+                print("NOT FRIENDS", e)
+                already_friends = False
         else:
             # Logged in user is requesting their own profile
             user = request.user
+            already_friends = False
 
         # user info for profile page
         biography = ProfileBio.objects.filter(owner__exact=user.id)
@@ -176,6 +185,8 @@ def profile(request):
         # Will shrink context later as we define new User model
         context = {
             'user': user,
+            # boolean
+            'already_friends': already_friends,
             'perfect_form': perfect_form,
             'perfect_balance': perfect_balance,
             'display_name_form': display_name_form,
