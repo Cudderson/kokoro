@@ -26,9 +26,10 @@
           <li class="dropdown">
               <button class="dropdown-btn">Noti</button>
               <div class="dropdown-content">
-                <a class="drop-noti">Link 1</a>
-                <a class="drop-noti">Link 2</a>
-                <a class="drop-noti">Link 3</a>
+                {% for notification in notifications %}
+                      <a class="drop-noti">{{ notification.message }}</a>
+                {% endfor %}
+                <a class="drop-noti">Mark All As Seen</a>
               </div>
           </li>
           <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
