@@ -11,7 +11,7 @@ from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName,\
                     FriendshipRequest, Friendships
 from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, \
                    ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm, ProfilePostForm
-from . import balance, profile_utils
+from . import balance, profile_utils, friendship_utils
 import pytz
 import datetime
 
@@ -468,7 +468,7 @@ def search(request):
 
 
 # Testing Friendship & FriendRequests
-def send_friendship_request(request, sending_to_id):
+def send_friendship_request_handler(request, sending_to_id):
     """
     Sending a friendship request from current user to another user
     :param request: http request data
@@ -476,42 +476,18 @@ def send_friendship_request(request, sending_to_id):
     :return: a message indicating that the friendship request sent successfully or 404
     """
 
-    # logged in user
-    from_user = request.user
+    successful = friendship_utils.send_friendship_request(request, sending_to_id)
 
-    try:
-        # convert str of id to int
-        sending_to_id = int(sending_to_id)
-
-        # get User object of user to send friend request to
-        sending_to = User.objects.get(id__exact=sending_to_id)
-        to_user = sending_to
-    except Exception as e:
-        print(e)
-        raise Http404(f"Couldn't retrieve user.")
-
-    print(f'It appears that {from_user} is sending a friendship request to {to_user}')
-
-    try:
-        # create FriendRequest object and save
-        new_friendship_request, created = FriendshipRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
-        new_friendship_request.save()
-        print("Friendship Request Sent!")
-
-    except Exception as e:
-        print(e)
-        raise Http404("Something went wrong while processing your friendship request.")
-
-    # Bring user back to profile they were viewing with success message
-    try:
-        messages.success(request, 'Friendship Request Sent!')
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    except Exception as e:
-        # user/browser may not have 'HTTP_REFERER' turned on
-        # Bring user back to own profile with a success message
-        print(e)
-        messages.success(request, 'Friendship Request Sent!')
-        return redirect('/profile')
+    if successful:
+        # Bring user back to profile they were viewing with success message
+        try:
+            messages.success(request, 'Friendship Request Sent!')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        except Exception as e:
+            # user/browser may not have 'HTTP_REFERER' turned on, bring user back to own profile with a success message
+            print(e)
+            messages.success(request, 'Friendship Request Sent!')
+            return redirect('/profile')
 
 
 def view_friendship_requests(request):
@@ -694,10 +670,6 @@ def remove_friendship(request, friendship_to_remove_id):
 
 def friendship_form_handler(request):
 
-
-    # This function will accept form info relating to friendships, then dish out the work to other functions defined in friendship_utils.py
-    # Can't forget that some of the form pass an extra variable, so we should define what those are right now.
-
     # send_friendship_request (sending_to_id == id of a User object)
     # view_friendship_requests (none)
     # accept_friendship_request (sent_by == id of a User object)
@@ -709,14 +681,13 @@ def friendship_form_handler(request):
     # I should first change send_friendship_request to pass an id rather than username [x]
     # make sure we can still send friend requests properly [x] (fixed & committed)
 
-    # Next, identify similarities
-    # send_friendship_request, accept_friendship_request, and remove friendship all take in a User id
+    # New plan: Delete this when done.
+    # Basically, keep the way the urls are defined and the functions they call.
+    # All we're doing is moving the meat of the view functions into friendship_utils
+    # We will also have to change function names
+    # remove url args where it makes sense when done.
 
-    # cancel_friendship_request & decline_friendship_request take in a FriendshipRequest id
-
-    # view_friendship_requests & view_friendships have no parameters
-
-    # We should also break down the functions so that db operations happen in a helper too
-
+    # check when done:
+    # send_friendship_request_form [x]
 
     return redirect('/profile')
