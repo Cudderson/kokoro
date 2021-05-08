@@ -22,7 +22,15 @@
 
         {% if user.is_authenticated %}
           <li><a>Hello, {{ request.user.username }}.</a></li>
-          <li><a>{{ notifications }}</a></li>
+          <!--place notification dropdown here-->
+          <li class="dropdown">
+              <button class="dropdown-btn">Noti</button>
+              <div class="dropdown-content">
+                <a class="drop-noti">Link 1</a>
+                <a class="drop-noti">Link 2</a>
+                <a class="drop-noti">Link 3</a>
+              </div>
+          </li>
           <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
           <li><a href="{% url 'kokoro_app:profile' %}">Profile</a></li>
           <li><a href="{% url 'users:logout' %}">Log Out</a></li>
