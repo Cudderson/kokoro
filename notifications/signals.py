@@ -1,6 +1,6 @@
 # signals for sending(creating) notifications
 
-from django.db.models.signals import post_save, post_delete, m2m_changed
+from django.db.models.signals import post_save, pre_delete
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 
@@ -46,7 +46,6 @@ def create_friendship_request_notification(sender, instance, created, **kwargs):
             sent_from=instance.from_user,
             message=f"{instance.from_user} sent you a friendship request!",
             reference=instance,
-            unread=True,
         )
 
         try:
@@ -58,29 +57,29 @@ def create_friendship_request_notification(sender, instance, created, **kwargs):
             pass
 
 
-@receiver(m2m_changed, sender=FriendshipRequest)
-def accept_friendship_request_notification(sender, instance):
-    # FriendshipRequest objects are deleted when:
-    # user cancels request
-    # recipient accepts or denies
+@receiver(pre_delete, sender=FriendshipRequest)
+def accept_friendship_request_notification(sender, instance, **kwargs):
 
-    # we only want a notification on a friendship request acceptance.
-    # could add field 'accepted' to FriendshipRequest, and when it's accepted, the value==True.
-    # then this post/pre_delete signal could trigger
-    # if accepted == True, then create the notification
+    # FriendshipRequest.accepted == True when accepted, before deletion
+    if instance.accepted:
 
-    # alternatively, I could send a signal when a User's Friendships model adds a user to the MTM field
-    # this seems better
+        friendship_accepted_notification = Notification(
+            recipient=instance.from_user,
+            sent_from=instance.to_user,
+            message=f'{instance.to_user} accepted your friendship request!',
+            reference=instance,
+        )
 
-    # thirdly, I could manually call a create_noti() function in the code where a friendship_request is accepted.
-    # but this would require importing the Notification model, maybe not a big deal
+        try:
+            friendship_accepted_notification.full_clean()
+            friendship_accepted_notification.save()
+            print("Accepted FriendshipRequest Notification created!")
+        except ValidationError as e:
+            print(e)
+            pass
 
 
-
-# this first one seems to be working great.
-# I'm afraid of hidden circular dependancy issues, though. I want to get a few more done before committing.
 # What else needs a notification?
 # FriendshipRequest creation [x]
-# Friendship Request acceptance []
-
-
+# Friendship Request acceptance [x]
+# When someone pins your post []

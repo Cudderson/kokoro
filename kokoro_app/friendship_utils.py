@@ -73,6 +73,8 @@ def accept_friendship_request(request, sent_by):
     try:
         # Get friendship request object to delete
         friendship_request = FriendshipRequest.objects.get(from_user=new_friend, to_user=request.user)
+        # new code testing pre_delete signal (works)
+        friendship_request.accepted = True
         friendship_request.delete()
     except Exception as e:
         raise Http404("Something went wrong deleting the friendship request. Friendship still established.")
