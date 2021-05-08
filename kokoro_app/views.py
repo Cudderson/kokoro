@@ -110,7 +110,7 @@ def profile(request):
 
             try:
                 # Objects.get() returns 1 object rather than queryset of objects (objects.filter())
-                user = User.objects.get(username__exact=user)
+                user = User.objects.get(id__exact=user)
             except Exception as e:
                 # Handle the case of MultipleObjectsReturned & DoesNotExist
                 print(e)

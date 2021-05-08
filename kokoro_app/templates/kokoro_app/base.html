@@ -24,12 +24,14 @@
           <li><a>Hello, {{ request.user.username }}.</a></li>
           <!--place notification dropdown here-->
           <li class="dropdown">
-              <button class="dropdown-btn">Noti</button>
+              <button class="dropdown-btn">Notifications</button>
               <div class="dropdown-content">
                 {% for notification in notifications %}
-                      <a class="drop-noti">{{ notification.message }}</a>
+                  <form action="{% url 'kokoro_app:profile' %}" method="get">
+                    <button type="submit" class="drop-noti" name="profile_to_visit" value="{{ notification.sent_from.id }}">{{ notification.message }}</button>
+                  </form>
                 {% endfor %}
-                <a class="drop-noti">Mark All As Seen</a>
+                <button class="drop-noti">Mark All As Seen</button>
               </div>
           </li>
           <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
