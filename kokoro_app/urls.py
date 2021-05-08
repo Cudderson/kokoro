@@ -29,4 +29,25 @@ urlpatterns = [
 
     # Called when forms submitted from post.html & write_post.html, redirects to profile()
     path('posts_form_handler/', views.posts_form_handler, name='posts_form_handler'),
+
+    # Called when send_friend_request_form submitted
+    path('send_friendship_request_handler/<sending_to_id>/', views.send_friendship_request_handler, name='send_friendship_request_handler'),
+
+    # Page to view pending friendship requests to and from user
+    path('view_friendship_requests', views.view_friendship_requests, name='view_friendship_requests'),
+
+    # Called when a user wants to accept a pending friendship request
+    path('accept_friendship_request_handler/<sent_by>/', views.accept_friendship_request_handler, name='accept_friendship_request_handler'),
+
+    # Called when a user wants to cancel a friendship request that they sent
+    path('cancel_friendship_request_handler/<friendship_request>/', views.cancel_friendship_request_handler, name='cancel_friendship_request_handler'),
+
+    # Called when a user wants to decline a friendship request that was sent to them
+    path('decline_friendship_request_handler/<friendship_request>/', views.decline_friendship_request_handler, name='decline_friendship_request_handler'),
+
+    # Page for viewing user's friendships
+    path('view_friendships', views.view_friendships, name='view_friendships'),
+
+    # Called when user wants to remove a friendship with another user
+    path('remove_friendship_handler/<friendship_to_remove_id>/', views.remove_friendship_handler, name='remove_friendship_handler'),
 ]

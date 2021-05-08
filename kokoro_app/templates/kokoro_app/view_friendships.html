@@ -1,0 +1,26 @@
+{% extends 'kokoro_app/base.html' %}
+
+{% block content %}
+
+    <h1 style="text-align: center;">{{ request.user }}'s Friendships:</h1>
+    <div style="text-align: center;">
+        {% for friendship in friendships %}
+        <div>
+            {{ friendship }}
+            <form action="{% url 'kokoro_app:profile' %}" method="get" style="display: inline-block;">
+                <button type="submit" name="profile_to_visit" value="{{ friendship }}">
+                    {{ friendship }}'s Profile
+                </button>
+            </form>
+            <!-- form to delete/remove friendship with user -->
+            <form action="{% url 'kokoro_app:remove_friendship_handler' friendship_to_remove_id=friendship.id %}" method="post" style="display: inline-block;">
+                {% csrf_token %}
+                <button type="submit" name="remove_friendship_form">
+                    Remove Friendship
+                </button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock content %}

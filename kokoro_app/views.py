@@ -7,12 +7,18 @@ from django.db import IntegrityError
 from django.http import Http404
 
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName,\
-                    ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User, PinnedProfilePost
+                    ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User, PinnedProfilePost,\
+                    FriendshipRequest, Friendships
 from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, \
                    ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm, ProfilePostForm
-from . import balance, profile_utils
+from . import balance, profile_utils, friendship_utils
 import pytz
 import datetime
+
+# testing returning to same page after sending friend request
+from django.http import HttpResponseRedirect
+# success messages
+from django.contrib import messages
 
 
 def index(request):
@@ -105,7 +111,7 @@ def profile(request):
             except Exception as e:
                 # Handle the case of MultipleObjectsReturned & DoesNotExist
                 print(e)
-                return Http404('Something went wrong while retrieving the profile you requested.')
+                raise Http404('Something went wrong while retrieving the profile you requested.')
 
         else:
             # Logged in user is requesting their own profile
@@ -164,6 +170,7 @@ def profile(request):
         balance_streak_object = BalanceStreak.objects.get(owner__exact=request.user)
         balance_streak = balance_streak_object.balance_streak
 
+        # Will shrink context later as we define new User model
         context = {
             'user': user,
             'perfect_form': perfect_form,
@@ -417,7 +424,7 @@ def posts_form_handler(request):
 
             except Exception as e:
                 print(e)
-                return Http404('Something went wrong while un-pinning the post.')
+                raise Http404('Something went wrong while un-pinning the post.')
 
             return redirect('/profile')
 
@@ -430,7 +437,7 @@ def posts_form_handler(request):
                 print('Post Deleted.')
             except Exception as e:
                 print(e)
-                return Http404("Something went wrong while deleting your post.")
+                raise Http404("Something went wrong while deleting your post.")
 
             return redirect('/profile')
 
@@ -458,3 +465,165 @@ def search(request):
     }
 
     return render(request, 'kokoro_app/search.html', context)
+
+
+# Testing Friendship & FriendRequests
+def send_friendship_request_handler(request, sending_to_id):
+    """
+    Handler for sending a friendship request from current user to another user
+    :param request: http request data
+    :param sending_to_id: a unique id (str) of a User object
+    :return: a message indicating that the friendship request sent successfully or 404
+    """
+
+    successful = friendship_utils.send_friendship_request(request, sending_to_id)
+
+    if successful:
+        # Bring user back to profile they were viewing with success message
+        try:
+            messages.success(request, 'Friendship Request Sent!')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        except Exception as e:
+            # user/browser may not have 'HTTP_REFERER' turned on, bring user back to own profile with a success message
+            print(e)
+            messages.success(request, 'Friendship Request Sent!')
+            return redirect('/profile')
+
+
+def view_friendship_requests(request):
+    """
+    Page for viewing user's pending friendship requests
+    :param request: http request data
+    :return: render of template for viewing friendship requests
+    """
+
+    # get pending friend requests
+    pending_requests_from_user = FriendshipRequest.objects.filter(from_user__exact=request.user)
+    pending_requests_to_user = FriendshipRequest.objects.filter(to_user__exact=request.user)
+
+    context = {
+        'requests_from_user': pending_requests_from_user,
+        'requests_to_user': pending_requests_to_user,
+    }
+
+    return render(request, 'kokoro_app/friendship_requests.html', context)
+
+
+def accept_friendship_request_handler(request, sent_by):
+    """
+    Handler for accepting(saving) a Friendships object, and deleting the corresponding FriendshipRequest object
+    :param sent_by: a unique id (str) of the user who sent the friendship request to the current user
+    :param request: http post data
+    :return:
+    """
+
+    successful = friendship_utils.accept_friendship_request(request, sent_by)
+
+    if successful:
+        # could return dynamic message where "Cancel" was
+        return redirect('/profile')
+
+
+@login_required
+def cancel_friendship_request_handler(request, friendship_request):
+    """
+    Handler for cancelling (deleting) a FriendshipRequest object
+    :param request: http post data
+    :param friendship_request: unique id (str) of a FriendshipRequest object
+    :return: HttpResponseRedirect
+    """
+
+    successful = friendship_utils.cancel_friendship_request(request, friendship_request)
+
+    if successful:
+        # consider success message
+        return redirect('/view_friendship_requests')
+    else:
+        raise Http404("There was an error redirecting you to page. Friendship Request cancelled.")
+
+
+@login_required
+def decline_friendship_request_handler(request, friendship_request):
+    """
+    Handler for declining(deleting) a FriendshipRequest object
+    :param request: http post data
+    :param friendship_request: unique id (str) of a FriendshipRequest object
+    :return: HttpResponseRedirect
+    """
+
+    successful = friendship_utils.decline_friendship_request(request, friendship_request)
+
+    if successful:
+        return redirect('/view_friendship_requests')
+    else:
+        raise Http404("There was an error redirecting you to page. Friendship request declined.")
+
+
+@login_required
+def view_friendships(request):
+    """
+    Page for viewing a user's friendships
+    :param request: http request data
+    :return: render of view_friendships.html
+    """
+
+    # get user friendships
+    # return type = <class 'kokoro_app.models.Friendships'> (ManyRelatedManager object)
+    friendships, created = Friendships.objects.get_or_create(owner=request.user)
+
+    # convert ManyRelatedManager object into Queryset
+    friendships = friendships.friendships.all()
+
+    context = {
+        'friendships': friendships,
+    }
+
+    return render(request, 'kokoro_app/view_friendships.html', context)
+
+
+@login_required
+def remove_friendship_handler(request, friendship_to_remove_id):
+    """
+    Helper for removing a friendship from a user's friendships (remove User from Friendships object)
+    :param request: http post data
+    :param friendship_to_remove_id: unique id of a User object
+    :return: redirect to view_friendships.html
+    """
+
+    successful = friendship_utils.remove_friendship(request, friendship_to_remove_id)
+
+    if successful:
+        print('Friendship removed successfully.')
+        return redirect('/view_friendships')
+    else:
+        raise Http404("There was an error redirecting you to page. Friendship Removed.")
+
+
+def friendship_form_handler(request):
+
+    # send_friendship_request (sending_to_id == id of a User object)
+    # view_friendship_requests (none)
+    # accept_friendship_request (sent_by == id of a User object)
+    # cancel_friendship_request (friendship_request == id of a FriendshipRequest object)
+    # decline_friendship_request (friendship_request == id of a FriendshipRequest object)
+    # view_friendships (none)
+    # remove_friendship (friendship_to_remove_id == id of a User object)
+
+    # I should first change send_friendship_request to pass an id rather than username [x]
+    # make sure we can still send friend requests properly [x] (fixed & committed)
+
+    # New plan: Delete this when done.
+    # Basically, keep the way the urls are defined and the functions they call.
+    # All we're doing is moving the meat of the view functions into friendship_utils
+    # We will also have to change function names
+    # remove url args where it makes sense when done.
+
+    # check when done:
+    # send_friendship_request_form [x]
+    # view_friendship_requests [the logic for this one is just a db query, hold-off for now]
+    # accept_friendship_request [x]
+    # cancel_friendship_request [x]
+    # decline_friendship_request [x]
+    # remove_friendship [x]
+
+    return redirect('/profile')

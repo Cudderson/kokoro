@@ -1,0 +1,40 @@
+{% extends 'kokoro_app/base.html' %}
+
+{% block content %}
+
+    <div>Sent by {{ request.user }}:</div>
+    {% for friendship_request in requests_from_user %}
+        <div>
+            <form action="{% url 'kokoro_app:cancel_friendship_request_handler' friendship_request=friendship_request.id %}" method="post">
+                {% csrf_token %}
+                {{ friendship_request }}
+                <button type="submit" name="cancel_friendship_request_form">
+                    Cancel
+                </button>
+            </form>
+        </div>
+    {% endfor %}
+    <br>
+    <br>
+    <div>Sent to {{ request.user }}:</div>
+    {% for friendship_request in requests_to_user %}
+        <div>
+            {{ friendship_request }}
+            <!-- form sends the unique id of the user whom sent the friendship request -->
+            <form action="{% url 'kokoro_app:accept_friendship_request_handler' sent_by=friendship_request.from_user.id %}" method="post" style="display:inline-block;">
+                {% csrf_token %}
+                <button type="submit" name="accept_friendship_form">
+                    Accept
+                </button>
+            </form>
+        <!-- Decline a friendship request sent to user -->
+            <form action="{% url 'kokoro_app:decline_friendship_request_handler' friendship_request=friendship_request.id %}" method="post" style="display:inline-block;">
+                {% csrf_token %}
+                <button type="submit" name="decline_friendship_request_form">
+                    Decline
+                </button>
+            </form>
+        </div>
+    {% endfor %}
+
+{% endblock content %}

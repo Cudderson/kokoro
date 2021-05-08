@@ -2,10 +2,35 @@
 
 {% block content %}
 
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>
+                {{ message }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
 <!-- for user's viewing their own profile only -->
 {% if user == request.user %}
+
+    <!-- allow user to view their pending friendship requests -->
+    <div>
+        <form action="{% url 'kokoro_app:view_friendship_requests' %}" method="get">
+            <button type="submit" name="view_friendship_requests_form">
+                View Pending Friendship Requests
+            </button>
+        </form>
+    </div>
+    <div>
+        <form action="{% url 'kokoro_app:view_friendships' %}" method="get">
+            <button type="submit">
+                View Friendships
+            </button>
+        </form>
+    </div>
+
     {% load tz %}
-    Hello, world!
     <div style="margin-left: 35vw; margin-right: auto; margin-bottom: 2vw;">
         {% localtime off %}
             {{ user }}'s local time:
@@ -35,9 +60,18 @@
 
     <div onclick="testFunction(this)" style="cursor: pointer; user-select: none; border: 1px solid black; border-radius: 4px; width: 10%; text-align: center; margin: auto; margin-bottom: 2vw;">Edit Profile</div>
 
-{% endif %}
 <!-- everything above this is for a user viewing their own profile only -->
-
+{% else %}
+<!-- user is defined as the profile we're visiting via profile() view -->
+    <div>
+        <form action="{% url 'kokoro_app:send_friendship_request_handler' sending_to_id=user.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" name="send_friendship_request_form" value="{{ user }}">
+                Send Friend Request to {{ user }}
+            </button>
+        </form>
+    </div>
+{% endif %}
 <div class="profile-grid">
     <div class="profile-placeholder">
         <img class="profile-image" src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
