@@ -129,3 +129,39 @@ def decline_friendship_request(request, friendship_request):
 
     # Return True if no Exceptions raised
     return True
+
+
+def remove_friendship(request, friendship_to_remove_id):
+    """
+    Remove a friendship from a user's friendships (Delete User from Friendships object)
+    :param request: http post data
+    :param friendship_to_remove_id: unique id (str) of a User object
+    :return: redirect to view_friendships.html
+    """
+
+    try:
+        # convert str to int
+        friendship_to_remove_id = int(friendship_to_remove_id)
+        # get User object matching the id passed from template
+        friendship_to_remove = User.objects.get(id__exact=friendship_to_remove_id)
+    except Exception as e:
+        raise Http404("Something went wrong identifying the friendship to remove.")
+
+    try:
+        # get current user's Friendships ManyRelatedManager
+        user_friendships, created = Friendships.objects.get_or_create(owner=request.user)
+        # get friendship_to_remove's Friendships ManyRelatedManager
+        friendship_to_remove_friendships, created = Friendships.objects.get_or_create(owner=friendship_to_remove)
+    except Exception as e:
+        raise Http404("Something went wrong while identifying friendships.")
+
+    try:
+        # remove friendship_to_remove from user's Friendships.friendships field (MTM)
+        # remove user from friendship_to_remove's Friendship.friendships field (MTM)
+        user_friendships.friendships.remove(friendship_to_remove)
+        friendship_to_remove_friendships.friendships.remove(request.user)
+    except Exception as e:
+        raise Http404("Something went wrong while removing your friendship.")
+
+    # return True if no Exceptions raised
+    return True

@@ -13,7 +13,7 @@
                 </button>
             </form>
             <!-- form to delete/remove friendship with user -->
-            <form action="{% url 'kokoro_app:remove_friendship' friendship_to_remove_id=friendship.id %}" method="post" style="display: inline-block;">
+            <form action="{% url 'kokoro_app:remove_friendship_handler' friendship_to_remove_id=friendship.id %}" method="post" style="display: inline-block;">
                 {% csrf_token %}
                 <button type="submit" name="remove_friendship_form">
                     Remove Friendship

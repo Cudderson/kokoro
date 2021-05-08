@@ -567,17 +567,12 @@ def view_friendships(request):
     :return: render of view_friendships.html
     """
 
-    # *** move logic to different view, don't want to view all friends on profile
-    # get user friendships (user, not profile visiting)
+    # get user friendships
     # return type = <class 'kokoro_app.models.Friendships'> (ManyRelatedManager object)
     friendships, created = Friendships.objects.get_or_create(owner=request.user)
 
     # convert ManyRelatedManager object into Queryset
     friendships = friendships.friendships.all()
-
-    # print user's friends
-    # for friend in friendships:
-    #     print(f'{request.user} has a friendship with {friend}!')
 
     context = {
         'friendships': friendships,
@@ -587,40 +582,21 @@ def view_friendships(request):
 
 
 @login_required
-def remove_friendship(request, friendship_to_remove_id):
+def remove_friendship_handler(request, friendship_to_remove_id):
     """
-    Remove a friendship from a user's friendships
+    Helper for removing a friendship from a user's friendships (remove User from Friendships object)
     :param request: http post data
     :param friendship_to_remove_id: unique id of a User object
     :return: redirect to view_friendships.html
     """
 
-    try:
-        # convert str to int
-        friendship_to_remove_id = int(friendship_to_remove_id)
-        # get User object matching the id passed from template
-        friendship_to_remove = User.objects.get(id__exact=friendship_to_remove_id)
-    except Exception as e:
-        raise Http404("Something went wrong identifying the friendship to remove.")
+    successful = friendship_utils.remove_friendship(request, friendship_to_remove_id)
 
-    try:
-        # get current user's Friendships ManyRelatedManager
-        user_friendships, created = Friendships.objects.get_or_create(owner=request.user)
-        # get friendship_to_remove's Friendships ManyRelatedManager
-        friendship_to_remove_friendships, created = Friendships.objects.get_or_create(owner=friendship_to_remove)
-    except Exception as e:
-        raise Http404("Something went wrong while identifying friendships.")
-
-    try:
-        # remove friendship_to_remove from user's Friendships.friendships field (MTM)
-        # remove user from friendship_to_remove's Friendship.friendships field (MTM)
-        user_friendships.friendships.remove(friendship_to_remove)
-        friendship_to_remove_friendships.friendships.remove(request.user)
-    except Exception as e:
-        raise Http404("Something went wrong while removing your friendship.")
-
-    print('Friendship removed successfully.')
-    return redirect('/view_friendships')
+    if successful:
+        print('Friendship removed successfully.')
+        return redirect('/view_friendships')
+    else:
+        raise Http404("There was an error redirecting you to page. Friendship Removed.")
 
 
 def friendship_form_handler(request):
@@ -648,5 +624,6 @@ def friendship_form_handler(request):
     # accept_friendship_request [x]
     # cancel_friendship_request [x]
     # decline_friendship_request [x]
+    # remove_friendship [x]
 
     return redirect('/profile')
