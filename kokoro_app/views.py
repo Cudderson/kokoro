@@ -470,7 +470,7 @@ def search(request):
 # Testing Friendship & FriendRequests
 def send_friendship_request_handler(request, sending_to_id):
     """
-    Sending a friendship request from current user to another user
+    Handler for sending a friendship request from current user to another user
     :param request: http request data
     :param sending_to_id: a unique id (str) of a User object
     :return: a message indicating that the friendship request sent successfully or 404
@@ -511,7 +511,7 @@ def view_friendship_requests(request):
 
 def accept_friendship_request_handler(request, sent_by):
     """
-
+    Handler for accepting(saving) a Friendships object, and deleting the corresponding FriendshipRequest object
     :param sent_by: a unique id (str) of the user who sent the friendship request to the current user
     :param request: http post data
     :return:
@@ -525,28 +525,21 @@ def accept_friendship_request_handler(request, sent_by):
 
 
 @login_required
-def cancel_friendship_request(request, friendship_request):
+def cancel_friendship_request_handler(request, friendship_request):
     """
-    Cancel a friendship request sent by user
-    :param friendship_request: unique id of a FriendshipRequest object
+    Handler for cancelling (deleting) a FriendshipRequest object
     :param request: http post data
-    :return: redirect to friendship_requests.html
+    :param friendship_request: unique id (str) of a FriendshipRequest object
+    :return: HttpResponseRedirect
     """
 
-    # convert from str >> int
-    friendship_request_id = int(friendship_request)
+    successful = friendship_utils.cancel_friendship_request(request, friendship_request)
 
-    try:
-        # get matching FriendRequest object
-        request_to_cancel = FriendshipRequest.objects.get(id__exact=friendship_request_id)
-
-        # delete request
-        request_to_cancel.delete()
-
-    except Exception as e:
-        raise Http404("Something went wrong cancelling your friendship request.")
-
-    return redirect('/view_friendship_requests')
+    if successful:
+        # consider success message
+        return redirect('/view_friendship_requests')
+    else:
+        raise Http404("There was an error redirecting you to page. Friendship Request cancelled.")
 
 
 @login_required
@@ -660,7 +653,8 @@ def friendship_form_handler(request):
     # check when done:
     # send_friendship_request_form [x]
     # view_friendship_requests [the logic for this one is just a db query, hold-off for now]
-    # accept_friendship_request []
-
+    # accept_friendship_request [x]
+    # cancel_friendship_request [x]
+    # decline_friendship_request []
 
     return redirect('/profile')
