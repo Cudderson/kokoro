@@ -12,8 +12,16 @@ def pass_notifications_to_context(request):
     :return: global context for templates
     """
 
-    user_notifications = Notification.objects.filter(recipient__exact=request.user)
+    try:
+        user_notifications = Notification.objects.filter(recipient__exact=request.user)
 
-    return {
-        'notifications': 'LETS GO!'
-    }
+        return {
+            'notifications': user_notifications
+        }
+
+    except Exception as e:
+        print(e)
+        return {
+            'notifications': 'None'
+        }
+
