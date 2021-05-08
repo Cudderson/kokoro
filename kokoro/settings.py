@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     # Need to include config path for signals to work
     'users.apps.UsersConfig',
 
+    # including config path for signals
+    'notifications.apps.NotificationsConfig',
+
     # django default apps
     'django.contrib.admin',
     'django.contrib.auth',
