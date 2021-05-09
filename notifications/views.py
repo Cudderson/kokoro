@@ -32,13 +32,21 @@ def notification_form_handler(request):
 
             # deliver user to correct url
 
-            # Type 1: Someone sent you a friend request
+            # Type 1: Someone sent you a friendship request
             if notification.type == 1:
                 # On click, should bring user to 'friendship_requests.html'
                 # The proper way is to redirect to the appropriate url
                 return redirect('/view_friendship_requests')
+
+            # Type 2: Someone accepted your friendship request
             elif notification.type == 2:
-                # should call profile(request) with a 'profile_to_visit' parameter
+                # should call profile(request), add profile_to_visit session variable
+                request.session['profile_to_visit'] = notification.sent_from.id
+                return redirect('/profile')
+
+            # Type 3: Someone pinned your ProfilePost to their profile
+            elif notification.type == 3:
+                # should call profile(request), add profile_to_visit session variable
                 request.session['profile_to_visit'] = notification.sent_from.id
                 return redirect('/profile')
 
