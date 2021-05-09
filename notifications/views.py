@@ -11,19 +11,21 @@ def notification_form_handler(request):
     :return:
     """
 
-    if request.method == 'GET':
+    if request.method == 'POST':
 
-        if 'notification_form' in request.GET:
+        if 'notification_form' in request.POST:
+            # User selected a notification from nav
 
             # get form data (id (str))
-            notification_id = request.GET.get('notification_form')
+            notification_id = request.POST.get('notification_form')
 
             # get Notification object matching id, mark as 'read'
             notification = Notification.objects.get(id=notification_id)
             notification.unread = False
             notification.save()
 
-        # Now, any notification clicked on from nav is marked as unread = False
-        # We can show if a notification is read in template using the 'unread' value of the notification [x]
+        elif 'mark_all_form' in request.POST:
+            # mark all user notifications as 'unread = False'
+            Notification.objects.filter(recipient=request.user).update(unread=False)
 
     return redirect('/profile')

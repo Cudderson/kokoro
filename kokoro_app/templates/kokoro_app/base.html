@@ -29,17 +29,22 @@
                 {% for notification in notifications %}
                   {% if notification.unread == True %}
                   <!-- notification is unread -->
-                  <form action="{% url 'notifications:notification_form_handler' %}" method="get">
+                  <form action="{% url 'notifications:notification_form_handler' %}" method="post">
+                    {% csrf_token %}
                     <button type="submit" class="drop-noti" name="notification_form" value="{{ notification.id }}">{{ notification.message }}</button>
                   </form>
                   {% else %}
                   <!-- notification is not unread -->
-                    <form action="{% url 'notifications:notification_form_handler' %}" method="get">
+                    <form action="{% url 'notifications:notification_form_handler' %}" method="post">
+                      {% csrf_token %}
                       <button type="submit" class="drop-noti drop-noti-read" name="notification_form" value="{{ notification.id }}">{{ notification.message }}</button>
                     </form>
                   {% endif %}
                 {% endfor %}
-                <button class="drop-noti">Mark All As Seen</button>
+                <form action="{% url 'notifications:notification_form_handler' %}" method="post">
+                  {% csrf_token %}
+                  <button class="drop-noti" name="mark_all_form">Mark All As Seen</button>
+                </form>
               </div>
           </li>
           <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
