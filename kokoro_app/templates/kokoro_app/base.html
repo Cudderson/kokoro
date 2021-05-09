@@ -40,10 +40,16 @@
                       <button type="submit" class="drop-noti drop-noti-read" name="notification_form" value="{{ notification.id }}">{{ notification.message }}</button>
                     </form>
                   {% endif %}
+                {% empty %}
+                    <button class="drop-noti">No Notifications</button>
                 {% endfor %}
                 <form action="{% url 'notifications:notification_form_handler' %}" method="post">
                   {% csrf_token %}
                   <button class="drop-noti" name="mark_all_form">Mark All As Seen</button>
+                </form>
+                <form action="{% url 'notifications:notification_form_handler' %}" method="post">
+                  {% csrf_token %}
+                  <button class="drop-noti" name="clear_all_form">Clear All</button>
                 </form>
               </div>
           </li>

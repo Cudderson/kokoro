@@ -54,12 +54,10 @@ def notification_form_handler(request):
             # mark all user notifications as 'unread = False'
             Notification.objects.filter(recipient=request.user).update(unread=False)
 
-    return HttpResponse("yolo")
+        elif 'clear_all_form' in request.POST:
+            # Delete all notifications for user
+            all_notifications = Notification.objects.filter(recipient=request.user)
+            all_notifications.delete()
+            return redirect('/profile')
 
-
-# if not request.GET._mutable:
-#    request.GET._mutable = True
-#
-# # now you can edit it
-# request.GET['name'] = 'jhon'
-# request.GET['age'] = 26
+    return redirect('/profile')
