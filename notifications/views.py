@@ -5,22 +5,22 @@ from .models import Notification
 
 def notification_form_handler(request):
     """
-    Helper function for handling forms involving Notification model
+    Helper function for handling forms involving Notification model,
+    marks Notification object as 'unread = False'
     :param request: http data
     :return:
     """
 
     if request.method == 'GET':
-        # do stuff
-        ...
+
         if 'notification_form' in request.GET:
-            print("hehe")
+
+            # get form data (id (str))
             notification_id = request.GET.get('notification_form')
-            print(notification_id, "is the notification id.")
 
-            # get Notification object matching id
-            notification = Notification.objects.get(id__exact=notification_id)
-
-            print(f'{notification.type} is the type value')
+            # get Notification object matching id, mark as 'read'
+            notification = Notification.objects.get(id=notification_id)
+            notification.unread = False
+            notification.save()
 
     return redirect('/profile')
