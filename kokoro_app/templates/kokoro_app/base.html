@@ -28,7 +28,7 @@
               <div class="dropdown-content">
                 {% for notification in notifications %}
                   <form action="{% url 'notifications:notification_form_handler' %}" method="get">
-                    <button type="submit" class="drop-noti" name="notification_form" value="{{ notification.sent_from.id }}">{{ notification.message }}</button>
+                    <button type="submit" class="drop-noti" name="notification_form" value="{{ notification.id }}">{{ notification.message }}</button>
                   </form>
                 {% endfor %}
                 <button class="drop-noti">Mark All As Seen</button>
