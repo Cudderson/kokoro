@@ -99,15 +99,32 @@ def profile(request):
     """
 
     if request.method == "POST":
-        print("This shouldn't happen.")
+        raise Http404("This shouldn't happen.")
 
     elif request.method == 'GET':
 
+        # Get id of user profile to visit
+
         if 'profile_to_visit' in request.GET:
+
             # User is requesting the profile of a different user (search form)
-            # redefine user to grab their data rather than logged in user
             user_id = request.GET.get('profile_to_visit')
 
+        elif 'profile_to_visit' in request.session:
+
+            # User is requesting the profile of a different user (notification)
+            user_id = request.session['profile_to_visit']
+            # remove variable from session to avoid cross-ups
+            del request.session['profile_to_visit']
+
+        else:
+            # Logged in user is requesting their own profile
+            user = request.user
+            user_id = request.user.id
+            already_friends = False
+
+        # Get user object if user requesting a different profile than their own
+        if user_id != request.user.id:
             try:
                 # Objects.get() returns 1 object rather than queryset of objects (objects.filter())
                 user = User.objects.get(id__exact=user_id)
@@ -124,10 +141,6 @@ def profile(request):
             except Exception as e:
                 print("NOT FRIENDS", e)
                 already_friends = False
-        else:
-            # Logged in user is requesting their own profile
-            user = request.user
-            already_friends = False
 
         # user info for profile page
         biography = ProfileBio.objects.filter(owner__exact=user.id)
