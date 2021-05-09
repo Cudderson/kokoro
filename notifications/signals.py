@@ -14,10 +14,10 @@ from django.core.exceptions import ValidationError
 # django.db.models.signals.m2m_changed
 # Sent when a ManyToManyField on a model is changed.
 
-
-@receiver(request_finished)
-def test_signal(sender, **kwargs):
-    print("Your signal is working.")
+# Use this  to test signals if not working
+# @receiver(request_finished)
+# def test_signal(sender, **kwargs):
+#     print("Your signal is working.")
 
 
 # we want to trigger a signal when certain events happen
@@ -42,6 +42,7 @@ def create_friendship_request_notification(sender, instance, created, **kwargs):
     if created:
 
         friendship_request_notification = Notification(
+            type=1,
             recipient=instance.to_user,
             sent_from=instance.from_user,
             message=f"{instance.from_user} sent you a friendship request!",
@@ -63,6 +64,7 @@ def accept_friendship_request_notification(sender, instance, **kwargs):
     if instance.accepted:
 
         friendship_accepted_notification = Notification(
+            type=2,
             recipient=instance.from_user,
             sent_from=instance.to_user,
             message=f'{instance.to_user} accepted your friendship request!',
@@ -95,6 +97,7 @@ def pinned_profile_post_notification(sender, instance, created, **kwargs):
         original_headline = instance.original.headline
 
         pinned_post_notification = Notification(
+            type=3,
             recipient=original_author,
             sent_from=instance.pinned_by,
             message=f"{instance.pinned_by} pinned your post '{original_headline}' to their profile!",
@@ -109,7 +112,6 @@ def pinned_profile_post_notification(sender, instance, created, **kwargs):
             print(e)
 
 
-
 # What else needs a notification?
 # FriendshipRequest creation [x]
 # Friendship Request acceptance [x]
@@ -117,4 +119,3 @@ def pinned_profile_post_notification(sender, instance, created, **kwargs):
 
 # I like this start so far.
 # Before building out all notifications, we should now work on the template (base.html) and incorporate notifications there
-

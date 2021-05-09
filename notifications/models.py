@@ -8,6 +8,15 @@ class Notification(models.Model):
     Represents a notification for a particular user
     """
 
+    NOTIFICATION_TYPES = (
+        (1, 'New Friendship Request'),
+        (2, 'Accepted Friendship Request'),
+        (3, 'Pinned Post'),
+    )
+
+    # the type of notification, defined from 'NOTIFICATION TYPES'
+    type = models.PositiveSmallIntegerField(choices=NOTIFICATION_TYPES)
+
     # who the notification is being sent to
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recipient')
 
