@@ -10,8 +10,10 @@ def notification_form_handler(request):
     :return:
     """
 
-    if request.method == 'POST':
+    if request.method == 'GET':
         # do stuff
         ...
+        if 'notification_form' in request.GET:
+            print("hehe")
 
     return redirect('/profile')

@@ -27,8 +27,8 @@
               <button class="dropdown-btn">Notifications</button>
               <div class="dropdown-content">
                 {% for notification in notifications %}
-                  <form action="{% url 'kokoro_app:profile' %}" method="get">
-                    <button type="submit" class="drop-noti" name="profile_to_visit" value="{{ notification.sent_from.id }}">{{ notification.message }}</button>
+                  <form action="{% url 'notifications:notification_form_handler' %}" method="get">
+                    <button type="submit" class="drop-noti" name="notification_form" value="{{ notification.sent_from.id }}">{{ notification.message }}</button>
                   </form>
                 {% endfor %}
                 <button class="drop-noti">Mark All As Seen</button>

@@ -5,10 +5,11 @@ from django.urls import path
 from . import views
 
 app_name = 'notifications'
+print(app_name)
 
 urlpatterns = [
 
     # Called when a Notification object needs to be altered
-    path('notification_form_handler/', views.notification_form_handler, name='notification_form_handler'),
+    path('notifications/notifications_form_handler', views.notification_form_handler, name='notification_form_handler'),
 
 ]
