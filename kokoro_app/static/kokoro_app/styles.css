@@ -649,6 +649,11 @@ nav a:hover {
     user-select: none;
     border: none;
     width: 100%;
+    background-color: #ddd;
+}
+
+.drop-noti-read {
+    background-color: #eee;
 }
 
 

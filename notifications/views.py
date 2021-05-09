@@ -23,4 +23,7 @@ def notification_form_handler(request):
             notification.unread = False
             notification.save()
 
+        # Now, any notification clicked on from nav is marked as unread = False
+        # We can show if a notification is read in template using the 'unread' value of the notification [x]
+
     return redirect('/profile')

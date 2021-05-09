@@ -27,9 +27,17 @@
               <button class="dropdown-btn">Notifications</button>
               <div class="dropdown-content">
                 {% for notification in notifications %}
+                  {% if notification.unread == True %}
+                  <!-- notification is unread -->
                   <form action="{% url 'notifications:notification_form_handler' %}" method="get">
                     <button type="submit" class="drop-noti" name="notification_form" value="{{ notification.id }}">{{ notification.message }}</button>
                   </form>
+                  {% else %}
+                  <!-- notification is not unread -->
+                    <form action="{% url 'notifications:notification_form_handler' %}" method="get">
+                      <button type="submit" class="drop-noti drop-noti-read" name="notification_form" value="{{ notification.id }}">{{ notification.message }}</button>
+                    </form>
+                  {% endif %}
                 {% endfor %}
                 <button class="drop-noti">Mark All As Seen</button>
               </div>
