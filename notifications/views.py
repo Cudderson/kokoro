@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse, reverse, HttpResponseRedirect
 from .models import Notification
-
+from kokoro_app.models import ProfilePost
 from kokoro_app.views import view_friendship_requests
 
 # Create your views here.
@@ -49,6 +49,23 @@ def notification_form_handler(request):
                 # should call profile(request), add profile_to_visit session variable
                 request.session['profile_to_visit'] = notification.sent_from.id
                 return redirect('/profile')
+
+            elif notification.type == 4:
+                # bring user to new profile post
+                # get post_slug of post
+                reference_post = notification.reference
+                reference_post_author = notification.sent_from
+
+                # get matching post
+                post = ProfilePost.objects.get(author=reference_post_author, headline=reference_post)
+
+                # get unique slug of post
+                post_slug = post.post_slug
+
+                # redirect with proper param
+                return redirect('kokoro_app:post', post_slug=post_slug)
+
+                # return redirect('app_1:profile', user_id=userid)
 
         elif 'mark_all_form' in request.POST:
             # mark all user notifications as 'unread = False'
