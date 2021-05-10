@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     # Need to include config path for signals to work
     'users.apps.UsersConfig',
 
+    # including config path for signals
+    'notifications.apps.NotificationsConfig',
+
     # django default apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -77,6 +80,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # context processor that retrieves notifications for user
+                'notifications.context_processors.pass_notifications_to_context',
             ],
         },
     },

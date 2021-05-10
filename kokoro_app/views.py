@@ -9,6 +9,9 @@ from django.http import Http404
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName,\
                     ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User, PinnedProfilePost,\
                     FriendshipRequest, Friendships
+
+from notifications.models import Notification
+
 from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, \
                    ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm, ProfilePostForm
 from . import balance, profile_utils, friendship_utils
@@ -96,26 +99,48 @@ def profile(request):
     """
 
     if request.method == "POST":
-        print("This shouldn't happen.")
+        raise Http404("This shouldn't happen.")
 
     elif request.method == 'GET':
 
-        if 'profile_to_visit' in request.GET:
-            # User is requesting the profile of a different user (search form)
-            # redefine user to grab their data rather than logged in user
-            user = request.GET.get('profile_to_visit')
+        # Get id of user profile to visit
 
+        if 'profile_to_visit' in request.GET:
+
+            # User is requesting the profile of a different user (search form)
+            user_id = request.GET.get('profile_to_visit')
+
+        elif 'profile_to_visit' in request.session:
+
+            # User is requesting the profile of a different user (notification)
+            user_id = request.session['profile_to_visit']
+            # remove variable from session to avoid cross-ups
+            del request.session['profile_to_visit']
+
+        else:
+            # Logged in user is requesting their own profile
+            user = request.user
+            user_id = request.user.id
+            already_friends = False
+
+        # Get user object if user requesting a different profile than their own
+        if user_id != request.user.id:
             try:
                 # Objects.get() returns 1 object rather than queryset of objects (objects.filter())
-                user = User.objects.get(username__exact=user)
+                user = User.objects.get(id__exact=user_id)
             except Exception as e:
                 # Handle the case of MultipleObjectsReturned & DoesNotExist
                 print(e)
                 raise Http404('Something went wrong while retrieving the profile you requested.')
 
-        else:
-            # Logged in user is requesting their own profile
-            user = request.user
+            # determine if current user is already friends with the user that we're visiting
+            try:
+                already_friends = Friendships.objects.get(owner=request.user, friendships__id=user.id)
+                already_friends = True
+                print("FRIENDS")
+            except Exception as e:
+                print("NOT FRIENDS", e)
+                already_friends = False
 
         # user info for profile page
         biography = ProfileBio.objects.filter(owner__exact=user.id)
@@ -173,6 +198,8 @@ def profile(request):
         # Will shrink context later as we define new User model
         context = {
             'user': user,
+            # boolean
+            'already_friends': already_friends,
             'perfect_form': perfect_form,
             'perfect_balance': perfect_balance,
             'display_name_form': display_name_form,
@@ -357,6 +384,7 @@ def write_post(request):
         return render(request, 'kokoro_app/write_post.html', context)
 
 
+@login_required
 def posts_form_handler(request):
     """
     Helper function for processing forms submitted from post.html and write_post.html templates
@@ -467,7 +495,7 @@ def search(request):
     return render(request, 'kokoro_app/search.html', context)
 
 
-# Testing Friendship & FriendRequests
+@login_required
 def send_friendship_request_handler(request, sending_to_id):
     """
     Handler for sending a friendship request from current user to another user
@@ -490,6 +518,7 @@ def send_friendship_request_handler(request, sending_to_id):
             return redirect('/profile')
 
 
+@login_required
 def view_friendship_requests(request):
     """
     Page for viewing user's pending friendship requests
@@ -509,6 +538,7 @@ def view_friendship_requests(request):
     return render(request, 'kokoro_app/friendship_requests.html', context)
 
 
+@login_required
 def accept_friendship_request_handler(request, sent_by):
     """
     Handler for accepting(saving) a Friendships object, and deleting the corresponding FriendshipRequest object
@@ -597,33 +627,3 @@ def remove_friendship_handler(request, friendship_to_remove_id):
         return redirect('/view_friendships')
     else:
         raise Http404("There was an error redirecting you to page. Friendship Removed.")
-
-
-def friendship_form_handler(request):
-
-    # send_friendship_request (sending_to_id == id of a User object)
-    # view_friendship_requests (none)
-    # accept_friendship_request (sent_by == id of a User object)
-    # cancel_friendship_request (friendship_request == id of a FriendshipRequest object)
-    # decline_friendship_request (friendship_request == id of a FriendshipRequest object)
-    # view_friendships (none)
-    # remove_friendship (friendship_to_remove_id == id of a User object)
-
-    # I should first change send_friendship_request to pass an id rather than username [x]
-    # make sure we can still send friend requests properly [x] (fixed & committed)
-
-    # New plan: Delete this when done.
-    # Basically, keep the way the urls are defined and the functions they call.
-    # All we're doing is moving the meat of the view functions into friendship_utils
-    # We will also have to change function names
-    # remove url args where it makes sense when done.
-
-    # check when done:
-    # send_friendship_request_form [x]
-    # view_friendship_requests [the logic for this one is just a db query, hold-off for now]
-    # accept_friendship_request [x]
-    # cancel_friendship_request [x]
-    # decline_friendship_request [x]
-    # remove_friendship [x]
-
-    return redirect('/profile')

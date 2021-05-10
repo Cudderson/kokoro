@@ -8,7 +8,7 @@
         <div>
             {{ friendship }}
             <form action="{% url 'kokoro_app:profile' %}" method="get" style="display: inline-block;">
-                <button type="submit" name="profile_to_visit" value="{{ friendship }}">
+                <button type="submit" name="profile_to_visit" value="{{ friendship.id }}">
                     {{ friendship }}'s Profile
                 </button>
             </form>

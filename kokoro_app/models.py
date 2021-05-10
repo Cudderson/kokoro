@@ -243,7 +243,7 @@ class FriendshipRequest(models.Model):
 
     to_user = models.ForeignKey(User, related_name='to_user', on_delete=models.CASCADE)
 
-    # Consider 'status' field if it makes more sense here than in view
+    accepted = models.BooleanField(default=False)
 
     def __str__(self):
         return f'Pending Request from {self.from_user} to {self.to_user}'

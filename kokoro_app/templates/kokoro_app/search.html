@@ -6,7 +6,7 @@
     <br>
     {% for user in search_results %}
         <form action="{% url 'kokoro_app:profile' %}" method="get">
-            <div style="text-align: center;"><input type="submit" name="profile_to_visit" value="{{ user }}"></div>
+            <div style="text-align: center;"><button type="submit" name="profile_to_visit" value="{{ user.id }}">{{ user }}</button></div>
         </form>
     {% endfor %}
 

@@ -63,14 +63,18 @@
 <!-- everything above this is for a user viewing their own profile only -->
 {% else %}
 <!-- user is defined as the profile we're visiting via profile() view -->
-    <div>
-        <form action="{% url 'kokoro_app:send_friendship_request_handler' sending_to_id=user.id %}" method="post">
-            {% csrf_token %}
-            <button type="submit" name="send_friendship_request_form" value="{{ user }}">
-                Send Friend Request to {{ user }}
-            </button>
-        </form>
-    </div>
+    {% if already_friends %}
+        <div>You are friends with {{ user }}!</div>
+    {% else %}
+        <div>
+            <form action="{% url 'kokoro_app:send_friendship_request_handler' sending_to_id=user.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" name="send_friendship_request_form" value="{{ user }}">
+                    Send Friend Request to {{ user }}
+                </button>
+            </form>
+        </div>
+    {% endif %}
 {% endif %}
 <div class="profile-grid">
     <div class="profile-placeholder">

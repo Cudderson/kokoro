@@ -22,6 +22,39 @@
 
         {% if user.is_authenticated %}
           <li><a>Hello, {{ request.user.username }}.</a></li>
+          <!--place notification dropdown here-->
+          <li class="dropdown">
+              <button class="dropdown-btn">Notifications</button>
+              <div class="dropdown-content">
+                {% for notification in notifications %}
+                  {% if notification.unread == True %}
+                  <!-- notification is unread -->
+                  <form action="{% url 'notifications:notification_form_handler' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="drop-noti" name="notification_form" value="{{ notification.id }}">{{ notification.message }}</button>
+                  </form>
+                  {% else %}
+                  <!-- notification is not unread -->
+                    <form action="{% url 'notifications:notification_form_handler' %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit" class="drop-noti drop-noti-read" name="notification_form" value="{{ notification.id }}">{{ notification.message }}</button>
+                    </form>
+                  {% endif %}
+                {% empty %}
+                    <button class="drop-noti">No Notifications</button>
+                {% endfor %}
+                {% if notifications %}
+                  <form action="{% url 'notifications:notification_form_handler' %}" method="post">
+                    {% csrf_token %}
+                    <button class="drop-noti" name="mark_all_form">Mark All As Seen</button>
+                  </form>
+                  <form action="{% url 'notifications:notification_form_handler' %}" method="post">
+                    {% csrf_token %}
+                    <button class="drop-noti" name="clear_all_form">Clear All</button>
+                  </form>
+                {% endif %}
+              </div>
+          </li>
           <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
           <li><a href="{% url 'kokoro_app:profile' %}">Profile</a></li>
           <li><a href="{% url 'users:logout' %}">Log Out</a></li>
