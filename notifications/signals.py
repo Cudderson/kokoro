@@ -4,7 +4,7 @@ from django.db.models.signals import post_save, pre_delete
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 
-from kokoro_app.models import FriendshipRequest, PinnedProfilePost
+from kokoro_app.models import FriendshipRequest, Friendships, PinnedProfilePost, ProfilePost
 from .models import Notification
 
 from django.core.signals import request_finished
@@ -29,8 +29,8 @@ def create_friendship_request_notification(sender, instance, created, **kwargs):
     """
     Create a Notification when a FriendshipRequest object is created
     :param sender:
-    :param instance:
-    :param created:
+    :param instance: FriendshipRequest object
+    :param created: boolean indicating creation of FriendshipRequest object
     :param kwargs:
     :return:
     """
@@ -59,6 +59,13 @@ def create_friendship_request_notification(sender, instance, created, **kwargs):
 
 @receiver(pre_delete, sender=FriendshipRequest)
 def accept_friendship_request_notification(sender, instance, **kwargs):
+    """
+    Creates a Notification object when a FriendshipRequest is deleted (provided that accepted == True)
+    :param sender:
+    :param instance: FriendshipRequest object
+    :param kwargs:
+    :return:
+    """
 
     # FriendshipRequest.accepted == True when accepted, before deletion
     if instance.accepted:
@@ -84,8 +91,8 @@ def pinned_profile_post_notification(sender, instance, created, **kwargs):
     """
     Create a Notification object when someone pins a post to their profile (PinnedProfilePost object created)
     :param sender:
-    :param instance:
-    :param created:
+    :param instance: PinnedProfilePost object
+    :param created: boolean indicating the creation of a PinnedProfilePost object
     :param kwargs:
     :return:
     """
@@ -112,10 +119,48 @@ def pinned_profile_post_notification(sender, instance, created, **kwargs):
             print(e)
 
 
+@receiver(post_save, sender=ProfilePost)
+def new_profile_post_notification(sender, instance, created, **kwargs):
+    """
+    Create a Notification object for all friends of user when ProfilePost is published by user
+    :param sender:
+    :param instance: ProfilePost object
+    :param created: boolean indicating the creation of a ProfilePost object
+    :param kwargs:
+    :return:
+    """
+
+    if created:
+
+        # get author of the ProfilePost object
+        author_id = instance.author.id
+
+        # get user friendships
+        # return type = <class 'kokoro_app.models.Friendships'> (ManyRelatedManager object)
+        friendships, created = Friendships.objects.get_or_create(owner=author_id)
+
+        # convert ManyRelatedManager object into Queryset
+        friendships = friendships.friendships.all()
+
+        # create Notification object for each friend
+        for friend in friendships:
+            new_post_notification = Notification(
+                type=4,
+                recipient=friend,
+                sent_from=instance.author,
+                message=f"{instance.author} just published a new post, '{instance.headline}'. Check it out!",
+                reference=instance
+            )
+
+            try:
+                new_post_notification.full_clean()
+                new_post_notification.save()
+            except Exception as e:
+                print(e)
+
+
 # What else needs a notification?
 # FriendshipRequest creation [x]
 # Friendship Request acceptance [x]
 # When someone pins your post [x]
-
-# I like this start so far.
-# Before building out all notifications, we should now work on the template (base.html) and incorporate notifications there
+# When you publish a ProfilePost, notify all friends []

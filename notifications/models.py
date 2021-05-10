@@ -12,6 +12,7 @@ class Notification(models.Model):
         (1, 'New Friendship Request'),
         (2, 'Accepted Friendship Request'),
         (3, 'Pinned Post'),
+        (4, 'New Post'),
     )
 
     # the type of notification, defined from 'NOTIFICATION TYPES'
