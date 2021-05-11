@@ -289,7 +289,7 @@ activity-form-container {
     overflow: hidden;
     width: 90%; /* flexbox overrides width property. have to define width here too */
     margin: 0 auto;
-    margin-top: 5rem;
+    /*margin-top: 5rem;*/
 }
 
 .activity-radio {
