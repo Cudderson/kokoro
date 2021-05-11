@@ -73,31 +73,63 @@
 <div style="background-color: lightgray; padding-top: .25rem; border-top: 1px solid gray; margin-top: 1rem;"></div>
 <div class="grid-balance" style="text-align: center; border-top: 1px solid gray; border-bottom: 1px solid gray; padding: .5rem;">
     {% if balance_bool == 'True' %}
-        <h4 style="margin-bottom: 1rem;">You have found balance today.</h4>
+        <h4 style="margin-bottom: 1rem; margin-top: 1rem;">You have found balance today.</h4>
     {% elif balance_bool == 'False' %}
         <h4 style="margin-bottom: 1rem;">Still finding balance...</h4>
     {% endif %}
     <div style="padding: .025rem; background-color: black; width: 80%; margin: 0 auto;"></div>
-    <h5 style="margin-top: 1rem;">Current Balance Streak: {{ balance_streak }} days</h5>
+    <h5 style="margin-top: 1rem; margin-bottom: 1rem;">Current Balance Streak: {{ balance_streak }} days</h5>
 </div>
 <div style="background-color: lightgray; padding-top: .25rem; border-bottom: 1px solid gray;"></div>
 
 <!-- Manage Activities button -->
 <div style="text-align: center; border-bottom: 1px solid black;">
-    <h5 data-form="manage-form-container" onclick="toggleFormDisplay(this)" style="cursor: pointer;">Manage Daily Activities</h5>
+    <h5 data-form="manage-form-container" onclick="toggleFormDisplay(this)" style="cursor: pointer;">View All Daily Activities</h5>
 </div>
 <!-- end Manage Activities button -->
 <!-- padding div -->
 <div style="background-color: lightgray; padding-top: .25rem; border-bottom: 1px solid gray;"></div>
 
-<!-- Daily Activities (not looking good on mobile)-->
-<!--"grid-item-daily" in old code-->
-<!--<div class="daily-activities">-->
-<!--    <h3 style="text-align: center;">Mind:<br></h3><h3>{{ all_daily.daily_mind.0 }}</h3>-->
-<!--    <h3 style="text-align: center;">Body:<br></h3><h3>{{ all_daily.daily_body.0.description }}</h3>-->
-<!--    <h3 style="text-align: center;">Soul:<br></h3><h3>{{ all_daily.daily_soul.0 }}</h3>-->
-<!--</div>-->
-<!-- end Daily Activities -->
+<!-- Manage Activity Form  -->
+<div class="manage-form-container form-container">
+    <div class="close-form" data-form="manage-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
+    <h5>{{ user }}'s activities today:</h5>
+    <form action="{% url 'kokoro_app:home' %}" method="post" style="background-color: white; padding: 2rem;">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>MIND</th>
+            </tr>
+            {% for mind_act in all_daily.daily_mind %}
+                <tr>
+                    <td><input type="checkbox" name="{{ mind_act.id }}" id="{{ mind_act.id }}"> {{ mind_act }}///{{ mind_act.id }}///{{ mind_act.pk }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <table>
+            <tr>
+                <th>BODY</th>
+            </tr>
+            {% for body_act in all_daily.daily_body %}
+                <tr>
+                    <td><input type="checkbox" name="{{ body_act.id }}" id="{{ body_act.id }}"> {{ body_act }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <table>
+            <tr>
+                <th>SOUL</th>
+            </tr>
+            {% for soul_act in all_daily.daily_soul %}
+                <tr>
+                    <td><input type="checkbox" name="{{ soul_act.id }}" id="{{ soul_act.id }}"> {{ soul_act }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" name="manage_form" value="Delete Selected Activities">
+    </form>
+</div>
+
 <script>
     function collapse() {
         activitySubmit.classList.toggle("collapse");

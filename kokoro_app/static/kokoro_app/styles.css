@@ -394,3 +394,80 @@ activity-form-container {
     font-size: 14px;
     text-align: center;
 }
+/* end Daily Activities */
+
+/* form-container stuff */
+.form-container {
+    display: none;
+    /* javascript changes display value on button click */
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    border: 1px solid white;
+    z-index: 999;
+}
+
+.show-form {
+    /* class is added to form-containers on svg click */
+    display: flex;
+}
+
+.form-container form {
+    margin-top: 30vh;
+    width: 50%;
+}
+
+.form-container form label {
+    color: white;
+    display: flow-root; /* change context */
+    padding-top: 1em;
+    font-size: 1.25vw;
+}
+
+.form-container input[type=text] {
+    width: 100%;
+    padding: 15px 0px;
+    margin: 0;
+    line-height: 1.5vw;
+    font-size: 1.25vw;
+}
+
+.form-container input[type=email] {
+    width: 100%;
+    padding: 15px 0px;
+    margin: 0;
+    line-height: 1.5vw;
+    font-size: 1.25vw;
+}
+
+.form-container input[type=submit] {
+    width: 100%;
+    padding: 10px 0px;
+    background: lightgreen;
+}
+
+.close-form {
+    align-self: flex-end;
+    width: 3vw;
+    height: 3vw;
+    background: white;
+    border-radius: 4px;
+    margin: .5em .5em .5em .5em;
+    cursor: pointer;
+}
+
+.close-form div {
+    /* for the 'x' close symbol */
+    width: 3vw;
+    height: 3vw;
+    line-height: 3vw; /* match div height to vertically center */
+    text-align: center;
+    font-size: 4vw;
+    font-weight: bold;
+}
