@@ -44,14 +44,20 @@
 <!-- end Daily Activity Form -->
 <!-- Balance Message -->
 <!--Evaluate string representation of Python bool-->
-<div class="grid-balance" style="text-align: center;">
+<div class="grid-balance" style="text-align: center; border-top: 1px solid black; border-bottom: 1px solid black; padding: .5rem;">
     {% if balance_bool == 'True' %}
-        <h4 style="border-top: 1px solid black; border-bottom: 1px solid black; padding: 1rem;">You have found balance today.</h4>
+        <h4>You have found balance today.</h4>
     {% elif balance_bool == 'False' %}
-        <h4>Still finding balance...</h4>
+        <h4 style="margin-bottom: 1rem;">Still finding balance...</h4>
+        <h6 style="margin: 0; margin-bottom: .5rem;">Find balance by submitting an activity for Mind, Body, and Soul.</h6>
     {% endif %}
 </div>
-
+<div style="text-align: center; border-bottom: 1px solid black;">
+    <h5 data-form="manage-form-container" onclick="toggleFormDisplay(this)" style="cursor: pointer;">Manage Activities</h5>
+</div>
+<div style="text-align: center; border-bottom: 1px solid black;">
+    <h5>Current Balance Streak: {{ balance_streak }} days</h5>
+</div>
 <!-- comment out until ready -->
 <!--<h6>Current Streak: {{ balance_streak }}</h6>-->
 <!--<h6 data-form="manage-form-container" onclick="toggleFormDisplay(this)" style="cursor: pointer;">Manage Activities</h6>-->
