@@ -248,7 +248,7 @@ nav a:hover {
 
 /* home.html svg */
 .svg-container {
-    width: 65%;
+    width: 50%;
     margin: 0 auto;
 }
 
@@ -286,9 +286,9 @@ activity-form-container {
     display: flex;
     justify-content: center;
     overflow: hidden;
-    width: 80%; /* flexbox overrides width property. have to define width here too */
+    width: 90%; /* flexbox overrides width property. have to define width here too */
     margin: 0 auto;
-    margin-top: 2rem;
+    margin-top: 5rem;
 }
 
 .activity-radio {
@@ -305,7 +305,7 @@ activity-form-container {
     text-align: center;
     color: black;
     background: #eee;
-    padding: 5px 10px 5px 10px;
+    padding: 10px 10px 10px 10px;
     font-weight: bold;
     font-size: 16px; /*  make label text responsive [] */
     cursor: pointer;
@@ -338,7 +338,7 @@ activity-form-container {
     grid-template-columns: 1fr 1fr 1fr;
     /* grid contains text input + submit button */
     margin: 0 auto;
-    width: 80%;
+    width: 90%;
     /* closing transition */
     transform: scale(1, 0);
     transform-origin: top;
@@ -386,3 +386,10 @@ activity-form-container {
     transition: transform 500ms ease-in-out 10ms;
 }
 /* end home.html Daily Activity Form */
+
+/* Daily Activities (text above activity-form) */
+.daily-activities > h3 {
+    margin: 0 12vw 0 12vw;
+    font-size: 14px;
+    text-align: center;
+}

@@ -17,9 +17,9 @@
 
         <polygon class="tri tri-3" fill="white" stroke="black" stroke-width=".2" points="150,300 300,300 225,170.01"></polygon>
 
-        <text x="130" y="135">Mind</text>
-        <text x="54" y="265">Body</text>
-        <text x="209" y="265">Soul</text>
+        <text x="130" y="135"></text>
+        <text x="54" y="265"></text>
+        <text x="209" y="265"></text>
     </svg>
 </div>
 
@@ -42,6 +42,29 @@
     </form>
 </div>
 <!-- end Daily Activity Form -->
+
+<!-- Balance Message -->
+<!--Evaluate string representation of Python bool-->
+<div class="grid-balance" style="text-align: center;">
+    {% if balance_bool == 'True' %}
+        <h4 style="border-top: 1px solid black; border-bottom: 1px solid black; padding: 1rem;">You have found balance today.</h4>
+    {% elif balance_bool == 'False' %}
+        <h4>Still finding balance...</h4>
+    {% endif %}
+</div>
+<!-- comment out until ready -->
+<!--<h6>Current Streak: {{ balance_streak }}</h6>-->
+<!--<h6 data-form="manage-form-container" onclick="toggleFormDisplay(this)" style="cursor: pointer;">Manage Activities</h6>-->
+<!-- end Balance Message -->
+
+<!-- Daily Activities (not looking good on mobile)-->
+<!--"grid-item-daily" in old code-->
+<!--<div class="daily-activities">-->
+<!--    <h3 style="text-align: center;">Mind:<br></h3><h3>{{ all_daily.daily_mind.0 }}</h3>-->
+<!--    <h3 style="text-align: center;">Body:<br></h3><h3>{{ all_daily.daily_body.0.description }}</h3>-->
+<!--    <h3 style="text-align: center;">Soul:<br></h3><h3>{{ all_daily.daily_soul.0 }}</h3>-->
+<!--</div>-->
+<!-- end Daily Activities -->
 <script>
     function collapse() {
         activitySubmit.classList.toggle("collapse");
