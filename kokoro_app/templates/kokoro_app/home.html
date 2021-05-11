@@ -2,107 +2,46 @@
 
 {% block content %}
 
-<div class="home-grid">
-    <!--testing flexbox to avoid unwanted gaps-->
-    <div class="activity-form">
-        <form action="{% url 'kokoro_app:home' %}" method="post">
-            {% csrf_token %}
-            <div class="activity-select"> <!--flexbox-->
-                <input class="activity-radio" type="radio" name="activity" value="mind" required="" id="id_activity_1">
-                <label class="activity-label mind-label" onclick="collapse()" for="id_activity_1">{{ activity_form.activity.1 }}</label>
-                <input class="activity-radio" type="radio" name="activity" value="body" required="" id="id_activity_2">
-                <label class="activity-label" onclick="collapse()" for="id_activity_2">{{ activity_form.activity.2 }}</label>
-                <input class="activity-radio" type="radio" name="activity" value="soul" required="" id="id_activity_3">
-                <label class="activity-label soul-label" onclick="collapse()" for="id_activity_3">{{ activity_form.activity.3 }}</label>
-            </div>
-            <div class="activity-submit">
-                  <input type="text" name="description" maxlength="100" required="" id="id_description" placeholder="Describe your activity...">
-                  <button type="submit" name="activity_form">Add</button>
-            </div>
-        </form>
-    </div>
-    <div class="grid-item-daily">
-        <h3>Today:</h3>
-        <h2>{{ all_daily.daily_mind.0 }}</h2>
-        <h2>{{ all_daily.daily_body.0 }}</h2>
-        <h2>{{ all_daily.daily_soul.0 }}</h2>
-    </div>
+<!--mobile-first-->
+<!--svg first-->
+<div class="svg-container">
+    <svg id="svg" viewBox="0 0 300 301">
+        <rect x="0" y="0" height="301" width="300" stroke="black" stroke-width="0" fill="none"></rect>
 
-    <!--Evaluate string representation of Python bool-->
-    <div class="grid-balance">
-        {% if balance_bool == 'True' %}
-            <h4>You have found balance today.</h4>
-        {% elif balance_bool == 'False' %}
-            <h4>Still finding balance...</h4>
-        {% endif %}
-        <h6>Current Streak: {{ balance_streak }}</h6>
-        <h6 data-form="manage-form-container" onclick="toggleFormDisplay(this)" style="cursor: pointer;">Manage Activities</h6>
+        <polygon fill="gray" stroke="none" points="0,300 300,300 150,40.1925"></polygon>
 
-    </div>
+        <!--make smaller triangles overlay-->
+        <polygon class="tri tri-1" fill="white" stroke="black" stroke-width=".2" points="75,170.01 225,170.01 150,40.1925"></polygon>
 
+        <polygon class="tri tri-2" fill="white" stroke="black" stroke-width=".2" points="0,300 150,300 75,170.01"></polygon>
 
-    <div class="svg-container">
-        <svg id="svg" viewBox="0 0 300 301">
-            <rect x="0" y="0" height="301" width="300" stroke="black" stroke-width="0" fill="none"></rect>
+        <polygon class="tri tri-3" fill="white" stroke="black" stroke-width=".2" points="150,300 300,300 225,170.01"></polygon>
 
-            <polygon fill="gray" stroke="none" points="0,300 300,300 150,40.1925"></polygon>
-
-            <!--make smaller triangles overlay-->
-            <polygon class="tri tri-1" fill="white" stroke="black" stroke-width=".2" points="75,170.01 225,170.01 150,40.1925"></polygon>
-
-            <polygon class="tri tri-2" fill="white" stroke="black" stroke-width=".2" points="0,300 150,300 75,170.01"></polygon>
-
-            <polygon class="tri tri-3" fill="white" stroke="black" stroke-width=".2" points="150,300 300,300 225,170.01"></polygon>
-
-            <text x="130" y="135">Mind</text>
-            <text x="54" y="265">Body</text>
-            <text x="209" y="265">Soul</text>
-        </svg>
-    </div>
+        <text x="130" y="135">Mind</text>
+        <text x="54" y="265">Body</text>
+        <text x="209" y="265">Soul</text>
+    </svg>
 </div>
-<!-- Not In Grid -->
-<div class="manage-form-container form-container">
-    <div class="close-form" data-form="manage-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
-    <h5>{{ user }}'s activities today:</h5>
-    <form action="{% url 'kokoro_app:home' %}" method="post" style="background-color: white; padding: 2rem;">
+
+<!-- Daily Activity Form -->
+<div class="activity-form-container">
+    <form action="{% url 'kokoro_app:home' %}" method="post">
         {% csrf_token %}
-        <table>
-            <tr>
-                <th>MIND</th>
-            </tr>
-            {% for mind_act in all_daily.daily_mind %}
-                <tr>
-                    <td><input type="checkbox" name="{{ mind_act.id }}" id="{{ mind_act.id }}"> {{ mind_act }}///{{ mind_act.id }}///{{ mind_act.pk }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <table>
-            <tr>
-                <th>BODY</th>
-            </tr>
-            {% for body_act in all_daily.daily_body %}
-                <tr>
-                    <td><input type="checkbox" name="{{ body_act.id }}" id="{{ body_act.id }}"> {{ body_act }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <table>
-            <tr>
-                <th>SOUL</th>
-            </tr>
-            {% for soul_act in all_daily.daily_soul %}
-                <tr>
-                    <td><input type="checkbox" name="{{ soul_act.id }}" id="{{ soul_act.id }}"> {{ soul_act }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <input type="submit" name="manage_form" value="Delete Selected Activities">
+        <div class="activity-select"> <!--flexbox-->
+            <input class="activity-radio" type="radio" name="activity" value="mind" required="" id="id_activity_1">
+            <label class="activity-label mind-label" onclick="collapse()" for="id_activity_1">{{ activity_form.activity.1 }}</label>
+            <input class="activity-radio" type="radio" name="activity" value="body" required="" id="id_activity_2">
+            <label class="activity-label" onclick="collapse()" for="id_activity_2">{{ activity_form.activity.2 }}</label>
+            <input class="activity-radio" type="radio" name="activity" value="soul" required="" id="id_activity_3">
+            <label class="activity-label soul-label" onclick="collapse()" for="id_activity_3">{{ activity_form.activity.3 }}</label>
+        </div>
+        <div class="activity-submit">
+              <input type="text" name="description" maxlength="100" required="" id="id_description" placeholder="Describe your activity...">
+              <button type="submit" name="activity_form">Add</button>
+        </div>
     </form>
 </div>
-
-<!--apply new css class to triangles referencing fulfilled activities-->
-<!--*** ACTIVITIES WITH QUOTES ("") BREAK THE JS ***-->
-<!--also, tell user to select an option (MBS) if none was selected-->
+<!-- end Daily Activity Form -->
 <script>
     function collapse() {
         activitySubmit.classList.toggle("collapse");
@@ -177,4 +116,5 @@
         form.classList.toggle("show-form");
     }
 </script>
+
 {% endblock content %}
