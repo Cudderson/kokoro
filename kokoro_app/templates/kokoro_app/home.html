@@ -3,6 +3,29 @@
 {% block content %}
 
 <!--mobile-first-->
+<!-- Instructions for Daily Activities -->
+<div style="border-top: 4px solid gray; margin-top: 1rem; margin-bottom: 2rem;">
+    {% if balance_bool == 'True' %}
+    <h4 style="margin: 1rem; text-align: center;">Your Daily Balance</h4>
+    <!-- recreate two-line item -->
+    <div style="border-bottom: 1px solid gray; border-top: 4px solid gray; padding: .5rem;">
+        <h6 style="margin: 0; padding-left: .5rem; color: lightgray">MIND</h6>
+        <h5 style="margin: 0; padding-left: .5rem;">{{ all_daily.daily_mind.0.description }}</h5>
+    </div>
+    <div style="border-bottom: 1px solid gray; padding: .5rem;">
+        <h6 style="margin: 0; padding-left: .5rem; color: lightgray">BODY</h6>
+        <h5 style="margin: 0; padding-left: .5rem;">{{ all_daily.daily_body.0.description }}</h5>
+    </div>
+    <div style="padding: .5rem;">
+        <h6 style="margin: 0; padding-left: .5rem; color: lightgray">SOUL</h6>
+        <h5 style="margin: 0; padding-left: .5rem;">{{ all_daily.daily_soul.0.description }}</h5>
+    </div>
+    <div style="padding: 2px; background-color: gray;"></div>
+    {% else %}
+    <h5 style="">Find balance by submitting a Mind, Body, and Soul activity.</h5>
+    {% endif %}
+</div>
+<!-- end Instructions -->
 <!--svg first-->
 <div class="svg-container">
     <svg id="svg" viewBox="0 0 300 301">
@@ -21,10 +44,6 @@
         <text x="54" y="265"></text>
         <text x="209" y="265"></text>
     </svg>
-</div>
-
-<div style="text-align: center; border-top: 1px solid gray; border-bottom: 1px solid gray; padding: .5rem; margin-top: 3rem; margin-bottom: 3rem;">
-    <h6 style="margin: 0;">Find balance by submitting an activity for Mind, Body, and Soul.</h6>
 </div>
 
 <!-- Daily Activity Form -->
@@ -51,17 +70,18 @@
 <div style="background-color: lightgray; padding-top: .25rem; border-top: 1px solid gray; margin-top: 1.5rem;"></div>
 <div class="grid-balance" style="text-align: center; border-top: 1px solid gray; border-bottom: 1px solid gray; padding: .5rem;">
     {% if balance_bool == 'True' %}
-        <h4>You have found balance today.</h4>
+        <h4 style="margin-bottom: 1rem;">You have found balance today.</h4>
     {% elif balance_bool == 'False' %}
         <h4 style="margin-bottom: 1rem;">Still finding balance...</h4>
     {% endif %}
-    <h5>Current Balance Streak: {{ balance_streak }} days</h5>
+    <div style="padding: .025rem; background-color: black; width: 80%; margin: 0 auto;"></div>
+    <h5 style="margin-top: 1rem;">Current Balance Streak: {{ balance_streak }} days</h5>
 </div>
 <div style="background-color: lightgray; padding-top: .25rem; border-bottom: 1px solid gray;"></div>
 
 <!-- Manage Activities button -->
 <div style="text-align: center; border-bottom: 1px solid black;">
-    <h5 data-form="manage-form-container" onclick="toggleFormDisplay(this)" style="cursor: pointer;">Manage Activities</h5>
+    <h5 data-form="manage-form-container" onclick="toggleFormDisplay(this)" style="cursor: pointer;">Manage Daily Activities</h5>
 </div>
 <!-- end Manage Activities button -->
 <!-- padding div -->
