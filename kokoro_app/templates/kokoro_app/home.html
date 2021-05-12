@@ -39,14 +39,13 @@
 
         <!--make smaller triangles overlay-->
         <polygon class="tri tri-1" fill="white" stroke="black" stroke-width=".2" points="75,170.01 225,170.01 150,40.1925"></polygon>
+        <text x="130" y="135" class="text-1">Mind</text>
 
         <polygon class="tri tri-2" fill="white" stroke="black" stroke-width=".2" points="0,300 150,300 75,170.01"></polygon>
+        <text x="54" y="265" class="text-2">Body</text>
 
         <polygon class="tri tri-3" fill="white" stroke="black" stroke-width=".2" points="150,300 300,300 225,170.01"></polygon>
-
-        <text x="130" y="135"></text>
-        <text x="54" y="265"></text>
-        <text x="209" y="265"></text>
+        <text x="209" y="265" class="text-3">Soul</text>
     </svg>
 </div>
 
@@ -133,41 +132,6 @@
         </div>
         <input type="submit" name="manage_form" value="Delete Selected Activities" style="margin-top: 5%; border: none; border-radius: 2px;">
     </form>
-
-
-        <!-- old manage activities form
-        <table>
-            <tr>
-                <th>MIND</th>
-            </tr>
-            {% for mind_act in all_daily.daily_mind %}
-                <tr>
-                    <td><input type="checkbox" name="{{ mind_act.id }}" id="{{ mind_act.id }}"> {{ mind_act }}///{{ mind_act.id }}///{{ mind_act.pk }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <table>
-            <tr>
-                <th>BODY</th>
-            </tr>
-            {% for body_act in all_daily.daily_body %}
-                <tr>
-                    <td><input type="checkbox" name="{{ body_act.id }}" id="{{ body_act.id }}"> {{ body_act }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <table>
-            <tr>
-                <th>SOUL</th>
-            </tr>
-            {% for soul_act in all_daily.daily_soul %}
-                <tr>
-                    <td><input type="checkbox" name="{{ soul_act.id }}" id="{{ soul_act.id }}"> {{ soul_act }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <input type="submit" name="manage_form" value="Delete Selected Activities">
-    </form>  end old manage activities form -->
 </div>
 
 <script>
