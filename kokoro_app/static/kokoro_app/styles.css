@@ -288,8 +288,7 @@ activity-form-container {
     justify-content: center;
     overflow: hidden;
     width: 90%; /* flexbox overrides width property. have to define width here too */
-    margin: 0 auto;
-    margin-top: 5rem;
+    margin: 5rem auto 0 auto;
 }
 
 .activity-radio {
@@ -418,7 +417,6 @@ activity-form-container {
 }
 
 .form-container form {
-    margin-top: 15%;
     height: 55%;
     width: 85%;
     border-radius: 4px;
@@ -452,7 +450,9 @@ activity-form-container {
     padding: 17.5px 30px;
     background: lightgreen;
 }
+/* end form-container stuff */
 
+/* 'X' symbol for closing form */
 .close-form {
     align-self: flex-end;
     width: 3rem;
@@ -472,3 +472,4 @@ activity-form-container {
     font-size: 4rem;
     font-weight: bold;
 }
+/* end close-form */

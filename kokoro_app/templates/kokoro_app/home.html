@@ -5,7 +5,7 @@
 <!--mobile-first-->
 <!-- Instructions for Daily Activities -->
 <div style="background-color: lightgray; padding-top: .25rem; border-bottom: 1px solid gray; border-top: 1px solid gray;"></div>
-<div style="margin-bottom: 2rem;">
+<div>
     {% if balance_bool == 'True' %}
     <h4 style="margin: 1rem; text-align: center;">- Your Daily Balance -</h4>
     <div style="background-color: lightgray; padding-top: .25rem; border-bottom: 1px solid gray; border-top: 1px solid gray;"></div>
@@ -29,6 +29,7 @@
     {% endif %}
 </div>
 <!-- end Instructions -->
+<div style="text-align: right; padding: 1rem;"><h6 style="font-size: 1rem; margin: 0; cursor: pointer; user-select: none;">?</h6></div>
 <!--svg first-->
 <div class="svg-container">
     <svg id="svg" viewBox="0 0 300 301">
@@ -48,6 +49,14 @@
         <text x="209" y="265"></text>
     </svg>
 </div>
+
+<!--SAVE IN CASE div for dynamic messages on hover/focus -->
+<!--<div style="padding: .05rem; background-color: black; width: 50%; margin: 3rem auto 0 auto;"></div>-->
+<!--<div style="text-align: center; width: 90%; opacity: 50; margin: 0 auto;">-->
+<!--    <h6 style="margin: .75rem auto; font-size: .8rem;">Improve your physical well-being with a Body activity.</h6>-->
+<!--</div>-->
+<!--<div style="padding: .05rem; background-color: black; width: 50%; margin: 0 auto 0 auto;"></div>-->
+<!-- end dynamic div -->
 
 <!-- Daily Activity Form -->
 <div class="activity-form-container">
