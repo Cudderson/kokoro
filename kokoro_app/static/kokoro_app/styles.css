@@ -23,7 +23,11 @@ body {
 }
 /* end project styles */
 
-/* navbar styles */
+/*
+===============
+===== NAV =====
+===============
+*/
 header {
     /*background: var(--background);*/
     background: #ccc;
@@ -246,6 +250,63 @@ nav a:hover {
     content: none !important;
 }
 /* end navbar styles */
+
+/*
+======================
+===== home.html ======
+======================
+*/
+
+.separator {
+    background-color: lightgray;
+    padding-top: .25rem;
+    border-bottom: 1px solid gray;
+    border-top: 1px solid gray;
+}
+
+.balance-banner-true {
+    margin: 1rem;
+    text-align: center;
+}
+
+.balance-banner-false {
+    text-align: center;
+}
+
+.balance-banner-div {
+    border-bottom: 1px solid gray; padding: .5rem;
+}
+
+.balance-banner-div > h6 {
+    margin: 0;
+    padding-left: .5rem;
+    color: lightgray;
+}
+
+.balance-banner-div > h5 {
+    margin: 0;
+    padding-left: .5rem;
+}
+
+.balance-message-container {
+    text-align: center;
+    padding: .5rem;
+}
+
+.balance-message-container > h4 {
+    margin: .75rem auto;
+}
+
+.separator-thin {
+    padding: .025rem;
+    background-color: black;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.balance-streak {
+    margin: .75rem auto;
+}
 
 /* home.html svg */
 .svg-container {
