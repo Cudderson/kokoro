@@ -34,7 +34,7 @@
 <div style="text-align: right; padding: 1rem;"><h6 style="font-size: 1rem; margin: 0; cursor: pointer; user-select: none;">?</h6></div>
 <!-- end help icon -->
 
-<!--svg first-->
+<!-- svg -->
 <div class="svg-container">
     <svg id="svg" viewBox="0 0 300 301">
         <rect x="0" y="0" height="301" width="300" stroke="black" stroke-width="0" fill="none"></rect>
@@ -52,15 +52,7 @@
         <text x="209" y="265" class="text-3">Soul</text>
     </svg>
 </div>
-
-<!--SAVE IN CASE div for dynamic messages on hover/focus -->
-<!--<div style="padding: .05rem; background-color: black; width: 50%; margin: 3rem auto 0 auto;"></div>-->
-<!--<div style="text-align: center; width: 90%; opacity: 50; margin: 0 auto;">-->
-<!--    <h6 style="margin: .75rem auto; font-size: .8rem;">Improve your physical well-being with a Body activity.</h6>-->
-<!--</div>-->
-<!--<div style="padding: .05rem; background-color: black; width: 50%; margin: 0 auto 0 auto;"></div>-->
-<!-- end dynamic div -->
-
+<!-- end svg -->
 <!-- Daily Activity Form -->
 <div class="activity-form-container">
     <form action="{% url 'kokoro_app:home' %}" method="post">
@@ -95,8 +87,8 @@
 <div class="separator"></div>
 
 <!-- Manage Activities button -->
-<div style="text-align: center;">
-    <h5 data-form="manage-form-container" onclick="toggleFormDisplay(this)" style="cursor: pointer;">View All Daily Activities</h5>
+<div class="view-all-activities">
+    <h5 data-form="manage-form-container" onclick="toggleFormDisplay(this)">View All Daily Activities</h5>
 </div>
 <div class="separator"></div>
 <!-- end Manage Activities button -->
@@ -105,35 +97,35 @@
 <div class="manage-form-container form-container">
     <div class="close-form" data-form="manage-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
     <h5>{{ user }}'s activities today:</h5>
-    <form action="{% url 'kokoro_app:home' %}" method="post" style="background-color: white; padding: 1.5rem; border: 2px solid gray;">
+    <form class="manage-form" action="{% url 'kokoro_app:home' %}" method="post">
         {% csrf_token %}
-        <h2 style="text-align: center; margin-top: 0; margin-bottom: .5rem;">Manage Activities</h2>
-        <div style="padding: .05rem; background-color: black"></div>
+        <h2 class="manage-form-header">Manage Activities</h2>
+        <div class="separator-thin"></div>
         <!-- scrolling activities -->
-        <div style="overflow: auto; width: 100%; height: 75%; border: 1px solid gray;">
+        <div class="manage-form-scroll">
             {% for mind_act in all_daily.daily_mind %}
-                <div style="border-bottom: 3px solid gray; padding: .25rem .5rem .5rem .5rem;">
-                    <input type="checkbox" name="{{ mind_act.id }}" id="{{ mind_act.id }}" style="margin: 0;">
-                    <h6 style="margin: 0; color: lightgray; display: inline-block;">MIND</h6>
-                    <h5 style="margin: 0;">{{ mind_act.description }}</h5>
+                <div>
+                    <input type="checkbox" name="{{ mind_act.id }}" id="{{ mind_act.id }}">
+                    <h6>MIND</h6>
+                    <h5>{{ mind_act.description }}</h5>
                 </div>
             {% endfor %}
             {% for body_act in all_daily.daily_body %}
-                <div style="border-bottom: 3px solid gray; padding: .25rem .5rem .5rem .5rem;">
-                    <input type="checkbox" name="{{ body_act.id }}" id="{{ body_act.id }}" style="margin: 0;">
-                    <h6 style="margin: 0; color: lightgray; display: inline-block;">BODY</h6>
-                    <h5 style="margin: 0;">{{ body_act.description }}</h5>
+                <div>
+                    <input type="checkbox" name="{{ body_act.id }}" id="{{ body_act.id }}">
+                    <h6>BODY</h6>
+                    <h5>{{ body_act.description }}</h5>
                 </div>
             {% endfor %}
             {% for soul_act in all_daily.daily_soul %}
-                <div style="border-bottom: 3px solid gray; padding: .25rem .5rem .5rem .5rem;">
-                    <input type="checkbox" name="{{ soul_act.id }}" id="{{ soul_act.id }}" style="margin: 0;">
-                    <h6 style="margin: 0; color: lightgray; display: inline-block;">SOUL</h6>
-                    <h5 style="margin: 0;">{{ soul_act.description }}</h5>
+                <div>
+                    <input type="checkbox" name="{{ soul_act.id }}" id="{{ soul_act.id }}">
+                    <h6>SOUL</h6>
+                    <h5>{{ soul_act.description }}</h5>
                 </div>
             {% endfor %}
         </div>
-        <input type="submit" name="manage_form" value="Delete Selected Activities" style="margin-top: 5%; border: none; border-radius: 2px;">
+        <input type="submit" name="manage_form" value="Delete Selected Activities">
     </form>
 </div>
 

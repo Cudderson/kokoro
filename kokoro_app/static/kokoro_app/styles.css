@@ -267,10 +267,12 @@ nav a:hover {
 .balance-banner-true {
     margin: 1rem;
     text-align: center;
+    user-select: none;
 }
 
 .balance-banner-false {
     text-align: center;
+    user-select: none;
 }
 
 .balance-banner-div {
@@ -281,11 +283,13 @@ nav a:hover {
     margin: 0;
     padding-left: .5rem;
     color: lightgray;
+    user-select: none;
 }
 
 .balance-banner-div > h5 {
     margin: 0;
     padding-left: .5rem;
+    user-select: none;
 }
 
 .balance-message-container {
@@ -295,6 +299,7 @@ nav a:hover {
 
 .balance-message-container > h4 {
     margin: .75rem auto;
+    user-select: none;
 }
 
 .separator-thin {
@@ -306,6 +311,7 @@ nav a:hover {
 
 .balance-streak {
     margin: .75rem auto;
+    user-select: none;
 }
 
 /* home.html svg */
@@ -358,8 +364,6 @@ svg text {
 /* end home.html svg */
 
 /* home.html Daily Activity Form */
-activity-form-container {
-}
 
 .activity-select {
     display: flex;
@@ -377,8 +381,6 @@ activity-form-container {
 
 .activity-label {
     flex-grow: 1;*/ /* all items same size */
-    /*flex: 0 0 auto;*/
-    /*width: 33%;*/
     flex-basis: space-evenly;
     text-align: center;
     color: black;
@@ -387,6 +389,7 @@ activity-form-container {
     font-weight: bold;
     font-size: 16px; /*  make label text responsive [] */
     cursor: pointer;
+    user-select: none;
 }
 
 .mind-label {
@@ -415,7 +418,7 @@ activity-form-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     /* grid contains text input + submit button */
-    margin: 0 auto;
+    margin: 0 auto 1rem auto;
     width: 90%;
     /* closing transition */
     transform: scale(1, 0);
@@ -529,6 +532,63 @@ activity-form-container {
     background: lightgreen;
 }
 /* end form-container stuff */
+
+/*
+=====================================
+===== manage-form for home.html =====
+=====================================
+*/
+
+.view-all-activities {
+    text-align: center;
+}
+
+.view-all-activities > h5 {
+    cursor: pointer;
+}
+
+.manage-form {
+    background-color: white;
+    padding: 1.5rem;
+    border: 2px solid gray;
+}
+
+.manage-form-header {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: .5rem;
+}
+
+.manage-form-scroll {
+    overflow: auto;
+    width: 100%;
+    height: 75%;
+    border: 1px solid gray;
+    margin-top: 1rem;
+}
+
+.manage-form-scroll > div {
+    border-bottom: 3px solid gray;
+    padding: .25rem .5rem .5rem .5rem;
+}
+
+.manage-form-scroll > div > h6 {
+    margin: 0;
+    color: lightgray;
+    display: inline-block;
+}
+
+.manage-form-scroll > div > input[type=checkbox],
+.manage-form-scroll > div > h5 {
+    margin: 0;
+}
+
+.manage-form > input[type=submit] {
+    margin-top: 5%;
+    border: none;
+    border-radius: 2px;
+}
+/* end manage-form on home.html */
 
 /* 'X' symbol for closing form */
 .close-form {
