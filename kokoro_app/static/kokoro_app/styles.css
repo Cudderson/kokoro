@@ -418,8 +418,8 @@ activity-form-container {
 }
 
 .form-container form {
-    margin-top: 25%;
-    height: 50%;
+    margin-top: 15%;
+    height: 55%;
     width: 85%;
     border-radius: 4px;
 }
@@ -449,7 +449,7 @@ activity-form-container {
 
 .form-container input[type=submit] {
     width: 100%;
-    padding: 10px 0px;
+    padding: 17.5px 30px;
     background: lightgreen;
 }
 

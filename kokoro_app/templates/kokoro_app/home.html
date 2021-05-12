@@ -94,7 +94,7 @@
 <div class="manage-form-container form-container">
     <div class="close-form" data-form="manage-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
     <h5>{{ user }}'s activities today:</h5>
-    <form action="{% url 'kokoro_app:home' %}" method="post" style="background-color: white; padding: 1.5rem;">
+    <form action="{% url 'kokoro_app:home' %}" method="post" style="background-color: white; padding: 1.5rem; border: 2px solid gray;">
         {% csrf_token %}
         <h2 style="text-align: center; margin-top: 0; margin-bottom: .5rem;">Manage Activities</h2>
         <div style="padding: .05rem; background-color: black"></div>
@@ -123,6 +123,7 @@
             {% endfor %}
         </div>
         <input type="submit" name="manage_form" value="Delete Selected Activities" style="margin-top: 5%; border: none; border-radius: 2px;">
+    </form>
 
 
         <!-- old manage activities form
