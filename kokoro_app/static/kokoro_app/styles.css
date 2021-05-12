@@ -409,7 +409,6 @@ activity-form-container {
     left: 0;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0, 0.9);
-    border: 1px solid white;
     z-index: 999;
 }
 
@@ -419,8 +418,10 @@ activity-form-container {
 }
 
 .form-container form {
-    margin-top: 30vh;
-    width: 50%;
+    margin-top: 25%;
+    height: 50%;
+    width: 85%;
+    border-radius: 4px;
 }
 
 .form-container form label {
@@ -454,8 +455,8 @@ activity-form-container {
 
 .close-form {
     align-self: flex-end;
-    width: 3vw;
-    height: 3vw;
+    width: 3rem;
+    height: 3rem;
     background: white;
     border-radius: 4px;
     margin: .5em .5em .5em .5em;
@@ -464,10 +465,10 @@ activity-form-container {
 
 .close-form div {
     /* for the 'x' close symbol */
-    width: 3vw;
-    height: 3vw;
-    line-height: 3vw; /* match div height to vertically center */
+    width: 3rem;
+    height: 3rem;
+    line-height: 2.75rem; /* match div height to vertically center */
     text-align: center;
-    font-size: 4vw;
+    font-size: 4rem;
     font-weight: bold;
 }
