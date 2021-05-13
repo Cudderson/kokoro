@@ -1,1 +1,25 @@
 {% extends 'kokoro_app/base.html' %}
+
+{% block content %}
+
+<div style="padding: 2rem; background: lightgray; text-align: center;">Cover Photo/Background</div>
+<!-- remember that certain areas have conditions depending on the profile the user is visiting -->
+<!-- I used a big grid on the original, multiple smaller grids would be better, or flexbox -->
+<!-- if we nest grids, then when we're scaling we can control the order of grid-hierarchy easily -->
+
+<!-- container grid holding all-grids -->
+<div class="profile-grid-master">
+    <!-- this grid contains profile_photo and profile_quote -->
+    <div class="profile-grid-header">
+        <!-- profile image -->
+        <div class="profile-image">
+            <img src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
+        </div>
+        <span class="profile-quote-content">"{{ quote_data.quote }}"</span>
+        <span class="profile-quote-author">- {{ quote_data.quote_author }}</span>
+    </div>
+</div>
+
+
+
+{% endblock content %}
