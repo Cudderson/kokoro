@@ -681,16 +681,24 @@ svg text {
     color: gray;
 }
 
-.edit-profile-or-friendship-btn {
-    grid-row: 1 / 2;
-    border: 1px solid black;
-    border-radius: 4px;
-    width: 50%;
-    min-width: 60%;
-    height: 90%;
+.edit-profile-form {
+    grid-row: 1 / 3;
+    width: 80%;
     align-self: center;
     justify-self: end;
-    margin-right: .5em;
+    margin-right: .5rem;
+}
+
+.edit-profile-or-friendship-btn {
+    /* needs fixing for visiting profiles */
+    border: 1px solid black;
+    border-radius: 4px;
+    width: 100%;
+    min-width: 60%;
+    align-self: end;
+    justify-self: end;
+    padding: .25em;
+    font-family: 'Playfair Display', serif;
 }
 
 .profile-biography {

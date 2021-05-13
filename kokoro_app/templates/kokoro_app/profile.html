@@ -23,7 +23,9 @@
             <span class="profile-display-name">{{ display_name.0 }}</span>
             {% if user == request.user %}
                 <!-- form for directing user to edit_profile.html -->
-                <button class="edit-profile-or-friendship-btn">Edit Profile</button>
+                <form class="edit-profile-form" action="{% url 'kokoro_app:edit_profile' %}" method="get">
+                    <button class="edit-profile-or-friendship-btn" type="submit">Edit Profile</button>
+                </form>
             {% else %}
                 {% if already_friends %}
                     <!-- form for editing friendship-status with friend -->

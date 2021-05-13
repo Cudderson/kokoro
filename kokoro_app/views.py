@@ -222,6 +222,23 @@ def profile(request):
 
 
 @login_required
+def edit_profile(request):
+    """
+    Page for editing profile and account settings
+    :param request: http data
+    :return: render of edit_profile.html
+    """
+
+    message = 'hello, world!'
+
+    context = {
+        'message': message
+    }
+
+    return render(request, 'kokoro_app/edit_profile.html', context)
+
+
+@login_required
 def profile_form_handler(request):
     """
     Helper function for processing forms submitted from profile.html template

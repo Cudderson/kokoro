@@ -15,6 +15,9 @@ urlpatterns = [
     # User-Profile Page
     path('profile/', views.profile, name='profile'),
 
+    # Page for editing profile & account settings
+    path('edit_profile/', views.edit_profile, name='edit_profile'),
+
     # Page for viewing a single post
     path('post/<slug:post_slug>/', views.post, name='post'),
 
