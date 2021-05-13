@@ -699,3 +699,19 @@ svg text {
     font-size: clamp(1rem, 2.5rem, 4vw);
     width: 75%;
 }
+
+.profile-perfect-balance {
+    margin-top: .75rem;
+}
+
+.perfect-mind {
+    color: lightblue;
+}
+
+.perfect-body {
+    color: orange;
+}
+
+.perfect-soul {
+    color: lightgreen;
+}
