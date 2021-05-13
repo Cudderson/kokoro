@@ -2,102 +2,107 @@
 
 {% block content %}
 
-<div style="padding: 2rem; background: lightgray; text-align: center;">Cover Photo/Background</div>
-<!-- remember that certain areas have conditions depending on the profile the user is visiting -->
-<!-- I used a big grid on the original, multiple smaller grids would be better, or flexbox -->
-<!-- if we nest grids, then when we're scaling we can control the order of grid-hierarchy easily -->
+{% load tz %}
+{% localtime off %}
+    <div style="padding: 2rem; background: lightgray; text-align: center;">Cover Photo/Background</div>
+    <!-- remember that certain areas have conditions depending on the profile the user is visiting -->
+    <!-- I used a big grid on the original, multiple smaller grids would be better, or flexbox -->
+    <!-- if we nest grids, then when we're scaling we can control the order of grid-hierarchy easily -->
 
-<!-- container grid holding all-grids -->
-<div class="profile-grid-master">
-    <!-- this grid contains profile_photo and profile_quote -->
-    <div class="profile-grid-header">
-        <div class="profile-image">
-            <img src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
+    <!-- container grid holding all-grids -->
+    <div class="profile-grid-master">
+        <!-- this grid contains profile_photo and profile_quote -->
+        <div class="profile-grid-header">
+            <div class="profile-image">
+                <img src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
+            </div>
+            <span class="profile-quote-content">"{{ quote_data.quote }}"</span>
+            <span class="profile-quote-author">- {{ quote_data.quote_author }}</span>
         </div>
-        <span class="profile-quote-content">"{{ quote_data.quote }}"</span>
-        <span class="profile-quote-author">- {{ quote_data.quote_author }}</span>
-    </div>
-    <div class="profile-name-grid">
-        <span class="profile-display-name">{{ display_name.0 }}</span>
-        <button class="edit-profile-btn">Edit Profile</button>
-        <span class="profile-username">@{{ user }}</span>
-    </div>
-    <div class="profile-biography">
-        <span>{{ biography.0 }} and many other things. Founder of kokoro.</span>
-    </div>
-    <div class="profile-perfect-balance">
-        <!-- could make dynamic 'view perfect balance' option / user decides to display it or not (color-coded) -->
-        <!-- change how packaged for semantic purposes -->
-        <span class="perfect-mind">{{ perfect_balance.0 }}</span><br>
-        <span class="perfect-body">{{ perfect_balance.1 }}</span><br>
-        <span class="perfect-soul">{{ perfect_balance.2 }}</span>
-    </div>
-    <div class="profile-contact">
-        <!-- contact button may work better here instead (pulls up contact information) -->
-        {% for info in contact_info %}
-            <span>{{ info }}</span>
+        <div class="profile-name-grid">
+            <span class="profile-display-name">{{ display_name.0 }}</span>
+            <button class="edit-profile-btn">Edit Profile</button>
+            <span class="profile-username">@{{ user }}</span>
+        </div>
+        <div class="profile-biography">
+            <span>{{ biography.0 }} and many other things. Founder of kokoro.</span>
+        </div>
+        <div class="profile-perfect-balance">
+            <!-- could make dynamic 'view perfect balance' option / user decides to display it or not (color-coded) -->
+            <!-- change how packaged for semantic purposes -->
+            <span class="perfect-mind">{{ perfect_balance.0 }}</span><br>
+            <span class="perfect-body">{{ perfect_balance.1 }}</span><br>
+            <span class="perfect-soul">{{ perfect_balance.2 }}</span>
+        </div>
+        <div class="profile-contact">
+            <!-- contact button may work better here instead (pulls up contact information) -->
+            {% for info in contact_info %}
+                <span>{{ info }}</span>
+            {% endfor %}
+        </div>
+        <!-- only for when viewing own profile -->
+        <br>
+        <div>-----own profile only (combine to one button/page)-----</div>
+        <div class="friendship-btn">
+            <div>
+                <form action="{% url 'kokoro_app:view_friendship_requests' %}" method="get">
+                    <button type="submit" name="view_friendship_requests_form">
+                        View Pending Friendship Requests
+                    </button>
+                </form>
+            </div>
+            <div>
+                <form action="{% url 'kokoro_app:view_friendships' %}" method="get">
+                    <button type="submit">
+                        View Friendships
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="write-post-btn">
+            <form action="{% url 'kokoro_app:write_post' %}" method="get">
+                <button type="submit">Write a Post</button>
+            </form>
+        </div>
+        <div>----------------------------------------------------</div>
+        <!-- end viewing own profile -->
+        <div class="profile-post-header">Posts</div>
+        <!--new code for dynamic ProfilePost display-->
+        {% for post in posts %}
+            {% if post.post_slug %}
+                <!-- post == ProfilePost object -->
+                <form class="profile-post" action="{% url 'kokoro_app:post' post.post_slug %}" method="get">
+                    <button type="submit">
+                        <span class="profile-post-headline">{{ post.headline }}</span>
+                        <span class="profile-post-author">- {{ post.author }}</span>
+                        <span class="post-date">{{ post.date_published }}</span>
+                    </button>
+                </form>
+                <div class="post-separator"></div>
+            {% else %}
+                <!-- post == PinnedProfilePost object -->
+                <form class="profile-post" action="{% url 'kokoro_app:post' post.original.post_slug %}" method="get">
+                    <button type="submit">
+                        <span class="profile-pinned-message">*pinned</span>
+                        <span class="profile-post-headline profile-post-headline-pinned">{{ post.original.headline }}</span>
+                        <span class="profile-post-author">- {{ post.original.author }}</span>
+                        <span class="post-date">{{ post.date_published }}</span>
+                    </button>
+                </form>
+                <div class="post-separator"></div>
+            {% endif %}
+        {% empty %}
+            <div class="profile-post">
+                <span>{{ user }} hasn't created a post yet.</span>
+            </div>
         {% endfor %}
+        <br>
+        <div class="profile-post-header">End Posts</div>
     </div>
-    <!-- only for when viewing own profile -->
-    <br>
-    <div>-----own profile only (combine to one button/page)-----</div>
-    <div class="friendship-btn">
-        <div>
-            <form action="{% url 'kokoro_app:view_friendship_requests' %}" method="get">
-                <button type="submit" name="view_friendship_requests_form">
-                    View Pending Friendship Requests
-                </button>
-            </form>
-        </div>
-        <div>
-            <form action="{% url 'kokoro_app:view_friendships' %}" method="get">
-                <button type="submit">
-                    View Friendships
-                </button>
-            </form>
-        </div>
-    </div>
-    <div class="write-post-btn">
-        <form action="{% url 'kokoro_app:write_post' %}" method="get">
-            <button type="submit">Write a Post</button>
-        </form>
-    </div>
-    <div>----------------------------------------------------</div>
-    <!-- end viewing own profile -->
-    <div class="profile-post-header">Posts</div>
-    <!--new code for dynamic ProfilePost display-->
-    {% for post in posts %}
-        {% if post.post_slug %}
-            <!-- post == ProfilePost object -->
-            <form class="profile-post" action="{% url 'kokoro_app:post' post.post_slug %}" method="get">
-                <button type="submit">
-                    <span class="profile-post-headline">{{ post.headline }}</span>
-                    <span class="profile-post-author">- {{ post.author }}</span>
-                    <span class="post-date">{{ post.date_published }}</span>
-                </button>
-            </form>
-            <div class="post-separator"></div>
-        {% else %}
-            <!-- post == PinnedProfilePost object -->
-            <form class="profile-post" action="{% url 'kokoro_app:post' post.original.post_slug %}" method="get">
-                <button type="submit">
-                    <span class="profile-pinned-message">*pinned</span>
-                    <span class="profile-post-headline profile-post-headline-pinned">{{ post.original.headline }}</span>
-                    <span class="profile-post-author">- {{ post.original.author }}</span>
-                    <span class="post-date">{{ post.date_published }}</span>
-                </button>
-            </form>
-            <div class="post-separator"></div>
-        {% endif %}
-    {% empty %}
-        <div class="profile-post">
-            <span>{{ user }} hasn't created a post yet.</span>
-        </div>
-    {% endfor %}
-</div>
-
-
-
-
-
+{% endlocaltime %}
 {% endblock content %}
+<!-- still to add to profile / deal with:
+[] TZ select/info (should be on profile page)
+[] Balance Streak (I don't think this needs to be on profile)
+[] Edit SVGs (no, there will be an edit_profile.html page)
+-->
