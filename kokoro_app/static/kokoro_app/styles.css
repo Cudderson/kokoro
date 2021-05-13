@@ -702,6 +702,7 @@ svg text {
 
 .profile-perfect-balance {
     margin-top: .75rem;
+    font-size: clamp(.9rem, 2.25rem, 3.5vw);
 }
 
 .perfect-mind {
@@ -714,4 +715,21 @@ svg text {
 
 .perfect-soul {
     color: lightgreen;
+}
+
+.profile-contact {
+    margin-top: .5rem;
+    font-size: clamp(.9rem, 2rem, 3vw);
+}
+
+.write-post-btn {
+    margin-top: .5rem;
+}
+
+.profile-post-header {
+    padding: .125rem;
+    background: lightgray;
+    text-align: center;
+    border: 1px solid gray;
+    border-radius: 4px;
 }
