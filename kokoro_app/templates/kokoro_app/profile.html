@@ -11,14 +11,23 @@
 <div class="profile-grid-master">
     <!-- this grid contains profile_photo and profile_quote -->
     <div class="profile-grid-header">
-        <!-- profile image -->
         <div class="profile-image">
             <img src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
         </div>
         <span class="profile-quote-content">"{{ quote_data.quote }}"</span>
         <span class="profile-quote-author">- {{ quote_data.quote_author }}</span>
     </div>
+    <div class="profile-name-grid">
+        <span class="profile-display-name">{{ display_name.0 }}</span>
+        <button class="edit-profile-btn">Edit Profile</button>
+        <span class="profile-username">@{{ user }}</span>
+    </div>
+    <div class="profile-biography">
+        <span>{{ biography.0 }} and many other things. Founder of kokoro.</span>
+    </div>
 </div>
+
+
 
 
 
