@@ -21,7 +21,18 @@
         </div>
         <div class="profile-name-grid">
             <span class="profile-display-name">{{ display_name.0 }}</span>
-            <button class="edit-profile-btn">Edit Profile</button>
+            {% if user == request.user %}
+                <!-- form for directing user to edit_profile.html -->
+                <button class="edit-profile-or-friendship-btn">Edit Profile</button>
+            {% else %}
+                {% if already_friends %}
+                    <!-- form for editing friendship-status with friend -->
+                    <button class="edit-profile-or-friendship-btn">Friends</button>
+                {% else %}
+                    <!-- form for requesting friendship with user -->
+                    <button class="edit-profile-or-friendship-btn">Request Friendship</button>
+                {% endif %}
+            {% endif %}
             <span class="profile-username">@{{ user }}</span>
         </div>
         <div class="profile-biography">

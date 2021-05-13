@@ -681,7 +681,7 @@ svg text {
     color: gray;
 }
 
-.edit-profile-btn {
+.edit-profile-or-friendship-btn {
     grid-row: 1 / 2;
     border: 1px solid black;
     border-radius: 4px;
@@ -744,6 +744,7 @@ svg text {
     background: white;
     padding: 0;
     border: 0;
+    cursor: pointer;
 }
 
 .profile-pinned-message {
