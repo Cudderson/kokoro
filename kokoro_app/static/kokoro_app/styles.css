@@ -723,7 +723,7 @@ svg text {
 }
 
 .write-post-btn {
-    margin-top: .5rem;
+    margin: .5rem 0;
 }
 
 .profile-post-header {

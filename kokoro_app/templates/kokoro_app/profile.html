@@ -53,29 +53,29 @@
         </div>
         <!-- only for when viewing own profile -->
         <br>
-        <div>-----own profile only (combine to one button/page)-----</div>
-        <div class="friendship-btn">
-            <div>
-                <form action="{% url 'kokoro_app:view_friendship_requests' %}" method="get">
-                    <button type="submit" name="view_friendship_requests_form">
-                        View Pending Friendship Requests
-                    </button>
+        {% if user == request.user %}
+            <div class="friendship-btn">
+                <div>
+                    <form action="{% url 'kokoro_app:view_friendship_requests' %}" method="get">
+                        <button type="submit" name="view_friendship_requests_form">
+                            View Pending Friendship Requests
+                        </button>
+                    </form>
+                </div>
+                <div>
+                    <form action="{% url 'kokoro_app:view_friendships' %}" method="get">
+                        <button type="submit">
+                            View Friendships
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="write-post-btn">
+                <form action="{% url 'kokoro_app:write_post' %}" method="get">
+                    <button type="submit">Write a Post</button>
                 </form>
             </div>
-            <div>
-                <form action="{% url 'kokoro_app:view_friendships' %}" method="get">
-                    <button type="submit">
-                        View Friendships
-                    </button>
-                </form>
-            </div>
-        </div>
-        <div class="write-post-btn">
-            <form action="{% url 'kokoro_app:write_post' %}" method="get">
-                <button type="submit">Write a Post</button>
-            </form>
-        </div>
-        <div>----------------------------------------------------</div>
+        {% endif %}
         <!-- end viewing own profile -->
         <div class="profile-post-header">Posts</div>
         <!--new code for dynamic ProfilePost display-->
