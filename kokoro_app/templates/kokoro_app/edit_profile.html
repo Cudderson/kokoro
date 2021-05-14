@@ -6,6 +6,13 @@
 <div class="edit-profile-form-container">
     <h2>Edit Your Profile</h2>
 
+    <h3>Profile Image</h3>
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ profile_image_form }}
+        <input type="submit" name="profile_image_form" value="Update Profile Photo">
+    </form>
+
     <h3>Display Name</h3>
     <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
         {% csrf_token %}
@@ -51,6 +58,9 @@
         </select>
         <input type="submit" name="tz_form" value="Set Timezone">
     </form>
+
+    <!-- contact info not included. Still deciding -->
+    <!-- cover photo doesn't exist yet -->
 </div>
 
 {% endblock content %}
@@ -62,7 +72,9 @@
 
      Check off when on page:
      TZ select [x]
+     Display Name [x]
      Biography [x]
-
-
+     Quote [x]
+     Profile Image [x]
+     Perfect Balance [x]
 -->
