@@ -32,7 +32,13 @@
                     <button class="edit-profile-or-friendship-btn">Friends</button>
                 {% else %}
                     <!-- form for requesting friendship with user -->
-                    <button class="edit-profile-or-friendship-btn">Request Friendship</button>
+                    <!-- dynamic 'Requested!' message should appear after successful request send -->
+                    <form action="{% url 'kokoro_app:send_friendship_request_handler' sending_to_id=user.id %}" method="post">
+                        {% csrf_token %}
+                        <button class="edit-profile-or-friendship-btn" type="submit" name="send_friendship_request_form" value="{{ user }}">
+                            Request Friendship
+                        </button>
+                    </form>
                 {% endif %}
             {% endif %}
             <span class="profile-username">@{{ user }}</span>
@@ -57,13 +63,6 @@
         <br>
         {% if user == request.user %}
             <div class="friendship-btn">
-                <div>
-                    <form action="{% url 'kokoro_app:view_friendship_requests' %}" method="get">
-                        <button type="submit" name="view_friendship_requests_form">
-                            View Pending Friendship Requests
-                        </button>
-                    </form>
-                </div>
                 <div>
                     <form action="{% url 'kokoro_app:view_friendships' %}" method="get">
                         <button type="submit">

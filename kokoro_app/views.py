@@ -570,26 +570,6 @@ def send_friendship_request_handler(request, sending_to_id):
 
 
 @login_required
-def view_friendship_requests(request):
-    """
-    Page for viewing user's pending friendship requests
-    :param request: http request data
-    :return: render of template for viewing friendship requests
-    """
-
-    # get pending friend requests
-    pending_requests_from_user = FriendshipRequest.objects.filter(from_user__exact=request.user)
-    pending_requests_to_user = FriendshipRequest.objects.filter(to_user__exact=request.user)
-
-    context = {
-        'requests_from_user': pending_requests_from_user,
-        'requests_to_user': pending_requests_to_user,
-    }
-
-    return render(request, 'kokoro_app/friendship_requests.html', context)
-
-
-@login_required
 def accept_friendship_request_handler(request, sent_by):
     """
     Handler for accepting(saving) a Friendships object, and deleting the corresponding FriendshipRequest object
@@ -635,7 +615,7 @@ def decline_friendship_request_handler(request, friendship_request):
     successful = friendship_utils.decline_friendship_request(request, friendship_request)
 
     if successful:
-        return redirect('/view_friendship_requests')
+        return redirect('/view_friendships')
     else:
         raise Http404("There was an error redirecting you to page. Friendship request declined.")
 
@@ -655,8 +635,14 @@ def view_friendships(request):
     # convert ManyRelatedManager object into Queryset
     friendships = friendships.friendships.all()
 
+    # get friendship requests
+    pending_requests_from_user = FriendshipRequest.objects.filter(from_user__exact=request.user)
+    pending_requests_to_user = FriendshipRequest.objects.filter(to_user__exact=request.user)
+
     context = {
         'friendships': friendships,
+        'requests_from_user': pending_requests_from_user,
+        'requests_to_user': pending_requests_to_user,
     }
 
     return render(request, 'kokoro_app/view_friendships.html', context)
