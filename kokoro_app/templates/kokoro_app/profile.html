@@ -33,7 +33,7 @@
                 {% else %}
                     <!-- form for requesting friendship with user -->
                     <!-- dynamic 'Requested!' message should appear after successful request send -->
-                    <form action="{% url 'kokoro_app:send_friendship_request_handler' sending_to_id=user.id %}" method="post">
+                    <form class="edit-profile-form" action="{% url 'kokoro_app:send_friendship_request_handler' sending_to_id=user.id %}" method="post">
                         {% csrf_token %}
                         <button class="edit-profile-or-friendship-btn" type="submit" name="send_friendship_request_form" value="{{ user }}">
                             Request Friendship

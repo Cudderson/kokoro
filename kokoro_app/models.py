@@ -18,7 +18,7 @@ class Activity(models.Model):
 
     activity = models.CharField(max_length=4, choices=ACTIVITY_TYPES)
 
-    description = models.CharField(max_length=100)
+    description = models.CharField(max_length=80)
 
     date_added = models.DateTimeField(auto_now_add=True)
 
@@ -63,9 +63,9 @@ class PerfectBalance(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     # a user's favorite mind, body, and soul activities
-    perfect_mind = models.CharField(max_length=100)
-    perfect_body = models.CharField(max_length=100)
-    perfect_soul = models.CharField(max_length=100)
+    perfect_mind = models.CharField(max_length=60)
+    perfect_body = models.CharField(max_length=60)
+    perfect_soul = models.CharField(max_length=60)
 
     def __str__(self):
         """
@@ -85,7 +85,7 @@ class ProfileBio(models.Model):
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    biography = models.CharField(max_length=100)
+    biography = models.CharField(max_length=80)
 
     class Meta:
         verbose_name_plural = 'biographies'
@@ -105,7 +105,7 @@ class ProfileDisplayName(models.Model):
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    display_name = models.CharField(max_length=40)
+    display_name = models.CharField(max_length=30)
 
     def __str__(self):
         """
@@ -122,9 +122,9 @@ class ProfileQuote(models.Model):
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    quote = models.CharField(max_length=180)
+    quote = models.CharField(max_length=160)
 
-    quote_author = models.CharField(max_length=40)
+    quote_author = models.CharField(max_length=30)
 
     def __str__(self):
         """
@@ -186,7 +186,7 @@ class ProfilePost(models.Model):
 
     date_published = models.DateTimeField(auto_now_add=True)
 
-    headline = models.CharField(max_length=80)
+    headline = models.CharField(max_length=70)
 
     content = models.TextField()
 

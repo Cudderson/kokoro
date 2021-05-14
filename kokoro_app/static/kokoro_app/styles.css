@@ -694,7 +694,6 @@ svg text {
     border: 1px solid black;
     border-radius: 4px;
     width: 100%;
-    min-width: 60%;
     align-self: end;
     justify-self: end;
     padding: .25em;
