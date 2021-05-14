@@ -239,7 +239,8 @@ def edit_profile(request):
     # Forms for editing profile
     bio_form = ProfileBioForm()
     perfect_form = PerfectBalanceForm()
-
+    display_name_form = ProfileDisplayNameForm()
+    quote_form = ProfileQuoteForm()
 
     # *** MOVE to helper file
     # get UTC time with offset
@@ -255,6 +256,8 @@ def edit_profile(request):
     user_timezone = utc_timezone.astimezone(pytz.timezone(user_timezone_string))
 
     context = {
+        'display_name_form': display_name_form,
+        'quote_form': quote_form,
         'bio_form': bio_form,
         'perfect_form': perfect_form,
         'timezones': pytz.common_timezones,

@@ -6,6 +6,23 @@
 <div class="edit-profile-form-container">
     <h2>Edit Your Profile</h2>
 
+    <h3>Display Name</h3>
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
+        {% csrf_token %}
+        <div>{{ display_name_form }}</div>
+        <input type="submit" name="display_name_form" value="Update Display Name">
+    </form>
+
+    <h3>Profile Quote</h3>
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
+        {% csrf_token %}
+        <div>Quote:</div>
+        <div>{{ quote_form.quote }}</div>
+        <div>Author:</div>
+        <div>{{ quote_form.quote_author }}</div>
+        <input type="submit" name="quote_form" value="Update Quote">
+    </form>
+
     <h3>Biography</h3>
     <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
         {% csrf_token %}
