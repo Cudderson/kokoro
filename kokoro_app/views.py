@@ -229,10 +229,30 @@ def edit_profile(request):
     :return: render of edit_profile.html
     """
 
-    message = 'hello, world!'
+    # WAIT
+    # what if the forms were submitted to profile_form_handler, where they were already being sent to..
+    # all I would need on this view is the forms themselves
+    # trying it
+
+    user = request.user
+
+    # *** MOVE to helper file
+    # get UTC time with offset
+    utc_timezone = datetime.datetime.now(tz=pytz.UTC)
+
+    # get user's saved time zone
+    user_timezone_object = ProfileTimezone.objects.filter(owner__exact=user.id)[0]  # type= <class 'kokoro_app.models.ProfileTimezone'>
+
+    # convert to string
+    user_timezone_string = str(user_timezone_object)
+
+    # convert utc_timezone to user timezone (with offset)
+    user_timezone = utc_timezone.astimezone(pytz.timezone(user_timezone_string))
 
     context = {
-        'message': message
+        'timezones': pytz.common_timezones,
+        'user_timezone_object': user_timezone_object,
+        'user_timezone': user_timezone,
     }
 
     return render(request, 'kokoro_app/edit_profile.html', context)
@@ -246,10 +266,12 @@ def profile_form_handler(request):
     :return: A redirect to profile() view
     """
 
+    # checking when moved from here to edit_profile()
+
     if request.method == "POST":
 
         # user timezone testing
-        if 'tz_form' in request.POST:
+        if 'tz_form' in request.POST:   # [x]
             # timezone the user selected
             user_timezone_form = ProfileTimezoneForm(request.POST, instance=request.user.profiletimezone)
             # check validity

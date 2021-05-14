@@ -800,3 +800,13 @@ svg text {
     padding: .05rem;
     width: 95%;
 }
+
+/*
+=============================
+===== edit_profile.html =====
+============================
+*/
+
+.edit-profile-form-container {
+    padding: 0 1rem;
+}

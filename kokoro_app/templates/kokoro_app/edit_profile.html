@@ -3,5 +3,28 @@
 {% block content %}
 
 <span>{{ message }}</span>
+<div class="edit-profile-form-container">
+    <h2>Edit Your Profile</h2>
+
+    <h3>Time Zone</h3>
+    <span>Your current time zone setting: {{ user_timezone_object }}</span>
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="POST">
+        {% csrf_token %}
+        <select name="user_timezone">
+            <option disabled selected value="">Select Timezone</option>
+            {% for tz in timezones %}
+            <option value="{{ tz }}">{{ tz }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" name="tz_form" value="Set Timezone">
+    </form>
+</div>
 
 {% endblock content %}
+
+<!-- edit_profile.html is basically a bunch of forms.
+     We'll get the forms from views.profile, and the template forms from old_profile.html
+
+     Check off when on page:
+     TZ select [x]
+-->
