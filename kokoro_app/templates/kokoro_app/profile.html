@@ -4,7 +4,7 @@
 
 {% load tz %}
 {% localtime off %}
-    <div style="padding: 2rem; background: lightgray; text-align: center;">Cover Photo/Background</div>
+    <div style="padding: 2rem; background: lightgray; text-align: center; width: 100%;">Cover Photo/Background</div>
     <!-- remember that certain areas have conditions depending on the profile the user is visiting -->
     <!-- I used a big grid on the original, multiple smaller grids would be better, or flexbox -->
     <!-- if we nest grids, then when we're scaling we can control the order of grid-hierarchy easily -->
@@ -16,8 +16,15 @@
             <div class="profile-image">
                 <img src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
             </div>
-            <span class="profile-quote-content">"{{ quote_data.quote }}"</span>
-            <span class="profile-quote-author">- {{ quote_data.quote_author }}</span>
+            <div class="profile-quote-container">
+                <span class="profile-quote-content">
+                    "{{ quote_data.quote }}"<br>
+                    <span class="profile-quote-author">
+                        - {{ quote_data.quote_author }}
+                    </span>
+                </span>
+                <!--<span class="profile-quote-author">- {{ quote_data.quote_author }}</span>-->
+            </div>
         </div>
         <div class="profile-name-grid">
             <span class="profile-display-name">{{ display_name.0 }}</span>
