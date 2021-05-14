@@ -231,10 +231,15 @@ def edit_profile(request):
 
     # WAIT
     # what if the forms were submitted to profile_form_handler, where they were already being sent to..
-    # all I would need on this view is the forms themselves
+    # all I would need on this view is the forms themselves (and placeholders?)
     # trying it
 
     user = request.user
+
+    # Forms for editing profile
+    bio_form = ProfileBioForm()
+    perfect_form = PerfectBalanceForm()
+
 
     # *** MOVE to helper file
     # get UTC time with offset
@@ -250,6 +255,8 @@ def edit_profile(request):
     user_timezone = utc_timezone.astimezone(pytz.timezone(user_timezone_string))
 
     context = {
+        'bio_form': bio_form,
+        'perfect_form': perfect_form,
         'timezones': pytz.common_timezones,
         'user_timezone_object': user_timezone_object,
         'user_timezone': user_timezone,
