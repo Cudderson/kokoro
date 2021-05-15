@@ -555,6 +555,16 @@ svg text {
     padding: 17.5px 30px;
     background: lightgreen;
 }
+
+/* help icon */
+.help-form > span {
+    display: block;
+}
+
+.help-form {
+    overflow: scroll;
+}
+
 /* end form-container stuff */
 
 /*
