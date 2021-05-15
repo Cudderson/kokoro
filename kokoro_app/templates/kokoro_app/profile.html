@@ -85,38 +85,45 @@
             </div>
         {% endif %}
         <!-- end viewing own profile -->
-        <div class="profile-post-header">Posts</div>
+        <!-- make post header look better -->
+<!--        <div class="profile-post-header">Posts</div>-->
         <!--new code for dynamic ProfilePost display-->
-        {% for post in posts %}
-            {% if post.post_slug %}
-                <!-- post == ProfilePost object -->
-                <form class="profile-post" action="{% url 'kokoro_app:post' post.post_slug %}" method="get">
-                    <button type="submit">
-                        <span class="profile-post-headline">{{ post.headline }}</span>
-                        <span class="profile-post-author">- {{ post.author }}</span>
-                        <span class="post-date">{{ post.date_published }}</span>
-                    </button>
-                </form>
-                <div class="post-separator"></div>
-            {% else %}
-                <!-- post == PinnedProfilePost object -->
-                <form class="profile-post" action="{% url 'kokoro_app:post' post.original.post_slug %}" method="get">
-                    <button type="submit">
-                        <span class="profile-pinned-message">*pinned</span>
-                        <span class="profile-post-headline profile-post-headline-pinned">{{ post.original.headline }}</span>
-                        <span class="profile-post-author">- {{ post.original.author }}</span>
-                        <span class="post-date">{{ post.date_published }}</span>
-                    </button>
-                </form>
-                <div class="post-separator"></div>
-            {% endif %}
-        {% empty %}
-            <div class="profile-post">
-                <span>{{ user }} hasn't created a post yet.</span>
-            </div>
-        {% endfor %}
-        <br>
-        <div class="profile-post-header">End Posts</div>
+        <span class="profile-post-label">Posts</span>
+        <div class="profile-post-prefix"></div>
+<!--        <div class="separator-thin" style="width: 100%;"></div>-->
+        <div class="profile-post-container">
+            {% for post in posts %}
+                {% if post.post_slug %}
+                    <!-- post == ProfilePost object -->
+                    <form class="profile-post" action="{% url 'kokoro_app:post' post.post_slug %}" method="get">
+                        <button type="submit">
+                            <span class="profile-post-headline">{{ post.headline }}</span>
+                            <span class="profile-post-author">- {{ post.author }}</span>
+                            <span class="post-date">{{ post.date_published }}</span>
+                        </button>
+                    </form>
+                    <div class="post-separator"></div>
+                {% else %}
+                    <!-- post == PinnedProfilePost object -->
+                    <form class="profile-post" action="{% url 'kokoro_app:post' post.original.post_slug %}" method="get">
+                        <button type="submit">
+                            <span class="profile-pinned-message">*pinned</span>
+                            <span class="profile-post-headline profile-post-headline-pinned">{{ post.original.headline }}</span>
+                            <span class="profile-post-author">- {{ post.original.author }}</span>
+                            <span class="post-date">{{ post.date_published }}</span>
+                        </button>
+                    </form>
+                    <div class="post-separator"></div>
+                {% endif %}
+            {% empty %}
+                <div class="profile-post">
+                    <span>{{ user }} hasn't created a post yet.</span>
+                </div>
+            {% endfor %}
+            <br>
+
+        </div>
+        <div class="profile-post-prefix"></div>
     </div>
 {% endlocaltime %}
 {% endblock content %}

@@ -6,7 +6,7 @@
     --background: rgba(100, 250, 100, 75);
 }
 
-html {
+html, button {
     /*font-family: 'Open Sans', sans-serif;*/
     font-family: 'Playfair Display', serif;
 }
@@ -633,7 +633,6 @@ svg text {
     grid-template-columns: repeat(4, 1fr);
     /*grid-template-rows: repeat(auto-fit, auto);*/
     /*grid-auto-rows: max-content;*/
-    grid-column-gap: 1%;
 /**/
 }
 
@@ -699,7 +698,7 @@ svg text {
     grid-row: 2 / 3;
     grid-column: 2 / 3;
     width: 100%;
-    align-self: center;
+    align-self: end;
     justify-self: end;
     margin-right: .5rem;
 }
@@ -712,6 +711,7 @@ svg text {
     justify-self: end;
     padding: .25em;
     font-family: 'Playfair Display', serif;
+    float: right;
 }
 
 .profile-biography {
@@ -747,12 +747,26 @@ svg text {
     margin: .5rem 0;
 }
 
-.profile-post-header {
-    padding: .125rem;
-    background: lightgray;
-    text-align: center;
-    border: 1px solid gray;
+.profile-post-label {
+    margin: 1rem 0 0 .1rem;
+    display: inline-block;
+    width: fit-content;
+    border: 1px solid black;
+    border-bottom: 0;
     border-radius: 4px 4px 0 0;
+    padding: .125rem 1rem;
+}
+
+.profile-post-prefix {
+    width: 100%;
+    padding: .05rem;
+    background: gray;
+}
+
+.profile-post-container {
+    height: 40vh;
+    position: relative;
+    overflow: auto;
 }
 
 .profile-post {
