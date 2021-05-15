@@ -17,12 +17,14 @@
                 <img src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
             </div>
             <div class="profile-quote-container">
-                <span class="profile-quote-content">
-                    "{{ quote_data.quote }}"<br>
-                    <span class="profile-quote-author">
-                        - {{ quote_data.quote_author }}
+                <div>
+                    <span class="profile-quote-content">
+                        "{{ quote_data.quote }}"
+                        <span class="profile-quote-author">
+                            - {{ quote_data.quote_author }}
+                        </span>
                     </span>
-                </span>
+                </div>
                 <!--<span class="profile-quote-author">- {{ quote_data.quote_author }}</span>-->
             </div>
         </div>
@@ -53,6 +55,7 @@
         <div class="profile-biography">
             <span>{{ biography.0 }}</span>
         </div>
+<!--        <div style="margi">Perfect Balance</div>-->
         <div class="profile-perfect-balance">
             <!-- could make dynamic 'view perfect balance' option / user decides to display it or not (color-coded) -->
             <!-- change how packaged for semantic purposes -->
