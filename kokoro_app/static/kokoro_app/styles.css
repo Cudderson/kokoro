@@ -1,6 +1,21 @@
 /* new home page design/layout */
 
 /* project styles */
+
+/* vertically-center page if its contents don't span 100vh */
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+html {
+    display: table;
+}
+body {
+    display: table-cell;
+    vertical-align: middle;
+}
+
 /* global color */
 :root {
     --background: rgba(100, 250, 100, 75);
