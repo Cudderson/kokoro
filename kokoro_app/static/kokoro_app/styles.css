@@ -728,7 +728,7 @@ svg text {
 }
 
 .profile-perfect-balance {
-    margin-top: 1rem;
+    /*margin-top: 1rem;*/
     font-size: clamp(.9rem, 2.25rem, 3.5vw);
 }
 
