@@ -631,9 +631,9 @@ svg text {
     /* define own grid properties */
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    /*grid-template-rows: repeat(auto-fit, auto);*/
-    /*grid-auto-rows: max-content;*/
-/**/
+    grid-column-gap: 2%;
+
+    margin-top: -3rem;
 }
 
 .profile-image {
@@ -656,6 +656,8 @@ svg text {
     position: relative;
     overflow: auto;
     height: 100%;
+    border: 1px solid gray;
+    border-radius: 4px;
 }
 
 .profile-quote-content {
@@ -668,6 +670,7 @@ svg text {
     margin: auto;
     padding: 1rem .75rem 0 .75rem;
     position: absolute;
+    background: white;
 }
 
 .profile-quote-author {
