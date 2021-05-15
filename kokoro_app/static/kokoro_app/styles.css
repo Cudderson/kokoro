@@ -639,6 +639,13 @@ svg text {
 .profile-image {
     grid-row: 1 / 3;
     width: 100%;
+    background-size: cover;
+
+    /* make image square */
+    float:left;
+    position: relative;
+    padding-bottom : 100%; /* = width for a 1:1 aspect ratio */
+    overflow: hidden;
 }
 
 .profile-image > img {
@@ -646,7 +653,13 @@ svg text {
     margin: auto;
     border: 1px solid gray;
     border-radius: 8px;
+    background-color: white;
     vertical-align: bottom;
+
+    /* make image square */
+    position: absolute;
+    height: 100%;
+    object-fit: cover;
 }
 
 .profile-quote-container {
