@@ -318,6 +318,28 @@ nav a:hover {
 .svg-container {
     width: 50%;
     margin: 0 auto;
+    position: relative;
+}
+
+.svg-container::before {
+    /* this is the pseudo-element representing the shadow */
+    content: "";
+    position: absolute;
+    background: lightgray;
+    top: 70%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+
+    /* give perspective to shadow */
+    transform: perspective(2rem) rotateX(20deg) scale(1, .2);
+    filter: blur(3em);
+    pointer-events: none;
+}
+
+.tri-main {
+    stroke-width: 5px;
 }
 
 .tri-1:hover {
