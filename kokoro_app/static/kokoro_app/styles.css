@@ -644,6 +644,7 @@ svg text {
 .profile-image > img {
     width: 100%;
     margin: auto;
+    border: 1px solid gray;
     border-radius: 8px;
     vertical-align: bottom;
 }
@@ -668,7 +669,7 @@ svg text {
     font-size: 15px;
     font-weight: bold;
     margin: auto;
-    padding: 1rem .75rem 0 .75rem;
+    padding: .8rem .75rem 0 .75rem;
     position: absolute;
     background: white;
 }
