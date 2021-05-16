@@ -11,6 +11,7 @@ body {
 html {
     display: table;
 }
+
 body {
     display: table-cell;
     vertical-align: middle;
@@ -33,6 +34,7 @@ body {
     padding-top: 85.5px; /* header height = 80px (depends on logo size)*/
     /* background-color: rgba(25, 225, 85, .7);  page bg color */
     background-color: white;
+    max-width: 500px;
 }
 /* reset box-sizing */
 *, *::before, *::after {
@@ -432,12 +434,16 @@ svg text {
 
 /* home.html Daily Activity Form */
 
+.activity-form-container {
+    display: block;
+}
+
 .activity-select {
     display: flex;
     justify-content: center;
     overflow: hidden;
     width: 90%; /* flexbox overrides width property. have to define width here too */
-    margin: 5rem auto 0 auto;
+    margin: 5em auto 0 auto;
     border: 1px solid gray;
     border-radius: 4px 4px 0 0;
     /*border-bottom: 1px solid gray;*/
