@@ -34,7 +34,6 @@ body {
     padding-top: 85.5px; /* header height = 80px (depends on logo size)*/
     /* background-color: rgba(25, 225, 85, .7);  page bg color */
     background-color: white;
-    max-width: 500px;
 }
 /* reset box-sizing */
 *, *::before, *::after {
@@ -446,7 +445,7 @@ svg text {
     margin: 5em auto 0 auto;
     border: 1px solid gray;
     border-radius: 4px 4px 0 0;
-    /*border-bottom: 1px solid gray;*/
+    background-color: gray; /* this fixes white-space */
 }
 
 .activity-radio {
@@ -486,6 +485,7 @@ svg text {
 .activity-label option {
     /* remove default padding for option text */
     padding: 0px;
+    margin: 0;
 }
 
 .activity-submit {
