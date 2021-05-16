@@ -8,24 +8,24 @@
 <div class="separator"></div>
 <div>
     {% if balance_bool == 'True' %}
-    <h4 class="balance-banner-true">- Your Daily Balance -</h4>
+    <span class="balance-banner-true font-med">- Your Daily Balance -</span>
     <div class="separator"></div>
     <!-- recreate two-line item -->
-    <div class="balance-banner-div" style="">
-        <h6>MIND</h6>
-        <h5>{{ all_daily.daily_mind.0.description }}</h5>
+    <div class="balance-banner-div">
+        <span class="act-type font-small">MIND</span>
+        <span class="act-description font-small">{{ all_daily.daily_mind.0.description }}</span>
     </div>
     <div class="balance-banner-div">
-        <h6>BODY</h6>
-        <h5>{{ all_daily.daily_body.0.description }}</h5>
+        <span class="act-type font-small">BODY</span>
+        <span class="act-description font-small">{{ all_daily.daily_body.0.description }}</span>
     </div>
     <div class="balance-banner-div" style="border-bottom: 0;">
-        <h6>SOUL</h6>
-        <h5>{{ all_daily.daily_soul.0.description }}</h5>
+        <span class="act-type">SOUL</span>
+        <span class="act-description font-small">{{ all_daily.daily_soul.0.description }}</span>
     </div>
     <div class="separator"></div>
     {% else %}
-    <h5 class="balance-banner-false">Find balance by completing a Mind, Body, and Soul activity.</h5>
+    <span class="balance-banner-false font-small">Find balance by completing a Mind, Body, and Soul activity.</span>
     <div class="separator"></div>
     {% endif %}
 </div>
@@ -81,18 +81,18 @@
 <div class="separator"></div>
 <div class="balance-message-container">
     {% if balance_bool == 'True' %}
-        <h4>You have found balance today.</h4>
+        <span class="font-large">You have found balance today.</span>
     {% elif balance_bool == 'False' %}
-        <h4>Still finding balance...</h4>
+        <span class="font-large">Still finding balance...</span>
     {% endif %}
     <div class="separator-thin"></div>
-    <h5 class="balance-streak">Current Balance Streak: {{ balance_streak }} days</h5>
+    <span class="balance-streak font-med">Current Balance Streak: {{ balance_streak }} days</span>
 </div>
 <div class="separator"></div>
 
 <!-- Manage Activities button -->
 <div class="view-all-activities">
-    <h5 data-form="manage-form-container" onclick="toggleFormDisplay(this)">View All Daily Activities</h5>
+    <span class="view-acts font-med" data-form="manage-form-container" onclick="toggleFormDisplay(this)">View All Daily Activities</span>
 </div>
 <div class="separator"></div>
 <!-- end Manage Activities button -->
@@ -100,32 +100,31 @@
 <!-- Manage Activity Form  -->
 <div class="manage-form-container form-container">
     <div class="close-form" data-form="manage-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
-    <h5>{{ user }}'s activities today:</h5>
     <form class="manage-form" action="{% url 'kokoro_app:home' %}" method="post">
         {% csrf_token %}
-        <h2 class="manage-form-header">Manage Activities</h2>
+        <span class="manage-form-header font-xl">Manage Activities</span>
         <div class="separator-thin"></div>
         <!-- scrolling activities -->
         <div class="manage-form-scroll">
             {% for mind_act in all_daily.daily_mind %}
                 <div>
                     <input type="checkbox" name="{{ mind_act.id }}" id="{{ mind_act.id }}">
-                    <h6>MIND</h6>
-                    <h5>{{ mind_act.description }}</h5>
+                    <span class="manage-act-type font-small">MIND</span>
+                    <span class="manage-act-desc font-small">{{ mind_act.description }}</span>
                 </div>
             {% endfor %}
             {% for body_act in all_daily.daily_body %}
                 <div>
                     <input type="checkbox" name="{{ body_act.id }}" id="{{ body_act.id }}">
-                    <h6>BODY</h6>
-                    <h5>{{ body_act.description }}</h5>
+                    <span class="manage-act-type font-small">BODY</span>
+                    <span class="manage-act-desc font-small">{{ body_act.description }}</span>
                 </div>
             {% endfor %}
             {% for soul_act in all_daily.daily_soul %}
                 <div>
                     <input type="checkbox" name="{{ soul_act.id }}" id="{{ soul_act.id }}">
-                    <h6>SOUL</h6>
-                    <h5>{{ soul_act.description }}</h5>
+                    <span class="manage-act-type font-small">SOUL</span>
+                    <span class="manage-act-desc font-small">{{ soul_act.description }}</span>
                 </div>
             {% endfor %}
         </div>
