@@ -7,6 +7,7 @@
 
 <!-- create master grid of sub-grids -->
 <div class="home-grid-master">
+    <!-- mobile -->
     <div class="separator"></div>
     <div class="balance-banner-container">
         {% if balance_bool == 'True' %}
@@ -22,7 +23,7 @@
             <span class="act-description font-small">{{ all_daily.daily_body.0.description }}</span>
         </div>
         <div class="balance-banner-div" style="border-bottom: 0;">
-            <span class="act-type">SOUL</span>
+            <span class="act-type font-small">SOUL</span>
             <span class="act-description font-small">{{ all_daily.daily_soul.0.description }}</span>
         </div>
         <div class="separator"></div>
@@ -31,7 +32,31 @@
         <div class="separator"></div>
         {% endif %}
     </div>
-    <!-- end Instructions -->
+    <!-- end Instructions / mobile -->
+    <!-- desktop (show activities) -->
+    <div class="activity-card-container">
+        {% if not all_daily.daily_mind and not all_daily.daily_body and not all_daily.daily_soul %}
+            <span>Find balance by completing a Mind, Body, and Soul activity.</span>
+        {% endif %}
+        {% for act in all_daily.daily_mind %}
+            <div class="activity-card-content">
+                <span class="act-type font-small">MIND</span>
+                <span class="act-description font-xl">{{ act.description }}</span>
+            </div>
+        {% endfor %}
+        {% for act in all_daily.daily_body %}
+            <div class="activity-card-content">
+                <span class="act-type font-small">BODY</span>
+                <span class="act-description font-small">{{ act.description }}</span>
+            </div>
+        {% endfor %}
+        {% for act in all_daily.daily_soul %}
+            <div class="activity-card-content">
+                <span class="act-type font-small">SOUL</span>
+                <span class="act-description font-small">{{ act.description }}</span>
+            </div>
+        {% endfor %}
+    </div>
 
     <!-- help icon -->
     <div class="help-icon-container" data-form="help-form-container" onclick="toggleFormDisplay(this)" style="text-align: right; padding: 1rem;"><h6 style="font-size: 1rem; margin: 0; cursor: pointer; user-select: none;">?</h6></div>
