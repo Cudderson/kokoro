@@ -940,3 +940,83 @@ svg text {
 .edit-profile-form-container {
     padding: 0 1rem;
 }
+
+/*
+==========================
+===== media queries  =====
+==========================
+*/
+
+@media screen and (min-width: 800px) {
+    /* remove elements from page */
+    /* turn on when necessary */
+    .separator,
+    .svg-container::before,
+    .balance-banner-container,
+    .help-icon-container,
+    .view-all-activities,
+    .balance-message-container {
+
+        display: none;
+
+    }
+
+    /* activate grid */
+    .home-grid-master {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        align-items: end;
+        justify-items: center;
+        margin: 7.5rem 7.5vw 20rem 7.5vw;
+    }
+
+    /* place elements in grid */
+    .activity-form-container {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+        width: 80%;
+        padding: 0;
+        margin: 0;
+        padding-top: auto;
+        position: relative;
+    }
+
+    .activity-select, .activity-submit {
+        width: 100%;
+        margin: 0;
+    }
+
+    .svg-container {
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+        width: 60%;
+    }
+
+    svg {
+        vertical-align: bottom;
+    }
+
+    .svg-container::before {
+        transform: perspective(6rem) rotateX(20deg) scale(1, .2);
+        display: block;
+    }
+
+    .svg-container > div::before {
+        content: "";
+        position: absolute;
+        background: lightgray;
+        top: 65%;
+        left: -175%;
+        width: 120%;
+        height: 105%;
+        margin: 0 auto;
+
+        transform: perspective(6rem) rotateX(20deg) scale(1, .15);
+        filter: blur(4em);
+        pointer-events: none;
+        z-index: -1;
+
+        display: block;
+    }
+}
