@@ -37,25 +37,33 @@
     <div class="activity-card-container">
         {% if not all_daily.daily_mind and not all_daily.daily_body and not all_daily.daily_soul %}
             <span class="font-large">Find balance by completing a Mind, Body, and Soul activity.</span>
+        {% else %}
+            <div>
+                <span class="daily-acts-header font-xl">Daily Activities</span>
+                <div class="separator-thin"></div>
+            </div>
+            {% for act in all_daily.daily_mind %}
+                <div class="activity-card-content">
+                    <span class="act-type-desktop font-small">MIND</span>
+                    <span class="act-description font-xl">{{ act.description }}</span>
+                </div>
+                <div class="separator-gray"></div>
+            {% endfor %}
+            {% for act in all_daily.daily_body %}
+                <div class="activity-card-content">
+                    <span class="act-type-desktop font-small">BODY</span>
+                    <span class="act-description font-xl">{{ act.description }}</span>
+                </div>
+                <div class="separator-gray"></div>
+            {% endfor %}
+            {% for act in all_daily.daily_soul %}
+                <div class="activity-card-content">
+                    <span class="act-type-desktop font-small">SOUL</span>
+                    <span class="act-description font-xl">{{ act.description }}</span>
+                </div>
+                <div class="separator-gray"></div>
+            {% endfor %}
         {% endif %}
-        {% for act in all_daily.daily_mind %}
-            <div class="activity-card-content">
-                <span class="act-type font-small">MIND</span>
-                <span class="act-description font-xl">{{ act.description }}</span>
-            </div>
-        {% endfor %}
-        {% for act in all_daily.daily_body %}
-            <div class="activity-card-content">
-                <span class="act-type font-small">BODY</span>
-                <span class="act-description font-small">{{ act.description }}</span>
-            </div>
-        {% endfor %}
-        {% for act in all_daily.daily_soul %}
-            <div class="activity-card-content">
-                <span class="act-type font-small">SOUL</span>
-                <span class="act-description font-small">{{ act.description }}</span>
-            </div>
-        {% endfor %}
     </div>
 
     <!-- help icon -->

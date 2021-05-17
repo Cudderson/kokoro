@@ -1034,7 +1034,7 @@ svg text {
         overflow: auto;
 
         display: flex;
-        align-items: center;
+        flex-direction: column;
 
         background: rgba(200, 200, 200, 0.5);
     }
@@ -1043,6 +1043,31 @@ svg text {
         display: block;
         text-align: center;
         margin: 0 auto;
+    }
+
+    .daily-acts-header {
+        display: block;
+        text-align: center;
+        padding: .5em 0 .5em 0;
+    }
+
+    .activity-card-content {
+        padding: .5em 0 .5em .5em;
+    }
+
+    .activity-card-content > .act-type-desktop {
+        display: block;
+        color: gray;
+    }
+
+    .activity-card-content .act-description {
+        display: block;
+    }
+
+    .separator-gray {
+        width: 100%;
+        background-color: lightgray;
+        padding: .025em;
     }
 
 }
