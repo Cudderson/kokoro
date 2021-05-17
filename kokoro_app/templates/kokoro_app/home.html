@@ -36,7 +36,7 @@
     <!-- desktop (show activities) -->
     <div class="activity-card-container">
         {% if not all_daily.daily_mind and not all_daily.daily_body and not all_daily.daily_soul %}
-            <span>Find balance by completing a Mind, Body, and Soul activity.</span>
+            <span class="font-large">Find balance by completing a Mind, Body, and Soul activity.</span>
         {% endif %}
         {% for act in all_daily.daily_mind %}
             <div class="activity-card-content">

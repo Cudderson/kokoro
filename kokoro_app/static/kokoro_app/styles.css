@@ -1023,7 +1023,6 @@ svg text {
         grid-column: 1 / 2;
         grid-row: 1 / 2;
         position: relative;
-        display: block;
         align-self: start;
         width: 80%;
         height: 55%;
@@ -1034,7 +1033,16 @@ svg text {
         padding: 0 .5rem;
         overflow: auto;
 
+        display: flex;
+        align-items: center;
+
         background: rgba(200, 200, 200, 0.5);
+    }
+
+    .activity-card-container > span {
+        display: block;
+        text-align: center;
+        margin: 0 auto;
     }
 
 }
