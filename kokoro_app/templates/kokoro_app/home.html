@@ -38,10 +38,11 @@
         {% if not all_daily.daily_mind and not all_daily.daily_body and not all_daily.daily_soul %}
             <span class="font-large">Find balance by completing a Mind, Body, and Soul activity.</span>
         {% else %}
-            <div>
-                <span class="daily-acts-header font-xl">Daily Activities</span>
-                <div class="separator-thin"></div>
-            </div>
+        <div>
+            <span class="daily-acts-header font-xl">Daily Activities</span>
+            <div class="separator-thin"></div>
+        </div>
+        <div class="activity-card-container-inner">
             {% for act in all_daily.daily_mind %}
                 <div class="activity-card-content">
                     <span class="act-type-desktop font-small">MIND</span>
@@ -63,6 +64,7 @@
                 </div>
                 <div class="separator-gray"></div>
             {% endfor %}
+        </div>
         {% endif %}
     </div>
 

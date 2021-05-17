@@ -1031,12 +1031,16 @@ svg text {
         border: 1px solid gray;
         border-radius: 4px;
         padding: 0 .5rem;
-        overflow: auto;
+        /*overflow: auto;*/
 
         display: flex;
         flex-direction: column;
 
         background: rgba(200, 200, 200, 0.5);
+    }
+
+    .activity-card-container-inner {
+        overflow: auto;
     }
 
     .activity-card-container > span {
