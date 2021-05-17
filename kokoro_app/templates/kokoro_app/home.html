@@ -266,11 +266,13 @@
             }, false);
         }
 
-        var h2 = document.getElementsByTagName("H2");
 
-        for (let i = 0; i < 3; i++) {
-            if (h2[i].innerHTML) {
-                h2[i].classList.toggle("text-fade");
+        // daily activity fade in
+        var daily_acts = document.getElementsByClassName("activity-card-content");
+
+        for (let i = 0; i < daily_acts.length; i++) {
+            if (daily_acts[i].innerHTML) {
+                daily_acts[i].classList.toggle("text-fade");
             }
         }
     });

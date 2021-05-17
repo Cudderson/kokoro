@@ -1040,7 +1040,7 @@ svg text {
     }
 
     .activity-card-container-inner {
-        overflow: auto;
+        overflow-y: auto;
     }
 
     .activity-card-container > span {
@@ -1057,6 +1057,12 @@ svg text {
 
     .activity-card-content {
         padding: .5em 0 .5em .5em;
+        opacity: 0;
+        transition: opacity .7s ease-in-out;
+    }
+
+    .activity-card-content.text-fade {
+        opacity: 1;
     }
 
     .activity-card-content > .act-type-desktop {
