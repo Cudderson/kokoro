@@ -48,11 +48,12 @@
     </div>
     <div class="activity-card-container">
         {% if not all_daily.daily_mind and not all_daily.daily_body and not all_daily.daily_soul %}
-            <div class="balance-instructions">
+            <div class="instructions-header">
                 <div class="separator-thin"></div>
-                <span class="font-xl">Find balance by completing a Mind, Body, and Soul activity.</span>
+                <span class="font-large">Find balance by completing a Mind, Body, and Soul activity.</span>
                 <div class="separator-thin"></div>
             </div>
+        <div class="activity-card-container-inner" style="position: absolute;"></div>
         {% else %}
         <div>
             <span class="daily-acts-header font-xl">Daily Activities</span>

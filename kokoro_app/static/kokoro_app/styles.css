@@ -1037,7 +1037,6 @@ svg text {
         border: 1px solid gray;
         border-radius: 4px;
         padding: 0 .5rem;
-        /*overflow: auto;*/
 
         display: flex;
         flex-direction: column;
@@ -1050,21 +1049,19 @@ svg text {
         overflow-y: auto;
     }
 
-    .activity-card-container > .balance-instructions {
-        margin: auto;
-        text-align: center;
-        color: gray;
-    }
-
-    .balance-instructions > span {
-        display: block;
-        padding: 1.5em 0;
-    }
-
-    .daily-acts-header {
+    .daily-acts-header, .instructions-header {
         display: block;
         text-align: center;
         padding: .5em 0 .5em 0;
+    }
+
+    .instructions-header {
+        margin: auto;
+    }
+
+    .instructions-header span {
+        display: block;
+        padding: 1.5em 0;
     }
 
     .activity-card-content {
