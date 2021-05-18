@@ -974,7 +974,7 @@ svg text {
     .activity-form-container {
         grid-column: 1 / 2;
         grid-row: 1 / 2;
-        width: 80%;
+        width: 60%;
         padding: 0;
         margin: 0;
         padding-top: auto;
@@ -990,6 +990,7 @@ svg text {
         grid-column: 2 / 3;
         grid-row: 1 / 2;
         width: 60%;
+        align-self: start;
     }
 
     svg {
@@ -1024,7 +1025,7 @@ svg text {
         grid-row: 1 / 2;
         position: relative;
         align-self: start;
-        width: 80%;
+        width: 60%;
         height: 55%;
         margin-top: 10%;
         margin-bottom: 10%;
@@ -1040,6 +1041,7 @@ svg text {
     }
 
     .activity-card-container-inner {
+        height: 20vh;
         overflow-y: auto;
     }
 
