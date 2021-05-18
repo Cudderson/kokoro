@@ -1061,16 +1061,6 @@ svg text {
         text-align: center;
     }
 
-    .view-acts-desktop {
-        display: block;
-        cursor: pointer;
-        position: absolute;
-        top: 0;
-        right: 0;
-        float: right;
-        padding: 0 .5em 0 0;
-    }
-
     .instructions-header {
         margin: auto;
     }
@@ -1123,17 +1113,31 @@ svg text {
         grid-row: 1 / 2;
     }
 
-    .balance-message-container-desktop .balance-message,
-    .balance-streak {
+    .balance-message-container-desktop .balance-message {
         display: block;
         text-align: center;
+    }
+
+    .balance-streak-container {
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+    }
+
+    .help-and-manage-container-outer {
+        display: inline-block;
+        position: absolute;
+        right: 12.75%;
+    }
+
+    .view-acts-desktop {
+        font-weight: 800;
+        cursor: pointer;
     }
 
     .help-icon-container-desktop {
         font-weight: 800;
         cursor: pointer;
-        position: absolute;
-        right: 15%;
     }
 
     ::-webkit-scrollbar {

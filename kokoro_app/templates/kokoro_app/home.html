@@ -36,9 +36,6 @@
     <!-- desktop (show activities) -->
     <div class="desktop-home-header">
         <div class="balance-message-container-desktop">
-            <!-- help icon -->
-<!--            <span class="help-icon-container-desktop" data-form="help-form-container" onclick="toggleFormDisplay(this)">?</span>-->
-            <!-- end help icon -->
         {% if balance_bool == 'True' %}
             <span class="balance-message font-xl">
                 You have found balance today.
@@ -51,10 +48,18 @@
         </div>
         <!-- need: balance message, balance streak, manage activities-->
         <div class="separator-thin"></div>
-        <span class="balance-streak font-large">
-            Current Balance Streak: {{ balance_streak }} days
-            <span class="help-icon-container-desktop font-med" data-form="help-form-container" onclick="toggleFormDisplay(this)">?</span>
-        </span>
+        <div class="balance-streak-container">
+            <span class="balance-streak font-large">
+                Current Balance Streak: {{ balance_streak }} days
+            </span>
+            <!-- these should be 'buttons' -->
+        </div>
+        <div class="help-and-manage-container-outer">
+            <div class="help-and-manage-container-inner">
+                <button class="view-acts-desktop font-med" data-form="manage-form-container" onclick="toggleFormDisplay(this)">Manage Activities</button>
+                <button class="help-icon-container-desktop font-med" data-form="help-form-container" onclick="toggleFormDisplay(this)">Help</button>
+            </div>
+        </div>
     </div>
     <div class="activity-card-container">
         {% if not all_daily.daily_mind and not all_daily.daily_body and not all_daily.daily_soul %}
@@ -66,9 +71,7 @@
         <div class="activity-card-container-inner" style="position: absolute;"></div>
         {% else %}
         <div>
-            <!-- place manage activities here -->
             <span class="daily-acts-header font-xl">Daily Activities</span>
-            <span class="view-acts-desktop font-med" data-form="manage-form-container" onclick="toggleFormDisplay(this)">Manage</span>
             <div class="separator-thin"></div>
         </div>
         <div class="activity-card-container-inner">
