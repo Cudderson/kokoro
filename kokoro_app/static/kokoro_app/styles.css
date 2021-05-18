@@ -952,7 +952,7 @@ svg text {
 ==========================
 */
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1000px) {
     /* remove elements from page */
     /* turn on when necessary */
     .separator,
@@ -1049,10 +1049,26 @@ svg text {
         overflow-y: auto;
     }
 
-    .daily-acts-header, .instructions-header {
-        display: block;
+    .instructions-header {
         text-align: center;
+        display: block;
         padding: .5em 0 .5em 0;
+    }
+
+    .daily-acts-header {
+        display: block;
+        padding: .5em 0 .5em 0;
+        text-align: center;
+    }
+
+    .view-acts-desktop {
+        display: block;
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        right: 0;
+        float: right;
+        padding: 0 .5em 0 0;
     }
 
     .instructions-header {
