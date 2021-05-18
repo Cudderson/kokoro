@@ -36,15 +36,25 @@
     <!-- desktop (show activities) -->
     <div class="desktop-home-header">
         <div class="balance-message-container-desktop">
+            <!-- help icon -->
+<!--            <span class="help-icon-container-desktop" data-form="help-form-container" onclick="toggleFormDisplay(this)">?</span>-->
+            <!-- end help icon -->
         {% if balance_bool == 'True' %}
-            <span class="balance-message font-xl">You have found balance today.</span>
+            <span class="balance-message font-xl">
+                You have found balance today.
+            </span>
         {% elif balance_bool == 'False' %}
-            <span class="balance-message font-xl">Still finding balance...</span>
+            <span class="balance-message font-xl">
+                Still finding balance...
+            </span>
         {% endif %}
         </div>
         <!-- need: balance message, balance streak, manage activities-->
         <div class="separator-thin"></div>
-        <span class="balance-streak font-large">Current Balance Streak: {{ balance_streak }} days</span>
+        <span class="balance-streak font-large">
+            Current Balance Streak: {{ balance_streak }} days
+            <span class="help-icon-container-desktop font-med" data-form="help-form-container" onclick="toggleFormDisplay(this)">?</span>
+        </span>
     </div>
     <div class="activity-card-container">
         {% if not all_daily.daily_mind and not all_daily.daily_body and not all_daily.daily_soul %}
