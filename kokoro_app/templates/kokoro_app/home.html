@@ -34,9 +34,25 @@
     </div>
     <!-- end Instructions / mobile -->
     <!-- desktop (show activities) -->
+    <div class="desktop-home-header">
+        <div class="balance-message-container-desktop">
+        {% if balance_bool == 'True' %}
+            <span class="balance-message font-xl">You have found balance today.</span>
+        {% elif balance_bool == 'False' %}
+            <span class="balance-message font-xl">Still finding balance...</span>
+        {% endif %}
+        </div>
+        <!-- need: balance message, balance streak, manage activities-->
+        <div class="separator-thin"></div>
+        <span class="balance-streak font-med">Current Balance Streak: {{ balance_streak }} days</span>
+    </div>
     <div class="activity-card-container">
         {% if not all_daily.daily_mind and not all_daily.daily_body and not all_daily.daily_soul %}
-            <span class="font-large">Find balance by completing a Mind, Body, and Soul activity.</span>
+            <div class="balance-instructions">
+                <div class="separator-thin"></div>
+                <span class="font-xl">Find balance by completing a Mind, Body, and Soul activity.</span>
+                <div class="separator-thin"></div>
+            </div>
         {% else %}
         <div>
             <span class="daily-acts-header font-xl">Daily Activities</span>

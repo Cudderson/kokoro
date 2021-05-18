@@ -941,6 +941,11 @@ svg text {
     padding: 0 1rem;
 }
 
+/* things to hide on mobile */
+.desktop-home-header {
+    display: none;
+}
+
 /*
 ==========================
 ===== media queries  =====
@@ -952,9 +957,9 @@ svg text {
     /* turn on when necessary */
     .separator,
     .balance-banner-container,
+    .balance-message-container,
     .help-icon-container,
-    .view-all-activities,
-    .balance-message-container {
+    .view-all-activities {
 
         display: none;
 
@@ -964,16 +969,16 @@ svg text {
     .home-grid-master {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto;
+        grid-template-rows: auto auto auto;
         align-items: end;
         justify-items: center;
-        margin: 7.5rem 7.5vw 20rem 7.5vw;
+        margin: 1rem 7.5vw 20rem 7.5vw;
     }
 
     /* place elements in grid */
     .activity-form-container {
         grid-column: 1 / 2;
-        grid-row: 1 / 2;
+        grid-row: 2 / 3;
         width: 60%;
         padding: 0;
         margin: 0;
@@ -988,7 +993,7 @@ svg text {
 
     .svg-container {
         grid-column: 2 / 3;
-        grid-row: 1 / 2;
+        grid-row: 2 / 3;
         width: 60%;
         align-self: start;
     }
@@ -1022,7 +1027,7 @@ svg text {
     .activity-card-container {
         /* activities above activity-form */
         grid-column: 1 / 2;
-        grid-row: 1 / 2;
+        grid-row: 2 / 3;
         position: relative;
         align-self: start;
         width: 60%;
@@ -1045,10 +1050,15 @@ svg text {
         overflow-y: auto;
     }
 
-    .activity-card-container > span {
-        display: block;
+    .activity-card-container > .balance-instructions {
+        margin: auto;
         text-align: center;
-        margin: 0 auto;
+        color: gray;
+    }
+
+    .balance-instructions > span {
+        display: block;
+        padding: 1.5em 0;
     }
 
     .daily-acts-header {
@@ -1080,6 +1090,30 @@ svg text {
         width: 100%;
         background-color: lightgray;
         padding: .025em;
+    }
+
+    .desktop-home-header {
+        display: block;
+        grid-column: 1 / 3;
+        grid-row: 1 / 2;
+        width: 110%;
+        margin-top: 1em;
+        margin-bottom: 4em;
+    }
+
+    .desktop-home-header .separator-thin {
+        margin: .5em auto;
+    }
+
+    .balance-message-container-desktop {
+        grid-column: 1 / 3;
+        grid-row: 1 / 2;
+    }
+
+    .balance-message-container-desktop .balance-message,
+    .balance-streak {
+        display: block;
+        text-align: center;
     }
 
     ::-webkit-scrollbar {
