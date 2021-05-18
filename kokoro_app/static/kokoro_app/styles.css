@@ -1046,7 +1046,7 @@ svg text {
     }
 
     .activity-card-container-inner {
-        height: 20vh;
+        height: 22vh;
         overflow-y: auto;
     }
 
@@ -1098,7 +1098,7 @@ svg text {
         grid-row: 1 / 2;
         width: 110%;
         margin-top: 1em;
-        margin-bottom: 4em;
+        margin-bottom: 2em;
     }
 
     .desktop-home-header .separator-thin {

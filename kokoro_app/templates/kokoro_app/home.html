@@ -44,7 +44,7 @@
         </div>
         <!-- need: balance message, balance streak, manage activities-->
         <div class="separator-thin"></div>
-        <span class="balance-streak font-med">Current Balance Streak: {{ balance_streak }} days</span>
+        <span class="balance-streak font-large">Current Balance Streak: {{ balance_streak }} days</span>
     </div>
     <div class="activity-card-container">
         {% if not all_daily.daily_mind and not all_daily.daily_body and not all_daily.daily_soul %}
@@ -62,21 +62,21 @@
             {% for act in all_daily.daily_mind %}
                 <div class="activity-card-content">
                     <span class="act-type-desktop font-small">MIND</span>
-                    <span class="act-description font-xl">{{ act.description }}</span>
+                    <span class="act-description font-large">{{ act.description }}</span>
                 </div>
                 <div class="separator-gray"></div>
             {% endfor %}
             {% for act in all_daily.daily_body %}
                 <div class="activity-card-content">
                     <span class="act-type-desktop font-small">BODY</span>
-                    <span class="act-description font-xl">{{ act.description }}</span>
+                    <span class="act-description font-large">{{ act.description }}</span>
                 </div>
                 <div class="separator-gray"></div>
             {% endfor %}
             {% for act in all_daily.daily_soul %}
                 <div class="activity-card-content">
                     <span class="act-type-desktop font-small">SOUL</span>
-                    <span class="act-description font-xl">{{ act.description }}</span>
+                    <span class="act-description font-large">{{ act.description }}</span>
                 </div>
                 <div class="separator-gray"></div>
             {% endfor %}
