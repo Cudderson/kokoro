@@ -931,6 +931,13 @@ svg text {
     width: 95%;
 }
 
+.cover-placeholder {
+    padding: 3rem;
+    background: lightgray;
+    text-align: center;
+    width: 100%;
+}
+
 /*
 =============================
 ===== edit_profile.html =====
@@ -946,7 +953,6 @@ svg text {
     display: none;
 }
 
-/* hide desktop elements on mobile */
 .activity-card-container {
     display: none;
 }
@@ -1145,6 +1151,28 @@ svg text {
         cursor: pointer;
     }
 
+    /*
+    ================================
+    ===== profile.html desktop =====
+    ================================
+    */
+
+    .profile-wrapper {
+        margin: 0 18em;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+    }
+
+    .profile-grid-master {
+    }
+
+    .cover-placeholder {
+
+    }
+
+    /* end profile.html desktop */
+
+    /* custom scrollbar styles */
     ::-webkit-scrollbar {
         width: .25em;
     }
