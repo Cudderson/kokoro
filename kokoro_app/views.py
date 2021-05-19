@@ -580,13 +580,11 @@ def send_friendship_request_handler(request, sending_to_id):
     if successful:
         # Bring user back to profile they were viewing with success message
         try:
-            messages.success(request, 'Friendship Request Sent!')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         except Exception as e:
-            # user/browser may not have 'HTTP_REFERER' turned on, bring user back to own profile with a success message
+            # user/browser may not have 'HTTP_REFERER' turned on, bring user back to friendships
             print(e)
-            messages.success(request, 'Friendship Request Sent!')
-            return redirect('/profile')
+            return redirect('/view_friendships')
 
 
 @login_required

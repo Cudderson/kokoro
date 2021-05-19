@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse, reverse, HttpRespon
 from .models import Notification
 from kokoro_app.models import ProfilePost
 
+from django.http import HttpResponseRedirect
 # Create your views here.
 
 
@@ -67,14 +68,22 @@ def notification_form_handler(request):
 
                 # return redirect('app_1:profile', user_id=userid)
 
+        # These should return user to the same page they're visiting
         elif 'mark_all_form' in request.POST:
             # mark all user notifications as 'unread = False'
             Notification.objects.filter(recipient=request.user).update(unread=False)
+            try:
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            except Exception as e:
+                print(e)
 
         elif 'clear_all_form' in request.POST:
             # Delete all notifications for user
             all_notifications = Notification.objects.filter(recipient=request.user)
             all_notifications.delete()
-            return redirect('/profile')
+            try:
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            except Exception as e:
+                print(e)
 
     return redirect('/profile')
