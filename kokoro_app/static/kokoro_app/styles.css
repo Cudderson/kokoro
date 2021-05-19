@@ -1,444 +1,71 @@
+/* new home page design/layout */
+
+/* project styles */
+
+/* vertically-center page if its contents don't span 100vh */
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+html {
+    display: table;
+}
+
+body {
+    display: table-cell;
+    vertical-align: middle;
+}
+/* end vertically-center page stuff */
+
+
 /* global color */
 :root {
     --background: rgba(100, 250, 100, 75);
+    /* font variables */
+    --font-2xl: 36px;
 }
 
-html {
-    font-family: 'Open Sans', sans-serif;
+html, button {
+    /*font-family: 'Open Sans', sans-serif;*/
+    font-family: 'Playfair Display', serif;
 }
 
 body {
     margin: 0;
-    padding-top: 200px; /* header height = 80px (depends on logo size)*/
+    padding-top: 85.5px; /* header height = 80px (depends on logo size)*/
     /* background-color: rgba(25, 225, 85, .7);  page bg color */
     background-color: white;
-
 }
 /* reset box-sizing */
 *, *::before, *::after {
     box-sizing: border-box;
 }
 
-/* starting with grid for home page (nav excluded) */
-.home-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto auto auto;
+/* global font sizes */
+.font-small {
+    font-size: 14px;
 }
 
-/* test for home page daily activities */
-h2, h3 {
-    font-size: 1.5vw;
-    text-align: left;
-    opacity: 0;
-    transition: opacity .7s ease-in-out;
+.font-med {
+    font-size: 15px;
 }
 
-h2.text-fade {
-    opacity: 1;
-}
-/*end test*/
-
-/* place new test form within grid */
-.activity-form {
-    width: 100%;
-    grid-column: 2 / 7;
-    grid-row: 2 / 3;
-    order: 0;
-    justify-self: center;
-    align-self: end;
-    margin-bottom: 4px;
-    z-index: 777; /* this is a cop-out, fix appropriately */
+.font-large {
+    font-size: 18px;
 }
 
-.activity-select {
-    display: flex;
-    justify-content: center;
-    width: auto;
-    /*border: solid 4px black;*/
-    margin: 20px;
-    margin-bottom: 0;
-    overflow: hidden;
-
-}
-/*radio/label stuff*/
-.activity-radio {
-    position: absolute;
-    visibility: hidden;
-    display: none;
+.font-xl {
+    font-size: 21px;
 }
 
-.activity-label {
-    flex-grow: 1; /* all items same size */
-    text-align: center;
-    color: black;
-    background: #eee;
-    /*padding: 5px 30px;*/
-    padding: 9px 0px 9px 0px;
-    font-weight: bold;
-    font-size: 1vw; /* label text responsive */
-    cursor: pointer;
-}
+/* end project styles */
 
-.mind-label {
-    border-radius: 4px 0px 0px 0px;
-}
-
-.soul-label {
-    border-radius: 0px 4px 0px 0px;
-}
-
-.activity-label:hover {
-    background-color: gray !important; /* this makes hover work even after selection */
-    transition: .5s;
-}
-
-.activity-label + .activity-radio + .activity-label {
-    border-left: solid 1px gray;
-}
-
-.activity-label option {
-    /* remove default padding for option text */
-    padding: 0px;
-}
-
-.activity-submit {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    /* grid contains text input + submit button */
-    margin-left: 20px;
-    margin-right: 20px;
-    /* closing transition */
-    transform: scale(1, 0);
-    transform-origin: top;
-    transition: transform 500ms ease-in-out 10ms;
-    border: none;
-    border-top: 4px solid gray;
-    /*border-radius: 4px;*/
-}
-
-.activity-submit input {
-    grid-column: 1 / 3;
-    height: 3em;
-    /*border: 4px solid black;*/
-    border: 0;
-    border-radius: 0px 0px 0px 4px;
-    /*background-color: var(--background);*/
-    background-color: #eee;
-    padding: 0;
-    padding-left: 15px; /* gives placeholder text padding */
-    font-size: 1vw; /* keeps element responsive */
-    outline: none;
-}
-
-.activity-submit button {
-    grid-column: 3 / 4;
-    color: black;
-    /*border: 4px solid black;*/
-    border: none;
-    border-radius: 0px 0px 4px 0px;
-    border-top: 0;
-    background-color: #eee;
-    font-size: 1vw;
-    padding: 0;
-}
-
-.activity-submit button:hover {
-    background-color: lightgreen;
-    transition: .7s;
-}
-
-.activity-submit.collapse {
-    /* transition for un-collapsing activity-submit */
-    transform: scale(1, 1);
-    transform-origin: top;
-    transition: transform 500ms ease-in-out 10ms;
-}
-/* ^ end activity form ^ */
-
-.grid-balance {
-    grid-column: 1 / 13;
-    grid-row: 3 / 4;
-    font-size: 1.25vw;
-    padding-top: 8vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.grid-balance h4, h6 {
-    padding: 0;
-    margin: 0;
-}
-
-.grid-balance h6 {
-    margin-top: 1vh;
-}
-
-.grid-item-daily {
-    grid-column: 3 / 6;
-    grid-row: 1 / 2;
-    justify-self: center;
-    margin-top: 2em;
-    width: 100%;
-    word-wrap: break-word;
-}
-
-/* clean order later */
-.grid-item-daily {
-    order: 1;
-}
-
-.grid-balance {
-    order: 4;
-}
-
-/* svg */
-/* place svg in grid */
-.svg-container {
-    width: 100%;
-    grid-column: 8 / 11;
-    grid-row: 1 / 3;
-    justify-self: center;
-    align-self: end;
-}
-
-.tri-1:hover {
-    fill: gray;
-}
-.tri-2:hover {
-    fill: gray;
-}
-.tri-3:hover {
-    fill: gray;
-}
-.tri {
-    transition: .7s;
-}
-.completed_act {
-    fill: gray;
-}
-.completed_act:hover {
-    fill: #ffe;
-}
-/* make svg text non-responsive */
-svg text {
-    stroke: black;
-    fill: black;
-    pointer-events: none;
-}
-
-/* profile page styles start */
-
-.profile:hover {
-    font-size: 200%;
-}
-
-.profile-grid {
-    display: grid;
-    grid-template-columns: repeat(16, minmax(0, 1fr));
-    grid-auto-rows: minmax(0, 1fr);
-    grid-row-gap: .25em;
-    grid-column-gap: .25em;
-    margin-bottom: 6vw;
-}
-
-.profile-placeholder {
-    display: flex;
-    grid-column: 3 / 5;
-    border-radius: 4px;
-    /*test for svg placement*/
-    position: relative;
-}
-
-.profile-image {
-    max-width: 100%;
-    height: auto;
-    border: 1px solid black;
-    border-radius: 4px;
-}
-
-.profile-contact {
-    display: flex;
-    flex-direction: column;
-    grid-column: 3 / 6;
-    grid-row: 2 / 4;
-    background: white;
-    border: 1px solid black;
-    border-radius: 4px;
-}
-
-.profile-contact span {
-    font-size: 1vw;
-    /* set font-sizes in this div manually */
-}
-
-.profile-display-name {
-    margin: 0;
-    font-size: 1.5vw;
-    font-weight: bold;
-}
-
-.profile-header {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    grid-column: 5 / 15;
-    grid-row: 1 / 2;
-    background: white;
-    border: 1px solid black;
-    border-radius: 4px;
-}
-
-.profile-quote {
-    font-size: 1.7vw;
-    margin: auto 2em .5em 2em;
-    text-align: center;
-    font-style: italic;
-    font-weight: bold;
-}
-
-.profile-quote-author {
-    font-size: 1.25vw;
-    align-self: flex-end;
-    margin: 0 auto auto 55%; /* consumes all free-space to left of element */
-}
-
-.profile-post {
-    display: flex;
-    flex-direction: column;
-    grid-column: 6 / 15;
-    grid-row: auto;
-    background: white;
-    border: 1px solid black;
-    border-radius: 4px;
-    user-select: none;
-}
-
-.profile-post:hover {
-    cursor: pointer;
-    border: 3px solid black;
-    margin: -3px; /* negative margin keeps elements in place when border-size increases */
-}
-
-.profile-post button {
-    /* fit button to div (can style more later) */
-    width: auto;
-    height: 100%;
-    background: white;
-    border: none;
-    padding: 0;
-}
-
-.profile-post-headline {
-    /* place headline in middle-top */
-    display: block; /* give span same display as div */
-    text-align: center;
-    margin-right: auto;
-    font-size: 1.25vw;
-    padding: 1.5vw;
-}
-
-.profile-post-author {
-    /* place author in bottom-right */
-    display: block; /* give span same display as div */
-    align-self: flex-end;
-    margin-top: auto;
-    padding: 1rem;
-    font-size: 1vw;
-}
-/* forms on profile page */
-.form-container {
-    display: none;
-    /* javascript changes display value on button click */
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0, 0.9);
-    border: 1px solid white;
-    z-index: 999;
-}
-
-.show-form {
-    /* class is added to form-containers on svg click */
-    display: flex;
-}
-
-.form-container form {
-    margin-top: 30vh;
-    width: 50%;
-}
-
-.form-container form label {
-    color: white;
-    display: flow-root; /* change context */
-    padding-top: 1em;
-    font-size: 1.25vw;
-}
-
-.form-container input[type=text] {
-    width: 100%;
-    padding: 15px 0px;
-    margin: 0;
-    line-height: 1.5vw;
-    font-size: 1.25vw;
-}
-
-.form-container input[type=email] {
-    width: 100%;
-    padding: 15px 0px;
-    margin: 0;
-    line-height: 1.5vw;
-    font-size: 1.25vw;
-}
-
-.form-container input[type=submit] {
-    width: 100%;
-    padding: 10px 0px;
-    background: lightgreen;
-}
-
-.perfect-form-container form {
-    /* only for perfect form */
-    margin-top: 20vh;
-}
-
-.profile-image-form-container input[type="file"] {
-    color: red;
-}
-
-.close-form {
-    align-self: flex-end;
-    width: 3vw;
-    height: 3vw;
-    background: white;
-    border-radius: 4px;
-    margin: .5em .5em .5em .5em;
-    cursor: pointer;
-}
-
-.close-form div {
-    /* for the 'x' close symbol */
-    width: 3vw;
-    height: 3vw;
-    line-height: 3vw; /* match div height to vertically center */
-    text-align: center;
-    font-size: 4vw;
-    font-weight: bold;
-}
-
-.svg-icon-hidden {
-    visibility: hidden;
-}
-/* profile page styles end */
-
-/* new navbar styles */
-
+/*
+===============
+===== NAV =====
+===============
+*/
 header {
     /*background: var(--background);*/
     background: #ccc;
@@ -659,4 +286,994 @@ nav a:hover {
 
 .drop-noti::before {
     content: none !important;
+}
+/* end navbar styles */
+
+/*
+======================
+===== home.html ======
+======================
+*/
+
+.separator {
+    background-color: lightgray;
+    padding-top: .25rem;
+    border-bottom: 1px solid gray;
+    border-top: 1px solid gray;
+}
+
+.balance-banner-true {
+    display: block;
+    margin: 0 auto;
+    padding: 1em 0;
+    text-align: center;
+    user-select: none;
+    font-weight: bold;
+}
+
+.balance-banner-false {
+    text-align: center;
+    user-select: none;
+    padding: 1rem 0;
+    display: block;
+    font-weight: bold;
+}
+
+.balance-banner-div {
+    border-bottom: 1px solid gray; padding: .5rem;
+}
+
+.balance-banner-div > .act-type {
+    margin: 0;
+    padding-left: .5rem;
+    color: lightgray;
+    user-select: none;
+}
+
+.balance-banner-div > .act-description {
+    display: block;
+    font-weight: bold;
+    margin: 0;
+    padding-left: .5rem;
+    user-select: none;
+}
+
+.balance-message-container {
+    text-align: center;
+    padding: .5rem;
+}
+
+.balance-message-container > span {
+    display: block;
+    font-weight: bold;
+    padding: 1em;
+    user-select: none;
+}
+
+.separator-thin {
+    padding: .025rem;
+    background-color: black;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.balance-streak {
+    user-select: none;
+}
+
+/* home.html svg */
+.svg-container {
+    width: 50%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.svg-container::before {
+    /* this is the pseudo-element representing the shadow */
+    content: "";
+    position: absolute;
+    background: lightgray;
+    top: 65%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+
+    /* give perspective to shadow */
+    transform: perspective(2rem) rotateX(20deg) scale(1, .2);
+    filter: blur(3em);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.tri-main {
+    stroke-width: 5px;
+}
+
+.tri-1:hover {
+    fill: gray;
+}
+.tri-1:hover + .text-1 {
+    opacity: 100%;
+    transition: 1.5s;
+}
+
+.tri-2:hover {
+    fill: gray;
+}
+.tri-2:hover + .text-2 {
+    opacity: 100%;
+    transition: 1.5s;
+}
+
+.tri-3:hover {
+    fill: gray;
+}
+.tri-3:hover + .text-3 {
+    opacity: 100%;
+    transition: 1.5s;
+}
+
+.tri {
+    transition: .7s;
+}
+.completed_act {
+    fill: gray;
+}
+.completed_act:hover {
+    fill: #ffe;
+}
+/* make svg text non-responsive */
+svg text {
+    opacity: 0; /* text only shows on hover/focus */
+    stroke: black;
+    fill: black;
+    pointer-events: none;
+}
+
+/* end home.html svg */
+
+/* home.html Daily Activity Form */
+
+.activity-form-container {
+    display: block;
+}
+
+.activity-select {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    width: 90%; /* flexbox overrides width property. have to define width here too */
+    margin: 5em auto 0 auto;
+    border: 1px solid gray;
+    border-radius: 4px 4px 0 0;
+    background-color: gray; /* this fixes white-space */
+}
+
+.activity-radio {
+    position: absolute;
+    visibility: hidden;
+    display: none;
+}
+
+.activity-label {
+    flex-grow: 1;
+    text-align: center;
+    color: black;
+    background: #eee;
+    padding: 10px 10px 10px 10px;
+    font-size: 18px; /*  make label text responsive [] */
+    cursor: pointer;
+    user-select: none;
+}
+
+.mind-label {
+    border-radius: 4px 0px 0px 0px;
+}
+
+.soul-label {
+    border-radius: 0px 4px 0px 0px;
+}
+
+.activity-label:hover {
+    background-color: gray !important; /* this makes hover work even after selection */
+    transition: .5s;
+}
+
+.activity-label + .activity-radio + .activity-label {
+    border-left: solid 1px gray;
+}
+
+.activity-label option {
+    /* remove default padding for option text */
+    padding: 0px;
+    margin: 0;
+}
+
+.activity-submit {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* grid contains text input + submit button */
+    margin: 0 auto 1rem auto;
+    width: 90%;
+    /* closing transition */
+    transform: scale(1, 0);
+    transform-origin: top;
+    transition: transform 500ms ease-in-out 10ms;
+    border: 1px solid gray;
+    border-top: 4px solid gray;
+    border-radius: 0 0 4px 4px;
+}
+
+.activity-submit input {
+    grid-column: 1 / 3;
+    /*height: 3em;*/ /* don't use height */
+    /*border: 4px solid black;*/
+    border: 0;
+    border-radius: 0px 0px 0px 4px;
+    /*background-color: var(--background);*/
+    background-color: #eee;
+    padding: 10px 10px 10px 10px;
+    padding-left: 15px; /* gives placeholder text padding */
+    font-size: 16px;
+    outline: none;
+}
+
+.activity-submit button {
+    grid-column: 3 / 4;
+    color: black;
+    /* remove default border */
+    border: none;
+    border-radius: 0px 0px 4px 0px;
+    border-left: 1px solid gray;
+    background-color: #eee;
+    font-size: 16px;
+    padding: 0;
+}
+
+.activity-submit button:hover {
+    background-color: lightgreen;
+    transition: .7s;
+}
+
+.activity-submit.collapse {
+    /* transition for un-collapsing activity-submit */
+    transform: scale(1, 1);
+    transform-origin: top;
+    transition: transform 500ms ease-in-out 10ms;
+}
+/* end home.html Daily Activity Form */
+
+/* Daily Activities (text above activity-form) */
+.daily-activities > h3 {
+    margin: 0 12vw 0 12vw;
+    font-size: 14px;
+    text-align: center;
+}
+/* end Daily Activities */
+
+/* form-container stuff */
+.form-container {
+    display: none;
+    /* javascript changes display value on button click */
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    z-index: 999;
+}
+
+.show-form {
+    /* class is added to form-containers on svg click */
+    display: flex;
+}
+
+.form-container form {
+    height: 55%;
+    width: 85%;
+    border-radius: 4px;
+}
+
+.form-container form label {
+    color: white;
+    display: flow-root; /* change context */
+    padding-top: 1em;
+    font-size: 1.25vw;
+}
+
+.form-container input[type=text] {
+    width: 100%;
+    padding: 15px 0px;
+    margin: 0;
+    line-height: 1.5vw;
+    font-size: 1.25vw;
+}
+
+.form-container input[type=email] {
+    width: 100%;
+    padding: 15px 0px;
+    margin: 0;
+    line-height: 1.5vw;
+    font-size: 1.25vw;
+}
+
+.form-container input[type=submit] {
+    width: 100%;
+    padding: 17.5px 30px;
+    background: lightgreen;
+}
+
+/* help icon */
+.help-form > span {
+    display: block;
+}
+
+.help-form {
+    overflow: scroll;
+}
+
+/* end form-container stuff */
+
+/*
+=====================================
+===== manage-form for home.html =====
+=====================================
+*/
+
+.view-all-activities {
+    text-align: center;
+    cursor: pointer;
+}
+
+.view-acts {
+    display: block;
+    font-weight: bold;
+    padding: 1em;
+}
+
+.manage-form {
+    background-color: white;
+    padding: 1.5rem;
+    border: 2px solid gray;
+}
+
+.manage-form-header {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: .5rem;
+}
+
+.manage-form-scroll {
+    overflow: auto;
+    width: 100%;
+    height: 75%;
+    border: 1px solid gray;
+    margin-top: 1rem;
+}
+
+.manage-form-scroll > div {
+    border-bottom: 3px solid gray;
+    padding: .25rem .5rem .5rem .5rem;
+}
+
+.manage-form-scroll > div > .manage-act-type {
+    margin: 0;
+    color: gray;
+    display: inline-block;
+}
+
+.manage-form-scroll > div > input[type=checkbox] {
+    margin: 0;
+}
+
+.manage-form-scroll > div > .manage-act-desc {
+    margin: 0;
+    display: block;
+    font-weight: bold;
+}
+
+.manage-form > input[type=submit] {
+    margin-top: 5%;
+    border: none;
+    border-radius: 2px;
+}
+/* end manage-form on home.html */
+
+/* 'X' symbol for closing form */
+.close-form {
+    align-self: flex-end;
+    width: 3rem;
+    height: 3rem;
+    background: white;
+    border-radius: 4px;
+    margin: .5em .5em .5em .5em;
+    cursor: pointer;
+}
+
+.close-form div {
+    /* for the 'x' close symbol */
+    width: 3rem;
+    height: 3rem;
+    line-height: 2.75rem; /* match div height to vertically center */
+    text-align: center;
+    font-size: 4rem;
+    font-weight: bold;
+}
+/* end close-form */
+
+/*
+========================
+===== profile.html =====
+========================
+*/
+
+.profile-grid-master {
+    display: grid;
+    grid-template-rows: repeat(auto, 2fr);
+    padding: 1rem .75rem;
+}
+
+.profile-grid-header {
+    /* place in grid-master */
+    grid-row: 1 / 2;
+
+    /* define own grid properties */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 2%;
+
+    margin-top: -3rem;
+}
+
+.profile-image {
+    grid-row: 1 / 3;
+    width: 100%;
+    background-size: cover;
+
+    /* make image square */
+    float:left;
+    position: relative;
+    padding-bottom : 100%; /* = width for a 1:1 aspect ratio */
+    overflow: hidden;
+}
+
+.profile-image > img {
+    width: 100%;
+    margin: auto;
+    border: 1px solid gray;
+    border-radius: 8px;
+    background-color: white;
+    vertical-align: bottom;
+
+    /* make image square */
+    position: absolute;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-quote-container {
+    grid-column: 2 / 5;
+    grid-row: 1 / 3;
+    align-items: center;
+    /* position: absolute;*/
+    position: relative;
+    overflow: auto;
+    height: 100%;
+    border: 1px solid gray;
+    border-radius: 4px;
+}
+
+.profile-quote-content {
+    /* we can use 'clamp()' to set a min, desired, and max font size! */
+    justify-self: center;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    margin: auto;
+    padding: .8rem .75rem 0 .75rem;
+    position: absolute;
+    background: white;
+}
+
+.profile-quote-author {
+    width: 100%;
+    text-align: center;
+    display: block;
+    color: gray;
+    margin: .5rem 0 .5rem 0;
+}
+
+.profile-name-grid {
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    margin-top: 1vh;
+}
+
+.profile-display-name {
+    grid-row: 1 / 2;
+    font-weight: bold;
+    word-break: break-word;
+
+}
+
+.profile-username {
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
+    color: gray;
+}
+
+.edit-profile-form {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+    width: 100%;
+    align-self: end;
+    justify-self: end;
+    margin-right: .5rem;
+}
+
+.edit-profile-or-friendship-btn {
+    /* needs fixing for visiting profiles */
+    border: 1px solid black;
+    border-radius: 4px;
+    align-self: end;
+    justify-self: end;
+    padding: .25em 1em;
+    font-family: 'Playfair Display', serif;
+    float: right;
+}
+
+.profile-biography {
+    /* not in a sub-grid */
+    margin-top: .5rem;
+    width: 95%;
+}
+
+.perfect-balance-header {
+    margin-top: 1rem;
+    font-size: 15px;
+    text-decoration: underline;
+}
+
+.perfect-mind {
+    color: lightblue;
+}
+
+.perfect-body {
+    color: orange;
+}
+
+.perfect-soul {
+    color: lightgreen;
+}
+
+.profile-contact {
+    margin-top: .5rem;
+    font-size: 15px;
+}
+
+.write-post-btn {
+    margin: .5rem 0;
+}
+
+.write-post-btn-submit, .friendship-btn-submit {
+    padding: .25em 1em;
+}
+
+.profile-post-label {
+    margin: 1rem .5em 0 auto;
+    display: inline-block;
+    width: fit-content;
+    border: 1px solid black;
+    border-bottom: 0;
+    border-radius: 4px 4px 0 0;
+    padding: .125rem 1rem;
+}
+
+.profile-post-prefix {
+    width: 100%;
+    padding: .05rem;
+    background: gray;
+}
+
+.profile-post-container {
+    height: 40vh;
+    position: relative;
+    overflow: auto;
+}
+
+.profile-post button {
+    /* fit button to div (can style more later) */
+    width: 100%;
+    height: 100%;
+    background: white;
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+}
+
+.profile-pinned-message {
+    display: block;
+    text-align: right;
+    font-family: 'Playfair Display', serif;
+    color: lightgray;
+    padding: .5rem 1rem 0 1rem;
+}
+
+.profile-post-headline {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    font-family: 'Playfair Display', serif;
+    padding: 1.5rem 3% 0 3%;
+}
+
+.profile-post-headline-pinned {
+    padding-top: 0;
+}
+
+.profile-post-author {
+    display: block;
+    text-align: left;
+    font-family: 'Playfair Display', serif;
+    color: gray;
+    padding: .75rem 0 .5rem 3%;
+}
+
+.post-date {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    text-align: right;
+    padding-right: 3%;
+}
+
+.post-separator {
+    background: lightgray;
+    margin: 0 auto;
+    padding: .05rem;
+    width: 95%;
+}
+
+.cover-placeholder {
+    padding: 3rem;
+    background: lightgray;
+    text-align: center;
+    width: 100%;
+}
+
+/*
+=============================
+===== edit_profile.html =====
+============================
+*/
+
+.edit-profile-form-container {
+    padding: 0 1rem;
+}
+
+/* things to hide on mobile */
+.desktop-home-header {
+    display: none;
+}
+
+.activity-card-container {
+    display: none;
+}
+
+/*
+==========================
+===== media queries  =====
+==========================
+*/
+
+@media screen and (min-width: 1000px) {
+    /* remove elements from page */
+    /* turn on when necessary */
+    .separator,
+    .balance-banner-container,
+    .balance-message-container,
+    .help-icon-container,
+    .view-all-activities {
+
+        display: none;
+
+    }
+
+    /* activate grid */
+    .home-grid-master {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        align-items: end;
+        justify-items: center;
+        margin: 1rem 7.5vw 10em 7.5vw;
+    }
+
+    /* place elements in grid */
+    .activity-form-container {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+        width: 60%;
+        padding: 0;
+        margin: 0;
+        padding-top: auto;
+        position: relative;
+    }
+
+    .activity-select, .activity-submit {
+        width: 100%;
+        margin: 0;
+    }
+
+    .svg-container {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+        width: 60%;
+        align-self: start;
+    }
+
+    svg {
+        vertical-align: bottom;
+    }
+
+    .svg-container::before {
+        transform: perspective(6rem) rotateX(20deg) scale(1, .2);
+    }
+
+    .svg-container > div::before {
+        content: "";
+        position: absolute;
+        background: lightgray;
+        top: 65%;
+        left: -175%;
+        width: 120%;
+        height: 100%;
+        margin: 0 auto;
+
+        transform: perspective(6rem) rotateX(20deg) scale(1, .15);
+        filter: blur(4em);
+        pointer-events: none;
+        z-index: -1;
+
+        display: block;
+    }
+
+    .activity-card-container {
+        /* activities above activity-form */
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+        position: relative;
+        align-self: start;
+        width: 60%;
+        height: 55%;
+        margin-top: 10%;
+        margin-bottom: 10%;
+        border: 1px solid gray;
+        border-radius: 4px;
+        padding: 0 .5rem;
+
+        display: flex;
+        flex-direction: column;
+
+        background: rgba(200, 200, 200, 0.5);
+    }
+
+    .activity-card-container-inner {
+        height: 22vh;
+        overflow-y: auto;
+    }
+
+    .instructions-header {
+        text-align: center;
+        display: block;
+        padding: .5em 0 .5em 0;
+    }
+
+    .daily-acts-header {
+        display: block;
+        padding: .5em 0 .5em 0;
+        text-align: center;
+    }
+
+    .instructions-header {
+        margin: auto;
+    }
+
+    .instructions-header span {
+        display: block;
+        padding: 1.5em 0;
+    }
+
+    .activity-card-content {
+        padding: .5em 0 .5em .5em;
+        opacity: 0;
+        transition: opacity .7s ease-in-out;
+    }
+
+    .activity-card-content.text-fade {
+        opacity: 1;
+    }
+
+    .activity-card-content > .act-type-desktop {
+        display: block;
+        color: gray;
+    }
+
+    .activity-card-content .act-description {
+        display: block;
+    }
+
+    .separator-gray {
+        width: 100%;
+        background-color: lightgray;
+        padding: .025em;
+    }
+
+    .desktop-home-header {
+        display: block;
+        grid-column: 1 / 3;
+        grid-row: 1 / 2;
+        width: 110%;
+        margin-top: 1em;
+        margin-bottom: 3em;
+    }
+
+    .desktop-home-header .separator-thin {
+        margin: .5em auto;
+    }
+
+    .balance-message-container-desktop {
+        grid-column: 1 / 3;
+        grid-row: 1 / 2;
+    }
+
+    .balance-message-container-desktop .balance-message {
+        display: block;
+        text-align: center;
+    }
+
+    .balance-streak-container {
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+    }
+
+    .help-and-manage-container-outer {
+        display: inline-block;
+        position: absolute;
+        right: 12.75%;
+    }
+
+    .view-acts-desktop {
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+    .help-icon-container-desktop {
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+    /*
+    ================================
+    ===== profile.html desktop =====
+    ================================
+    */
+
+    .profile-wrapper {
+        margin: 0 25em 4em 25em;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+        border-bottom: 2px solid black;
+    }
+
+    .cover-placeholder {
+        padding: 4rem;
+        border-bottom: 1px solid black;
+    }
+
+    .profile-display-name {
+        /* turn all fonts into variables */
+        font-size: var(--font-2xl);
+    }
+
+    .profile-username {
+        font-size: 18px;
+    }
+
+    .profile-quote-container {
+        height: 100%;
+    }
+
+    .profile-quote-content {
+        font-size: 24px;
+        padding-top: 2em;
+    }
+
+    .profile-quote-author {
+        font-size: 18px;
+        padding-top: 1em;
+    }
+
+    .edit-profile-or-friendship-btn {
+        font-size: 16px;
+    }
+
+    .profile-biography {
+        font-size: 20px;
+        margin-top: 1em;
+    }
+
+    .perfect-balance-header {
+        font-size: 20px;
+        font-weight: 600;
+        color: black;
+        margin-top: 1.5em;
+    }
+
+    .profile-perfect-balance span {
+        font-size: 20px;
+    }
+
+    .profile-contact span {
+        font-size: 18px;
+    }
+
+    .friendship-btn-submit, .write-post-btn-submit {
+        font-size: 16px;
+    }
+
+    .profile-post-label {
+        font-size: 18px;
+        padding: .25em 1.5em;
+    }
+
+    .profile-post-headline {
+        font-size: 26px;
+        padding-top: 2em;
+    }
+
+    .profile-post-author {
+        font-size: 18px;
+        padding-bottom: 1em;
+    }
+
+    .post-date {
+        font-size: 18px;
+    }
+
+    .profile-pinned-message {
+        position: absolute;
+        width: 98%;
+        font-size: 16px;
+        padding-top: 1em;
+    }
+    /* end profile.html desktop */
+
+    /* custom scrollbar styles */
+    ::-webkit-scrollbar {
+        width: .25em;
+    }
+
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px grey;
+        border-radius: 10px;
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background:black;
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background:rgb(54, 56, 58);
+    }
 }

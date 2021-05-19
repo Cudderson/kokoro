@@ -1,0 +1,80 @@
+{% extends 'kokoro_app/base.html' %}
+
+{% block content %}
+
+<span>{{ message }}</span>
+<div class="edit-profile-form-container">
+    <h2>Edit Your Profile</h2>
+
+    <h3>Profile Image</h3>
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ profile_image_form }}
+        <input type="submit" name="profile_image_form" value="Update Profile Photo">
+    </form>
+
+    <h3>Display Name</h3>
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
+        {% csrf_token %}
+        <div>{{ display_name_form }}</div>
+        <input type="submit" name="display_name_form" value="Update Display Name">
+    </form>
+
+    <h3>Profile Quote</h3>
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
+        {% csrf_token %}
+        <div>Quote:</div>
+        <div>{{ quote_form.quote }}</div>
+        <div>Author:</div>
+        <div>{{ quote_form.quote_author }}</div>
+        <input type="submit" name="quote_form" value="Update Quote">
+    </form>
+
+    <h3>Biography</h3>
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
+        {% csrf_token %}
+        <div>{{ bio_form.biography }}</div>
+        <input type="submit" name="bio_form" value="Submit Biography">
+    </form>
+
+    <h3>Perfect Balance</h3>
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
+        {% csrf_token %}
+        <label>Perfect Mind Activity<span>{{ perfect_form.perfect_mind }}</span></label>
+        <label>Perfect Body Activity<span>{{ perfect_form.perfect_body }}</span></label>
+        <label>Perfect Soul Activity<span>{{ perfect_form.perfect_soul }}</span></label>
+        <input type="submit" name="perfect_form" value="Submit Perfect Balance">
+    </form>
+
+    <h3>Time Zone</h3>
+    <span>Your current time zone setting: {{ user_timezone_object }}</span>
+    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="POST">
+        {% csrf_token %}
+        <select name="user_timezone">
+            <option disabled selected value="">Select Timezone</option>
+            {% for tz in timezones %}
+            <option value="{{ tz }}">{{ tz }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" name="tz_form" value="Set Timezone">
+    </form>
+
+    <!-- contact info not included. Still deciding -->
+    <!-- cover photo doesn't exist yet -->
+</div>
+
+{% endblock content %}
+
+<!-- edit_profile.html is basically a bunch of forms.
+     We'll get the forms from views.profile, and the template forms from old_profile.html
+
+     Consider getting the current objects themselves as placeholders (yes)
+
+     Check off when on page:
+     TZ select [x]
+     Display Name [x]
+     Biography [x]
+     Quote [x]
+     Profile Image [x]
+     Perfect Balance [x]
+-->

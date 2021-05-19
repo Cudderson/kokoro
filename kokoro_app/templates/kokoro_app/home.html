@@ -2,9 +2,131 @@
 
 {% block content %}
 
-<div class="home-grid">
-    <!--testing flexbox to avoid unwanted gaps-->
-    <div class="activity-form">
+<!--mobile-first-->
+<!-- Instructions for Daily Activities -->
+
+<!-- create master grid of sub-grids -->
+<div class="home-grid-master">
+    <!-- mobile -->
+    <div class="separator"></div>
+    <div class="balance-banner-container">
+        {% if balance_bool == 'True' %}
+        <span class="balance-banner-true font-large">- Your Daily Balance -</span>
+        <div class="separator"></div>
+        <!-- recreate two-line item -->
+        <div class="balance-banner-div">
+            <span class="act-type font-small">MIND</span>
+            <span class="act-description font-small">{{ all_daily.daily_mind.0.description }}</span>
+        </div>
+        <div class="balance-banner-div">
+            <span class="act-type font-small">BODY</span>
+            <span class="act-description font-small">{{ all_daily.daily_body.0.description }}</span>
+        </div>
+        <div class="balance-banner-div" style="border-bottom: 0;">
+            <span class="act-type font-small">SOUL</span>
+            <span class="act-description font-small">{{ all_daily.daily_soul.0.description }}</span>
+        </div>
+        <div class="separator"></div>
+        {% else %}
+        <span class="balance-banner-false font-small">Find balance by completing a Mind, Body, and Soul activity.</span>
+        <div class="separator"></div>
+        {% endif %}
+    </div>
+    <!-- end Instructions / mobile -->
+    <!-- desktop (show activities) -->
+    <div class="desktop-home-header">
+        <div class="balance-message-container-desktop">
+        {% if balance_bool == 'True' %}
+            <span class="balance-message font-xl">
+                You have found balance today.
+            </span>
+        {% elif balance_bool == 'False' %}
+            <span class="balance-message font-xl">
+                Still finding balance...
+            </span>
+        {% endif %}
+        </div>
+        <div class="separator-thin"></div>
+        <div class="balance-streak-container">
+            <span class="balance-streak font-large">
+                Current Balance Streak: {{ balance_streak }} days
+            </span>
+        </div>
+        <div class="help-and-manage-container-outer">
+            <div class="help-and-manage-container-inner">
+                <button class="view-acts-desktop font-med" data-form="manage-form-container" onclick="toggleFormDisplay(this)">Manage Activities</button>
+                <button class="help-icon-container-desktop font-med" data-form="help-form-container" onclick="toggleFormDisplay(this)">Help</button>
+            </div>
+        </div>
+    </div>
+    <div class="activity-card-container">
+        {% if not all_daily.daily_mind and not all_daily.daily_body and not all_daily.daily_soul %}
+            <div class="instructions-header">
+                <div class="separator-thin"></div>
+                <span class="font-large">Find balance by completing a Mind, Body, and Soul activity.</span>
+                <div class="separator-thin"></div>
+            </div>
+        <div class="activity-card-container-inner" style="position: absolute;"></div>
+        {% else %}
+        <div>
+            <span class="daily-acts-header font-xl">Daily Activities</span>
+            <div class="separator-thin"></div>
+        </div>
+        <div class="activity-card-container-inner">
+            {% for act in all_daily.daily_mind %}
+                <div class="activity-card-content">
+                    <span class="act-type-desktop font-small">MIND</span>
+                    <span class="act-description font-large">{{ act.description }}</span>
+                </div>
+                <div class="separator-gray"></div>
+            {% endfor %}
+            {% for act in all_daily.daily_body %}
+                <div class="activity-card-content">
+                    <span class="act-type-desktop font-small">BODY</span>
+                    <span class="act-description font-large">{{ act.description }}</span>
+                </div>
+                <div class="separator-gray"></div>
+            {% endfor %}
+            {% for act in all_daily.daily_soul %}
+                <div class="activity-card-content">
+                    <span class="act-type-desktop font-small">SOUL</span>
+                    <span class="act-description font-large">{{ act.description }}</span>
+                </div>
+                <div class="separator-gray"></div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- help icon -->
+    <div class="help-icon-container" data-form="help-form-container" onclick="toggleFormDisplay(this)" style="text-align: right; padding: 1rem;"><h6 style="font-size: 1rem; margin: 0; cursor: pointer; user-select: none;">?</h6></div>
+    <!-- end help icon -->
+
+    <!-- svg -->
+    <div class="svg-container">
+        <div style="width: 100;"></div> <!-- div for extra pseudo element -->
+        <svg id="svg" viewBox="0 0 300 301">
+            <rect x="0" y="0" height="301" width="300" stroke="none" stroke-width="0" fill="none"></rect>
+
+            <!-- testing glow/shadow effect -->
+            <!-- should probably do the effect on the large polygon triangle, try first -->
+
+            <polygon class="tri-main" fill="gray" stroke="none" points="0,300 300,300 150,40.1925"></polygon>
+
+            <!--make smaller triangles overlay-->
+            <polygon class="tri tri-1" fill="white" stroke="black" stroke-width=".2" points="75,170.01 225,170.01 150,40.1925"></polygon>
+            <text x="130" y="135" class="text-1">Mind</text>
+
+            <polygon class="tri tri-2" fill="white" stroke="black" stroke-width=".2" points="0,300 150,300 75,170.01"></polygon>
+            <text x="54" y="265" class="text-2">Body</text>
+
+            <polygon class="tri tri-3" fill="white" stroke="black" stroke-width=".2" points="150,300 300,300 225,170.01"></polygon>
+            <text x="209" y="265" class="text-3">Soul</text>
+        </svg>
+    </div>
+    <!-- end svg -->
+    <!-- Daily Activity Form -->
+    <div class="activity-form-container">
         <form action="{% url 'kokoro_app:home' %}" method="post">
             {% csrf_token %}
             <div class="activity-select"> <!--flexbox-->
@@ -21,88 +143,102 @@
             </div>
         </form>
     </div>
-    <div class="grid-item-daily">
-        <h3>Today:</h3>
-        <h2>{{ all_daily.daily_mind.0 }}</h2>
-        <h2>{{ all_daily.daily_body.0 }}</h2>
-        <h2>{{ all_daily.daily_soul.0 }}</h2>
-    </div>
-
+    <!-- end Daily Activity Form -->
+    <!-- Balance Message -->
     <!--Evaluate string representation of Python bool-->
-    <div class="grid-balance">
+    <div class="separator"></div>
+    <div class="balance-message-container">
         {% if balance_bool == 'True' %}
-            <h4>You have found balance today.</h4>
+            <span class="font-large">You have found balance today.</span>
         {% elif balance_bool == 'False' %}
-            <h4>Still finding balance...</h4>
+            <span class="font-large">Still finding balance...</span>
         {% endif %}
-        <h6>Current Streak: {{ balance_streak }}</h6>
-        <h6 data-form="manage-form-container" onclick="toggleFormDisplay(this)" style="cursor: pointer;">Manage Activities</h6>
-
+        <div class="separator-thin"></div>
+        <span class="balance-streak font-med">Current Balance Streak: {{ balance_streak }} days</span>
     </div>
+    <div class="separator"></div>
 
-
-    <div class="svg-container">
-        <svg id="svg" viewBox="0 0 300 301">
-            <rect x="0" y="0" height="301" width="300" stroke="black" stroke-width="0" fill="none"></rect>
-
-            <polygon fill="gray" stroke="none" points="0,300 300,300 150,40.1925"></polygon>
-
-            <!--make smaller triangles overlay-->
-            <polygon class="tri tri-1" fill="white" stroke="black" stroke-width=".2" points="75,170.01 225,170.01 150,40.1925"></polygon>
-
-            <polygon class="tri tri-2" fill="white" stroke="black" stroke-width=".2" points="0,300 150,300 75,170.01"></polygon>
-
-            <polygon class="tri tri-3" fill="white" stroke="black" stroke-width=".2" points="150,300 300,300 225,170.01"></polygon>
-
-            <text x="130" y="135">Mind</text>
-            <text x="54" y="265">Body</text>
-            <text x="209" y="265">Soul</text>
-        </svg>
+    <!-- Manage Activities button -->
+    <div class="view-all-activities">
+        <span class="view-acts font-med" data-form="manage-form-container" onclick="toggleFormDisplay(this)">View All Daily Activities</span>
     </div>
+    <div class="separator"></div>
+    <!-- end Manage Activities button -->
 </div>
-<!-- Not In Grid -->
+<!-- Manage Activity Form  -->
 <div class="manage-form-container form-container">
     <div class="close-form" data-form="manage-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
-    <h5>{{ user }}'s activities today:</h5>
-    <form action="{% url 'kokoro_app:home' %}" method="post" style="background-color: white; padding: 2rem;">
+    <form class="manage-form" action="{% url 'kokoro_app:home' %}" method="post">
         {% csrf_token %}
-        <table>
-            <tr>
-                <th>MIND</th>
-            </tr>
+        <span class="manage-form-header font-xl">Manage Activities</span>
+        <div class="separator-thin"></div>
+        <!-- scrolling activities -->
+        <div class="manage-form-scroll">
             {% for mind_act in all_daily.daily_mind %}
-                <tr>
-                    <td><input type="checkbox" name="{{ mind_act.id }}" id="{{ mind_act.id }}"> {{ mind_act }}///{{ mind_act.id }}///{{ mind_act.pk }}</td>
-                </tr>
+                <div>
+                    <input type="checkbox" name="{{ mind_act.id }}" id="{{ mind_act.id }}">
+                    <span class="manage-act-type font-small">MIND</span>
+                    <span class="manage-act-desc font-small">{{ mind_act.description }}</span>
+                </div>
             {% endfor %}
-        </table>
-        <table>
-            <tr>
-                <th>BODY</th>
-            </tr>
             {% for body_act in all_daily.daily_body %}
-                <tr>
-                    <td><input type="checkbox" name="{{ body_act.id }}" id="{{ body_act.id }}"> {{ body_act }}</td>
-                </tr>
+                <div>
+                    <input type="checkbox" name="{{ body_act.id }}" id="{{ body_act.id }}">
+                    <span class="manage-act-type font-small">BODY</span>
+                    <span class="manage-act-desc font-small">{{ body_act.description }}</span>
+                </div>
             {% endfor %}
-        </table>
-        <table>
-            <tr>
-                <th>SOUL</th>
-            </tr>
             {% for soul_act in all_daily.daily_soul %}
-                <tr>
-                    <td><input type="checkbox" name="{{ soul_act.id }}" id="{{ soul_act.id }}"> {{ soul_act }}</td>
-                </tr>
+                <div>
+                    <input type="checkbox" name="{{ soul_act.id }}" id="{{ soul_act.id }}">
+                    <span class="manage-act-type font-small">SOUL</span>
+                    <span class="manage-act-desc font-small">{{ soul_act.description }}</span>
+                </div>
             {% endfor %}
-        </table>
+        </div>
         <input type="submit" name="manage_form" value="Delete Selected Activities">
     </form>
 </div>
+<!-- help icon display -->
+<div class="help-form-container form-container">
+    <div class="close-form" data-form="help-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
+    <form class="manage-form help-form">
+        <span>What do I do?</span>
+        <br>
+        <span>Complete the triangle and "find balance" by submitting an activity for each of: Mind, Body, and Soul.</span>
+        <br>
+        <span>Why?</span>
+        <span>
+            The Mind - Body - Soul idea is that all 3 are connected to one-another. For example, stress on the mind can also lead to physical-health problems.
+            "Finding Balance" is all about fulfilling the 3 categories with the goal of a healthier life.
+        </span>
+        <br>
+        <span>Descriptions and Examples:</span>
+        <br>
+        <span>Mind</span>
+        <span>A mind activity relates to our brain, keeping it engaged and sharp.</span>
+        <span>Examples: Studying a subject you're interested in, reading a book by your favorite author, solving a puzzle, practicing mindfulness</span>
+        <br>
+        <span>Body</span>
+        <span>A body activity relates to the improvement of our physical-health.</span>
+        <span>Examples: Going for a bike ride, eating a healthy meal, running/walking/hiking, lifting weights</span>
+        <br>
+        <span>Soul</span>
+        <span>A soul activity could take many forms. The Soul relates to inner-peace, community, love, and connecting to the bigger-picture.</span>
+        <span>Examples: Making a home-cooked meal, visiting with friends, watching a film, creating art</span>
+        <br>
+        <br>
+        <span>How do I do it?</span>
+        <span>
+            Click or tap on one of the icons below the triangle that corresponds to the activity you'd like to submit.
+            Type in a description of your activity and click the "Add" button. That's it!
+        </span>
+        <span>When you complete all 3 activity types, you have found balance!</span>
+        <span>(Activities will reset everyday)</span>
+        <br>
+    </form>
+</div>
 
-<!--apply new css class to triangles referencing fulfilled activities-->
-<!--*** ACTIVITIES WITH QUOTES ("") BREAK THE JS ***-->
-<!--also, tell user to select an option (MBS) if none was selected-->
 <script>
     function collapse() {
         activitySubmit.classList.toggle("collapse");
@@ -115,9 +251,9 @@
 
         let tri = document.getElementsByClassName('tri');
 
-        var mind = "{{ all_daily.daily_mind.0|safe }}";
-        var body = "{{ all_daily.daily_body.0|safe }}";
-        var soul = "{{ all_daily.daily_soul.0|safe }}";
+        var mind = "{{ all_daily.daily_mind.0 }}";
+        var body = "{{ all_daily.daily_body.0 }}";
+        var soul = "{{ all_daily.daily_soul.0 }}";
 
         let activities = [mind, body, soul];
 
@@ -160,11 +296,13 @@
             }, false);
         }
 
-        var h2 = document.getElementsByTagName("H2");
 
-        for (let i = 0; i < 3; i++) {
-            if (h2[i].innerHTML) {
-                h2[i].classList.toggle("text-fade");
+        // daily activity fade in
+        var daily_acts = document.getElementsByClassName("activity-card-content");
+
+        for (let i = 0; i < daily_acts.length; i++) {
+            if (daily_acts[i].innerHTML) {
+                daily_acts[i].classList.toggle("text-fade");
             }
         }
     });
@@ -177,4 +315,5 @@
         form.classList.toggle("show-form");
     }
 </script>
+
 {% endblock content %}

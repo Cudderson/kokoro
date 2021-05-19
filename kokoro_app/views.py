@@ -222,6 +222,55 @@ def profile(request):
 
 
 @login_required
+def edit_profile(request):
+    """
+    Page for editing profile and account settings
+    :param request: http data
+    :return: render of edit_profile.html
+    """
+
+    # WAIT
+    # what if the forms were submitted to profile_form_handler, where they were already being sent to..
+    # all I would need on this view is the forms themselves (and placeholders?)
+    # trying it
+
+    user = request.user
+
+    # Forms for editing profile
+    bio_form = ProfileBioForm()
+    perfect_form = PerfectBalanceForm()
+    display_name_form = ProfileDisplayNameForm()
+    quote_form = ProfileQuoteForm()
+    profile_image_form = ProfileImageForm()
+
+    # *** MOVE to helper file
+    # get UTC time with offset
+    utc_timezone = datetime.datetime.now(tz=pytz.UTC)
+
+    # get user's saved time zone
+    user_timezone_object = ProfileTimezone.objects.filter(owner__exact=user.id)[0]  # type= <class 'kokoro_app.models.ProfileTimezone'>
+
+    # convert to string
+    user_timezone_string = str(user_timezone_object)
+
+    # convert utc_timezone to user timezone (with offset)
+    user_timezone = utc_timezone.astimezone(pytz.timezone(user_timezone_string))
+
+    context = {
+        'profile_image_form': profile_image_form,
+        'display_name_form': display_name_form,
+        'quote_form': quote_form,
+        'bio_form': bio_form,
+        'perfect_form': perfect_form,
+        'timezones': pytz.common_timezones,
+        'user_timezone_object': user_timezone_object,
+        'user_timezone': user_timezone,
+    }
+
+    return render(request, 'kokoro_app/edit_profile.html', context)
+
+
+@login_required
 def profile_form_handler(request):
     """
     Helper function for processing forms submitted from profile.html template
@@ -229,10 +278,12 @@ def profile_form_handler(request):
     :return: A redirect to profile() view
     """
 
+    # checking when moved from here to edit_profile()
+
     if request.method == "POST":
 
         # user timezone testing
-        if 'tz_form' in request.POST:
+        if 'tz_form' in request.POST:   # [x]
             # timezone the user selected
             user_timezone_form = ProfileTimezoneForm(request.POST, instance=request.user.profiletimezone)
             # check validity
@@ -519,26 +570,6 @@ def send_friendship_request_handler(request, sending_to_id):
 
 
 @login_required
-def view_friendship_requests(request):
-    """
-    Page for viewing user's pending friendship requests
-    :param request: http request data
-    :return: render of template for viewing friendship requests
-    """
-
-    # get pending friend requests
-    pending_requests_from_user = FriendshipRequest.objects.filter(from_user__exact=request.user)
-    pending_requests_to_user = FriendshipRequest.objects.filter(to_user__exact=request.user)
-
-    context = {
-        'requests_from_user': pending_requests_from_user,
-        'requests_to_user': pending_requests_to_user,
-    }
-
-    return render(request, 'kokoro_app/friendship_requests.html', context)
-
-
-@login_required
 def accept_friendship_request_handler(request, sent_by):
     """
     Handler for accepting(saving) a Friendships object, and deleting the corresponding FriendshipRequest object
@@ -584,7 +615,7 @@ def decline_friendship_request_handler(request, friendship_request):
     successful = friendship_utils.decline_friendship_request(request, friendship_request)
 
     if successful:
-        return redirect('/view_friendship_requests')
+        return redirect('/view_friendships')
     else:
         raise Http404("There was an error redirecting you to page. Friendship request declined.")
 
@@ -604,8 +635,14 @@ def view_friendships(request):
     # convert ManyRelatedManager object into Queryset
     friendships = friendships.friendships.all()
 
+    # get friendship requests
+    pending_requests_from_user = FriendshipRequest.objects.filter(from_user__exact=request.user)
+    pending_requests_to_user = FriendshipRequest.objects.filter(to_user__exact=request.user)
+
     context = {
         'friendships': friendships,
+        'requests_from_user': pending_requests_from_user,
+        'requests_to_user': pending_requests_to_user,
     }
 
     return render(request, 'kokoro_app/view_friendships.html', context)

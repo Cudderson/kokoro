@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse, reverse, HttpResponseRedirect
 from .models import Notification
 from kokoro_app.models import ProfilePost
-from kokoro_app.views import view_friendship_requests
 
 # Create your views here.
 
@@ -36,7 +35,8 @@ def notification_form_handler(request):
             if notification.type == 1:
                 # On click, should bring user to 'friendship_requests.html'
                 # The proper way is to redirect to the appropriate url
-                return redirect('/view_friendship_requests')
+                # *** changing route from view_friendship_requests to view_friendships ***
+                return redirect('/view_friendships')
 
             # Type 2: Someone accepted your friendship request
             elif notification.type == 2:
