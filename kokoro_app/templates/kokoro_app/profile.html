@@ -6,10 +6,6 @@
 {% localtime off %}
     <div class="profile-wrapper">
         <div class="cover-placeholder"></div>
-        <!-- remember that certain areas have conditions depending on the profile the user is visiting -->
-        <!-- I used a big grid on the original, multiple smaller grids would be better, or flexbox -->
-        <!-- if we nest grids, then when we're scaling we can control the order of grid-hierarchy easily -->
-
         <!-- container grid holding all-grids -->
         <div class="profile-grid-master">
             <!-- this grid contains profile_photo and profile_quote -->
@@ -31,16 +27,13 @@
             <div class="profile-name-grid">
                 <span class="profile-display-name font-xl">{{ display_name.0 }}</span>
                 {% if user == request.user %}
-                    <!-- form for directing user to edit_profile.html -->
                     <form class="edit-profile-form" action="{% url 'kokoro_app:edit_profile' %}" method="get">
                         <button class="edit-profile-or-friendship-btn font-med" type="submit">Edit Profile</button>
                     </form>
                 {% else %}
                     {% if already_friends %}
-                        <!-- form for editing friendship-status with friend -->
                         <button class="edit-profile-or-friendship-btn font-med">Friends</button>
                     {% else %}
-                        <!-- form for requesting friendship with user -->
                         <!-- dynamic 'Requested!' message should appear after successful request send -->
                         <form class="edit-profile-form" action="{% url 'kokoro_app:send_friendship_request_handler' sending_to_id=user.id %}" method="post">
                             {% csrf_token %}
@@ -64,7 +57,6 @@
                 <span class="perfect-soul font-med">{{ perfect_balance.2 }}</span>
             </div>
             <div class="profile-contact">
-                <!-- contact button may work better here instead (pulls up contact information) -->
                 {% for info in contact_info %}
                     <span>{{ info }}</span>
                 {% endfor %}
@@ -90,12 +82,9 @@
                 </div>
             {% endif %}
             <!-- end viewing own profile -->
-            <!-- make post header look better -->
-    <!--        <div class="profile-post-header">Posts</div>-->
-            <!--new code for dynamic ProfilePost display-->
+
             <span class="profile-post-label">Posts</span>
             <div class="profile-post-prefix"></div>
-    <!--        <div class="separator-thin" style="width: 100%;"></div>-->
             <div class="profile-post-container">
                 {% for post in posts %}
                     {% if post.post_slug %}
@@ -133,8 +122,3 @@
     </div>
     {% endlocaltime %}
 {% endblock content %}
-<!-- still to add to profile / deal with:
-[] TZ select/info (should be on profile page)
-[] Balance Streak (I don't think this needs to be on profile)
-[] Edit SVGs (no, there will be an edit_profile.html page)
--->
