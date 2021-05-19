@@ -602,7 +602,7 @@ def accept_friendship_request_handler(request, sent_by):
 
     if successful:
         # could return dynamic message where "Cancel" was
-        return redirect('/profile')
+        return redirect('/view_friendships')
 
 
 @login_required

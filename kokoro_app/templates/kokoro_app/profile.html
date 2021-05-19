@@ -37,10 +37,10 @@
                         <!-- dynamic 'Requested!' message should appear after successful request send -->
                         <!-- we need to check if a FriendshipRequest object exists between user and profile visiting -->
                         {% if pending_friendship_request == True %}
-                            <form class="edit-profile-form" action="{% url 'kokoro_app:send_friendship_request_handler' sending_to_id=user.id %}" method="post">
+                            <form class="edit-profile-form" action="{% url 'kokoro_app:view_friendships' %}" method="get">
                                 {% csrf_token %}
-                                <button class="edit-profile-or-friendship-btn font-med" type="submit" name="send_friendship_request_form" value="{{ user }}">
-                                    Pending
+                                <button class="edit-profile-or-friendship-btn font-med" type="submit" name="view_friendships_form">
+                                    Pending...
                                 </button>
                             </form>
                         {% else %}
