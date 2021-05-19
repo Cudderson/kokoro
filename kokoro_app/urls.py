@@ -15,6 +15,9 @@ urlpatterns = [
     # User-Profile Page
     path('profile/', views.profile, name='profile'),
 
+    # Page for editing profile & account settings
+    path('edit_profile/', views.edit_profile, name='edit_profile'),
+
     # Page for viewing a single post
     path('post/<slug:post_slug>/', views.post, name='post'),
 
@@ -32,9 +35,6 @@ urlpatterns = [
 
     # Called when send_friend_request_form submitted
     path('send_friendship_request_handler/<sending_to_id>/', views.send_friendship_request_handler, name='send_friendship_request_handler'),
-
-    # Page to view pending friendship requests to and from user
-    path('view_friendship_requests', views.view_friendship_requests, name='view_friendship_requests'),
 
     # Called when a user wants to accept a pending friendship request
     path('accept_friendship_request_handler/<sent_by>/', views.accept_friendship_request_handler, name='accept_friendship_request_handler'),
