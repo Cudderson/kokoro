@@ -473,6 +473,8 @@ def posts_form_handler(request):
             if post_submitted.is_valid():
                 print('Valid Profile Post.')
                 new_post = post_submitted.save(commit=False)
+                # Title-ize headline
+                new_post.headline = new_post.headline.title()
                 # add author and unique slug to post
                 new_post.author = request.user
                 new_post.post_slug = slugify(new_post.headline)
