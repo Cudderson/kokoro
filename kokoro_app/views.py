@@ -509,7 +509,7 @@ def posts_form_handler(request):
             new_pinned_post.pinned_by = request.user
             new_pinned_post.save()
 
-            return redirect('/profile')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
         elif 'unpin_post_form' in request.POST:
             # get form data
