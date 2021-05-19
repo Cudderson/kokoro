@@ -10,7 +10,10 @@
     <h3>Profile Image</h3>
     <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ profile_image_form }}
+        <div class="profile-image-edit">
+            <img src="{{ profile_image_placeholder.image.url }}">
+        </div>
+        {{ profile_image_form.as_p }}
         <input type="submit" name="profile_image_form" value="Update Profile Photo">
     </form>
 
@@ -41,9 +44,9 @@
     <h3>Perfect Balance</h3>
     <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
         {% csrf_token %}
-        <label>Perfect Mind Activity<span>{{ perfect_form.perfect_mind }}</span></label>
-        <label>Perfect Body Activity<span>{{ perfect_form.perfect_body }}</span></label>
-        <label>Perfect Soul Activity<span>{{ perfect_form.perfect_soul }}</span></label>
+        <label class="perfect-label-edit">Perfect Mind Activity<span>{{ perfect_form.perfect_mind }}</span></label>
+        <label class="perfect-label-edit">Perfect Body Activity<span>{{ perfect_form.perfect_body }}</span></label>
+        <label class="perfect-label-edit">Perfect Soul Activity<span>{{ perfect_form.perfect_soul }}</span></label>
         <input type="submit" name="perfect_form" value="Submit Perfect Balance">
     </form>
 

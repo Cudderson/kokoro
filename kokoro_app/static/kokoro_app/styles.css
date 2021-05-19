@@ -957,6 +957,18 @@ svg text {
     padding: 0 1rem;
 }
 
+.perfect-label-edit {
+    display: block;
+}
+
+.profile-image-edit {
+    /* will take size of form */
+    width: 10%;
+}
+
+.profile-image-edit > img {
+    width: 100%;
+}
 /* things to hide on mobile */
 .desktop-home-header {
     display: none;
