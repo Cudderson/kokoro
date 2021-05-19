@@ -40,6 +40,9 @@ def home(request):
             activity_form = ActivityForm(data=request.POST)
             if activity_form.is_valid():
                 new_form = activity_form.save(commit=False)
+                # title-ize activity
+                new_form.description = new_form.description.title()
+                # add owner
                 new_form.owner = request.user
                 new_form.save()
                 return redirect('/home')
