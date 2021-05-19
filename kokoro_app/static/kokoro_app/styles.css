@@ -824,7 +824,7 @@ svg text {
     border-radius: 4px;
     align-self: end;
     justify-self: end;
-    padding: .25em;
+    padding: .25em 1em;
     font-family: 'Playfair Display', serif;
     float: right;
 }
@@ -833,6 +833,12 @@ svg text {
     /* not in a sub-grid */
     margin-top: .5rem;
     width: 95%;
+}
+
+.perfect-balance-header {
+    margin-top: 1rem;
+    font-size: 15px;
+    text-decoration: underline;
 }
 
 .perfect-mind {
@@ -856,8 +862,12 @@ svg text {
     margin: .5rem 0;
 }
 
+.write-post-btn-submit, .friendship-btn-submit {
+    padding: .25em 1em;
+}
+
 .profile-post-label {
-    margin: 1rem 0 0 .1rem;
+    margin: 1rem .5em 0 auto;
     display: inline-block;
     width: fit-content;
     border: 1px solid black;
@@ -876,9 +886,6 @@ svg text {
     height: 40vh;
     position: relative;
     overflow: auto;
-}
-
-.profile-post {
 }
 
 .profile-post button {
@@ -1160,12 +1167,10 @@ svg text {
     */
 
     .profile-wrapper {
-        margin: 0 18em;
+        margin: 0 25em 4em 25em;
         border-left: 1px solid black;
         border-right: 1px solid black;
-    }
-
-    .profile-grid-master {
+        border-bottom: 2px solid black;
     }
 
     .cover-placeholder {
@@ -1199,14 +1204,59 @@ svg text {
         padding-top: 1em;
     }
 
+    .edit-profile-or-friendship-btn {
+        font-size: 16px;
+    }
+
     .profile-biography {
+        font-size: 20px;
+        margin-top: 1em;
+    }
+
+    .perfect-balance-header {
+        font-size: 20px;
+        font-weight: 600;
+        color: black;
+        margin-top: 1.5em;
+    }
+
+    .profile-perfect-balance span {
         font-size: 20px;
     }
 
+    .profile-contact span {
+        font-size: 18px;
+    }
 
+    .friendship-btn-submit, .write-post-btn-submit {
+        font-size: 16px;
+    }
 
+    .profile-post-label {
+        font-size: 18px;
+        padding: .25em 1.5em;
+    }
 
+    .profile-post-headline {
+        font-size: 26px;
+        padding-top: 2em;
+    }
 
+    .profile-post-author {
+        font-size: 18px;
+        padding-bottom: 1em;
+    }
+
+    .post-date {
+        font-size: 18px;
+    }
+
+    .profile-pinned-message {
+        position: absolute;
+        width: 98%;
+        font-size: 16px;
+        padding-top: 1em;
+    }
     /* end profile.html desktop */
 
     /* custom scrollbar styles */

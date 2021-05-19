@@ -55,7 +55,7 @@
             <div class="profile-biography font-med">
                 <span>{{ biography.0 }}</span>
             </div>
-            <div style="margin-top: 1rem; font-size: 15px; text-decoration: underline;">Perfect Balance</div>
+            <div class="perfect-balance-header">Perfect Balance</div>
             <div class="profile-perfect-balance">
                 <!-- could make dynamic 'view perfect balance' option / user decides to display it or not (color-coded) -->
                 <!-- change how packaged for semantic purposes -->
@@ -75,7 +75,7 @@
                 <div class="friendship-btn">
                     <div>
                         <form action="{% url 'kokoro_app:view_friendships' %}" method="get">
-                            <button type="submit">
+                            <button class="friendship-btn-submit" type="submit">
                                 View Friendships
                             </button>
                         </form>
@@ -83,7 +83,9 @@
                 </div>
                 <div class="write-post-btn">
                     <form action="{% url 'kokoro_app:write_post' %}" method="get">
-                        <button type="submit">Write a Post</button>
+                        <button class="write-post-btn-submit" type="submit">
+                            Write a Post
+                        </button>
                     </form>
                 </div>
             {% endif %}
