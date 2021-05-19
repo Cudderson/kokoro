@@ -5,6 +5,7 @@ from django.utils.text import slugify
 from django.utils.crypto import get_random_string
 from django.db import IntegrityError
 from django.http import Http404
+from django.core.exceptions import ObjectDoesNotExist
 
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName,\
                     ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User, PinnedProfilePost,\
@@ -98,6 +99,10 @@ def profile(request):
     :return: render of a user's profile page
     """
 
+    # initial variables that aren't always reached
+    already_friends = False
+    pending_friendship_request = False
+
     if request.method == "POST":
         raise Http404("This shouldn't happen.")
 
@@ -137,10 +142,24 @@ def profile(request):
             try:
                 already_friends = Friendships.objects.get(owner=request.user, friendships__id=user.id)
                 already_friends = True
-                print("FRIENDS")
             except Exception as e:
-                print("NOT FRIENDS", e)
-                already_friends = False
+                print(e)
+
+            # Let's get the user's FriendshipRequest objects
+            # Better yet, let's determine in here if there is an open FriendshipRequest
+            # This block will try to execute when user is visiting someone else's profile (move to helper)
+            try:
+                # check if user has sent FriendshipRequest to profile visiting
+                pending_friendship_request = FriendshipRequest.objects.get(from_user=request.user, to_user=user_id, accepted=False)
+            except ObjectDoesNotExist:
+                # check if profile visiting has sent FriendshipRequest to user
+                try:
+                    pending_friendship_request = FriendshipRequest.objects.get(from_user=user_id, to_user=request.user, accepted=False)
+                except ObjectDoesNotExist:
+                    pass
+
+            pending_friendship_request = True if pending_friendship_request else False
+            print(">>>", pending_friendship_request)
 
         # user info for profile page
         biography = ProfileBio.objects.filter(owner__exact=user.id)
@@ -200,6 +219,7 @@ def profile(request):
             'user': user,
             # boolean
             'already_friends': already_friends,
+            'pending_friendship_request': pending_friendship_request,
             'perfect_form': perfect_form,
             'perfect_balance': perfect_balance,
             'display_name_form': display_name_form,
@@ -598,7 +618,7 @@ def cancel_friendship_request_handler(request, friendship_request):
 
     if successful:
         # consider success message
-        return redirect('/view_friendship_requests')
+        return redirect('/view_friendships')
     else:
         raise Http404("There was an error redirecting you to page. Friendship Request cancelled.")
 
