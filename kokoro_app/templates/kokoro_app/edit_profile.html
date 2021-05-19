@@ -1,6 +1,7 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
+<!-- add placeholders to forms -->
 
 <span>{{ message }}</span>
 <div class="edit-profile-form-container">
@@ -16,7 +17,7 @@
     <h3>Display Name</h3>
     <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
         {% csrf_token %}
-        <div>{{ display_name_form }}</div>
+        <div>{{ display_name_form.display_name }}</div>
         <input type="submit" name="display_name_form" value="Update Display Name">
     </form>
 
@@ -61,20 +62,7 @@
 
     <!-- contact info not included. Still deciding -->
     <!-- cover photo doesn't exist yet -->
+    <!-- editing posts doesn't exist yet -->
 </div>
 
 {% endblock content %}
-
-<!-- edit_profile.html is basically a bunch of forms.
-     We'll get the forms from views.profile, and the template forms from old_profile.html
-
-     Consider getting the current objects themselves as placeholders (yes)
-
-     Check off when on page:
-     TZ select [x]
-     Display Name [x]
-     Biography [x]
-     Quote [x]
-     Profile Image [x]
-     Perfect Balance [x]
--->

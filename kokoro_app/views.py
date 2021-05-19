@@ -252,19 +252,7 @@ def edit_profile(request):
     :return: render of edit_profile.html
     """
 
-    # WAIT
-    # what if the forms were submitted to profile_form_handler, where they were already being sent to..
-    # all I would need on this view is the forms themselves (and placeholders?)
-    # trying it
-
     user = request.user
-
-    # Forms for editing profile
-    bio_form = ProfileBioForm()
-    perfect_form = PerfectBalanceForm()
-    display_name_form = ProfileDisplayNameForm()
-    quote_form = ProfileQuoteForm()
-    profile_image_form = ProfileImageForm()
 
     # *** MOVE to helper file
     # get UTC time with offset
@@ -272,19 +260,37 @@ def edit_profile(request):
 
     # get user's saved time zone
     user_timezone_object = ProfileTimezone.objects.filter(owner__exact=user.id)[0]  # type= <class 'kokoro_app.models.ProfileTimezone'>
-
     # convert to string
     user_timezone_string = str(user_timezone_object)
-
     # convert utc_timezone to user timezone (with offset)
     user_timezone = utc_timezone.astimezone(pytz.timezone(user_timezone_string))
 
+    # I have all of the forms sent to edit_profile.html
+    # I also want the user data for each field to use as placeholders
+    bio_placeholder = ProfileBio.objects.get(owner=request.user).biography
+    perfect_placeholder_queryset = PerfectBalance.objects.get(owner=request.user)
+    display_name_placeholder = ProfileDisplayName.objects.get(owner=request.user)
+    quote_placeholder_queryset = ProfileQuote.objects.get(owner=request.user)
+    profile_image_placeholder = ProfileImage.objects.get(owner=request.user)
+
+    # Forms for editing profile
+    bio_form = ProfileBioForm()
+    perfect_form = PerfectBalanceForm()
+    display_name_form = ProfileDisplayNameForm(instance=display_name_placeholder)
+    quote_form = ProfileQuoteForm()
+    profile_image_form = ProfileImageForm()
+
     context = {
         'profile_image_form': profile_image_form,
+        'profile_image_placeholder': profile_image_placeholder,
         'display_name_form': display_name_form,
+        'display_name_placeholder': display_name_placeholder,
         'quote_form': quote_form,
+        'quote_placeholder_queryset': quote_placeholder_queryset,
         'bio_form': bio_form,
+        'bio_placeholder': bio_placeholder,
         'perfect_form': perfect_form,
+        'perfect_placeholder_queryset': perfect_placeholder_queryset,
         'timezones': pytz.common_timezones,
         'user_timezone_object': user_timezone_object,
         'user_timezone': user_timezone,
