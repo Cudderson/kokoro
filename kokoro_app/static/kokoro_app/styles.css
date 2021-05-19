@@ -1203,6 +1203,7 @@ svg text {
 
     .edit-profile-or-friendship-btn {
         font-size: 16px;
+        cursor: pointer;
     }
 
     .profile-biography {
