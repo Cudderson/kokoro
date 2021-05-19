@@ -22,6 +22,8 @@ body {
 /* global color */
 :root {
     --background: rgba(100, 250, 100, 75);
+    /* font variables */
+    --font-2xl: 36px;
 }
 
 html, button {
@@ -1167,8 +1169,43 @@ svg text {
     }
 
     .cover-placeholder {
-
+        padding: 4rem;
+        border-bottom: 1px solid black;
     }
+
+    .profile-display-name {
+        /* turn all fonts into variables */
+        font-size: var(--font-2xl);
+    }
+
+    .profile-username {
+        font-size: 18px;
+    }
+
+    .profile-quote-container {
+        height: 100%;
+    }
+
+    .profile-quote-container > div {
+    }
+
+    .profile-quote-content {
+        font-size: 24px;
+        padding-top: 2em;
+    }
+
+    .profile-quote-author {
+        font-size: 18px;
+        padding-top: 1em;
+    }
+
+    .profile-biography {
+        font-size: 20px;
+    }
+
+
+
+
 
     /* end profile.html desktop */
 
