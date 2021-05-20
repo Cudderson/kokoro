@@ -485,16 +485,33 @@ def edit_post(request):
     :return: render of edit_profile.html
     """
 
-    # get the specific post to edit
-    # get unique slug of ProfilePost object
-    post_slug = request.GET.get('edit_post_form')
+    if request.method == 'GET':
+        # get the specific post to edit
+        # get unique slug of ProfilePost object
+        post_slug = request.GET.get('edit_post_form')
 
-    # get ProfilePost object matching slug
-    post_to_edit = ProfilePost.objects.get(post_slug__exact=post_slug)
+        # get ProfilePost object matching slug
+        post_to_edit = ProfilePost.objects.get(post_slug__exact=post_slug)
+
+        post_form = ProfilePostForm(instance=post_to_edit)
+
+    elif request.method == 'POST':
+        data = request.POST.get('update_post_form')
+        print(data, "!!!")
+        return redirect('/profile')
 
     context = {
         'post_to_edit': post_to_edit,
+        'post_form': post_form,
     }
+
+    # def my_view(request, id):
+    #     instance = get_object_or_404(MyModel, id=id)
+    #     form = MyForm(request.POST or None, instance=instance)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('next_view')
+    #     return render(request, 'my_template.html', {'form': form})
 
     return render(request, 'kokoro_app/edit_post.html', context)
 

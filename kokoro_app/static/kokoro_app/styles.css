@@ -970,6 +970,18 @@ svg text {
 .profile-image-edit > img {
     width: 100%;
 }
+
+.edit-post-container {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 6em;
+}
+
+.edit-post-container span {
+    display: block;
+}
 /* things to hide on mobile */
 .desktop-home-header {
     display: none;
