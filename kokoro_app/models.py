@@ -132,7 +132,7 @@ class ProfileQuote(models.Model):
         """
 
         # 3-comma separator for reliable string-splitting (do for perfect too)
-        return f'{self.quote},,, {self.quote_author}'
+        return f'{self.quote} - {self.quote_author}'
 
 
 class ProfileImage(models.Model):

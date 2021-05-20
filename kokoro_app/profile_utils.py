@@ -58,18 +58,13 @@ def parse_quote_data(quote_data_queryset):
     :return: parsed dictionary of the queryset
     """
 
-    if len(quote_data_queryset) > 0:
-        # convert to string
-        quote_data_string = str(quote_data_queryset[0])
-        # parse string to list
-        quote_data_parsed = quote_data_string.split(',,, ')
-        # convert to dict for template readability
+    if quote_data_queryset:
         quote_data = {
-            'quote': quote_data_parsed[0],
-            'quote_author': quote_data_parsed[1]
+            'quote': quote_data_queryset.quote,
+            'quote_author': quote_data_queryset.quote_author
         }
     else:
-        quote_data = {'quote': 'NO QUOTE', 'quote_author': 'NO AUTHOR'}
+        quote_data = {'quote': '', 'quote_author': ''}
 
     return quote_data
 

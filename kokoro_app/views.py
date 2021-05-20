@@ -162,15 +162,26 @@ def profile(request):
                     pass
 
             pending_friendship_request = True if pending_friendship_request else False
-            print(">>>", pending_friendship_request)
 
         # user info for profile page
-        biography = ProfileBio.objects.get(owner__exact=user.id)
-        display_name = ProfileDisplayName.objects.get(owner__exact=user.id)
-        contact_info = ContactInfo.objects.filter(owner__exact=user.id)
+        try:
+            biography = ProfileBio.objects.get(owner__exact=user.id)
+        except Exception as e:
+            biography = ""
+        try:
+            display_name = ProfileDisplayName.objects.get(owner__exact=user.id)
+        except Exception as e:
+            display_name = ""
+        try:
+            contact_info = ContactInfo.objects.filter(owner__exact=user.id)
+        except Exception as e:
+            contact_info = ""
 
         # 'quote_data' is 'quote_data_queryset' parsed to a dictionary
-        quote_data_queryset = ProfileQuote.objects.filter(owner__exact=user.id)
+        try:
+            quote_data_queryset = ProfileQuote.objects.get(owner__exact=user.id)
+        except Exception as e:
+            quote_data_queryset = ""
         quote_data = profile_utils.parse_quote_data(quote_data_queryset)
 
         # 'perfect_balance' is 'perfect_balance_queryset parsed into a list
