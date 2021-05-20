@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="profile-name-grid">
-                <span class="profile-display-name font-xl">{{ display_name.0 }}</span>
+                <span class="profile-display-name font-xl">{{ display_name }}</span>
                 {% if user == request.user %}
                     <form class="edit-profile-form" action="{% url 'kokoro_app:edit_profile' %}" method="get">
                         <button class="edit-profile-or-friendship-btn font-med" type="submit">Edit Profile</button>
@@ -56,7 +56,7 @@
                 <span class="profile-username font-med">@{{ user }}</span>
             </div>
             <div class="profile-biography font-med">
-                <span>{{ biography.0 }}</span>
+                <span>{{ biography }}</span>
             </div>
             <div class="perfect-balance-header">Perfect Balance</div>
             <div class="profile-perfect-balance">

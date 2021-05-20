@@ -165,8 +165,8 @@ def profile(request):
             print(">>>", pending_friendship_request)
 
         # user info for profile page
-        biography = ProfileBio.objects.filter(owner__exact=user.id)
-        display_name = ProfileDisplayName.objects.filter(owner__exact=user.id)
+        biography = ProfileBio.objects.get(owner__exact=user.id)
+        display_name = ProfileDisplayName.objects.get(owner__exact=user.id)
         contact_info = ContactInfo.objects.filter(owner__exact=user.id)
 
         # 'quote_data' is 'quote_data_queryset' parsed to a dictionary
