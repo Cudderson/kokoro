@@ -184,8 +184,11 @@ def profile(request):
             quote_data_queryset = ""
         quote_data = profile_utils.parse_quote_data(quote_data_queryset)
 
-        # 'perfect_balance' is 'perfect_balance_queryset parsed into a list
-        perfect_balance_queryset = PerfectBalance.objects.filter(owner=user.id)
+        try:
+            # 'perfect_balance' is 'perfect_balance_queryset parsed into a list
+            perfect_balance_queryset = PerfectBalance.objects.get(owner=user.id)
+        except Exception as e:
+            perfect_balance_queryset = ""
         perfect_balance = profile_utils.get_perfect_balance_data(perfect_balance_queryset)
 
         # *** MOVE to helper file

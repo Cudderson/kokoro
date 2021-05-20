@@ -58,14 +58,16 @@
             <div class="profile-biography font-med">
                 <span>{{ biography }}</span>
             </div>
-            <div class="perfect-balance-header">Perfect Balance</div>
-            <div class="profile-perfect-balance">
-                <!-- could make dynamic 'view perfect balance' option / user decides to display it or not (color-coded) -->
-                <!-- change how packaged for semantic purposes -->
-                <span class="perfect-mind font-med">{{ perfect_balance.0 }}</span><br>
-                <span class="perfect-body font-med">{{ perfect_balance.1 }}</span><br>
-                <span class="perfect-soul font-med">{{ perfect_balance.2 }}</span>
-            </div>
+            {% if perfect_balance.perfect_mind %}
+                <div class="perfect-balance-header">Perfect Balance</div>
+                <div class="profile-perfect-balance">
+                    <!-- could make dynamic 'view perfect balance' option / user decides to display it or not (color-coded) -->
+                    <!-- change how packaged for semantic purposes -->
+                    <span class="perfect-mind font-med">{{ perfect_balance.perfect_mind }}</span><br>
+                    <span class="perfect-body font-med">{{ perfect_balance.perfect_body }}</span><br>
+                    <span class="perfect-soul font-med">{{ perfect_balance.perfect_soul }}</span>
+                </div>
+            {% endif %}
             <div class="profile-contact">
                 {% for info in contact_info %}
                     <span>{{ info }}</span>

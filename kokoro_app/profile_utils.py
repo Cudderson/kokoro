@@ -92,16 +92,17 @@ def get_perfect_balance_data(perfect_balance_queryset):
     :return: parsed list of the queryset
     """
 
-    if len(perfect_balance_queryset) > 0:
-        # convert queryset result to string, then to list, then capitalize for UI
-        perfect_balance = str(perfect_balance_queryset[0])
-        perfect_balance = perfect_balance.split(",,, ")
-        perfect_balance = [activity.capitalize() for activity in perfect_balance]
-
+    if perfect_balance_queryset:
+        perfect_balance = {
+            'perfect_mind': perfect_balance_queryset.perfect_mind,
+            'perfect_body': perfect_balance_queryset.perfect_body,
+            'perfect_soul': perfect_balance_queryset.perfect_soul,
+        }
     else:
-        perfect_balance = ['none' for x in range(3)]
-    #if not perfect_balance:
-        # Convert boolean to string for template comparison
-    #   perfect_balance = str(False)
+        perfect_balance = {
+            'perfect_mind': "",
+            'perfect_body': "",
+            'perfect_soul': "",
+        }
 
     return perfect_balance
