@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.utils.text import slugify
@@ -485,42 +485,53 @@ def edit_post(request):
     :return: render of edit_profile.html
     """
 
+    context = {}
+
     if request.method == 'GET':
-        # get the specific post to edit
-        # get unique slug of ProfilePost object
-        post_slug = request.GET.get('edit_post_form')
 
-        # get ProfilePost object matching slug
-        post_to_edit = ProfilePost.objects.get(post_slug__exact=post_slug)
+        try:
+            # get the specific post to edit
+            # get unique slug of ProfilePost object
+            post_slug = request.GET.get('edit_post_form')
 
-        post_form = ProfilePostForm(instance=post_to_edit)
+            # get ProfilePost object matching slug
+            post_to_edit = ProfilePost.objects.get(post_slug__exact=post_slug)
+
+            # generate ProfilePostForm prepopulated with instance object
+            post_form = ProfilePostForm(instance=post_to_edit)
+
+            context = {
+                'post_to_edit': post_to_edit,
+                'post_form': post_form,
+            }
+        except Exception as e:
+            raise Http404("Something went wrong retrieving your post to edit.", e)
 
     elif request.method == 'POST':
-        post_slug = request.POST.get('update_post_form')
-        post_to_update = ProfilePost.objects.get(post_slug__exact=post_slug)
 
-        new_headline = request.POST.get('headline')
-        new_content = request.POST.get('content')
+        try:
+            # form returns the unique slug of a ProfilePost object
+            post_slug = request.POST.get('update_post_form')
 
-        post_to_update.headline = new_headline
-        post_to_update.content = new_content
-        post_to_update.save(update_fields=['headline', 'content'])
-        return redirect('/profile')
+            # get object with matching slug
+            post_to_update = ProfilePost.objects.get(post_slug__exact=post_slug)
 
-    context = {
-        'post_to_edit': post_to_edit,
-        'post_form': post_form,
-    }
+            # get updated fields
+            new_headline = request.POST.get('headline')
+            new_content = request.POST.get('content')
 
-    # def my_view(request, id):
-    #     instance = get_object_or_404(MyModel, id=id)
-    #     form = MyForm(request.POST or None, instance=instance)
-    #     if form.is_valid():
-    #         form.save()
-    #         return redirect('next_view')
-    #     return render(request, 'my_template.html', {'form': form})
+            # save object with updated fields
+            post_to_update.headline = new_headline
+            post_to_update.content = new_content
+            post_to_update.save(update_fields=['headline', 'content'])
 
-    return render(request, 'kokoro_app/edit_post.html', context)
+        except Exception as e:
+            raise Http404("Something went wrong while updating your post. Sorry :( ", e)
+
+        return post(request, post_slug)
+
+    # get requests render the page to edit a post
+    return redirect(request, 'kokoro_app/edit_post.html', context)
 
 
 @login_required
