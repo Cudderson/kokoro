@@ -17,7 +17,7 @@ def get_start_of_today(request):
     utc_timezone = datetime.datetime.now(tz=pytz.UTC)
 
     # get user's saved time zone (type = queryset)
-    user_timezone_object = ProfileTimezone.objects.filter(owner__exact=request.user)[0]
+    user_timezone_object = ProfileTimezone.objects.get(owner__exact=request.user)
 
     # convert to string
     user_timezone_string = str(user_timezone_object)
@@ -99,7 +99,7 @@ def get_user_timezone(request):
     :return: user's timezone (string)
     """
 
-    user_timezone_object = ProfileTimezone.objects.filter(owner__exact=request.user)[0]
+    user_timezone_object = ProfileTimezone.objects.get(owner__exact=request.user)
     user_timezone_string = str(user_timezone_object)
 
     return user_timezone_string
@@ -111,7 +111,7 @@ def get_user_balance_streak_object(request):
     :return: user's BalanceStreak object from database
     """
 
-    balance_streak_object = BalanceStreak.objects.filter(owner__exact=request.user)[0]
+    balance_streak_object = BalanceStreak.objects.get(owner__exact=request.user)
 
     return balance_streak_object
 
@@ -147,7 +147,6 @@ def get_current_time_user_tz(user_timezone_string):
 
     # define the current UTC time
     current_time = datetime.datetime.now(tz=pytz.UTC)
-    print(f'current time utc: {current_time}')
 
     # Convert current UTC time to current time of user's TZ
     current_time_user_tz = convert_to_user_tz(current_time, user_timezone_string)
@@ -163,7 +162,6 @@ def get_expiration_date_user_tz(user_balance_streak_object, user_timezone_string
     """
 
     balance_streak_expiration_date_utc = user_balance_streak_object.expiration_date
-    print(f'streak expiration date: {balance_streak_expiration_date_utc}')
 
     # Convert expiration_date(UTC) to user timezone
     balance_streak_expiration_date_user_tz = convert_to_user_tz(balance_streak_expiration_date_utc, user_timezone_string)
@@ -184,7 +182,7 @@ def reset_balance_streak(user_balance_streak_object):
     user_balance_streak_object.balance_streak = 0
 
     # save updated BalanceStreak object for user
-    user_balance_streak_object.save()
+    user_balance_streak_object.save(update_fields=['balance_streak'])
 
     # make better return
     return 'streak reset'
@@ -263,7 +261,13 @@ def update_balance_streak(request, expiration_date):
     print(f'expiration date: {expiration_date}')
     print(f'date last incremented: {datetime.datetime.now(tz=pytz.UTC)}')
 
-    user_balance_streak.save()
+    user_balance_streak.save(
+        update_fields=[
+            'balance_streak',
+            'expiration_date',
+            'date_last_incremented'
+        ]
+    )
 
     return f"{request.user}'s balance streak was updated"
 
