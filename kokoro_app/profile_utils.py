@@ -19,18 +19,24 @@ def save_new_display_name(request, display_name_form):
 
 
 # repeat the above for saving the other forms
-def save_new_biography(request, bio_form):
+def save_new_biography(request, bio_form, current_biography):
     """
-    Save a validatedform submitted by user
+    Save a validated form submitted by user
     :param request: http post data
     :param bio_form: a validated form for changing user's biography
+    :param current_biography: Biography object for user
     :return: n/a
     """
 
     try:
-        new_bio_form = bio_form.save(commit=False)
-        new_bio_form.owner = request.user
-        new_bio_form.save()
+        current_biography.biography = bio_form['biography'].value()
+
+        current_biography.save(
+            update_fields=[
+                'biography'
+            ]
+        )
+
     except Exception:
         raise Http404(f"Something went wrong while saving your biography.")
 

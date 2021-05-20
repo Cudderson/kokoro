@@ -355,7 +355,7 @@ def profile_form_handler(request):
             perfect_form_submitted = PerfectBalanceForm(data=request.POST)
             if perfect_form_submitted.is_valid():
                 # retrieve user PerfectBalance object
-                current_perfect_balance = PerfectBalance.objects.get(owner__exact=request.user)
+                current_perfect_balance, created = PerfectBalance.objects.get_or_create(owner=request.user)
                 # save new perfect balance form with helper function
                 profile_utils.save_new_perfect_balance(request, perfect_form_submitted, current_perfect_balance)
 
@@ -365,10 +365,12 @@ def profile_form_handler(request):
             # user is submitting a biography
             bio_form_submitted = ProfileBioForm(data=request.POST)
             if bio_form_submitted.is_valid():
-                # delete old biography
-                ProfileBio.objects.filter(owner__exact=request.user).delete()
+                # retrieve user biography
+
+                current_biography, created = ProfileBio.objects.get_or_create(owner=request.user)
+
                 # save new biography
-                profile_utils.save_new_biography(request, bio_form_submitted)
+                profile_utils.save_new_biography(request, bio_form_submitted, current_biography)
 
                 return redirect('/profile')
 
