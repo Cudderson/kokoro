@@ -388,10 +388,10 @@ def profile_form_handler(request):
             quote_form_submitted = ProfileQuoteForm(data=request.POST)
             # check validity
             if quote_form_submitted.is_valid():
-                # delete old quote & author
-                ProfileQuote.objects.filter(owner__exact=request.user).delete()
-                # save new quote & author (before committing, add owner)
-                profile_utils.save_new_quote(request, quote_form_submitted)
+                # retrieve current ProfileQuote object for user
+                current_quote, created = ProfileQuote.objects.get_or_create(owner=request.user)
+                # save new quote & author
+                profile_utils.save_new_quote(request, quote_form_submitted, current_quote)
 
                 return redirect('/profile')
 

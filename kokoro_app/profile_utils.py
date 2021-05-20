@@ -45,20 +45,27 @@ def save_new_biography(request, bio_form, current_biography):
         raise Http404(f"Something went wrong while saving your biography.")
 
 
-def save_new_quote(request, quote_form):
+def save_new_quote(request, quote_form, current_quote):
     """
     Save a validated form submitted by user
     :param request: http post data
     :param quote_form: a validated form for changing user's profile quote
+    :param current_quote: ProfileQuote object for user
     :return: n/a
     """
 
     try:
-        new_quote = quote_form.save(commit=False)
-        new_quote.owner = request.user
-        new_quote.save()
-    except Exception:
-        raise Http404("Something went wrong while saving your quote.")
+        current_quote.quote = quote_form['quote'].value()
+        current_quote.quote_author = quote_form['quote_author'].value()
+
+        current_quote.save(
+            update_fields=[
+                'quote',
+                'quote_author'
+            ]
+        )
+    except Exception as e:
+        raise Http404("Something went wrong while saving your quote.", e)
 
 
 def parse_quote_data(quote_data_queryset):
