@@ -65,10 +65,11 @@ def home(request):
 
     activities = Activity.objects.filter(owner=request.user).order_by('date_added')
 
-    # Returns all activities submitted today for user
-    daily_mind = balance.daily_mind(request)
-    daily_body = balance.daily_body(request)
-    daily_soul = balance.daily_soul(request)
+    # Returns all activities submitted today for user (queryset)
+    start_of_today = balance.get_start_of_today(request)
+    daily_mind = balance.daily_mind(request, start_of_today)
+    daily_body = balance.daily_body(request, start_of_today)
+    daily_soul = balance.daily_soul(request, start_of_today)
 
     # Package daily activities
     all_daily = {
@@ -79,9 +80,9 @@ def home(request):
 
     # Returns boolean indicating if user has submitted at least 1 mind, body, and soul activity today
     # Also returns user balance streak
-    balance_data = balance.balance(request)
-    found_balance = balance_data[0]
-    balance_streak = balance_data[1]
+    balance_data = balance.balance(request, daily_mind, daily_body, daily_soul)
+    found_balance = balance_data['found_balance']
+    balance_streak = balance_data['balance_streak_value']
 
     context = {
         'activity_form': activity_form,

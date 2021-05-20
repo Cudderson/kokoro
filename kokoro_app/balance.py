@@ -36,14 +36,13 @@ def get_start_of_today(request):
 
 
 # Get all activities submitted today for a logged-in user
-def daily_mind(request):
+def daily_mind(request, start_of_today):
     """
     Returns all mind-related activities submitted today for user
-    :param request:
+    :param request: http data
+    :param start_of_today: TZ-aware datetime indicating 12:00AM today
     :return: django queryset
     """
-
-    start_of_today = get_start_of_today(request)
 
     # Create queryset for activities submitted after start of today
     daily_mind_activities = Activity.objects.filter(
@@ -55,14 +54,13 @@ def daily_mind(request):
     return daily_mind_activities
 
 
-def daily_body(request):
+def daily_body(request, start_of_today):
     """
     Returns all body-related activities submitted today for user
-    :param request:
+    :param request: http data
+    :param start_of_today: TZ-aware datetime indicating 12:00AM today
     :return: django queryset
     """
-
-    start_of_today = get_start_of_today(request)
 
     # Create queryset for activities submitted after start of today
     daily_body_activities = Activity.objects.filter(
@@ -74,14 +72,13 @@ def daily_body(request):
     return daily_body_activities
 
 
-def daily_soul(request):
+def daily_soul(request, start_of_today):
     """
     Returns all soul-related activities submitted today for user
-    :param request:
+    :param request: http data
+    :param start_of_today: TZ-aware datetime indicating 12:00AM today
     :return: django queryset
     """
-
-    start_of_today = get_start_of_today(request)
 
     # Create queryset for activities submitted after start of today
     daily_soul_activities = Activity.objects.filter(
@@ -285,17 +282,19 @@ def get_user_balance_streak_value(request):
     return balance_streak_value
 
 
-def balance(request):
+def balance(request, daily_mind_queryset, daily_body_queryset, daily_soul_queryset):
     """
     Returns a boolean indicating if user has at least 1 activity for mind, body and soul
-    :param request:
+    :param request: http data
+    :param daily_mind_queryset: Queryset of Activity objects relating to the Mind
+    :param daily_body_queryset: Queryset of Activity objects relating to the Body
+    :param daily_soul_queryset: Queryset of Activity objects relating to the Soul
     :return: boolean
     """
 
-    # Determine if user has submitted at least 1 activity for mind, body and soul
-    mind_fulfilled = True if len(daily_mind(request)) > 0 else False
-    body_fulfilled = True if len(daily_body(request)) > 0 else False
-    soul_fulfilled = True if len(daily_soul(request)) > 0 else False
+    mind_fulfilled = True if daily_mind_queryset else False
+    body_fulfilled = True if daily_body_queryset else False
+    soul_fulfilled = True if daily_soul_queryset else False
 
     # Get user timezone (string)
     user_timezone_string = get_user_timezone(request)
@@ -347,4 +346,8 @@ def balance(request):
 
     # Convert bool to string for template evaluation (Jinja2), return user balance streak
     balance_streak_value = get_user_balance_streak_value(request)
-    return str(found_balance), balance_streak_value
+
+    return {
+        'found_balance': str(found_balance),
+        'balance_streak_value': balance_streak_value
+    }
