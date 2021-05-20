@@ -69,18 +69,29 @@ def parse_quote_data(quote_data_queryset):
     return quote_data
 
 
-def save_new_perfect_balance(request, perfect_form):
+def save_new_perfect_balance(request, perfect_form, current_perfect_balance):
     """
     Save a validated form submitted by user
     :param request: http post data
     :param perfect_form: validated form for changing user's perfect balance
+    :param current_perfect_balance: PerfectBalance object belonging to user
     :return: n/a
     """
 
     try:
-        new_form = perfect_form.save(commit=False)
-        new_form.owner = request.user
-        new_form.save()
+        # apply form values to existing PerfectBalance object
+        current_perfect_balance.perfect_mind = perfect_form['perfect_mind'].value()
+        current_perfect_balance.perfect_body = perfect_form['perfect_body'].value()
+        current_perfect_balance.perfect_soul = perfect_form['perfect_soul'].value()
+
+        # update fields and save
+        current_perfect_balance.save(
+            update_fields=[
+                'perfect_mind',
+                'perfect_body',
+                'perfect_soul'
+            ]
+        )
     except Exception:
         raise Http404("Something went wrong while saving your perfect balance activities.")
 

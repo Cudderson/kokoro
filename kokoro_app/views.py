@@ -354,10 +354,10 @@ def profile_form_handler(request):
         elif 'perfect_form' in request.POST:
             perfect_form_submitted = PerfectBalanceForm(data=request.POST)
             if perfect_form_submitted.is_valid():
-                # delete old perfect balance (working)
-                PerfectBalance.objects.filter(owner__exact=request.user).delete()
+                # retrieve user PerfectBalance object
+                current_perfect_balance = PerfectBalance.objects.get(owner__exact=request.user)
                 # save new perfect balance form with helper function
-                profile_utils.save_new_perfect_balance(request, perfect_form_submitted)
+                profile_utils.save_new_perfect_balance(request, perfect_form_submitted, current_perfect_balance)
 
                 return redirect('/profile')
 
