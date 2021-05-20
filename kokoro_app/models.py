@@ -60,7 +60,7 @@ class PerfectBalance(models.Model):
     A user's 'perfect balance' section on profile page
     """
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
 
     # a user's favorite mind, body, and soul activities
     perfect_mind = models.CharField(max_length=60)
@@ -83,7 +83,7 @@ class ProfileBio(models.Model):
     A user's biography section on their profile
     """
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
 
     biography = models.CharField(max_length=80)
 
@@ -103,7 +103,7 @@ class ProfileDisplayName(models.Model):
     A user's display name on their profile
     """
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
 
     display_name = models.CharField(max_length=30)
 
@@ -120,7 +120,7 @@ class ProfileQuote(models.Model):
     A user's displayed quote & author on their profile
     """
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
 
     quote = models.CharField(max_length=160)
 
