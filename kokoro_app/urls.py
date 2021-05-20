@@ -24,6 +24,9 @@ urlpatterns = [
     # Page for writing a new ProfilePost
     path('write_post/', views.write_post, name='write_post'),
 
+    # Page for editing a ProfilePost object
+    path('edit_post/', views.edit_post, name='edit_post'),
+
     # Page to display search results
     path('search/', views.search, name='search'),
 

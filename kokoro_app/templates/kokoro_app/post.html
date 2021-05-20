@@ -30,6 +30,11 @@
                 {% endif %}
             {% else %}
                 <!-- request.user == post.author -->
+
+                <!-- edit a post -->
+                <form action="{% url 'kokoro_app:edit_post' %}" method="get">
+                    <button type="submit" name="edit_post_form" value="Edit Post">Edit Post</button>
+                </form>
                 <form action="{% url 'kokoro_app:posts_form_handler' %}" method="post">
                     {% csrf_token %}
                     <button type="submit" name="delete_post_form" value="{{ post.post_slug }}" style="padding: .75rem; background: white; margin-top: 2rem; background: red;">

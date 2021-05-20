@@ -478,6 +478,20 @@ def write_post(request):
 
 
 @login_required
+def edit_post(request):
+    """
+    Page for editing a ProfilePost object
+    :param request: http data
+    :return: render of edit_profile.html
+    """
+
+    context = {
+    }
+
+    return render(request, 'kokoro_app/edit_post.html', context)
+
+
+@login_required
 def posts_form_handler(request):
     """
     Helper function for processing forms submitted from post.html and write_post.html templates
