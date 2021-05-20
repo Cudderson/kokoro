@@ -496,8 +496,15 @@ def edit_post(request):
         post_form = ProfilePostForm(instance=post_to_edit)
 
     elif request.method == 'POST':
-        data = request.POST.get('update_post_form')
-        print(data, "!!!")
+        post_slug = request.POST.get('update_post_form')
+        post_to_update = ProfilePost.objects.get(post_slug__exact=post_slug)
+
+        new_headline = request.POST.get('headline')
+        new_content = request.POST.get('content')
+
+        post_to_update.headline = new_headline
+        post_to_update.content = new_content
+        post_to_update.save(update_fields=['headline', 'content'])
         return redirect('/profile')
 
     context = {

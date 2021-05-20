@@ -8,7 +8,7 @@
         <span>{{ post_form.headline }}</span>
         <span>Body</span>
         <span>{{ post_form.content }}</span>
-        <button type="submit" name="update_post_form" value="{{ post_form }}">Confirm Changes</button>
+        <button type="submit" name="update_post_form" value="{{ post_to_edit.post_slug }}">Confirm Changes</button>
     </form>
 </div>
 {% endblock content %}
