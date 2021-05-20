@@ -11,11 +11,12 @@ body {
 html {
     display: table;
 }
-
+/*
 body {
     display: table-cell;
     vertical-align: middle;
 }
+*/
 /* end vertically-center page stuff */
 
 

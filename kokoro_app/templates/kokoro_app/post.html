@@ -33,7 +33,7 @@
 
                 <!-- edit a post -->
                 <form action="{% url 'kokoro_app:edit_post' %}" method="get">
-                    <button type="submit" name="edit_post_form" value="Edit Post">Edit Post</button>
+                    <button type="submit" name="edit_post_form" value="{{ post.post_slug }}">Edit Post</button>
                 </form>
                 <form action="{% url 'kokoro_app:posts_form_handler' %}" method="post">
                     {% csrf_token %}

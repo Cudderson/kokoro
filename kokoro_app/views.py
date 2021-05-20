@@ -485,7 +485,15 @@ def edit_post(request):
     :return: render of edit_profile.html
     """
 
+    # get the specific post to edit
+    # get unique slug of ProfilePost object
+    post_slug = request.GET.get('edit_post_form')
+
+    # get ProfilePost object matching slug
+    post_to_edit = ProfilePost.objects.get(post_slug__exact=post_slug)
+
     context = {
+        'post_to_edit': post_to_edit,
     }
 
     return render(request, 'kokoro_app/edit_post.html', context)
