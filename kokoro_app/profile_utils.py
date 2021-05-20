@@ -2,20 +2,24 @@
 from django.http import Http404
 
 
-def save_new_display_name(request, display_name_form):
+def save_new_display_name(request, display_name_form, current_display_name):
     """
     Save a validated form submitted by user
     :param request: http post data
     :param display_name_form: a validated form for changing user's display name
+    :param current_display_name: ProfileDisplayName object for user
     :return: n/a
     """
 
     try:
-        new_display_name = display_name_form.save(commit=False)
-        new_display_name.owner = request.user
-        new_display_name.save()
-    except Exception:
-        raise Http404("Something went wrong while saving your display name.")
+        current_display_name.display_name = display_name_form['display_name'].value()
+        current_display_name.save(
+            update_fields=[
+                'display_name'
+            ]
+        )
+    except Exception as e:
+        raise Http404("Something went wrong while saving your display name.", e)
 
 
 # repeat the above for saving the other forms

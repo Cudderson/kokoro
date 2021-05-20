@@ -366,9 +366,7 @@ def profile_form_handler(request):
             bio_form_submitted = ProfileBioForm(data=request.POST)
             if bio_form_submitted.is_valid():
                 # retrieve user biography
-
                 current_biography, created = ProfileBio.objects.get_or_create(owner=request.user)
-
                 # save new biography
                 profile_utils.save_new_biography(request, bio_form_submitted, current_biography)
 
@@ -378,10 +376,10 @@ def profile_form_handler(request):
             # get submitted form data
             display_name_form_submitted = ProfileDisplayNameForm(data=request.POST)
             if display_name_form_submitted.is_valid():
-                # delete old display name
-                ProfileDisplayName.objects.filter(owner__exact=request.user).delete()
+                # retrieve or create ProfileDisplayName object for user
+                current_display_name, created = ProfileDisplayName.objects.get_or_create(owner=request.user)
                 # save new display name with helper function
-                profile_utils.save_new_display_name(request, display_name_form_submitted)
+                profile_utils.save_new_display_name(request, display_name_form_submitted, current_display_name)
 
                 return redirect('/profile')
 
