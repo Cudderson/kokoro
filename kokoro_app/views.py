@@ -182,7 +182,7 @@ def profile(request):
         utc_timezone = datetime.datetime.now(tz=pytz.UTC)
         # print(f'utc time: {utc_timezone}')
         # get user's saved time zone
-        user_timezone_object = ProfileTimezone.objects.filter(owner__exact=user.id)[0] # type= <class 'kokoro_app.models.ProfileTimezone'>
+        user_timezone_object = ProfileTimezone.objects.get(owner__exact=user.id)
         # convert to string
         user_timezone_string = str(user_timezone_object)
         # print(f'users saved TZ string: {user_timezone_string}')
@@ -259,7 +259,7 @@ def edit_profile(request):
     utc_timezone = datetime.datetime.now(tz=pytz.UTC)
 
     # get user's saved time zone
-    user_timezone_object = ProfileTimezone.objects.filter(owner__exact=user.id)[0]  # type= <class 'kokoro_app.models.ProfileTimezone'>
+    user_timezone_object = ProfileTimezone.objects.get(owner__exact=user.id)
     # convert to string
     user_timezone_string = str(user_timezone_object)
     # convert utc_timezone to user timezone (with offset)
@@ -442,7 +442,7 @@ def post(request, post_slug):
         print(e)
 
     # get user's saved time zone (outsource to helper?)
-    user_timezone_object = ProfileTimezone.objects.filter(owner__exact=request.user)[0]  # type= <class 'kokoro_app.models.ProfileTimezone'>
+    user_timezone_object = ProfileTimezone.objects.get(owner__exact=request.user)
     # convert to string
     user_timezone_string = str(user_timezone_object)
 
