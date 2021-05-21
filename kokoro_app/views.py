@@ -177,14 +177,6 @@ def profile(request):
         # print(f'user timezone: {user_timezone}')
         # print(f"Are these the same time? {user_timezone == utc_timezone}") # true
 
-        # forms for profile page
-        perfect_form = PerfectBalanceForm()
-        bio_form = ProfileBioForm()
-        display_name_form = ProfileDisplayNameForm()
-        quote_form = ProfileQuoteForm()
-        profile_image_form = ProfileImageForm()
-        contact_info_form = ContactInfoForm()
-
         # ***** Create list of queryset objects for template *****
         # our 2 querysets to sort together are pinned_posts and profile_posts
         # User ProfilePost's
@@ -207,16 +199,10 @@ def profile(request):
             'user': user,
             'already_friends': already_friends,
             'pending_friendship_request': pending_friendship_request,
-            'perfect_form': perfect_form,
             'perfect_balance': perfect_balance,
-            'display_name_form': display_name_form,
             'display_name': display_name,
-            'bio_form': bio_form,
             'biography': biography,
             'quote_data': quote_data,
-            'quote_form': quote_form,
-            'profile_image_form': profile_image_form,
-            'contact_info_form': contact_info_form,
             'contact_info': contact_info,
             'timezones': pytz.common_timezones,
             'user_timezone_object': user_timezone_object,
