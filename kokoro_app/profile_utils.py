@@ -1,5 +1,6 @@
 # Helper file for profile page logic
 from django.http import Http404
+from itertools import chain
 
 
 def get_profile_to_visit(request):
@@ -164,3 +165,23 @@ def get_perfect_balance_data(perfect_balance_queryset):
         }
 
     return perfect_balance
+
+
+def sort_posts_together(profile_posts, pinned_posts):
+    """
+    Sorts ProfilePost & PinnedPost objects together by date_published (reversed)
+    :param profile_posts: ProfilePost objects belonging to user (queryset)
+    :param pinned_posts: PinnedProfilePost objects belonging to user (queryset)
+    :return: Sorted list of ProfilePost and PinnedProfilePost objects
+    """
+
+    try:
+        # Sort querysets into one list using 'date_published' field, reverse
+        posts = sorted(
+            chain(profile_posts, pinned_posts),
+            key=lambda post_or_pinned: post_or_pinned.date_published, reverse=True
+        )
+    except Exception as e:
+        raise Http404("Something went wrong while sorting posts.", e)
+
+    return posts

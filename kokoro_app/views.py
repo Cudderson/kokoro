@@ -135,65 +135,56 @@ def profile(request):
             if not already_friends:
                 pending_friendship_request = friendship_utils.check_for_pending_friendship_request(request, user_id)
 
-        # user info for profile page
+        # ----- user info/data for profile page -----
         try:
             biography = ProfileBio.objects.get(owner__exact=user.id)
-        except Exception as e:
+        except ObjectDoesNotExist:
             biography = ""
+
         try:
             display_name = ProfileDisplayName.objects.get(owner__exact=user.id)
-        except Exception as e:
+        except ObjectDoesNotExist:
             display_name = ""
+
         try:
             contact_info = ContactInfo.objects.filter(owner__exact=user.id)
-        except Exception as e:
+        except ObjectDoesNotExist:
             contact_info = ""
 
         # 'quote_data' is 'quote_data_queryset' parsed to a dictionary
         try:
             quote_data_queryset = ProfileQuote.objects.get(owner__exact=user.id)
-        except Exception as e:
+        except ObjectDoesNotExist:
             quote_data_queryset = ""
         quote_data = profile_utils.parse_quote_data(quote_data_queryset)
 
         try:
-            # 'perfect_balance' is 'perfect_balance_queryset parsed into a list
             perfect_balance_queryset = PerfectBalance.objects.get(owner=user.id)
-        except Exception as e:
+        except ObjectDoesNotExist:
             perfect_balance_queryset = ""
+
+        # 'perfect_balance' is 'perfect_balance_queryset' parsed into a list
         perfect_balance = profile_utils.get_perfect_balance_data(perfect_balance_queryset)
 
-        # *** MOVE to helper file
-        # get UTC time with offset
-        utc_timezone = datetime.datetime.now(tz=pytz.UTC)
-        # print(f'utc time: {utc_timezone}')
-        # get user's saved time zone
-        user_timezone_object = ProfileTimezone.objects.get(owner__exact=user.id)
-        # convert to string
-        user_timezone_string = str(user_timezone_object)
-        # print(f'users saved TZ string: {user_timezone_string}')
-        # convert utc_timezone to user timezone (with offset)
-        user_timezone = utc_timezone.astimezone(pytz.timezone(user_timezone_string))
-        # print(f'user timezone: {user_timezone}')
-        # print(f"Are these the same time? {user_timezone == utc_timezone}") # true
-
-        # ***** Create list of queryset objects for template *****
-        # our 2 querysets to sort together are pinned_posts and profile_posts
-        # User ProfilePost's
+        # get ProfilePost and PinnedProfilePost objects belonging to user
         profile_posts = ProfilePost.objects.filter(author__exact=user.id)
-
-        # Pinned Posts
         pinned_posts = PinnedProfilePost.objects.filter(pinned_by__exact=user.id)
 
-        from itertools import chain
-        posts = sorted(
-            chain(profile_posts, pinned_posts),
-            key=lambda post_or_pinned: post_or_pinned.date_published, reverse=True
-        )
+        # returns list of User ProfilePost & PinnedPost objects sorted together by date_published (reversed)
+        posts = profile_utils.sort_posts_together(profile_posts, pinned_posts)
 
         # Let's also pass BalanceStreak data to template
         balance_streak_object = BalanceStreak.objects.get(owner__exact=request.user)
         balance_streak = balance_streak_object.balance_streak
+
+        # get UTC time with offset (aware)
+        utc_timezone = datetime.datetime.now(tz=pytz.UTC)
+
+        # get user's saved time zone
+        user_timezone_object = ProfileTimezone.objects.get(owner__exact=user.id)
+
+        # convert utc_timezone to user timezone (aware) using string of timezone_object
+        user_timezone = utc_timezone.astimezone(pytz.timezone(str(user_timezone_object)))
 
         context = {
             'user': user,
