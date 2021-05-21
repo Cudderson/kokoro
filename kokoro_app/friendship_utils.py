@@ -1,6 +1,24 @@
 # File for handling operations on the Friendships and FriendshipRequest models
 from .models import User, Friendships, FriendshipRequest
 from django.http import Http404
+from django.core.exceptions import ObjectDoesNotExist
+
+
+def determine_if_friends(request, user):
+    """
+
+    :param request:
+    :param user:
+    :return:
+    """
+
+    try:
+        friendship_object_exists = bool(Friendships.objects.get(owner=request.user, friendships__id=user.id))
+        already_friends = True if friendship_object_exists else False
+    except ObjectDoesNotExist:
+        already_friends = False
+
+    return already_friends
 
 
 def send_friendship_request(request, sending_to_id):
