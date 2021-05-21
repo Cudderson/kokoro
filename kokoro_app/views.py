@@ -143,39 +143,20 @@ def profile(request):
             'biography_model': ProfileBio,
             'display_name_model': ProfileDisplayName,
             'contact_info_model': ContactInfo,
+            'quote_model': ProfileQuote,
+            'perfect_balance_model': PerfectBalance,
+            'post_model': ProfilePost,
+            'pinned_post_model': PinnedProfilePost,
         }
 
         profile_data = profile_utils.get_profile_data(user, profile_models)
 
         biography = profile_data['biography']
         display_name = profile_data['display_name']
-
-        try:
-            contact_info = ContactInfo.objects.filter(owner__exact=user.id)
-        except ObjectDoesNotExist:
-            contact_info = ""
-
-        # 'quote_data' is 'quote_data_queryset' parsed to a dictionary
-        try:
-            quote_data_queryset = ProfileQuote.objects.get(owner__exact=user.id)
-        except ObjectDoesNotExist:
-            quote_data_queryset = ""
-        quote_data = profile_utils.parse_quote_data(quote_data_queryset)
-
-        try:
-            perfect_balance_queryset = PerfectBalance.objects.get(owner=user.id)
-        except ObjectDoesNotExist:
-            perfect_balance_queryset = ""
-
-        # 'perfect_balance' is 'perfect_balance_queryset' parsed into a list
-        perfect_balance = profile_utils.get_perfect_balance_data(perfect_balance_queryset)
-
-        # get ProfilePost and PinnedProfilePost objects belonging to user
-        profile_posts = ProfilePost.objects.filter(author__exact=user.id)
-        pinned_posts = PinnedProfilePost.objects.filter(pinned_by__exact=user.id)
-
-        # returns list of User ProfilePost & PinnedPost objects sorted together by date_published (reversed)
-        posts = profile_utils.sort_posts_together(profile_posts, pinned_posts)
+        contact_info = profile_data['contact_info'] # Determine usage of contact info
+        quote_data = profile_data['quote_data']
+        perfect_balance = profile_data['perfect_balance']
+        posts = profile_data['posts']
 
         # Let's also pass BalanceStreak data to template
         balance_streak_object = BalanceStreak.objects.get(owner__exact=request.user)
