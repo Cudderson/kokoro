@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.crypto import get_random_string
 from django.db import IntegrityError
@@ -10,8 +9,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName,\
                     ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User, PinnedProfilePost,\
                     FriendshipRequest, Friendships
-
-from notifications.models import Notification
 
 from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, \
                    ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm, ProfilePostForm
@@ -136,15 +133,22 @@ def profile(request):
                 pending_friendship_request = friendship_utils.check_for_pending_friendship_request(request, user_id)
 
         # ----- user info/data for profile page -----
-        try:
-            biography = ProfileBio.objects.get(owner__exact=user.id)
-        except ObjectDoesNotExist:
-            biography = ""
+        # maybe I can pass an instance of the model, and the helper can query using that?
+        # This works :)
+        # But better, what if I defined a data structure containing all necessary models, passed it to a 'get_profile_data'
+        # function, which then called the individual helper functions, then returned a dictionary of the results, which I could grab here
+        # Let's try it (start small)
 
-        try:
-            display_name = ProfileDisplayName.objects.get(owner__exact=user.id)
-        except ObjectDoesNotExist:
-            display_name = ""
+        profile_models = {
+            'biography_model': ProfileBio,
+            'display_name_model': ProfileDisplayName,
+            'contact_info_model': ContactInfo,
+        }
+
+        profile_data = profile_utils.get_profile_data(user, profile_models)
+
+        biography = profile_data['biography']
+        display_name = profile_data['display_name']
 
         try:
             contact_info = ContactInfo.objects.filter(owner__exact=user.id)

@@ -1,5 +1,6 @@
 # Helper file for profile page logic
 from django.http import Http404
+from django.core.exceptions import ObjectDoesNotExist
 from itertools import chain
 
 
@@ -33,6 +34,22 @@ def get_profile_to_visit(request):
         raise Http404("Something went wrong while retrieving the profile you requested.", e)
 
 
+def get_user_display_name(user, model):
+    """
+
+    :param user:
+    :param model:
+    :return:
+    """
+
+    try:
+        display_name = model.objects.get(owner__exact=user.id)
+    except ObjectDoesNotExist:
+        display_name = ""
+
+    return display_name
+
+
 def save_new_display_name(request, display_name_form, current_display_name):
     """
     Save a validated form submitted by user
@@ -53,7 +70,22 @@ def save_new_display_name(request, display_name_form, current_display_name):
         raise Http404("Something went wrong while saving your display name.", e)
 
 
-# repeat the above for saving the other forms
+def get_user_biography(user, model):
+    """
+
+    :param user:
+    :param model:
+    :return:
+    """
+
+    try:
+        biography = model.objects.get(owner__exact=user.id)
+    except ObjectDoesNotExist:
+        biography = ""
+
+    return biography
+
+
 def save_new_biography(request, bio_form, current_biography):
     """
     Save a validated form submitted by user
@@ -185,3 +217,23 @@ def sort_posts_together(profile_posts, pinned_posts):
         raise Http404("Something went wrong while sorting posts.", e)
 
     return posts
+
+
+def get_profile_data(user, profile_models):
+    """
+
+    :param user: User object
+    :param profile_models: django Models relating to a User's profile
+    :return: dictionary of profile data for a User
+    """
+
+    biography = get_user_biography(user, profile_models['biography_model'])
+
+    display_name = get_user_display_name(user, profile_models['display_name_model'])
+
+    profile_data = {
+        'biography': biography,
+        'display_name': display_name,
+    }
+
+    return profile_data
