@@ -133,12 +133,6 @@ def profile(request):
                 pending_friendship_request = friendship_utils.check_for_pending_friendship_request(request, user_id)
 
         # ----- user info/data for profile page -----
-        # maybe I can pass an instance of the model, and the helper can query using that?
-        # This works :)
-        # But better, what if I defined a data structure containing all necessary models, passed it to a 'get_profile_data'
-        # function, which then called the individual helper functions, then returned a dictionary of the results, which I could grab here
-        # Let's try it (start small)
-
         profile_models = {
             'biography_model': ProfileBio,
             'display_name_model': ProfileDisplayName,
@@ -147,44 +141,27 @@ def profile(request):
             'perfect_balance_model': PerfectBalance,
             'post_model': ProfilePost,
             'pinned_post_model': PinnedProfilePost,
+            'balance_streak_model': BalanceStreak,
+            'profile_timezone_model': ProfileTimezone,
         }
 
+        # Pass profile_models to helper (returns dictionary of user-specific data to build profile page)
         profile_data = profile_utils.get_profile_data(user, profile_models)
-
-        biography = profile_data['biography']
-        display_name = profile_data['display_name']
-        contact_info = profile_data['contact_info'] # Determine usage of contact info
-        quote_data = profile_data['quote_data']
-        perfect_balance = profile_data['perfect_balance']
-        posts = profile_data['posts']
-
-        # Let's also pass BalanceStreak data to template
-        balance_streak_object = BalanceStreak.objects.get(owner__exact=request.user)
-        balance_streak = balance_streak_object.balance_streak
-
-        # get UTC time with offset (aware)
-        utc_timezone = datetime.datetime.now(tz=pytz.UTC)
-
-        # get user's saved time zone
-        user_timezone_object = ProfileTimezone.objects.get(owner__exact=user.id)
-
-        # convert utc_timezone to user timezone (aware) using string of timezone_object
-        user_timezone = utc_timezone.astimezone(pytz.timezone(str(user_timezone_object)))
 
         context = {
             'user': user,
             'already_friends': already_friends,
             'pending_friendship_request': pending_friendship_request,
-            'perfect_balance': perfect_balance,
-            'display_name': display_name,
-            'biography': biography,
-            'quote_data': quote_data,
-            'contact_info': contact_info,
+            'perfect_balance': profile_data['perfect_balance'],
+            'display_name': profile_data['display_name'],
+            'biography': profile_data['biography'],
+            'quote_data': profile_data['quote_data'],
+            'contact_info': profile_data['contact_info'],  # Determine usage of contact info
+            'posts': profile_data['posts'],
+            'balance_streak': profile_data['balance_streak'],  # Determine usage of balance streak on profile page
+            'user_timezone_object': profile_data['user_timezone_object'],
+            'user_timezone': profile_data['user_timezone'],
             'timezones': pytz.common_timezones,
-            'user_timezone_object': user_timezone_object,
-            'user_timezone': user_timezone,
-            'posts': posts,
-            'balance_streak': balance_streak,
         }
 
         return render(request, 'kokoro_app/profile.html', context)

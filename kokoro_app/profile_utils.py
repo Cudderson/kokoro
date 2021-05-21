@@ -2,6 +2,8 @@
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
 from itertools import chain
+import datetime
+import pytz
 
 
 def get_profile_to_visit(request):
@@ -151,10 +153,10 @@ def parse_quote_data(quote_data_queryset):
 
 def get_quote_data(user, model):
     """
-
-    :param user:
-    :param model:
-    :return:
+    Retrieve ProfileQuote object for User from databse
+    :param user: User object
+    :param model: Model ProfileQuote
+    :return: ProfileQuote object for User
     """
 
     # 'quote_data' is 'quote_data_queryset' parsed to a dictionary
@@ -220,10 +222,10 @@ def get_perfect_balance_data(perfect_balance_queryset):
 
 def get_perfect_balance_queryset(user, model):
     """
-
-    :param user:
-    :param model:
-    :return:
+    Retrieve PerfectBalance queryset for User from database
+    :param user: User object
+    :param model: Model PerfectBalance
+    :return: PerfectBalance queryset
     """
 
     try:
@@ -256,10 +258,10 @@ def sort_posts_together(profile_posts, pinned_posts):
 
 def get_profile_posts(user, model):
     """
-
-    :param user:
-    :param model:
-    :return:
+    Retrieve ProfilePost objects from database for User
+    :param user: User object
+    :param model: Model ProfilePost
+    :return: ProfilePost queryset
     """
 
     profile_posts = model.objects.filter(author__exact=user.id)
@@ -269,10 +271,10 @@ def get_profile_posts(user, model):
 
 def get_pinned_profile_posts(user, model):
     """
-
-    :param user:
-    :param model:
-    :return:
+    Retrieve PinnedProfilePost objects from database for User
+    :param user: User object
+    :param model: Model PinnedProfilePost
+    :return: PinnedProfilePost queryset
     """
 
     pinned_posts = model.objects.filter(pinned_by__exact=user.id)
@@ -282,10 +284,10 @@ def get_pinned_profile_posts(user, model):
 
 def get_user_contact_info(user, model):
     """
-
-    :param user:
-    :param model:
-    :return:
+    Retrieve ContactInfo object for User from database
+    :param user: User object
+    :param model: Model ContactInfo
+    :return: ContactInfo object for User
     """
 
     try:
@@ -296,6 +298,40 @@ def get_user_contact_info(user, model):
     return contact_info
 
 
+def get_user_balance_streak(user, model):
+    """
+    Retrieve user BalanceStreak object from database
+    :param user: User object
+    :param model: Model BalanceStreak
+    :return: BalanceStreak object
+    """
+
+    balance_streak_object = model.objects.get(owner__exact=user)
+    balance_streak = balance_streak_object.balance_streak
+
+    return balance_streak
+
+
+def get_user_timezone(user, model):
+    """
+    Retrieve ProfileTimezone object for User, convert utc_timezone to user_timezone (aware)
+    :param user: User object
+    :param model: Model ProfileTimezone
+    :return: Tuple containing user's ProfileTimezone object & an aware datetime object of now in user's timezone
+    """
+
+    # get UTC time with offset (aware)
+    utc_timezone = datetime.datetime.now(tz=pytz.UTC)
+
+    # get user's saved time zone
+    user_timezone_object = model.objects.get(owner__exact=user.id)
+
+    # convert utc_timezone to user timezone (aware) using string of timezone_object
+    user_timezone = utc_timezone.astimezone(pytz.timezone(str(user_timezone_object)))
+
+    return user_timezone_object, user_timezone
+
+
 def get_profile_data(user, profile_models):
     """
     Retrieves User data needed for views.profile
@@ -304,12 +340,11 @@ def get_profile_data(user, profile_models):
     :return: dictionary of profile data for a User
     """
 
+    # get user data by passing Model in profile_models to helper functions
+
     biography = get_user_biography(user, profile_models['biography_model'])
-
     display_name = get_user_display_name(user, profile_models['display_name_model'])
-
     contact_info = get_user_contact_info(user, profile_models['contact_info_model'])
-
     quote_data = get_quote_data(user, profile_models['quote_model'])
 
     # 'perfect_balance' is 'perfect_balance_queryset' parsed into a list
@@ -323,6 +358,9 @@ def get_profile_data(user, profile_models):
     # returns list of User ProfilePost & PinnedPost objects sorted together by date_published (reversed)
     posts = sort_posts_together(profile_posts, pinned_posts)
 
+    balance_streak = get_user_balance_streak(user, profile_models['balance_streak_model'])
+    user_timezone_object, user_timezone = get_user_timezone(user, profile_models['profile_timezone_model'])
+
     profile_data = {
         'biography': biography,
         'display_name': display_name,
@@ -330,6 +368,9 @@ def get_profile_data(user, profile_models):
         'quote_data': quote_data,
         'perfect_balance': perfect_balance,
         'posts': posts,
+        'balance_streak': balance_streak,
+        'user_timezone_object': user_timezone_object,
+        'user_timezone': user_timezone,
     }
 
     return profile_data
