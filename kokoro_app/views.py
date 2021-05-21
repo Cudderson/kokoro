@@ -113,27 +113,15 @@ def profile(request):
     elif request.method == 'GET':
 
         # Get id of user profile to visit
+        user_id = profile_utils.get_profile_to_visit(request)
 
-        if 'profile_to_visit' in request.GET:
+        # user requesting their own profile
+        if user_id == request.user.id:
 
-            # User is requesting the profile of a different user (search form)
-            user_id = request.GET.get('profile_to_visit')
-
-        elif 'profile_to_visit' in request.session:
-
-            # User is requesting the profile of a different user (notification)
-            user_id = request.session['profile_to_visit']
-            # remove variable from session to avoid cross-ups
-            del request.session['profile_to_visit']
-
-        else:
-            # Logged in user is requesting their own profile
             user = request.user
-            user_id = request.user.id
-            already_friends = False
 
         # Get user object if user requesting a different profile than their own
-        if user_id != request.user.id:
+        else:
             try:
                 # Objects.get() returns 1 object rather than queryset of objects (objects.filter())
                 user = User.objects.get(id__exact=user_id)
@@ -232,10 +220,8 @@ def profile(request):
         balance_streak_object = BalanceStreak.objects.get(owner__exact=request.user)
         balance_streak = balance_streak_object.balance_streak
 
-        # Will shrink context later as we define new User model
         context = {
             'user': user,
-            # boolean
             'already_friends': already_friends,
             'pending_friendship_request': pending_friendship_request,
             'perfect_form': perfect_form,

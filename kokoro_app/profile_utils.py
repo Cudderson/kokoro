@@ -2,6 +2,36 @@
 from django.http import Http404
 
 
+def get_profile_to_visit(request):
+    """
+    Use request data to determine the id of a user's profile page to render
+    :param request: http data
+    :return: a unique id of a User object
+    """
+
+    if 'profile_to_visit' in request.GET:
+
+        # User is requesting the profile of a different user (search form)
+        user_id = request.GET.get('profile_to_visit')
+
+    elif 'profile_to_visit' in request.session:
+
+        # User is requesting the profile of a different user (notification)
+        user_id = request.session['profile_to_visit']
+        # remove variable from session to avoid cross-ups
+        del request.session['profile_to_visit']
+
+    else:
+        # Logged in user is requesting their own profile
+        user_id = request.user.id
+
+    try:
+        return user_id
+
+    except Exception as e:
+        raise Http404("Something went wrong while retrieving the profile you requested.", e)
+
+
 def save_new_display_name(request, display_name_form, current_display_name):
     """
     Save a validated form submitted by user
