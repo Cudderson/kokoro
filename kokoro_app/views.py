@@ -123,44 +123,17 @@ def profile(request):
         # Get user object if user requesting a different profile than their own
         else:
             try:
-                # Objects.get() returns 1 object rather than queryset of objects (objects.filter())
                 user = User.objects.get(id__exact=user_id)
+
             except Exception as e:
-                # Handle the case of MultipleObjectsReturned & DoesNotExist
-                print(e)
-                raise Http404('Something went wrong while retrieving the profile you requested.')
-
-            # The plan:
-            # The flaw in this code is that we are checking for a pending FriendshipRequest, even if user already determined as friends.
-            # The optimal approach is to have 1 function first determine if users are friends, and only call the next function if they aren't
-            # 2 functions: determine_if_friends() and check_for_pending_friendship_request()
-
-            # Steps:
-            # 1. determine is users are friends / call determine_if_friends()
-            # 2. if already_friends == False, check for pending FriendshipRequest. Otherwise, skip
-
-            # friendship logic start
+                raise Http404('Something went wrong while retrieving the profile you requested.', e)
 
             # determine if current user is already friends with the user that we're visiting (returns bool)
             already_friends = friendship_utils.determine_if_friends(request, user)
 
-            # Let's get the user's FriendshipRequest objects
-            # Better yet, let's determine in here if there is an open FriendshipRequest
-            # This block will try to execute when user is visiting someone else's profile (move to helper)
-            try:
-                # check if user has sent FriendshipRequest to profile visiting
-                pending_friendship_request = FriendshipRequest.objects.get(from_user=request.user, to_user=user_id, accepted=False)
-            except ObjectDoesNotExist:
-                # check if profile visiting has sent FriendshipRequest to user
-                try:
-                    pending_friendship_request = FriendshipRequest.objects.get(from_user=user_id, to_user=request.user, accepted=False)
-                except ObjectDoesNotExist:
-                    pass
-
-            pending_friendship_request = True if pending_friendship_request else False
-
-            # friendship logic end
-
+            # Check for pending friendship request if users are not friends (returns bool)
+            if not already_friends:
+                pending_friendship_request = friendship_utils.check_for_pending_friendship_request(request, user_id)
 
         # user info for profile page
         try:

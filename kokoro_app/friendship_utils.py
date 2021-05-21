@@ -6,10 +6,10 @@ from django.core.exceptions import ObjectDoesNotExist
 
 def determine_if_friends(request, user):
     """
-
-    :param request:
-    :param user:
-    :return:
+    Checks the friendship status between 2 User objects
+    :param request: http data
+    :param user: User object
+    :return: boolean indicating friendship status
     """
 
     try:
@@ -19,6 +19,36 @@ def determine_if_friends(request, user):
         already_friends = False
 
     return already_friends
+
+
+def check_for_pending_friendship_request(request, user_id):
+    """
+    Checks for FriendshipRequest object to/from 2 User objects with 'accepted' == False
+    :param request: http data
+    :param user_id: unique id of a User object
+    :return: boolean indicating the existence of a FriendshipRequest object
+    """
+
+    try:
+        # check if user has sent FriendshipRequest to profile visiting
+        pending_friendship_request_exists = bool(FriendshipRequest.objects.get(
+            from_user=request.user,
+            to_user=user_id,
+            accepted=False))
+
+    except ObjectDoesNotExist:
+        # check if profile visiting has sent FriendshipRequest to user
+        try:
+            pending_friendship_request_exists = bool(FriendshipRequest.objects.get(
+                from_user=user_id,
+                to_user=request.user,
+                accepted=False))
+
+        except ObjectDoesNotExist:
+            # no pending friendship request between users
+            pending_friendship_request_exists = False
+
+    return True if pending_friendship_request_exists else False
 
 
 def send_friendship_request(request, sending_to_id):
