@@ -7,7 +7,6 @@
   <title>kokoro</title>
 
   {% load static %}
-  <script src="{% static '\kokoro_app\kokoro_scripts_home.js' %}"></script>
   <link rel="stylesheet" type="text/css" href="\static\kokoro_app\styles.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <!--<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">-->
@@ -78,5 +77,6 @@
     </label>
   </header>
 {% block content %}{% endblock content %}
+<script src="{% static '\kokoro_app\kokoro_scripts_home.js' %}"></script>
 </body>
 </html>
