@@ -748,10 +748,10 @@ svg text {
 .profile-image > img {
     width: 100%;
     margin: auto;
-    border: 1px solid gray;
     border-radius: 8px;
     background-color: white;
     vertical-align: bottom;
+    /*background-color: green;*/ /* change to page bg-color if whitespace showing */
 
     /* make image square */
     position: absolute;
