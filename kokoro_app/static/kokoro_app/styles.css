@@ -24,27 +24,20 @@ body {
     /* font variables */
     --font-2xl: 36px;
     /* color-scheme test. 3 colors*/
-    /* 1: dark, 2: medium, 3: light */
-    --color-1: #3d3d3f; /* this could be a good 'black', maybe slightly darker. Going to keep using color-1 as black */
-    --color-2: #7dce94;
-    --color-3: #EDFEF0;
 
-    --color-green0: #034001;
-    --color-green1: #055902;
-    --color-green2: #067302;
-    --color-white: #F5FFF7;
-    --color-black: #013700;
+    /* another color scheme (green/tan/brown) need to add sky blue if wanted */
+    --color-1: #997646; /* dark-brown */
+    --color-2: #caac75; /* brown */
+    --color-3: #fefac1; /* lightbrown */
+    --color-4: #a5ee9d; /* pale green */
+    --color-5: #73db6a; /* light green */
+    --color-6: #3ec030; /* lime green */
 
-    /* The Alchemist Color Scheme */
-    --color-chemist-darkorange: #D44222;
-    --color-chemist-orange: #E46123;
-    --color-chemist-yellow: #F1992A;
-    --color-chemist-paleyellow: #F8DD79;
-    --color-chemist-white: #F8EEE3;
-    /* Possible sky-blues for background */
-    --color-lightblue: #C4FCF0;
-    --color-blue: #64BAAA;
-    --color-cartoon-blue: #1F81FF;
+    /* paletton color scheme */
+    --color-green: #75DB6A;
+    --color-blue: #1E857D;
+    --color-tan: #FFB57B;
+    --color-red: #EF555D;
 
 }
 
@@ -62,9 +55,9 @@ body {
     background-image: linear-gradient(to top, #3d3d3f, #495461, #476f81, #3d8d97, #43aa9f, #5fbaa3, #7ccaa6, #9adaaa, #afe3bb, #c4eccc, #d9f5de, #edfef0);
     */
     /*background-image: linear-gradient(to bottom, #f5fff7, #badcbe, #83b984, #4e964a, #067302);*/
-    background-image: url('/static/kokoro_app/sand-wave.svg'); /* getwaves.io, used --color-chemist-paleyellow */
+    background-image: url('/static/kokoro_app/sand-hill-wave.svg'); /* getwaves.io, used --color-chemist-paleyellow */
     background-size: cover;
-    background-color: var(--color-blue); /* color behind svg hill/wave */
+    background-color: #1E857D; /* color behind svg hill/wave */
 }
 /* reset box-sizing */
 *, *::before, *::after {
@@ -100,7 +93,8 @@ header {
     background-image: linear-gradient(to left, #badcbe, #83b984, #4e964a); */
 
     /* orange>yellow gradient */
-    background-image: linear-gradient(to right, #d44222, #d74822, #da4e22, #dd5423, #e05a23, #e36123, #e56923, #e87023, #eb7b23, #ed8525, #ef8f27, #f1992a);
+    /*background-image: linear-gradient(to right, #d44222, #d74822, #da4e22, #dd5423, #e05a23, #e36123, #e56923, #e87023, #eb7b23, #ed8525, #ef8f27, #f1992a);*/
+    background: var(--color-5);
     text-align: center;
     position: fixed;
     z-index: 999;
@@ -114,7 +108,7 @@ header {
 }
 
 .logo {
-    color: var(--color-chemist-white);
+    color: white;
 }
 
 nav {
@@ -128,7 +122,7 @@ nav {
     transform: scale(1, 0);
     transform-origin: top;
     transition: transform 400ms ease-in-out;
-    background-image: linear-gradient(to right, #d44222, #d74822, #da4e22, #dd5423, #e05a23, #e36123, #e56923, #e87023, #eb7b23, #ed8525, #ef8f27, #f1992a);
+    background: var(--color-5);
 }
 
 nav ul {
@@ -143,7 +137,7 @@ nav li {
 }
 
 nav a {
-    color: var(--color-chemist-white);
+    color: white;
     text-decoration: none;
     font-size: 1rem;
     /* text-transform: uppercase; <-- don't like this */
@@ -189,7 +183,7 @@ nav a:hover {
     width: 2em;
     border-radius: 2px;
     position: relative;
-    background: var(--color-chemist-white);
+    background: white;
 }
 
 .nav-toggle-label span::before,
@@ -289,7 +283,7 @@ nav a:hover {
 }
 
 .dropdown-content button:hover {
-    background-color: var(--color-chemist-white);
+    background-color: black;
 }
 
 .dropdown:hover .dropdown-content {
@@ -301,12 +295,12 @@ nav a:hover {
     border: none;
     font-size: 17px;
     background: none;
-    color: var(--color-chemist-white);
+    color: white;
     font-family: 'Playfair Display', serif;
 }
 
 .dropdown-btn:hover {
-    background-color: var(--color-chemist-orange);
+    background-color: var(--color-6);
 }
 
 .drop-noti {
@@ -314,7 +308,7 @@ nav a:hover {
     user-select: none;
     border: none;
     width: 100%;
-    background-color: var(--color-chemist-paleyellow);
+    background-color: var(--color-4);
 }
 
 .drop-noti-read {
@@ -392,7 +386,7 @@ nav a:hover {
 
 .separator-thin {
     padding: .025rem;
-    background-color: var(--color-1);
+    background-color: black;
     width: 80%;
     margin: 0 auto;
 }
@@ -412,7 +406,7 @@ nav a:hover {
     /* this is the pseudo-element representing the shadow */
     content: "";
     position: absolute;
-    background: var(--color-chemist-paleyellow);
+    background: #FFB67B;
 
     top: 65%;
     left: 0;
@@ -422,13 +416,26 @@ nav a:hover {
 
     /* give perspective to shadow */
     transform: perspective(2rem) rotateX(20deg) scale(1, .2);
-    filter: blur(3em) brightness(0.5);
+    filter: blur(3em) brightness(0.75);
     pointer-events: none;
     z-index: -1;
 }
 
 .tri-main {
     stroke-width: 5px;
+    fill: white;
+}
+
+.tri-1 {
+    fill: var(--color-blue);
+}
+
+.tri-2 {
+    fill: var(--color-red);
+}
+
+.tri-3 {
+    fill: var(--color-green);
 }
 
 .tri-1:hover {
@@ -486,7 +493,7 @@ svg text {
     overflow: hidden;
     width: 90%; /* flexbox overrides width property. have to define width here too */
     margin: 5em auto 0 auto;
-    border: 1px solid var(--color-1);
+    border: 1px solid black;
     border-radius: 4px 4px 0 0;
     background-color: gray; /* this fixes white-space */
 }
@@ -500,8 +507,8 @@ svg text {
 .activity-label {
     flex-grow: 1;
     text-align: center;
-    color: var(--color-chemist-white);
-    background: var(--color-chemist-yellow);
+    color: black;
+    background: var(--color-red);
     padding: 10px 10px 10px 10px;
     font-size: 18px; /*  make label text responsive [] */
     cursor: pointer;
@@ -510,10 +517,16 @@ svg text {
 
 .mind-label {
     border-radius: 4px 0px 0px 0px;
+    background: var(--color-blue);
+}
+
+.body-label {
+    background: var(--color-red);
 }
 
 .soul-label {
     border-radius: 0px 4px 0px 0px;
+    background: var(--color-green);
 }
 
 .activity-label:hover {
@@ -522,7 +535,7 @@ svg text {
 }
 
 .activity-label + .activity-radio + .activity-label {
-    border-left: solid 1px var(--color-1);
+    border-left: solid 1px black;
 }
 
 .activity-label option {
@@ -541,9 +554,10 @@ svg text {
     transform: scale(1, 0);
     transform-origin: top;
     transition: transform 500ms ease-in-out 10ms;
-    border: 1px solid var(--color-1);
-    border-top: 4px solid var(--color-1);
+    border: 1px solid black;
+    border-top: 4px solid var(--color-5);
     border-radius: 0 0 4px 4px;
+    background-color: var(--color-4);
 }
 
 .activity-submit input {
@@ -551,9 +565,10 @@ svg text {
     /*height: 3em;*/ /* don't use height */
     /*border: 4px solid black;*/
     border: 0;
+    border-top: 1px solid black;
     border-radius: 0px 0px 0px 4px;
     /*background-color: var(--background);*/
-    background-color: var(--color-white);
+    background-color: var(--color-4);
     padding: 10px 10px 10px 10px;
     padding-left: 15px; /* gives placeholder text padding */
     font-size: 16px;
@@ -566,14 +581,15 @@ svg text {
     /* remove default border */
     border: none;
     border-radius: 0px 0px 4px 0px;
-    border-left: 1px solid var(--color-1);
-    background-color: var(--color-2);
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    background-color: var(--color-5);
     font-size: 16px;
     padding: 0;
 }
 
 .activity-submit button:hover {
-    background-color: lightgreen;
+    background-color: var(--color-6);
     transition: .7s;
 }
 
@@ -1099,16 +1115,15 @@ svg text {
     .svg-container > div::before {
         content: "";
         position: absolute;
-        background: lightgray;
         top: 65%;
         left: -175%;
         width: 120%;
         height: 100%;
         margin: 0 auto;
 
-        background: var(--color-chemist-paleyellow);
+        background: #FFB67B;
         transform: perspective(6rem) rotateX(20deg) scale(1, .15);
-        filter: blur(6em) brightness(0.5);
+        filter: blur(6em) brightness(0.75);
         pointer-events: none;
         z-index: -1;
 
@@ -1125,27 +1140,22 @@ svg text {
         height: 55%;
         margin-top: 10%;
         margin-bottom: 10%;
-        border: 1px solid var(--color-1);
+        border: 1px solid black;
         border-radius: 4px;
         padding: 0 .5rem;
 
         display: flex;
         flex-direction: column;
 
-        /* rgba for color --color-1 */
-        /*background: rgba(61, 61, 63, .75);*/
+        /* rgba for --color-blue */
+        background: rgba(30, 133, 125, .75);
 
-        /* rgba for --color-2 */
-        /*background: rgba(125, 206, 148, 1);*/
+        /* rgba for --color-green */
+        /*background: rgba(117, 219, 106, .9);*/
 
-        /* rgba for --color-3 */
-        /*background: rgba(237, 254, 240, .9);*/
+        /* rgba for white */
+        /*background: rgba(255, 255, 255, .75);*/
 
-        /* rgba for --color-chemist-white */
-        /*background: rgba(248, 238, 227, .8);*/
-
-        /* rgba for --color-chemist-yellow */
-        background: rgba(241, 153, 42, .75);
 
     }
 
@@ -1175,6 +1185,11 @@ svg text {
     .instructions-header span {
         display: block;
         padding: 1.5em 0;
+        color: white;
+    }
+
+    .instructions-header .separator-thin {
+        background-color: white;
     }
 
     .activity-card-content {
@@ -1209,12 +1224,12 @@ svg text {
         width: 110%;
         margin-top: 1em;
         margin-bottom: 3em;
-        color: var(--color-1);
+        color: white;
     }
 
     .desktop-home-header .separator-thin {
         margin: .5em auto;
-        background-color: var(--color-1);
+        background-color: white;
     }
 
     .balance-message-container-desktop {
@@ -1242,9 +1257,11 @@ svg text {
     .view-acts-desktop, .help-icon-container-desktop {
         font-weight: 500;
         cursor: pointer;
-        padding: .25em 1em;
-        background-color: var(--color-1);
-        color: var(--color-white);
+        padding: .5em 1.5em;
+        border: none;
+        border-radius: 4px;
+        background-color: var(--color-5);
+        color: black;
     }
 
     /*
