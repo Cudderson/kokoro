@@ -41,6 +41,10 @@ body {
     --color-chemist-yellow: #F1992A;
     --color-chemist-paleyellow: #F8DD79;
     --color-chemist-white: #F8EEE3;
+    /* Possible sky-blues for background */
+    --color-lightblue: #C4FCF0;
+    --color-blue: #64BAAA;
+    --color-cartoon-blue: #1F81FF;
 
 }
 
@@ -60,6 +64,7 @@ body {
     /*background-image: linear-gradient(to bottom, #f5fff7, #badcbe, #83b984, #4e964a, #067302);*/
     background-image: url('/static/kokoro_app/sand-wave.svg'); /* getwaves.io, used --color-chemist-paleyellow */
     background-size: cover;
+    background-color: var(--color-blue); /* color behind svg hill/wave */
 }
 /* reset box-sizing */
 *, *::before, *::after {
@@ -495,8 +500,8 @@ svg text {
 .activity-label {
     flex-grow: 1;
     text-align: center;
-    color: black;
-    background: #D44222;
+    color: var(--color-chemist-white);
+    background: var(--color-chemist-yellow);
     padding: 10px 10px 10px 10px;
     font-size: 18px; /*  make label text responsive [] */
     cursor: pointer;
@@ -1128,19 +1133,26 @@ svg text {
         flex-direction: column;
 
         /* rgba for color --color-1 */
-        background: rgba(61, 61, 63, .5);
+        /*background: rgba(61, 61, 63, .75);*/
 
         /* rgba for --color-2 */
         /*background: rgba(125, 206, 148, 1);*/
 
         /* rgba for --color-3 */
         /*background: rgba(237, 254, 240, .9);*/
+
+        /* rgba for --color-chemist-white */
+        /*background: rgba(248, 238, 227, .8);*/
+
+        /* rgba for --color-chemist-yellow */
+        background: rgba(241, 153, 42, .75);
+
     }
 
     .activity-card-container-inner {
         height: 22vh;
         overflow-y: auto;
-        color: var(--color-1);
+        color: black;
     }
 
     .instructions-header {
@@ -1153,7 +1165,7 @@ svg text {
         display: block;
         padding: .5em 0 .5em 0;
         text-align: center;
-        color: var(--color-white);
+        color: black;
     }
 
     .instructions-header {
@@ -1177,7 +1189,7 @@ svg text {
 
     .activity-card-content > .act-type-desktop {
         display: block;
-        color: var(--color-white);
+        color: black;
     }
 
     .activity-card-content .act-description {
