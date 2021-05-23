@@ -34,6 +34,14 @@ body {
     --color-green2: #067302;
     --color-white: #F5FFF7;
     --color-black: #013700;
+
+    /* The Alchemist Color Scheme */
+    --color-chemist-darkorange: #D44222;
+    --color-chemist-orange: #E46123;
+    --color-chemist-yellow: #F1992A;
+    --color-chemist-paleyellow: #F8DD79;
+    --color-chemist-white: #F8EEE3;
+
 }
 
 html, button {
@@ -50,7 +58,7 @@ body {
     background-image: linear-gradient(to top, #3d3d3f, #495461, #476f81, #3d8d97, #43aa9f, #5fbaa3, #7ccaa6, #9adaaa, #afe3bb, #c4eccc, #d9f5de, #edfef0);
     */
     /*background-image: linear-gradient(to bottom, #f5fff7, #badcbe, #83b984, #4e964a, #067302);*/
-    background-image: url('/static/kokoro_app/green-wave-2.svg'); /* getwaves.io */
+    background-image: url('/static/kokoro_app/sand-wave.svg'); /* getwaves.io, used --color-chemist-paleyellow */
     background-size: cover;
 }
 /* reset box-sizing */
@@ -83,9 +91,11 @@ body {
 ===============
 */
 header {
-    /*background: var(--background);*/
-    /*background: var(--color-white);*/
-    background-image: linear-gradient(to left, #badcbe, #83b984, #4e964a);
+    /* this is a perfect green gradient for header, don't delete until end
+    background-image: linear-gradient(to left, #badcbe, #83b984, #4e964a); */
+
+    /* orange>yellow gradient */
+    background-image: linear-gradient(to right, #d44222, #d74822, #da4e22, #dd5423, #e05a23, #e36123, #e56923, #e87023, #eb7b23, #ed8525, #ef8f27, #f1992a);
     text-align: center;
     position: fixed;
     z-index: 999;
@@ -99,7 +109,7 @@ header {
 }
 
 .logo {
-    color: var(--color-1);
+    color: var(--color-chemist-white);
 }
 
 nav {
@@ -113,7 +123,7 @@ nav {
     transform: scale(1, 0);
     transform-origin: top;
     transition: transform 400ms ease-in-out;
-    background-image: linear-gradient(to left, #badcbe, #83b984, #4e964a);
+    background-image: linear-gradient(to right, #d44222, #d74822, #da4e22, #dd5423, #e05a23, #e36123, #e56923, #e87023, #eb7b23, #ed8525, #ef8f27, #f1992a);
 }
 
 nav ul {
@@ -128,7 +138,7 @@ nav li {
 }
 
 nav a {
-    color: var(--color-1);
+    color: var(--color-chemist-white);
     text-decoration: none;
     font-size: 1rem;
     /* text-transform: uppercase; <-- don't like this */
@@ -174,7 +184,7 @@ nav a:hover {
     width: 2em;
     border-radius: 2px;
     position: relative;
-    background: var(--color-1);
+    background: var(--color-chemist-white);
 }
 
 .nav-toggle-label span::before,
@@ -274,7 +284,7 @@ nav a:hover {
 }
 
 .dropdown-content button:hover {
-    background-color: var(--color-white);
+    background-color: var(--color-chemist-white);
 }
 
 .dropdown:hover .dropdown-content {
@@ -284,14 +294,14 @@ nav a:hover {
 .dropdown-btn {
     /* style button like other <li> in nav */
     border: none;
-    font-size: 1rem;
+    font-size: 17px;
     background: none;
-    color: var(--color-1);
-    font-family: 'Open Sans', sans-serif;
+    color: var(--color-chemist-white);
+    font-family: 'Playfair Display', serif;
 }
 
 .dropdown-btn:hover {
-    background-color: var(--color-1);
+    background-color: var(--color-chemist-orange);
 }
 
 .drop-noti {
@@ -299,11 +309,11 @@ nav a:hover {
     user-select: none;
     border: none;
     width: 100%;
-    background-color: #ddd;
+    background-color: var(--color-chemist-paleyellow);
 }
 
 .drop-noti-read {
-    background-color: #eee;
+    background-color: var(--color-chemist-white);
 }
 
 
@@ -397,7 +407,8 @@ nav a:hover {
     /* this is the pseudo-element representing the shadow */
     content: "";
     position: absolute;
-    background: var(--color-green2);
+    background: var(--color-chemist-paleyellow);
+
     top: 65%;
     left: 0;
     width: 100%;
@@ -406,7 +417,7 @@ nav a:hover {
 
     /* give perspective to shadow */
     transform: perspective(2rem) rotateX(20deg) scale(1, .2);
-    filter: blur(3em);
+    filter: blur(3em) brightness(0.5);
     pointer-events: none;
     z-index: -1;
 }
@@ -485,7 +496,7 @@ svg text {
     flex-grow: 1;
     text-align: center;
     color: black;
-    background-image: linear-gradient(to bottom, #badcbe, #83b984, #4e964a);
+    background: #D44222;
     padding: 10px 10px 10px 10px;
     font-size: 18px; /*  make label text responsive [] */
     cursor: pointer;
@@ -1090,13 +1101,13 @@ svg text {
         height: 100%;
         margin: 0 auto;
 
+        background: var(--color-chemist-paleyellow);
         transform: perspective(6rem) rotateX(20deg) scale(1, .15);
-        filter: blur(6em);
+        filter: blur(6em) brightness(0.5);
         pointer-events: none;
         z-index: -1;
 
         display: block;
-        background: var(--color-green2);
     }
 
     .activity-card-container {
