@@ -49,8 +49,9 @@ body {
     /* this is a gradient of the three color variables (3)
     background-image: linear-gradient(to top, #3d3d3f, #495461, #476f81, #3d8d97, #43aa9f, #5fbaa3, #7ccaa6, #9adaaa, #afe3bb, #c4eccc, #d9f5de, #edfef0);
     */
-    background-image: linear-gradient(to bottom, #f5fff7, #badcbe, #83b984, #4e964a, #067302);
-
+    /*background-image: linear-gradient(to bottom, #f5fff7, #badcbe, #83b984, #4e964a, #067302);*/
+    background-image: url('/static/kokoro_app/green-wave-2.svg'); /* getwaves.io */
+    background-size: cover;
 }
 /* reset box-sizing */
 *, *::before, *::after {
@@ -1116,7 +1117,7 @@ svg text {
         flex-direction: column;
 
         /* rgba for color --color-1 */
-        background: rgba(61, 61, 63, .1);
+        background: rgba(61, 61, 63, .5);
 
         /* rgba for --color-2 */
         /*background: rgba(125, 206, 148, 1);*/
