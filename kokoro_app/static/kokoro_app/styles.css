@@ -79,11 +79,6 @@ body {
 ===============
 */
 header {
-    /* this is a perfect green gradient for header, don't delete until end
-    background-image: linear-gradient(to left, #badcbe, #83b984, #4e964a); */
-
-    /* orange>yellow gradient */
-    /*background-image: linear-gradient(to right, #d44222, #d74822, #da4e22, #dd5423, #e05a23, #e36123, #e56923, #e87023, #eb7b23, #ed8525, #ef8f27, #f1992a);*/
     background: var(--color-blue);
     text-align: center;
     position: fixed;
@@ -106,13 +101,12 @@ nav {
     text-align: left;
     top: 100%;
     left: 0;
-    /*background: var(--background);*/
-    background: #ccc;
     width: 100%;
     transform: scale(1, 0);
     transform-origin: top;
     transition: transform 400ms ease-in-out;
-    background: var(--color-5);
+    background: var(--color-blue);
+    border-bottom: 2px solid white;
 }
 
 nav ul {
@@ -193,10 +187,12 @@ nav a:hover {
 .nav-search {
     border: 1px solid white;
     border-right: 0px;
-    border-radius: 4px 0px 0px 4px;
-    padding: .3em .5em;
+    border-radius: 12px 0px 0px 12px;
+    padding: .3em .75em;
+    padding-right: 0;
     background: var(--color-blue);
     color: white;
+    width: 75%;
 }
 
 .nav-search::placeholder {
@@ -216,7 +212,7 @@ nav a:hover {
 .nav-search + button[type=submit] {
     border: 1px solid white;
     border-left: 0px;
-    border-radius: 0px 4px 4px 0px;
+    border-radius: 0px 12px 12px 0px;
     padding: .29em 1em;
     transition: .5s;
     vertical-align: bottom;
@@ -237,7 +233,7 @@ nav a:hover {
     /* make header a grid */
     header {
         display: grid;
-        grid-template-columns: .75fr auto minmax(600px, 2.25fr) .75fr;
+        grid-template-columns: .75fr auto minmax(600px, 2.25fr) .5fr;
     }
 
     .logo {
@@ -254,12 +250,13 @@ nav a:hover {
     }
 
     nav ul {
+        margin-top: 20px;
         display: flex; /* make <li> elements appear side-by-side rather than vertically using flex */
     }
 
     nav li {
         /* turn off bottom margin of <li> elements and space them with left margin */
-        margin-left: 3em;
+        margin-right: 3vw;
         margin-bottom: 0;
     }
 
@@ -1295,7 +1292,7 @@ svg text {
         grid-column: 1 / 3;
         grid-row: 1 / 2;
         width: 110%;
-        margin-top: 1em;
+        margin-top: 2em;
         margin-bottom: 3em;
         color: white;
     }
