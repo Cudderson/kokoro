@@ -283,14 +283,34 @@ nav a:hover {
 .dropdown-btn {
     /* style button like other <li> in nav */
     border: none;
-    font-size: 17px;
+    padding: 0;
+    outline: none;
+    font-size: 16px;
     background: none;
     color: white;
     font-family: 'Playfair Display', serif;
 }
 
 .dropdown-btn:hover {
-    background-color: var(--color-green);
+    color: var(--color-green);
+}
+
+.dropdown-btn::before {
+    content: '';
+    display: block;
+    height: 5px;
+    position: absolute;
+    background: var(--color-green);
+    border-radius: 4px;
+    top: -.75em;
+    left: 0;
+    right: 0;
+    transform: scale(0, 1);
+    transition: transform ease-in-out 250ms;
+}
+
+.dropdown-btn:hover::before {
+    transform: scale(1, 1);
 }
 
 .drop-noti {
