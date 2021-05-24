@@ -190,6 +190,45 @@ nav a:hover {
     top: 7px;
 }
 
+.nav-search {
+    border: 1px solid white;
+    border-right: 0px;
+    border-radius: 4px 0px 0px 4px;
+    padding: .3em .5em;
+    background: var(--color-blue);
+    color: white;
+}
+
+.nav-search::placeholder {
+    color: lightgray;
+}
+
+.nav-search:focus {
+    outline: none;
+    vertical-align: bottom;
+    border-color: var(--color-green);
+}
+
+.nav-search:focus::placeholder {
+    color: var(--color-blue);
+}
+
+.nav-search + button[type=submit] {
+    border: 1px solid white;
+    border-left: 0px;
+    border-radius: 0px 4px 4px 0px;
+    padding: .29em 1em;
+    transition: .5s;
+    vertical-align: bottom;
+}
+
+.nav-search + button[type=submit]:hover {
+    background-color: var(--color-green);
+    border-color: var(--color-green);
+    color: white;
+    transition: .5s;
+}
+
 /* change screen size if needed */
 @media screen and (min-width: 1200px) {
     .nav-toggle-label {
