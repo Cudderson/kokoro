@@ -516,6 +516,10 @@ svg text {
     transition: 1s;
 }
 
+.activated {
+    background: var(--color-green);
+}
+
 .mind-label {
     border-radius: 4px 0px 0px 0px;
     background:;

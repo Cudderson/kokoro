@@ -130,7 +130,7 @@
                 <input class="activity-radio" type="radio" name="activity" value="mind" required="" id="id_activity_1">
                 <label class="activity-label mind-label" onclick="collapse()" for="id_activity_1">{{ activity_form.activity.1 }}</label>
                 <input class="activity-radio" type="radio" name="activity" value="body" required="" id="id_activity_2">
-                <label class="activity-label" onclick="collapse()" for="id_activity_2">{{ activity_form.activity.2 }}</label>
+                <label class="activity-label body-label" onclick="collapse()" for="id_activity_2">{{ activity_form.activity.2 }}</label>
                 <input class="activity-radio" type="radio" name="activity" value="soul" required="" id="id_activity_3">
                 <label class="activity-label soul-label" onclick="collapse()" for="id_activity_3">{{ activity_form.activity.3 }}</label>
             </div>
@@ -262,19 +262,13 @@ window.addEventListener("load", function () {
         }
     }
 
-    // need to change the loops below to compare classes rather than colors (rgba screwed it up)
-
     // activity-form scripts/logic
     let activityLabel = document.getElementsByClassName("activity-label");
     var activityInput = document.getElementById("id_description");
     let activityTypes = ["Mind", "Body", "Soul"];
 
-    function revertColor() {
-        for (let i = 0; i < 3; i++) {
-            console.log("HEEHEH");
-            activityLabel[i].style.background = "rgba(255, 255, 255, 0)";
-        }
-    }
+    // On click, check if any labels have class 'activated', if so, labelSelected == true, and we remove 'activated' from classList
+    // If none had 'activated' in classList, second 'if' condition triggers to add class 'activated'.
 
     for (let i = 0; i < 3; i++) {
 
@@ -283,15 +277,16 @@ window.addEventListener("load", function () {
             let labelSelected = false;
 
             for (let j = 0; j < 3; j++) {
-                if (activityLabel[j].style.background == "#4ABB49") {
+                if (activityLabel[j].classList.contains("activated")) {
+
                     labelSelected = true;
-                    console.log("CLEAR");
-                    revertColor();
+                    activityLabel[j].classList.toggle("activated");
                     break;
                 }
             }
             if (labelSelected != true) {
-                activityLabel[i].style.background = "#4ABB49";
+
+                activityLabel[i].classList.toggle("activated");
                 activityInput.placeholder = `Describe Your ${activityTypes[i]} Activity..`;
             }
         }, false);
