@@ -264,6 +264,7 @@ window.addEventListener("load", function () {
 
     // activity-form scripts/logic
     let activityLabel = document.getElementsByClassName("activity-label");
+    let activitySelect = document.getElementsByClassName("activity-select")[0];
     var activityInput = document.getElementById("id_description");
     let activityTypes = ["Mind", "Body", "Soul"];
 
@@ -281,12 +282,14 @@ window.addEventListener("load", function () {
 
                     labelSelected = true;
                     activityLabel[j].classList.toggle("activated");
+                    activitySelect.classList.toggle("activated-submit");
                     break;
                 }
             }
             if (labelSelected != true) {
 
                 activityLabel[i].classList.toggle("activated");
+                activitySelect.classList.toggle("activated-submit");
                 activityInput.placeholder = `Describe Your ${activityTypes[i]} Activity..`;
             }
         }, false);

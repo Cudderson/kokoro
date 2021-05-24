@@ -520,6 +520,10 @@ svg text {
     background: var(--color-green);
 }
 
+.activated-submit {
+    border-bottom: 1px solid var(--color-green);
+}
+
 .mind-label {
     border-radius: 4px 0px 0px 0px;
     background:;
@@ -559,7 +563,7 @@ svg text {
     transform-origin: top;
     transition: transform 500ms ease-in-out 10ms;
     border: 1px solid black;
-    border-top: 4px solid black;
+    border-top: 4px solid var(--color-green);
     border-radius: 0 0 4px 4px;
     background-color: ;
 }
