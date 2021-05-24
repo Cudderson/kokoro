@@ -466,7 +466,7 @@ nav a:hover {
     transition: .7s;
 }
 .completed_act {
-    fill: gray;
+    fill-opacity: 1;
 }
 .completed_act:hover {
     fill: #ffe;
@@ -1147,26 +1147,20 @@ svg text {
         display: flex;
         flex-direction: column;
 
-        /* rgba for --color-blue */
-        /*background: rgba(30, 133, 125, .75);*/
-
-        /* rgba for --color-green */
-        /*background: rgba(117, 219, 106, .75);*/
-
         /* rgba for white */
         /*background: rgba(255, 255, 255, .75);*/
 
         /* new green */
         /*background: rgba(74, 187, 73, .75);*/
 
-        background: rgba(0, 0, 0, .5);
+        background: rgba(0, 0, 0, .4);
 
     }
 
     .activity-card-container-inner {
         height: 22vh;
         overflow-y: auto;
-        color: black;
+        color: white;
     }
 
     .instructions-header {
@@ -1179,7 +1173,11 @@ svg text {
         display: block;
         padding: .5em 0 .5em 0;
         text-align: center;
-        color: black;
+        color: white;
+    }
+
+    .daily-acts-header ~ .separator-thin {
+        background-color: white;
     }
 
     .instructions-header {
@@ -1208,7 +1206,7 @@ svg text {
 
     .activity-card-content > .act-type-desktop {
         display: block;
-        color: black;
+        color: var(--color-green);
     }
 
     .activity-card-content .act-description {
@@ -1217,7 +1215,7 @@ svg text {
 
     .separator-gray {
         width: 100%;
-        background-color: black;
+        background-color: white;
         padding: .025em;
     }
 
