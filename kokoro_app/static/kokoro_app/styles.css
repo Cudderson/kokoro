@@ -39,6 +39,15 @@ body {
     --color-tan: #FFB57B;
     --color-red: #EF555D;
 
+    --color-red: white;
+    --color-tan: white;
+    --color-blue: white;
+
+    /* new 3 color scheme */
+    blue: #05406D;
+    tan: #F5A52D;
+    green: #4ABB49;
+
 }
 
 html, button {
@@ -55,9 +64,9 @@ body {
     background-image: linear-gradient(to top, #3d3d3f, #495461, #476f81, #3d8d97, #43aa9f, #5fbaa3, #7ccaa6, #9adaaa, #afe3bb, #c4eccc, #d9f5de, #edfef0);
     */
     /*background-image: linear-gradient(to bottom, #f5fff7, #badcbe, #83b984, #4e964a, #067302);*/
-    background-image: url('/static/kokoro_app/sand-hill-wave.svg'); /* getwaves.io, used --color-chemist-paleyellow */
+    background-image: url('/static/kokoro_app/tan-wave.svg'); /* getwaves.io, used --color-chemist-paleyellow */
     background-size: cover;
-    background-color: #1E857D; /* color behind svg hill/wave */
+    background-color: #05406D; /* color behind svg hill/wave */
 }
 /* reset box-sizing */
 *, *::before, *::after {
@@ -94,7 +103,7 @@ header {
 
     /* orange>yellow gradient */
     /*background-image: linear-gradient(to right, #d44222, #d74822, #da4e22, #dd5423, #e05a23, #e36123, #e56923, #e87023, #eb7b23, #ed8525, #ef8f27, #f1992a);*/
-    background: var(--color-5);
+    background: #05406D;
     text-align: center;
     position: fixed;
     z-index: 999;
@@ -108,7 +117,7 @@ header {
 }
 
 .logo {
-    color: white;
+    color: #4ABB49;
 }
 
 nav {
@@ -406,7 +415,7 @@ nav a:hover {
     /* this is the pseudo-element representing the shadow */
     content: "";
     position: absolute;
-    background: #FFB67B;
+    background: #F5A52D;
 
     top: 65%;
     left: 0;
@@ -422,20 +431,22 @@ nav a:hover {
 }
 
 .tri-main {
-    stroke-width: 5px;
-    fill: white;
+    stroke-width: 2px;
+    stroke: black;
+    fill: #4ABB49;
 }
 
 .tri-1 {
-    fill: var(--color-blue);
+    stroke: black;
+    fill: #4ABB49;
 }
 
 .tri-2 {
-    fill: var(--color-red);
+    fill: #4ABB49;
 }
 
 .tri-3 {
-    fill: var(--color-green);
+    fill: #4ABB49;
 }
 
 .tri-1:hover {
@@ -526,7 +537,7 @@ svg text {
 
 .soul-label {
     border-radius: 0px 4px 0px 0px;
-    background: var(--color-green);
+    background: white;
 }
 
 .activity-label:hover {
@@ -1121,7 +1132,7 @@ svg text {
         height: 100%;
         margin: 0 auto;
 
-        background: #FFB67B;
+        background: #F5A52D;
         transform: perspective(6rem) rotateX(20deg) scale(1, .15);
         filter: blur(6em) brightness(0.75);
         pointer-events: none;
@@ -1148,14 +1159,18 @@ svg text {
         flex-direction: column;
 
         /* rgba for --color-blue */
-        background: rgba(30, 133, 125, .75);
+        /*background: rgba(30, 133, 125, .75);*/
 
         /* rgba for --color-green */
-        /*background: rgba(117, 219, 106, .9);*/
+        /*background: rgba(117, 219, 106, .75);*/
 
         /* rgba for white */
         /*background: rgba(255, 255, 255, .75);*/
 
+        /* new green */
+        /*background: rgba(74, 187, 73, .75);*/
+
+        background: rgba(0, 0, 0, .5);
 
     }
 
@@ -1257,11 +1272,11 @@ svg text {
     .view-acts-desktop, .help-icon-container-desktop {
         font-weight: 500;
         cursor: pointer;
-        padding: .5em 1.5em;
-        border: none;
-        border-radius: 4px;
-        background-color: var(--color-5);
-        color: black;
+        padding: .25em 1.25em;
+        border: 1px solid white;
+        border-radius: 15px;
+        background-color: #05406D;
+        color: white;
     }
 
     /*
