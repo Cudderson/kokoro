@@ -495,7 +495,7 @@ svg text {
     margin: 5em auto 0 auto;
     border: 1px solid black;
     border-radius: 4px 4px 0 0;
-    background-color: rgba(255, 255, 255, 0); /* this fixes white-space */
+    background:; /* this fixes white-space */
 }
 
 .activity-radio {
@@ -518,6 +518,7 @@ svg text {
 
 .activated {
     background: var(--color-green);
+    border-bottom: 1px solid var(--color-green);
 }
 
 .activated-submit {
@@ -570,17 +571,18 @@ svg text {
 
 .activity-submit input {
     grid-column: 1 / 3;
-    /*height: 3em;*/ /* don't use height */
-    /*border: 4px solid black;*/
     border: 0;
-    border-top: 1px solid black;
+    border-top: 1px solid var(--color-green);
     border-radius: 0px 0px 0px 4px;
-    /*background-color: var(--background);*/
-    background-color: ;
+    background: rgba(255, 255, 255, .15);
     padding: 10px 10px 10px 10px;
     padding-left: 15px; /* gives placeholder text padding */
     font-size: 16px;
     outline: none;
+}
+
+.activity-submit input:focus {
+    background: rgba(255, 255, 255, 0);
 }
 
 .activity-submit button {
@@ -590,14 +592,15 @@ svg text {
     border: none;
     border-radius: 0px 0px 4px 0px;
     border-left: 1px solid black;
-    border-top: 1px solid black;
-    background-color: ;
-    font-size: 16px;
+    border-top: 1px solid var(--color-green);
+    background-color: rgba(255, 255, 255, 0);
+    color: black;
+    font-size: 17px;
     padding: 0;
 }
 
 .activity-submit button:hover {
-    background-color: ;
+    background-color: var(--color-green);
     transition: .7s;
 }
 

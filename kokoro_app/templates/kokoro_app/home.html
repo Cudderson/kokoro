@@ -124,7 +124,7 @@
     <!-- end svg -->
     <!-- Daily Activity Form -->
     <div class="activity-form-container">
-        <form action="{% url 'kokoro_app:home' %}" method="post">
+        <form action="{% url 'kokoro_app:home' %}" method="post" autocomplete="off">
             {% csrf_token %}
             <div class="activity-select"> <!--flexbox-->
                 <input class="activity-radio" type="radio" name="activity" value="mind" required="" id="id_activity_1">
