@@ -431,7 +431,7 @@ nav a:hover {
 }
 
 .tri-main {
-    stroke-width: 2px;
+    stroke-width: 0px;
     stroke: black;
     fill: #4ABB49;
 }
@@ -439,14 +439,19 @@ nav a:hover {
 .tri-1 {
     stroke: black;
     fill: #4ABB49;
+    stroke-width: 1px
 }
 
 .tri-2 {
     fill: #4ABB49;
+    stroke: black;
+    stroke-width: 1px;
 }
 
 .tri-3 {
     fill: #4ABB49;
+    stroke: black;
+    stroke-width: 1px;
 }
 
 .tri-1:hover {
