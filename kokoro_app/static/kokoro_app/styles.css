@@ -136,7 +136,7 @@ nav a {
 }
 
 nav a:hover {
-    color: #000;
+    color: var(--color-green);
 }
 
 .nav-toggle:checked ~ nav {
@@ -236,7 +236,7 @@ nav a:hover {
         display: block;
         height: 5px;
         position: absolute;
-        background: black;
+        background: var(--color-green);
         border-radius: 4px;
         top: -.75em;
         left: 0;
@@ -290,7 +290,7 @@ nav a:hover {
 }
 
 .dropdown-btn:hover {
-    background-color: var(--color-6);
+    background-color: var(--color-green);
 }
 
 .drop-noti {
