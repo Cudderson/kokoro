@@ -262,6 +262,8 @@ window.addEventListener("load", function () {
         }
     }
 
+    // need to change the loops below to compare classes rather than colors (rgba screwed it up)
+
     // activity-form scripts/logic
     let activityLabel = document.getElementsByClassName("activity-label");
     var activityInput = document.getElementById("id_description");
@@ -269,7 +271,8 @@ window.addEventListener("load", function () {
 
     function revertColor() {
         for (let i = 0; i < 3; i++) {
-            activityLabel[i].style.background = "#eee";
+            console.log("HEEHEH");
+            activityLabel[i].style.background = "rgba(255, 255, 255, 0)";
         }
     }
 
@@ -280,14 +283,15 @@ window.addEventListener("load", function () {
             let labelSelected = false;
 
             for (let j = 0; j < 3; j++) {
-                if (activityLabel[j].style.background == "gray") {
+                if (activityLabel[j].style.background == "#4ABB49") {
                     labelSelected = true;
+                    console.log("CLEAR");
                     revertColor();
                     break;
                 }
             }
             if (labelSelected != true) {
-                activityLabel[i].style.background = "gray";
+                activityLabel[i].style.background = "#4ABB49";
                 activityInput.placeholder = `Describe Your ${activityTypes[i]} Activity..`;
             }
         }, false);

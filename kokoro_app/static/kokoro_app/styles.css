@@ -495,7 +495,7 @@ svg text {
     margin: 5em auto 0 auto;
     border: 1px solid black;
     border-radius: 4px 4px 0 0;
-    background-color: gray; /* this fixes white-space */
+    background-color: rgba(255, 255, 255, 0); /* this fixes white-space */
 }
 
 .activity-radio {
@@ -508,11 +508,12 @@ svg text {
     flex-grow: 1;
     text-align: center;
     color: black;
-    background:;
+    background: rgba(255, 255, 255, 0);
     padding: 10px 10px 10px 10px;
     font-size: 18px; /*  make label text responsive [] */
     cursor: pointer;
     user-select: none;
+    transition: 1s;
 }
 
 .mind-label {
@@ -526,12 +527,11 @@ svg text {
 
 .soul-label {
     border-radius: 0px 4px 0px 0px;
-    background: white;
 }
 
 .activity-label:hover {
-    background-color: gray !important; /* this makes hover work even after selection */
-    transition: .5s;
+    background: rgba(74, 187, 73, 1); !important; /* this makes hover work even after selection */
+    transition: 1s;
 }
 
 .activity-label + .activity-radio + .activity-label {
@@ -1262,8 +1262,15 @@ svg text {
         padding: .25em 1.25em;
         border: 1px solid white;
         border-radius: 15px;
-        background-color: #05406D;
+        background-color: var(--color-blue);
         color: white;
+        transition: 1s;
+    }
+
+    .view-acts-desktop:hover, .help-icon-container-desktop:hover {
+        background-color: var(--color-green);
+        border: 1px solid var(--color-green);
+        transition: .7s;
     }
 
     /*
