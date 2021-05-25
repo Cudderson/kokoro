@@ -976,7 +976,6 @@ svg text {
 .perfect-balance-header {
     margin-top: 1rem;
     margin-bottom: .25rem;
-    font-size: 15px;
     /*text-decoration: underline;*/
     color: var(--color-green);
 }

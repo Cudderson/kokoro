@@ -32,7 +32,7 @@
                     </form>
                 {% else %}
                     {% if already_friends %}
-                        <form action="{% url 'kokoro_app:view_friendships' %}">
+                        <form class="edit-profile-form" action="{% url 'kokoro_app:view_friendships' %}">
                             <button type="submit" class="edit-profile-or-friendship-btn font-small">Friends</button>
                         </form>
                     {% else %}
@@ -59,7 +59,7 @@
                 <span>{{ biography }}</span>
             </div>
             {% if perfect_balance.perfect_mind %}
-                <div class="perfect-balance-header">Perfect Balance</div>
+                <div class="perfect-balance-header font-large">Perfect Balance</div>
                 <div class="profile-perfect-balance">
                     <!-- could make dynamic 'view perfect balance' option / user decides to display it or not (color-coded) -->
                     <!-- change how packaged for semantic purposes -->
