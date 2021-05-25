@@ -1352,28 +1352,35 @@ svg text {
     */
 
     .profile-wrapper {
-        margin: 0 25em 4em 25em;
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-        border-bottom: 2px solid black;
+        margin: 0 auto;
+        margin-top: 2em;
+        border: 1px solid white;
+        min-width: 500px;
+        max-width: 50vw;
+        background: var(--color-blue);
     }
 
     .cover-placeholder {
         padding: 4rem;
         border-bottom: 1px solid black;
+        background: var(--color-blue);
     }
 
     .profile-display-name {
         /* turn all fonts into variables */
         font-size: var(--font-2xl);
+        color: white;
     }
 
     .profile-username {
         font-size: 18px;
+        color: lightgray;
     }
 
     .profile-quote-container {
         height: 100%;
+        background: red;
+        border: 1px solid white;
     }
 
     .profile-quote-content {
@@ -1389,11 +1396,24 @@ svg text {
     .edit-profile-or-friendship-btn {
         font-size: 16px;
         cursor: pointer;
+        border: 1px solid white;
+        border-radius: 14px;
+        color: white;
+        background-color: var(--color-blue);
+        transition: .5s;
+    }
+
+    .edit-profile-or-friendship-btn:hover {
+        background-color: var(--color-green);
+        border-color: var(--color-green);
+        color: black;
+        transition: .5s;
     }
 
     .profile-biography {
         font-size: 20px;
         margin-top: 1em;
+        color: white;
     }
 
     .perfect-balance-header {
