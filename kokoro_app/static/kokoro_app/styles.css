@@ -849,6 +849,7 @@ svg text {
     display: grid;
     grid-template-rows: repeat(auto, 2fr);
     padding: 1rem .75rem;
+    background: var(--color-blue);
 }
 
 .profile-grid-header {
@@ -897,8 +898,9 @@ svg text {
     position: relative;
     overflow: auto;
     height: 100%;
-    border: 1px solid gray;
+    border: 1px solid white;
     border-radius: 4px;
+    background: var(--color-midnight-blue);
 }
 
 .profile-quote-content {
@@ -910,14 +912,15 @@ svg text {
     margin: auto;
     padding: .8rem .75rem 0 .75rem;
     position: absolute;
-    background: white;
+    background: var(--color-midnight-blue);
+    color: white;
 }
 
 .profile-quote-author {
     width: 100%;
     text-align: center;
     display: block;
-    color: gray;
+    color: var(--color-green);
     margin: .5rem 0 .5rem 0;
 }
 
@@ -931,13 +934,13 @@ svg text {
     grid-row: 1 / 2;
     font-weight: bold;
     word-break: break-word;
-
+    color: white;
 }
 
 .profile-username {
     grid-row: 2 / 3;
     grid-column: 1 / 2;
-    color: gray;
+    color: var(--color-green);
 }
 
 .edit-profile-form {
@@ -951,42 +954,49 @@ svg text {
 
 .edit-profile-or-friendship-btn {
     /* needs fixing for visiting profiles */
-    border: 1px solid black;
-    border-radius: 4px;
+    border: 1px solid white;
+    border-radius: 16px;
     align-self: end;
     justify-self: end;
     padding: .25em 1em;
     font-family: 'Playfair Display', serif;
     float: right;
+    color: white;
+    background-color: var(--color-blue);
+    cursor: pointer;
 }
 
 .profile-biography {
     /* not in a sub-grid */
     margin-top: .5rem;
     width: 95%;
+    color: white;
 }
 
 .perfect-balance-header {
     margin-top: 1rem;
+    margin-bottom: .25rem;
     font-size: 15px;
-    text-decoration: underline;
+    /*text-decoration: underline;*/
+    color: white;
 }
 
 .perfect-mind {
-    color: lightblue;
+    color: var(--color-green);
 }
 
 .perfect-body {
-    color: orange;
+    color: var(--color-green);
 }
 
 .perfect-soul {
-    color: lightgreen;
+    color: var(--color-green);
 }
 
 .profile-contact {
     margin-top: .5rem;
     font-size: 15px;
+    color: var(--color-tan);
 }
 
 .write-post-btn {
@@ -995,16 +1005,22 @@ svg text {
 
 .write-post-btn-submit, .friendship-btn-submit {
     padding: .25em 1em;
+    border: 1px solid white;
+    border-radius: 16px;
+    background-color: var(--color-blue);
+    color: white;
+    transition: .5s;
 }
 
 .profile-post-label {
     margin: 1rem .5em 0 auto;
     display: inline-block;
     width: fit-content;
-    border: 1px solid black;
+    border: 1px solid white;
     border-bottom: 0;
     border-radius: 4px 4px 0 0;
     padding: .125rem 1rem;
+    color: white;
 }
 
 .profile-post-prefix {
@@ -1077,7 +1093,7 @@ svg text {
 
 .cover-placeholder {
     padding: 3rem;
-    background: lightgray;
+    background: var(--color-midnight-blue);
     text-align: center;
     width: 100%;
 }
@@ -1380,19 +1396,19 @@ svg text {
 
     .profile-username {
         font-size: 18px;
-        color: lightgray;
+        color: var(--color-green);
     }
 
     .profile-quote-container {
         height: 100%;
-        background: var(--color-blue);
+        background: var(--color-midnight-blue);
         border: 1px solid white;
     }
 
     .profile-quote-content {
         font-size: 24px;
         padding-top: 2em;
-        background: rgba(0, 0, 0, .25);
+        background: var(--color-midnight-blue);
         color: white;
     }
 
@@ -1426,20 +1442,18 @@ svg text {
     }
 
     .perfect-balance-header {
-        font-size: 20px;
         font-weight: 600;
         color: white;
         margin-top: 1.5em;
     }
 
     .profile-perfect-balance span {
-        font-size: 20px;
         color: var(--color-green);
     }
 
     .profile-contact span {
         font-size: 18px;
-        color: var(--color-green);
+        color: var(--color-tan);
     }
 
     .friendship-btn-submit, .write-post-btn-submit {
@@ -1500,7 +1514,7 @@ svg text {
     }
 
     ::-webkit-scrollbar-thumb {
-        background:black;
+        background: var(--color-green);
         border-radius: 10px;
     }
 

@@ -28,25 +28,25 @@
                 <span class="profile-display-name font-xl">{{ display_name }}</span>
                 {% if user == request.user %}
                     <form class="edit-profile-form" action="{% url 'kokoro_app:edit_profile' %}" method="get">
-                        <button class="edit-profile-or-friendship-btn font-med" type="submit">Edit Profile</button>
+                        <button class="edit-profile-or-friendship-btn font-small" type="submit">Edit Profile</button>
                     </form>
                 {% else %}
                     {% if already_friends %}
                         <form action="{% url 'kokoro_app:view_friendships' %}">
-                            <button type="submit" class="edit-profile-or-friendship-btn font-med">Friends</button>
+                            <button type="submit" class="edit-profile-or-friendship-btn font-small">Friends</button>
                         </form>
                     {% else %}
                         {% if pending_friendship_request == True %}
                             <form class="edit-profile-form" action="{% url 'kokoro_app:view_friendships' %}" method="get">
                                 {% csrf_token %}
-                                <button class="edit-profile-or-friendship-btn font-med" type="submit" name="view_friendships_form">
+                                <button class="edit-profile-or-friendship-btn font-small" type="submit" name="view_friendships_form">
                                     Pending...
                                 </button>
                             </form>
                         {% else %}
                             <form class="edit-profile-form" action="{% url 'kokoro_app:send_friendship_request_handler' sending_to_id=user.id %}" method="post">
                                 {% csrf_token %}
-                                <button class="edit-profile-or-friendship-btn font-med" type="submit" name="send_friendship_request_form" value="{{ user }}">
+                                <button class="edit-profile-or-friendship-btn font-small" type="submit" name="send_friendship_request_form" value="{{ user }}">
                                     Request Friendship
                                 </button>
                             </form>
@@ -55,7 +55,7 @@
                 {% endif %}
                 <span class="profile-username font-med">@{{ user }}</span>
             </div>
-            <div class="profile-biography font-med">
+            <div class="profile-biography font-large">
                 <span>{{ biography }}</span>
             </div>
             {% if perfect_balance.perfect_mind %}
@@ -63,9 +63,9 @@
                 <div class="profile-perfect-balance">
                     <!-- could make dynamic 'view perfect balance' option / user decides to display it or not (color-coded) -->
                     <!-- change how packaged for semantic purposes -->
-                    <span class="perfect-mind font-med">{{ perfect_balance.perfect_mind }}</span><br>
-                    <span class="perfect-body font-med">{{ perfect_balance.perfect_body }}</span><br>
-                    <span class="perfect-soul font-med">{{ perfect_balance.perfect_soul }}</span>
+                    <span class="perfect-mind font-large">{{ perfect_balance.perfect_mind }}</span><br>
+                    <span class="perfect-body font-large">{{ perfect_balance.perfect_body }}</span><br>
+                    <span class="perfect-soul font-large">{{ perfect_balance.perfect_soul }}</span>
                 </div>
             {% endif %}
             <div class="profile-contact">
