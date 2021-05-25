@@ -29,6 +29,8 @@ body {
     --color-tan: #F5A52D;
     --color-green: #4ABB49;
 
+    --color-midnight-blue: #043052;
+
 }
 
 html, button {
@@ -1008,20 +1010,22 @@ svg text {
 .profile-post-prefix {
     width: 100%;
     padding: .05rem;
-    background: gray;
+    background: white;
 }
 
 .profile-post-container {
     height: 40vh;
     position: relative;
     overflow: auto;
+    border: 1px solid white;
+    background: var(--color-midnight-blue);
 }
 
 .profile-post button {
     /* fit button to div (can style more later) */
     width: 100%;
     height: 100%;
-    background: white;
+    background: var(--color-midnight-blue);
     padding: 0;
     border: 0;
     cursor: pointer;
@@ -1031,7 +1035,7 @@ svg text {
     display: block;
     text-align: right;
     font-family: 'Playfair Display', serif;
-    color: lightgray;
+    color: var(--color-tan);
     padding: .5rem 1rem 0 1rem;
 }
 
@@ -1041,6 +1045,7 @@ svg text {
     font-weight: bold;
     font-family: 'Playfair Display', serif;
     padding: 1.5rem 3% 0 3%;
+    color: white;
 }
 
 .profile-post-headline-pinned {
@@ -1051,7 +1056,7 @@ svg text {
     display: block;
     text-align: left;
     font-family: 'Playfair Display', serif;
-    color: gray;
+    color: var(--color-green);
     padding: .75rem 0 .5rem 3%;
 }
 
@@ -1060,6 +1065,7 @@ svg text {
     font-family: 'Playfair Display', serif;
     text-align: right;
     padding-right: 3%;
+    color: white;
 }
 
 .post-separator {
@@ -1379,25 +1385,28 @@ svg text {
 
     .profile-quote-container {
         height: 100%;
-        background: red;
+        background: var(--color-blue);
         border: 1px solid white;
     }
 
     .profile-quote-content {
         font-size: 24px;
         padding-top: 2em;
+        background: rgba(0, 0, 0, .25);
+        color: white;
     }
 
     .profile-quote-author {
         font-size: 18px;
         padding-top: 1em;
+        color: var(--color-green);
     }
 
     .edit-profile-or-friendship-btn {
         font-size: 16px;
         cursor: pointer;
         border: 1px solid white;
-        border-radius: 14px;
+        border-radius: 16px;
         color: white;
         background-color: var(--color-blue);
         transition: .5s;
@@ -1419,25 +1428,41 @@ svg text {
     .perfect-balance-header {
         font-size: 20px;
         font-weight: 600;
-        color: black;
+        color: white;
         margin-top: 1.5em;
     }
 
     .profile-perfect-balance span {
         font-size: 20px;
+        color: var(--color-green);
     }
 
     .profile-contact span {
         font-size: 18px;
+        color: var(--color-green);
     }
 
     .friendship-btn-submit, .write-post-btn-submit {
         font-size: 16px;
+        border: 1px solid white;
+        border-radius: 16px;
+        background-color: var(--color-blue);
+        color: white;
+        transition: .5s;
+    }
+
+    .friendship-btn-submit:hover, .write-post-btn-submit:hover {
+        background-color: var(--color-green);
+        border-color: var(--color-green);
+        transition: .5s;
     }
 
     .profile-post-label {
         font-size: 18px;
         padding: .25em 1.5em;
+        border: 1px solid white;
+        border-bottom: none;
+        color: white;
     }
 
     .profile-post-headline {
