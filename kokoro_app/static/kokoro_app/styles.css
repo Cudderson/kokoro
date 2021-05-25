@@ -934,13 +934,13 @@ svg text {
     grid-row: 1 / 2;
     font-weight: bold;
     word-break: break-word;
-    color: white;
+    color: var(--color-green);
 }
 
 .profile-username {
     grid-row: 2 / 3;
     grid-column: 1 / 2;
-    color: var(--color-green);
+    color: white;
 }
 
 .edit-profile-form {
@@ -978,19 +978,19 @@ svg text {
     margin-bottom: .25rem;
     font-size: 15px;
     /*text-decoration: underline;*/
-    color: white;
+    color: var(--color-green);
 }
 
 .perfect-mind {
-    color: var(--color-green);
+    color: white;
 }
 
 .perfect-body {
-    color: var(--color-green);
+    color: white;
 }
 
 .perfect-soul {
-    color: var(--color-green);
+    color: white;
 }
 
 .profile-contact {
@@ -1391,31 +1391,25 @@ svg text {
     .profile-display-name {
         /* turn all fonts into variables */
         font-size: var(--font-2xl);
-        color: white;
     }
 
     .profile-username {
         font-size: 18px;
-        color: var(--color-green);
     }
 
     .profile-quote-container {
         height: 100%;
-        background: var(--color-midnight-blue);
         border: 1px solid white;
     }
 
     .profile-quote-content {
         font-size: 24px;
         padding-top: 2em;
-        background: var(--color-midnight-blue);
-        color: white;
     }
 
     .profile-quote-author {
         font-size: 18px;
         padding-top: 1em;
-        color: var(--color-green);
     }
 
     .edit-profile-or-friendship-btn {
@@ -1438,17 +1432,11 @@ svg text {
     .profile-biography {
         font-size: 20px;
         margin-top: 1em;
-        color: white;
     }
 
     .perfect-balance-header {
         font-weight: 600;
-        color: white;
         margin-top: 1.5em;
-    }
-
-    .profile-perfect-balance span {
-        color: var(--color-green);
     }
 
     .profile-contact span {
