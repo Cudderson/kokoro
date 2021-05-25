@@ -16,14 +16,14 @@
                 {% if pinned %}
                     <form action="{% url 'kokoro_app:posts_form_handler' %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" name="unpin_post_form" value="{{ post.post_slug }}" style="padding: .75rem; background: white; margin-top: 2rem;">
+                        <button type="submit" name="unpin_post_form" value="{{ post.post_slug }}" style="padding: .75rem; background: var(--color-white);margin-top: 2rem;">
                             Un-Pin This Post From My Profile
                         </button>
                     </form>
                 {% else %}
                     <form action="{% url 'kokoro_app:posts_form_handler' %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" name="pin_post_form" value="{{ post.post_slug }}" style="padding: .75rem; background: white; margin-top: 2rem;">
+                        <button type="submit" name="pin_post_form" value="{{ post.post_slug }}" style="padding: .75rem; background: var(--color-white);margin-top: 2rem;">
                             Pin This Post to My Profile
                         </button>
                     </form>
@@ -37,13 +37,13 @@
                 </form>
                 <form action="{% url 'kokoro_app:posts_form_handler' %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" name="delete_post_form" value="{{ post.post_slug }}" style="padding: .75rem; background: white; margin-top: 2rem; background: red;">
+                    <button type="submit" name="delete_post_form" value="{{ post.post_slug }}" style="padding: .75rem; background: var(--color-white);margin-top: 2rem; background: red;">
                         Delete Post
                     </button>
                 </form>
             {% endif %}
             <form action="{% url 'kokoro_app:profile' %}" method="get">
-                <button type="submit" name="profile_to_visit" value="{{ post.author.id }}" style="padding: .75rem; background: white; margin-top: 1rem;">
+                <button type="submit" name="profile_to_visit" value="{{ post.author.id }}" style="padding: .75rem; background: var(--color-white);margin-top: 1rem;">
                     {% if post.author != request.user %}
                         {{ post.author }}'s Profile
                     {% else %}
