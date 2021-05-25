@@ -1150,7 +1150,7 @@ svg text {
         grid-template-rows: auto auto auto;
         align-items: end;
         justify-items: center;
-        margin: 1rem 7.5vw 10em 7.5vw;
+        margin: 0 7.5vw 10em 7.5vw;
     }
 
     /* place elements in grid */
