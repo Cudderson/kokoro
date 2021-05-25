@@ -49,6 +49,7 @@ body {
     /*background-image: linear-gradient(to bottom, #f5fff7, #badcbe, #83b984, #4e964a, #067302);*/
     background-image: url('/static/kokoro_app/tan-wave.svg'); /* getwaves.io, used --color-chemist-paleyellow */
     background-size: cover;
+    background-position: 0px -100px;
     background-color: var(--color-blue); /* color behind svg hill/wave */
 }
 /* reset box-sizing */
@@ -164,12 +165,11 @@ nav a:hover {
 .nav-toggle-label span::before,
 .nav-toggle-label span::after {
     display: block;
-    background: white;
     height: 2px;
     width: 2em;
     border-radius: 2px;
     position: relative;
-    background: white;
+    background: var(--color-green);
 }
 
 .nav-toggle-label span::before,
@@ -376,11 +376,15 @@ nav a:hover {
 ======================
 */
 
+.home-grid-master {
+    display: block;
+}
+
 .separator {
-    background-color: var(--color-1);
+    background-color: var(--color-blue);
     padding-top: .125rem;
-    border-bottom: 1px solid var(--color-2);
-    border-top: 1px solid var(--color-2);
+    border-bottom: 1px solid var(--color-midnight-blue);
+    border-top: 1px solid var(--color-midnight-blue);
 }
 
 .balance-banner-true {
@@ -442,6 +446,19 @@ nav a:hover {
 
 .balance-streak {
     user-select: none;
+}
+
+.help-icon-container {
+    text-align: right;
+    padding: 1rem;
+}
+
+.help-icon-container > h6 {
+    font-size: 1em;
+    margin: 0;
+    cursor: pointer;
+    user-select: none;
+    color: var(--color-tan);
 }
 
 /* home.html svg */
@@ -1162,6 +1179,7 @@ svg text {
     body {
         /* give spacing below shadow effect on svg */
         margin-bottom: 10em;
+        background-position: 0px 0px;
     }
 
     /* activate grid */
