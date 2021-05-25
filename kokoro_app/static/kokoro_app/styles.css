@@ -49,7 +49,7 @@ body {
     /*background-image: linear-gradient(to bottom, #f5fff7, #badcbe, #83b984, #4e964a, #067302);*/
     background-image: url('/static/kokoro_app/tan-wave.svg'); /* getwaves.io, used --color-chemist-paleyellow */
     background-size: cover;
-    background-position: 0px -100px;
+    background-position: 0px -60px;
     background-color: var(--color-blue); /* color behind svg hill/wave */
 }
 /* reset box-sizing */
@@ -378,68 +378,70 @@ nav a:hover {
 
 .home-grid-master {
     display: block;
+    margin-top: 2px;
 }
 
 .separator {
-    background-color: var(--color-blue);
-    padding-top: .125rem;
-    border-bottom: 1px solid var(--color-midnight-blue);
+    background-color: var(--color-midnight-blue);
+    padding-top: .05em;
     border-top: 1px solid var(--color-midnight-blue);
+    border-bottom: 1px solid var(--color-midnight-blue);
 }
 
-.balance-banner-true {
+.separator-balance {
+    width: 90%;
+    background-color: black;
+    padding-top: 0em; /* makes disappear */
+    margin: 0 auto;
+}
+
+.balance-banner-true, .balance-banner-false {
     display: block;
     margin: 0 auto;
-    padding: 1em 0;
+    width: 95%;
+    padding: 1em .05em;
     text-align: center;
     user-select: none;
-    font-weight: bold;
-    color: var(--color-1);
-}
-
-.balance-banner-false {
-    text-align: center;
-    user-select: none;
-    padding: 1rem 0;
-    display: block;
-    font-weight: bold;
-    color: var(--color-1);
+    color: lightgray;
+    background-color: var(--color-blue);
 }
 
 .balance-banner-div {
-    border-bottom: 1px solid gray; padding: .5rem;
+    border-bottom: 1px solid var(--color-midnight-blue);
+    padding: .5em;
 }
 
 .balance-banner-div > .act-type {
     margin: 0;
     padding-left: .5rem;
-    color: lightgray;
+    color: var(--color-green);
     user-select: none;
 }
 
 .balance-banner-div > .act-description {
     display: block;
-    font-weight: bold;
     margin: 0;
     padding-left: .5rem;
     user-select: none;
+    color: white;
 }
 
 .balance-message-container {
     text-align: center;
     padding: .5rem;
+    background-color: var(--color-blue);
+    color: white;
 }
 
 .balance-message-container > span {
     display: block;
-    font-weight: bold;
     padding: 1em;
     user-select: none;
 }
 
 .separator-thin {
     padding: .025rem;
-    background-color: black;
+    background-color: white;
     width: 80%;
     margin: 0 auto;
 }
@@ -776,11 +778,12 @@ svg text {
 .view-all-activities {
     text-align: center;
     cursor: pointer;
+    color: white;
+    background-color: var(--color-blue);
 }
 
 .view-acts {
     display: block;
-    font-weight: bold;
     padding: 1em;
 }
 
