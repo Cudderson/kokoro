@@ -1195,17 +1195,20 @@ svg text {
 */
 
 .search-container {
-    width: 95%;
-    max-width: 700px;
+    width: 100%;
+    max-width: 600px;
     margin: 0 auto;
 }
 
 .search-card {
     display: grid;
-    grid-template-columns: 20% 60% 20%;
-    border: 1px solid red;
-    margin-bottom: 1em;
-    background-color: var(--color-blue);
+    grid-template-columns: 75px 1fr;
+    grid-template-rows: auto;
+    grid-column-gap: .5rem;
+    border-radius: 8px;
+    margin-bottom: .5rem;
+    background-color: var(--color-midnight-blue);
+    padding: .5rem;
 }
 
 .search-card span {
@@ -1215,32 +1218,42 @@ svg text {
 .search-image {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
-    width: 100%;
-    background-size: cover;
-
-    /* make image square */
-    float:left;
-    position: relative;
-    padding-bottom : 100%; /* = width for a 1:1 aspect ratio */
-    overflow: hidden;
 }
 
 .search-image > img {
     /* make image square */
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    float: left;
+    width:  75px;
+    height: 75px;
     object-fit: cover;
+    border-radius: 4px;
 }
 
 .search-info {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
-    padding-left: .5em;
 }
 
 .search-display-name {
     color: var(--color-green);
+}
+
+.search-username {
+    color: lightgray;
+}
+
+.search-bio {
+    color: var(--color-white);
+}
+
+.search-profile {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    margin-left: auto;
+}
+
+.search-profile-btn {
+    font-size: 14px !important;
 }
 /* end search.html */
 
