@@ -558,11 +558,6 @@ def search(request):
 
     # returns queryset of User(s) with username value of search_input
     users_queryset = User.objects.filter(username__icontains=f'{search_input}')
-    print(users_queryset)
-
-    # The user object apparently can access all fields, even foreign keys? this changes everything.
-    # Do I even need to retrieve all of that extra data??
-    # Let's see if I can accomplish this without any extra queries
 
     context = {
         'search_results': users_queryset,

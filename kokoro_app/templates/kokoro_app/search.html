@@ -3,9 +3,9 @@
 {% block content %}
 <!-- for each user, we should display: -->
 <!-- profileimage, username, display_name, biography (to start) -->
-
-<span>Search Results:</span>
+<div class="super-container">
 <div class="search-container">
+    <span class="search-header font-xl">Search Results:</span>
     {% for user in search_results %}
     <div class="search-card">
         <div class="search-profile">
@@ -21,14 +21,15 @@
         <div class="search-info">
             <span class="search-display-name font-large">{{ user.profiledisplayname.display_name }}</span>
             <span class="search-username font-small">@{{ user.username }}</span>
-            <span class="search-bio font-small">{{ user.profilebio.biography }}</span>
         </div>
+        <span class="search-bio font-small">{{ user.profilebio.biography }}</span>
     </div>
     {% empty %}
     <span>
         No users matched your search...
     </span>
     {% endfor %}
+</div>
 </div>
 
 
