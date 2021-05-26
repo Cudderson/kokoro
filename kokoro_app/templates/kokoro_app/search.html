@@ -1,13 +1,34 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
+<!-- for each user, we should display: -->
+<!-- profileimage, username, display_name, biography (to start) -->
 
-    <div style="text-align: center;">Search Results:</div>
-    <br>
+<span>Search Results:</span>
+<div class="search-container">
     {% for user in search_results %}
-        <form action="{% url 'kokoro_app:profile' %}" method="get">
-            <div style="text-align: center;"><button type="submit" name="profile_to_visit" value="{{ user.id }}">{{ user }}</button></div>
-        </form>
+    <div class="search-card">
+        <div class="search-profile">
+            <form action="{% url 'kokoro_app:profile' %}" method="get">
+                <button type="submit" name="profile_to_visit" value="{{ user.id }}">
+                    <span>Profile</span>
+                </button>
+            </form>
+        </div>
+        <div class="search-image">
+            <img src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
+        </div>
+        <span class="search-display_name">{{ user.profiledisplayname.display_name }}</span>
+        <span class="search-username">{{ user.username }}</span>
+        <span class="search-bio">{{ user.profilebio.biography }}</span>
+    </div>
+    {% empty %}
+    <span>
+        No users matched your search...
+    </span>
     {% endfor %}
+</div>
+
+
 
 {% endblock content %}

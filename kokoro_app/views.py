@@ -560,8 +560,9 @@ def search(request):
     users_queryset = User.objects.filter(username__icontains=f'{search_input}')
     print(users_queryset)
 
-    # Now that we have the requested user(s), we should pass the results to new template
-    # can pass additional needed data later
+    # The user object apparently can access all fields, even foreign keys? this changes everything.
+    # Do I even need to retrieve all of that extra data??
+    # Let's see if I can accomplish this without any extra queries
 
     context = {
         'search_results': users_queryset,
