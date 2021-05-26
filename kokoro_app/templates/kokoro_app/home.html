@@ -8,9 +8,9 @@
 <!-- create master grid of sub-grids -->
 <div class="home-grid-master">
     <!-- mobile -->
-    <div class="separator"></div>
     <div class="balance-banner-container">
         {% if balance_bool == 'True' %}
+        <div class="separator"></div>
         <span class="balance-banner-true font-large">- Your Daily Balance -</span>
         <div class="separator"></div>
         <!-- recreate two-line item -->
@@ -194,7 +194,7 @@
                 </div>
             {% endfor %}
         </div>
-        <input type="submit" name="manage_form" value="Delete Selected Activities">
+        <button class="manage-form-submit font-large" type="submit" name="manage_form">Delete Selected Activities</button>
     </form>
 </div>
 <!-- help icon display -->
