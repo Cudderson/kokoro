@@ -16,16 +16,16 @@
                 <div class="profile-quote-container">
                     <div>
                         <span class="profile-quote-content font-med">
-                            "{{ quote_data.quote }}"
+                            "{{ user.profilequote.quote }}"
                             <span class="profile-quote-author font-small">
-                                - {{ quote_data.quote_author }}
+                                - {{ user.profilequote.quote_author }}
                             </span>
                         </span>
                     </div>
                 </div>
             </div>
             <div class="profile-name-grid">
-                <span class="profile-display-name font-xl">{{ display_name }}</span>
+                <span class="profile-display-name font-xl">{{ user.profiledisplayname.display_name }}</span>
                 {% if user == request.user %}
                     <form class="edit-profile-form" action="{% url 'kokoro_app:edit_profile' %}" method="get">
                         <button class="edit-profile-or-friendship-btn font-small" type="submit">Edit Profile</button>
@@ -56,16 +56,16 @@
                 <span class="profile-username font-med">@{{ user }}</span>
             </div>
             <div class="profile-biography font-large">
-                <span>{{ biography }}</span>
+                <span>{{ user.profilebio.biography }}</span>
             </div>
-            {% if perfect_balance.perfect_mind %}
+            {% if user.perfectbalance.perfect_mind %}
                 <div class="perfect-balance-header font-large">Perfect Balance</div>
                 <div class="profile-perfect-balance">
                     <!-- could make dynamic 'view perfect balance' option / user decides to display it or not (color-coded) -->
                     <!-- change how packaged for semantic purposes -->
-                    <span class="perfect-mind font-large">{{ perfect_balance.perfect_mind }}</span><br>
-                    <span class="perfect-body font-large">{{ perfect_balance.perfect_body }}</span><br>
-                    <span class="perfect-soul font-large">{{ perfect_balance.perfect_soul }}</span>
+                    <span class="perfect-mind font-large">{{ user.perfectbalance.perfect_mind }}</span><br>
+                    <span class="perfect-body font-large">{{ user.perfectbalance.perfect_body }}</span><br>
+                    <span class="perfect-soul font-large">{{ user.perfectbalance.perfect_soul }}</span>
                 </div>
             {% endif %}
             <div class="profile-contact">
@@ -94,7 +94,6 @@
                 </div>
             {% endif %}
             <!-- end viewing own profile -->
-
             <span class="profile-post-label">Posts</span>
             <div class="profile-post-prefix"></div>
             <div class="profile-post-container">

@@ -342,14 +342,7 @@ def get_profile_data(user, profile_models):
 
     # get user data by passing Model in profile_models to helper functions
 
-    biography = get_user_biography(user, profile_models['biography_model'])
-    display_name = get_user_display_name(user, profile_models['display_name_model'])
     contact_info = get_user_contact_info(user, profile_models['contact_info_model'])
-    quote_data = get_quote_data(user, profile_models['quote_model'])
-
-    # 'perfect_balance' is 'perfect_balance_queryset' parsed into a list
-    perfect_balance_queryset = get_perfect_balance_queryset(user, profile_models['perfect_balance_model'])
-    perfect_balance = get_perfect_balance_data(perfect_balance_queryset)
 
     # get ProfilePost and PinnedProfilePost objects belonging to user
     profile_posts = get_profile_posts(user, profile_models['post_model'])
@@ -362,11 +355,7 @@ def get_profile_data(user, profile_models):
     user_timezone_object, user_timezone = get_user_timezone(user, profile_models['profile_timezone_model'])
 
     profile_data = {
-        'biography': biography,
-        'display_name': display_name,
         'contact_info': contact_info,
-        'quote_data': quote_data,
-        'perfect_balance': perfect_balance,
         'posts': posts,
         'balance_streak': balance_streak,
         'user_timezone_object': user_timezone_object,

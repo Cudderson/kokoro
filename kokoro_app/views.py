@@ -133,12 +133,9 @@ def profile(request):
                 pending_friendship_request = friendship_utils.check_for_pending_friendship_request(request, user_id)
 
         # ----- user info/data for profile page -----
+        # Note: some data can be accessed via 'user'
         profile_models = {
-            'biography_model': ProfileBio,
-            'display_name_model': ProfileDisplayName,
             'contact_info_model': ContactInfo,
-            'quote_model': ProfileQuote,
-            'perfect_balance_model': PerfectBalance,
             'post_model': ProfilePost,
             'pinned_post_model': PinnedProfilePost,
             'balance_streak_model': BalanceStreak,
@@ -152,10 +149,6 @@ def profile(request):
             'user': user,
             'already_friends': already_friends,
             'pending_friendship_request': pending_friendship_request,
-            'perfect_balance': profile_data['perfect_balance'],
-            'display_name': profile_data['display_name'],
-            'biography': profile_data['biography'],
-            'quote_data': profile_data['quote_data'],
             'contact_info': profile_data['contact_info'],  # Determine usage of contact info
             'posts': profile_data['posts'],
             'balance_streak': profile_data['balance_streak'],  # Determine usage of balance streak on profile page
