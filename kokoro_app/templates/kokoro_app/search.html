@@ -18,9 +18,11 @@
         <div class="search-image">
             <img src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
         </div>
-        <span class="search-display_name">{{ user.profiledisplayname.display_name }}</span>
-        <span class="search-username">{{ user.username }}</span>
-        <span class="search-bio">{{ user.profilebio.biography }}</span>
+        <div class="search-info">
+            <span class="search-display-name font-xl">{{ user.profiledisplayname.display_name }}</span>
+            <span class="search-username font-large">@{{ user.username }}</span>
+            <span class="search-bio font-large">{{ user.profilebio.biography }}</span>
+        </div>
     </div>
     {% empty %}
     <span>
