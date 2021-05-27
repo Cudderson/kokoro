@@ -3,15 +3,16 @@
 {% block content %}
 <div class="super-container">
     <div class="request-grid">
+        <span class="request-header">Friendship Requests</span>
         <div class="received-request-container">
-        <span>Sent to {{ request.user }}:</span>
+        <span class="font-xl request-type">Received:</span>
         {% for friendship_request in requests_to_user %}
             <div class="received-request">
                 <!-- each received request should show: image, username/display_name, buttons -->
                 <div class="request-image">
                     <img src="{{ friendship_request.from_user.profileimage.image.url }}">
                 </div>
-                <span class="request-message">@{{ friendship_request.from_user }} wants to be your friend!</span>
+                <span class="request-message"><span class="friend-username">@{{ friendship_request.from_user }}</span> wants to be your friend!</span>
                 <!-- form sends the unique id of the user whom sent the friendship request -->
                 <form class="accept-request-form" action="{% url 'kokoro_app:accept_friendship_request_handler' sent_by=friendship_request.from_user.id %}" method="post">
                     {% csrf_token %}
@@ -36,13 +37,13 @@
         {% endfor %}
         </div>
         <div class="sent-request-container">
-        <span>Sent by {{ request.user }}:</span>
+        <span class="font-xl request-type">Sent:</span>
         {% for friendship_request in requests_from_user %}
             <div class="sent-request">
                 <div class="request-image">
                     <img src="{{ friendship_request.to_user.profileimage.image.url }}">
                 </div>
-                <span class="request-message">Pending Request to @{{ friendship_request.to_user }}</span>
+                <span class="request-message">Pending Request to <span class="friend-username">@{{ friendship_request.to_user }}</span></span>
                 <form class="cancel-request-form" action="{% url 'kokoro_app:cancel_friendship_request_handler' friendship_request=friendship_request.id %}" method="post">
                     {% csrf_token %}
                     <button class="request-btn font-med" type="submit" name="cancel_friendship_request_form">
@@ -55,7 +56,7 @@
     </div>
 
     <!-- perhaps we can give these the same styles as search.html cards -->
-    <h1 style="text-align: center;">{{ request.user }}'s Friendships:</h1>
+    <span class="friendships-header">Friendships:</span>
 
     <div class="search-card friend-card">
         {% for friendship in friendships %}
