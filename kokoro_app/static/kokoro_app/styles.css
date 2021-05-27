@@ -1271,6 +1271,50 @@ svg text {
 /* end search.html */
 
 /*
+=================================
+===== view_friendships.html =====
+=================================
+*/
+
+.request-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 1em;
+    background-color: red;
+    margin: 0 auto;
+    padding: 1em;
+    width: 80%;
+}
+
+.request-grid span {
+    color: white;
+}
+
+.sent-request-container {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    border: 1px solid white;
+}
+
+.received-request-container {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    border: 1px solid white;
+}
+
+.sent-request {
+    display: grid;
+    border: 1px solid white;
+}
+
+.received-request {
+    display: grid;
+    border: 1px solid white;
+}
+
+/* end view_friendships.html */
+
+/*
 ==========================
 ===== media queries  =====
 ==========================

@@ -1,48 +1,53 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
-    <div>Sent by {{ request.user }}:</div>
-    {% for friendship_request in requests_from_user %}
-        <div>
-            <form action="{% url 'kokoro_app:cancel_friendship_request_handler' friendship_request=friendship_request.id %}" method="post">
-                {% csrf_token %}
-                {{ friendship_request }}
-                <button type="submit" name="cancel_friendship_request_form">
-                    Cancel
-                </button>
-            </form>
+<div class="super-container">
+    <div class="request-grid">
+        <div class="sent-request-container">
+        <span>Sent by {{ request.user }}:</span>
+        {% for friendship_request in requests_from_user %}
+            <div class="sent-request">
+                <span>{{ friendship_request }}</span>
+                <form action="{% url 'kokoro_app:cancel_friendship_request_handler' friendship_request=friendship_request.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="cancel_friendship_request_form">
+                        Cancel
+                    </button>
+                </form>
+            </div>
+        {% endfor %}
         </div>
-    {% endfor %}
-    <br>
-    <br>
-    <div>Sent to {{ request.user }}:</div>
-    {% for friendship_request in requests_to_user %}
-        <div>
-            {{ friendship_request.from_user }} wants to be your friend!
-            <!-- form sends the unique id of the user whom sent the friendship request -->
-            <form action="{% url 'kokoro_app:accept_friendship_request_handler' sent_by=friendship_request.from_user.id %}" method="post" style="display:inline-block;">
-                {% csrf_token %}
-                <button type="submit" name="accept_friendship_form">
-                    Accept
-                </button>
-            </form>
-            <!-- Decline a friendship request sent to user -->
-            <form action="{% url 'kokoro_app:decline_friendship_request_handler' friendship_request=friendship_request.id %}" method="post" style="display:inline-block;">
-                {% csrf_token %}
-                <button type="submit" name="decline_friendship_request_form">
-                    Decline
-                </button>
-            </form>
-            <!-- View Profile of user that sent friendship_request -->
-            <form action="{% url 'kokoro_app:profile' %}" method="get" style="display: inline-block;">
-                <button type="submit" name="profile_to_visit" value="{{ friendship_request.from_user.id }}">
-                    View Profile
-                </button>
-            </form>
+        <div class="received-request-container">
+        <span>Sent to {{ request.user }}:</span>
+        {% for friendship_request in requests_to_user %}
+            <div class="received-request">
+                <span>{{ friendship_request.from_user }} wants to be your friend!</span>
+                <!-- form sends the unique id of the user whom sent the friendship request -->
+                <form action="{% url 'kokoro_app:accept_friendship_request_handler' sent_by=friendship_request.from_user.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="accept_friendship_form">
+                        Accept
+                    </button>
+                </form>
+                <!-- Decline a friendship request sent to user -->
+                <form action="{% url 'kokoro_app:decline_friendship_request_handler' friendship_request=friendship_request.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="decline_friendship_request_form">
+                        Decline
+                    </button>
+                </form>
+                <!-- View Profile of user that sent friendship_request -->
+                <form action="{% url 'kokoro_app:profile' %}" method="get">
+                    <button type="submit" name="profile_to_visit" value="{{ friendship_request.from_user.id }}">
+                        View Profile
+                    </button>
+                </form>
+            </div>
+        {% endfor %}
         </div>
-    {% endfor %}
-
-
+    </div>
+</div>
+<!-- save until request-grid finished
     <h1 style="text-align: center;">{{ request.user }}'s Friendships:</h1>
     <div style="text-align: center;">
         {% for friendship in friendships %}
@@ -53,7 +58,6 @@
                     {{ friendship }}'s Profile
                 </button>
             </form>
-            <!-- form to delete/remove friendship with user -->
             <form action="{% url 'kokoro_app:remove_friendship_handler' friendship_to_remove_id=friendship.id %}" method="post" style="display: inline-block;">
                 {% csrf_token %}
                 <button type="submit" name="remove_friendship_form">
@@ -63,5 +67,5 @@
         </div>
         {% endfor %}
     </div>
-
+-->
 {% endblock content %}
