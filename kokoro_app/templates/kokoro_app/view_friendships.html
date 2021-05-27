@@ -2,13 +2,12 @@
 
 {% block content %}
 <div class="super-container">
+    <span class="request-header">Friendship Requests<button class="request-btn hide-btn" onclick="hideRequests(this)">Hide</button></span>
     <div class="request-grid">
-        <span class="request-header">Friendship Requests</span>
         <div class="received-request-container">
         <span class="font-xl request-type">Received:</span>
         {% for friendship_request in requests_to_user %}
             <div class="received-request">
-                <!-- each received request should show: image, username/display_name, buttons -->
                 <div class="request-image">
                     <img src="{{ friendship_request.from_user.profileimage.image.url }}">
                 </div>
@@ -55,32 +54,44 @@
         </div>
     </div>
 
-    <!-- perhaps we can give these the same styles as search.html cards -->
+    <div class="separator-thin"></div>
     <span class="friendships-header">Friendships:</span>
-
+    {% for friendship in friendships %}
     <div class="search-card friend-card">
-        {% for friendship in friendships %}
-            <div class="friend-info">
-                <span class="friend-display-name font-large">{{ friendship.profiledisplayname.display_name }}</span>
-                <span class="friend-username font-small">@{{ friendship }}</span>
-                <span class="friend-bio font-small">{{ friendship.profilebio.biography }}</span>
-            </div>
-            <div class="request-image">
-                <img src="{{ friendship.profileimage.image.url }}">
-            </div>
-            <form class="friend-profile-form" action="{% url 'kokoro_app:profile' %}" method="get">
-                <button class="request-btn" type="submit" name="profile_to_visit" value="{{ friendship.id }}">
-                    Profile
-                </button>
-            </form>
-            <form class="remove-friend-form" action="{% url 'kokoro_app:remove_friendship_handler' friendship_to_remove_id=friendship.id %}" method="post">
-                {% csrf_token %}
-                <button class="request-btn" type="submit" name="remove_friendship_form">
-                    Remove
-                </button>
-            </form>
-        {% endfor %}
-
+        <div class="friend-info">
+            <span class="friend-display-name font-large">{{ friendship.profiledisplayname.display_name }}</span>
+            <span class="friend-username font-small">@{{ friendship }}</span>
+            <span class="friend-bio font-small">{{ friendship.profilebio.biography }}</span>
+        </div>
+        <div class="request-image">
+            <img src="{{ friendship.profileimage.image.url }}">
+        </div>
+        <form class="friend-profile-form" action="{% url 'kokoro_app:profile' %}" method="get">
+            <button class="request-btn" type="submit" name="profile_to_visit" value="{{ friendship.id }}">
+                Profile
+            </button>
+        </form>
+        <form class="remove-friend-form" action="{% url 'kokoro_app:remove_friendship_handler' friendship_to_remove_id=friendship.id %}" method="post">
+            {% csrf_token %}
+            <button class="request-btn" type="submit" name="remove_friendship_form">
+                Remove
+            </button>
+        </form>
     </div>
+    {% endfor %}
 </div>
+<!-- script for hiding friendship requests -->
+<script>
+    let requests = document.getElementsByClassName("request-grid")[0];
+
+    function hideRequests(btn) {
+        requests.classList.toggle("hide-requests");
+        if (btn.innerHTML == "Hide") {
+            btn.innerHTML = "Show";
+        }
+        else {
+            btn.innerHTML = "Hide";
+        }
+    }
+</script>
 {% endblock content %}
