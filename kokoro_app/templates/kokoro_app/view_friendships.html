@@ -7,10 +7,13 @@
         <span>Sent by {{ request.user }}:</span>
         {% for friendship_request in requests_from_user %}
             <div class="sent-request">
-                <span>{{ friendship_request }}</span>
-                <form action="{% url 'kokoro_app:cancel_friendship_request_handler' friendship_request=friendship_request.id %}" method="post">
+                <div class="request-image">
+                    <img src="{{ friendship_request.to_user.profileimage.image.url }}">
+                </div>
+                <span class="request-message">Pending Request to @{{ friendship_request.to_user }}</span>
+                <form class="cancel-request-form" action="{% url 'kokoro_app:cancel_friendship_request_handler' friendship_request=friendship_request.id %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" name="cancel_friendship_request_form">
+                    <button class="request-btn font-med" type="submit" name="cancel_friendship_request_form">
                         Cancel
                     </button>
                 </form>
