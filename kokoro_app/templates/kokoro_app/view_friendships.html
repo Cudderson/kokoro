@@ -17,29 +17,34 @@
             </div>
         {% endfor %}
         </div>
+
         <div class="received-request-container">
         <span>Sent to {{ request.user }}:</span>
         {% for friendship_request in requests_to_user %}
             <div class="received-request">
-                <span>{{ friendship_request.from_user }} wants to be your friend!</span>
+                <!-- each received request should show: image, username/display_name, buttons -->
+                <div class="request-image">
+                    <img src="{{ friendship_request.from_user.profileimage.image.url }}">
+                </div>
+                <span class="request-message">@{{ friendship_request.from_user }} wants to be your friend!</span>
                 <!-- form sends the unique id of the user whom sent the friendship request -->
-                <form action="{% url 'kokoro_app:accept_friendship_request_handler' sent_by=friendship_request.from_user.id %}" method="post">
+                <form class="accept-request-form" action="{% url 'kokoro_app:accept_friendship_request_handler' sent_by=friendship_request.from_user.id %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" name="accept_friendship_form">
+                    <button class="request-btn font-med" type="submit" name="accept_friendship_form">
                         Accept
                     </button>
                 </form>
                 <!-- Decline a friendship request sent to user -->
-                <form action="{% url 'kokoro_app:decline_friendship_request_handler' friendship_request=friendship_request.id %}" method="post">
+                <form class="decline-request-form" action="{% url 'kokoro_app:decline_friendship_request_handler' friendship_request=friendship_request.id %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" name="decline_friendship_request_form">
+                    <button class="request-btn font-med" type="submit" name="decline_friendship_request_form">
                         Decline
                     </button>
                 </form>
                 <!-- View Profile of user that sent friendship_request -->
-                <form action="{% url 'kokoro_app:profile' %}" method="get">
-                    <button type="submit" name="profile_to_visit" value="{{ friendship_request.from_user.id }}">
-                        View Profile
+                <form class="profile-request-form" action="{% url 'kokoro_app:profile' %}" method="get">
+                    <button class="request-btn font-med" type="submit" name="profile_to_visit" value="{{ friendship_request.from_user.id }}">
+                        Profile
                     </button>
                 </form>
             </div>
