@@ -1575,8 +1575,60 @@ svg text {
     color: var(--color-white);
 }
 /* end post.html */
+/*
+===========================
+===== write_post.html ===== (uses some post.html styles)
+===========================
+*/
 
+.post-form-header {
+    font-size: 50px;
+    color: var(--color-white);
+}
 
+.write-post-container {
+    margin-top: 2rem;
+}
+
+.write-header {
+    display: block;
+    color: lightgray;
+}
+
+/* access django form */
+.post-form-headline > input[type=text] {
+    display: block;
+    outline: none;
+    width: 100%;
+    margin-bottom: 2rem;
+    border: 2px solid var(--color-midnight-blue);
+    border-radius: 4px;
+    outline: none;
+    background-color: var(--color-blue);
+    color: var(--color-tan);
+    font-size: 44px;
+    font-family: 'Playfair Display', serif;
+}
+
+.post-form-content > textarea {
+    display: block;
+    resize: none;
+    outline: none;
+    width: 100%;
+    margin-bottom: 1rem;
+    border: 2px solid var(--color-midnight-blue);
+    border-radius: 4px;
+    background-color: var(--color-blue);
+    color: var(--color-white);
+    font-family: 'Playfair Display', serif;
+    font-size: 21px;
+}
+
+.write-btn {
+    display: block;
+    margin-left: auto;
+}
+/* end write_post.html */
 /*
 ==========================
 ===== media queries  =====
