@@ -1152,7 +1152,26 @@ svg text {
 */
 
 .edit-profile-form-container {
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 2rem;
+    border-radius: 12px;
     padding: 0 1rem;
+    background-color: var(--color-midnight-blue);
+}
+
+.edit-profile-form-container span {
+    display: block;
+}
+
+.edit-header-large {
+    font-size: 40px;
+    color: var(--color-white);
+}
+
+.edit-header {
+    color: var(--color-green);
+    font-size: 30px;
 }
 
 .perfect-label-edit {
@@ -1452,9 +1471,6 @@ svg text {
 .hide-requests {
     display: none;
 }
-
-/* testing here, will add to main media query after */
-
 
 /* end view_friendships.html */
 
