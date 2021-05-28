@@ -4,14 +4,13 @@
 {% load tz %}
 
 <div class="super-container">
-    <!--iterate over values in post-->
     <div class="post-container">
         {% localtime off %}
             <span class="post-headline">{{ post.headline }}</span>
             <span class="post-author font-large">{{ post.author }}</span>
             <!-- date_published converted to user TZ -->
             <span class="post-published font-med">{{ date_published_user_tz }}</span>
-            <span class="post-content font-xl">{{ post.content|linebreaks }}</span>
+            <span class="post-content">{{ post.content|linebreaks }}</span>
 
             {% if post.author != request.user %}
                 <!-- pin/unpin logic -->

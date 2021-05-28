@@ -1,14 +1,20 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
-<div class="edit-post-container">
-    <form action="{% url 'kokoro_app:edit_post' %}" method="post">
-        {% csrf_token %}
-        <span>Headline</span>
-        <span>{{ post_form.headline }}</span>
-        <span>Body</span>
-        <span>{{ post_form.content }}</span>
-        <button type="submit" name="update_post_form" value="{{ post_to_edit.post_slug }}">Confirm Changes</button>
-    </form>
+<div class="super-container">
+    <div class="post-container">
+        <span class="post-form-header">Edit Post</span>
+        <span class="write-header font-small">Make changes to your post and press 'Confirm Changes'</span>
+        <br>
+        <br>
+        <form action="{% url 'kokoro_app:edit_post' %}" method="post">
+            {% csrf_token %}
+            <span class="font-large">Headline</span>
+            <span class="post-form-headline">{{ post_form.headline }}</span>
+            <span class="font-med">Body</span>
+            <span class="post-form-content">{{ post_form.content }}</span>
+            <button class="request-btn font-large" type="submit" name="update_post_form" value="{{ post_to_edit.post_slug }}">Confirm Changes</button>
+        </form>
+    </div>
 </div>
 {% endblock content %}

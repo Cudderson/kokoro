@@ -447,7 +447,7 @@ def edit_post(request):
         return post(request, post_slug)
 
     # get requests render the page to edit a post
-    return redirect(request, 'kokoro_app/edit_post.html', context)
+    return render(request, 'kokoro_app/edit_post.html', context)
 
 
 @login_required

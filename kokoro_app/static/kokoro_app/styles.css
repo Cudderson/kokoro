@@ -1239,20 +1239,6 @@ svg text {
     margin-bottom: 1rem;
 }
 
-/* edit_post.html (SAVE) */
-.edit-post-container {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    margin: 0 auto;
-    margin-top: 6em;
-}
-
-.edit-post-container span {
-    display: block;
-}
-/* end edit_post.html */
-
 /* things to hide on mobile */
 .desktop-home-header {
     display: none;
@@ -1539,7 +1525,7 @@ svg text {
     width: 96%;
     max-width: 700px;
     margin: 0 auto;
-    margin-top: 6rem;
+    margin-top: 5rem;
 }
 
 .post-container > form > button {
@@ -1556,7 +1542,7 @@ svg text {
 .post-headline {
     display: block;
     padding-bottom: 1rem;
-    font-size: 50px;
+    font-size: 36px;
     color: var(--color-tan);
     line-height: 1.2em;
 }
@@ -1573,7 +1559,9 @@ svg text {
 
 .post-content {
     color: var(--color-white);
+    font-size: 18px;
 }
+
 /* end post.html */
 /*
 ===========================
@@ -1629,6 +1617,9 @@ svg text {
     margin-left: auto;
 }
 /* end write_post.html */
+
+/* edit_post.html uses no additional styles */
+
 /*
 ==========================
 ===== media queries  =====
@@ -1985,7 +1976,7 @@ svg text {
     }
     /* end profile.html desktop */
 
-    /* write_post.html queries */
+    /* write_post.html/post.html/edit_post.html queries */
     .post-form-header {
         font-size: 50px;
     }
@@ -1996,6 +1987,14 @@ svg text {
 
     .post-form-content > textarea {
         font-size: 21px;
+    }
+
+    .post-content {
+        font-size: 21px;
+    }
+
+    .post-headline {
+        font-size: 50px;
     }
     /* end write_post.html queries */
 
