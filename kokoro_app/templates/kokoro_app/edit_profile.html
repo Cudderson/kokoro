@@ -1,72 +1,71 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
-<!-- add placeholders to forms -->
-
 <span>{{ message }}</span>
-<div class="edit-profile-form-container">
-    <span class="edit-header-large">Edit Your Profile</span>
+<div class="super-container">
+    <div class="edit-profile-form-container">
+        <span class="edit-header-large">Edit Your Profile</span>
 
-    <span class="edit-header">Profile Image</span>
-    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="profile-image-edit">
-            <img src="{{ profile_image_placeholder.image.url }}">
-        </div>
-        {{ profile_image_form.as_p }}
-        <button class="font-med" type="submit" name="profile_image_form">Update Profile Photo</button>
-    </form>
+        <span class="edit-header">Profile Image</span>
+        <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="profile-image-edit">
+                <img src="{{ profile_image_placeholder.image.url }}">
+            </div>
+            <span class="edit-header-small image-details">{{ profile_image_form.image }}</span>
+            <button class="font-med" type="submit" name="profile_image_form">Update Profile Photo</button>
+        </form>
 
-    <span class="edit-header">Display Name</span>
-    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
-        {% csrf_token %}
-        <span class="edit-input">{{ display_name_form.display_name }}</span>
-        <button class="font-med" type="submit" name="display_name_form">Update Display Name</button>
-    </form>
+        <span class="edit-header">Display Name</span>
+        <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
+            {% csrf_token %}
+            <span class="edit-input">{{ display_name_form.display_name }}</span>
+            <button class="font-med" type="submit" name="display_name_form">Update Display Name</button>
+        </form>
 
-    <span class="edit-header">Profile Quote</span>
-    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
-        {% csrf_token %}
-        <span class="edit-header-small">Quote:</span>
-        <span class="edit-input">{{ quote_form.quote }}</span>
-        <span class="edit-header-small">Author:</span>
-        <span class="edit-input">{{ quote_form.quote_author }}</span>
-        <button class="font-med" type="submit" name="quote_form">Update Quote</button>
-    </form>
+        <span class="edit-header">Profile Quote</span>
+        <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
+            {% csrf_token %}
+            <span class="edit-header-small">Quote:</span>
+            <span class="edit-input">{{ quote_form.quote }}</span>
+            <span class="edit-header-small">Author:</span>
+            <span class="edit-input">{{ quote_form.quote_author }}</span>
+            <button class="font-med" type="submit" name="quote_form">Update Quote</button>
+        </form>
 
-    <span class="edit-header">Biography</span>
-    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
-        {% csrf_token %}
-        <span class="edit-input">{{ bio_form.biography }}</span>
-        <button class="font-med" type="submit" name="bio_form">Update Biography</button>
-    </form>
+        <span class="edit-header">Biography</span>
+        <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
+            {% csrf_token %}
+            <span class="edit-input">{{ bio_form.biography }}</span>
+            <button class="font-med" type="submit" name="bio_form">Update Biography</button>
+        </form>
 
-    <span class="edit-header">Perfect Balance</span>
-    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
-        {% csrf_token %}
-        <label class="edit-header-small">Perfect Mind Activity<span class="edit-input">{{ perfect_form.perfect_mind }}</span></label>
-        <label class="edit-header-small">Perfect Body Activity<span class="edit-input">{{ perfect_form.perfect_body }}</span></label>
-        <label class="edit-header-small">Perfect Soul Activity<span class="edit-input">{{ perfect_form.perfect_soul }}</span></label>
-        <button class="font-med" type="submit" name="perfect_form">Update Perfect Balance</button>
-    </form>
+        <span class="edit-header">Perfect Balance</span>
+        <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
+            {% csrf_token %}
+            <label class="edit-header-small">Perfect Mind Activity<span class="edit-input">{{ perfect_form.perfect_mind }}</span></label>
+            <label class="edit-header-small">Perfect Body Activity<span class="edit-input">{{ perfect_form.perfect_body }}</span></label>
+            <label class="edit-header-small">Perfect Soul Activity<span class="edit-input">{{ perfect_form.perfect_soul }}</span></label>
+            <button class="font-med" type="submit" name="perfect_form">Update Perfect Balance</button>
+        </form>
 
-    <span class="edit-header">Time Zone</span>
-    <span class="edit-header-small">Your current time zone setting: {{ user_timezone_object }}</span>
-    <form action="{% url 'kokoro_app:profile_form_handler' %}" method="POST">
-        {% csrf_token %}
-        <select class="tz-select font-large" name="user_timezone">
-            <option disabled selected value="">Select Timezone</option>
-            {% for tz in timezones %}
-            <option value="{{ tz }}">{{ tz }}</option>
-            {% endfor %}
-        </select>
-        <br>
-        <button class="font-med" type="submit" name="tz_form">Set Timezone</button>
-    </form>
+        <span class="edit-header">Time Zone</span>
+        <span class="edit-header-small">Your current time zone setting: {{ user_timezone_object }}</span>
+        <form action="{% url 'kokoro_app:profile_form_handler' %}" method="POST">
+            {% csrf_token %}
+            <select class="tz-select font-large" name="user_timezone">
+                <option disabled selected value="">Select Timezone</option>
+                {% for tz in timezones %}
+                <option value="{{ tz }}">{{ tz }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <button class="font-med" type="submit" name="tz_form">Set Timezone</button>
+        </form>
 
-    <!-- contact info not included. Still deciding -->
-    <!-- cover photo doesn't exist yet -->
-    <!-- editing posts doesn't exist yet -->
+        <!-- contact info not included. Still deciding -->
+        <!-- cover photo doesn't exist yet -->
+
+    </div>
 </div>
-
 {% endblock content %}
