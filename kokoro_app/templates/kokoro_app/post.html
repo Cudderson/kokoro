@@ -3,14 +3,17 @@
 {% block content %}
 {% load tz %}
 
+<div class="super-container">
     <!--iterate over values in post-->
-    <div style="text-align: center; margin-left: auto; margin-right: auto;">
+    <div class="post-container">
         {% localtime off %}
-            <div>Here is a post from {{ post.author }}</div>
-            <div>{{ post.headline }}</div>
-            <div>{{ post.content }}</div>
+
+            <span class="post-headline">{{ post.headline }}</span>
+            <span class="post-author font-large">{{ post.author }}</span>
             <!-- date_published converted to user TZ -->
-            <div>Published: {{ date_published_user_tz }}</div>
+            <span class="post-published font-med">{{ date_published_user_tz }}</span>
+            <span class="post-content font-xl">{{ post.content|linebreaks }}</span>
+
             {% if post.author != request.user %}
                 <!-- pin/unpin logic -->
                 {% if pinned %}
@@ -53,4 +56,5 @@
             </form>
         {% endlocaltime %}
     </div>
+</div>
 {% endblock content %}

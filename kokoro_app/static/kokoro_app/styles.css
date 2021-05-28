@@ -1239,7 +1239,7 @@ svg text {
     margin-bottom: 1rem;
 }
 
-/* not sure what this is */
+/* edit_post.html (SAVE) */
 .edit-post-container {
     display: flex;
     flex-direction: column;
@@ -1251,6 +1251,8 @@ svg text {
 .edit-post-container span {
     display: block;
 }
+/* end edit_post.html */
+
 /* things to hide on mobile */
 .desktop-home-header {
     display: none;
@@ -1526,6 +1528,42 @@ svg text {
 }
 
 /* end view_friendships.html */
+
+/*
+=====================
+===== post.html =====
+=====================
+*/
+
+.post-container {
+    width: 96%;
+    max-width: 700px;
+    margin: 0 auto;
+    margin-top: 6rem;
+}
+
+.post-headline {
+    display: block;
+    padding-bottom: 1rem;
+    font-size: 50px;
+    color: var(--color-tan);
+    line-height: 1.2em;
+}
+
+.post-author {
+    display: block;
+    color: var(--color-green);
+}
+
+.post-published {
+    color: var(--color-tan);
+}
+
+.post-content {
+    color: var(--color-white);
+}
+/* end post.html */
+
 
 /*
 ==========================
