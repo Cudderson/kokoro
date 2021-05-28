@@ -1582,7 +1582,7 @@ svg text {
 */
 
 .post-form-header {
-    font-size: 50px;
+    font-size: 40px;
     color: var(--color-white);
 }
 
@@ -1606,7 +1606,7 @@ svg text {
     outline: none;
     background-color: var(--color-blue);
     color: var(--color-tan);
-    font-size: 44px;
+    font-size: 28px;
     font-family: 'Playfair Display', serif;
 }
 
@@ -1621,7 +1621,7 @@ svg text {
     background-color: var(--color-blue);
     color: var(--color-white);
     font-family: 'Playfair Display', serif;
-    font-size: 21px;
+    font-size: 18px;
 }
 
 .write-btn {
@@ -1984,6 +1984,20 @@ svg text {
         padding-top: 1em;
     }
     /* end profile.html desktop */
+
+    /* write_post.html queries */
+    .post-form-header {
+        font-size: 50px;
+    }
+
+    .post-form-headline > input[type=text] {
+        font-size: 44px;
+    }
+
+    .post-form-content > textarea {
+        font-size: 21px;
+    }
+    /* end write_post.html queries */
 
     /* custom scrollbar styles */
     ::-webkit-scrollbar {
