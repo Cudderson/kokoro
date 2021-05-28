@@ -1542,6 +1542,17 @@ svg text {
     margin-top: 6rem;
 }
 
+.post-container > form > button {
+    margin-right: .5rem;
+    float: left;
+}
+
+.red-btn:hover {
+    background-color: var(--color-tan);
+    border-color: var(--color-tan);
+    color: var(--color-black);
+}
+
 .post-headline {
     display: block;
     padding-bottom: 1rem;
@@ -1556,6 +1567,7 @@ svg text {
 }
 
 .post-published {
+    display: block;
     color: var(--color-tan);
 }
 

@@ -7,7 +7,6 @@
     <!--iterate over values in post-->
     <div class="post-container">
         {% localtime off %}
-
             <span class="post-headline">{{ post.headline }}</span>
             <span class="post-author font-large">{{ post.author }}</span>
             <!-- date_published converted to user TZ -->
@@ -19,14 +18,14 @@
                 {% if pinned %}
                     <form action="{% url 'kokoro_app:posts_form_handler' %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" name="unpin_post_form" value="{{ post.post_slug }}" style="padding: .75rem; background: var(--color-white);margin-top: 2rem;">
+                        <button class="request-btn font-med" type="submit" name="unpin_post_form" value="{{ post.post_slug }}">
                             Un-Pin This Post From My Profile
                         </button>
                     </form>
                 {% else %}
                     <form action="{% url 'kokoro_app:posts_form_handler' %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" name="pin_post_form" value="{{ post.post_slug }}" style="padding: .75rem; background: var(--color-white);margin-top: 2rem;">
+                        <button class="request-btn font-med" type="submit" name="pin_post_form" value="{{ post.post_slug }}">
                             Pin This Post to My Profile
                         </button>
                     </form>
@@ -36,17 +35,17 @@
 
                 <!-- edit a post -->
                 <form action="{% url 'kokoro_app:edit_post' %}" method="get">
-                    <button type="submit" name="edit_post_form" value="{{ post.post_slug }}">Edit Post</button>
+                    <button class="request-btn font-med" type="submit" name="edit_post_form" value="{{ post.post_slug }}">Edit Post</button>
                 </form>
                 <form action="{% url 'kokoro_app:posts_form_handler' %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" name="delete_post_form" value="{{ post.post_slug }}" style="padding: .75rem; background: var(--color-white);margin-top: 2rem; background: red;">
+                    <button class="request-btn red-btn font-med" type="submit" name="delete_post_form" value="{{ post.post_slug }}">
                         Delete Post
                     </button>
                 </form>
             {% endif %}
             <form action="{% url 'kokoro_app:profile' %}" method="get">
-                <button type="submit" name="profile_to_visit" value="{{ post.author.id }}" style="padding: .75rem; background: var(--color-white);margin-top: 1rem;">
+                <button class="request-btn font-med" type="submit" name="profile_to_visit" value="{{ post.author.id }}">
                     {% if post.author != request.user %}
                         {{ post.author }}'s Profile
                     {% else %}
