@@ -1,21 +1,23 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
-<div class="register-container">
-    <span class="register-header">Log In</span>
-    {% if form.errors %}
-        <span class="register-error login-error font-large">The username and password you provided do not match. Please try again.</span>
-    {% endif %}
-    <form action="{% url 'users:login' %}" method="post" autocomplete="off">
-        {% csrf_token %}
-        <span class="register-label font-large">{{ form.username.label }}</span>
-        <span class="register-field">{{ form.username }}</span>
-        <span class="register-label font-large">{{ form.password.label }}</span>
-        <span class="register-field">{{ form.password }}</span>
-        <br>
-        <button class="request-btn login-btn font-xl" type="submit">Log In</button>
-        <!-- hidden input field to reference the next page -->
-        <input type="hidden" name="next" value="{% url 'kokoro_app:home' %}">
-    </form>
+<div class="login-container">
+    <div class="register-container">
+        <span class="register-header">Log In</span>
+        {% if form.errors %}
+            <span class="register-error login-error font-large">The username and password you provided do not match. Please try again.</span>
+        {% endif %}
+        <form action="{% url 'users:login' %}" method="post" autocomplete="off">
+            {% csrf_token %}
+            <span class="register-label font-large">{{ form.username.label }}</span>
+            <span class="register-field">{{ form.username }}</span>
+            <span class="register-label font-large">{{ form.password.label }}</span>
+            <span class="register-field">{{ form.password }}</span>
+            <br>
+            <button class="request-btn login-btn font-xl" type="submit">Log In</button>
+            <!-- hidden input field to reference the next page -->
+            <input type="hidden" name="next" value="{% url 'kokoro_app:home' %}">
+        </form>
+    </div>
 </div>
 {% endblock content %}
