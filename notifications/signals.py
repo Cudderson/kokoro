@@ -11,17 +11,12 @@ from django.core.signals import request_finished
 
 from django.core.exceptions import ValidationError
 
-# django.db.models.signals.m2m_changed
-# Sent when a ManyToManyField on a model is changed.
 
 # Use this  to test signals if not working
 # @receiver(request_finished)
 # def test_signal(sender, **kwargs):
 #     print("Your signal is working.")
 
-
-# we want to trigger a signal when certain events happen
-# Let's start with one, when a FriendshipRequest object is created
 
 # This signal is being called twice.. *NEED TO FIX*
 @receiver(post_save, sender=FriendshipRequest, dispatch_uid="my_unique_identifier")
@@ -157,10 +152,3 @@ def new_profile_post_notification(sender, instance, created, **kwargs):
                 new_post_notification.save()
             except Exception as e:
                 print(e)
-
-
-# What else needs a notification?
-# FriendshipRequest creation [x]
-# Friendship Request acceptance [x]
-# When someone pins your post [x]
-# When you publish a ProfilePost, notify all friends []

@@ -3,6 +3,7 @@ from .models import Notification
 from kokoro_app.models import ProfilePost
 
 from django.http import HttpResponseRedirect
+from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 
@@ -27,16 +28,12 @@ def notification_form_handler(request):
             notification.unread = False
             notification.save()
 
-            # type (int)
-            print(notification.type)
-
             # deliver user to correct url
 
             # Type 1: Someone sent you a friendship request
             if notification.type == 1:
                 # On click, should bring user to 'friendship_requests.html'
-                # The proper way is to redirect to the appropriate url
-                # *** changing route from view_friendship_requests to view_friendships ***
+
                 return redirect('/view_friendships')
 
             # Type 2: Someone accepted your friendship request
@@ -51,22 +48,28 @@ def notification_form_handler(request):
                 request.session['profile_to_visit'] = notification.sent_from.id
                 return redirect('/profile')
 
+            # Type 4: Friend published a new ProfilePost
             elif notification.type == 4:
+
                 # bring user to new profile post
                 # get post_slug of post
                 reference_post = notification.reference
                 reference_post_author = notification.sent_from
 
-                # get matching post
-                post = ProfilePost.objects.get(author=reference_post_author, headline=reference_post)
+                try:
+                    # get matching post
+                    post = ProfilePost.objects.get(author=reference_post_author, headline=reference_post)
 
-                # get unique slug of post
-                post_slug = post.post_slug
+                    # get unique slug of post
+                    post_slug = post.post_slug
 
-                # redirect with proper param
-                return redirect('kokoro_app:post', post_slug=post_slug)
+                    # redirect with proper param
+                    return redirect('kokoro_app:post', post_slug=post_slug)
 
-                # return redirect('app_1:profile', user_id=userid)
+                except ObjectDoesNotExist:
+                    # Author may have edited post/post_slug, bring user to their profile instead
+                    request.session['profile_to_visit'] = reference_post_author.id
+                    return redirect('kokoro_app:profile')
 
         # These should return user to the same page they're visiting
         elif 'mark_all_form' in request.POST:

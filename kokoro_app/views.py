@@ -435,16 +435,19 @@ def edit_post(request):
             # get updated fields
             new_headline = request.POST.get('headline')
             new_content = request.POST.get('content')
+            new_post_slug = slugify(new_headline)
 
             # save object with updated fields
-            post_to_update.headline = new_headline
+            post_to_update.headline = new_headline.title()
             post_to_update.content = new_content
-            post_to_update.save(update_fields=['headline', 'content'])
+            post_to_update.post_slug = new_post_slug
+
+            post_to_update.save(update_fields=['headline', 'content', 'post_slug'])
 
         except Exception as e:
             raise Http404("Something went wrong while updating your post. Sorry :( ", e)
 
-        return post(request, post_slug)
+        return post(request, new_post_slug)
 
     # get requests render the page to edit a post
     return render(request, 'kokoro_app/edit_post.html', context)

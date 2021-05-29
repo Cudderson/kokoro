@@ -956,7 +956,6 @@ svg text {
     justify-self: center;
     width: 100%;
     text-align: center;
-    font-weight: bold;
     margin: auto;
     padding: .8rem .75rem 0 .75rem;
     position: absolute;
@@ -1105,7 +1104,6 @@ svg text {
 .profile-post-headline {
     display: block;
     text-align: left;
-    font-weight: bold;
     font-family: 'Playfair Display', serif;
     padding: 1.5rem 3% 0 3%;
     color: var(--color-white);
