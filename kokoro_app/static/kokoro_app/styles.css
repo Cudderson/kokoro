@@ -1662,14 +1662,23 @@ svg text {
     color: var(--color-tan);
 }
 
-.register-error {
+.register-error, .login-error {
     color: red;
+}
+
+.login-error {
+    display: block;
+    padding-bottom: 1rem;
 }
 
 .register-btn {
     display: block;
     margin: 0 auto;
     margin-top: 1rem;
+}
+
+.login-btn {
+    width: 100%;
 }
 
 .logout-message {
