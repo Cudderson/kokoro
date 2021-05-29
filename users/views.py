@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from kokoro_app.forms import PerfectBalanceForm
 
 
 def register(request):
@@ -10,19 +8,19 @@ def register(request):
 
     if request.method != "POST":
         # Display blank registration form
-        form = UserCreationForm()
+        register_form = UserCreationForm()
     else:
         # Process completed form
-        form = UserCreationForm(data=request.POST)
+        register_form = UserCreationForm(data=request.POST)
 
-        if form.is_valid():
-            new_user = form.save()
+        if register_form.is_valid():
+            new_user = register_form.save()
 
             # Log in the new user and return to home page
             login(request, new_user)
             return redirect('kokoro_app:index')
 
     # Display blank or invalid form
-    context = {'form': form}
+    context = {'register_form': register_form}
 
     return render(request, 'registration/register.html', context)
