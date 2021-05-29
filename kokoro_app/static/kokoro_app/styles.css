@@ -1620,6 +1620,58 @@ svg text {
 
 /* edit_post.html uses no additional styles */
 
+/* 'users' app styles */
+.register-container {
+    width: 98%;
+    max-width: 700px;
+    margin: 0 auto;
+    margin-top: 4rem;
+    padding: 2rem;
+    border-radius: 8px;
+    background-color: var(--color-midnight-blue);
+}
+
+.register-container > form > span {
+    display: block;
+}
+
+.register-header {
+    display: block;
+    font-size: 50px;
+    color: var(--color-white);
+    margin-bottom: 3rem;
+}
+
+.register-label {
+    color: var(--color-green);
+}
+
+.register-field > input[type=text], .register-field > input[type=password] {
+    background-color: var(--color-blue);
+    width: 100%;
+    margin-bottom: 1rem;
+    padding-left: .5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 24px;
+    font-family: 'Playfair Display', serif;
+    color: var(--color-white);
+}
+
+.register-help {
+    color: var(--color-tan);
+}
+
+.register-error {
+    color: red;
+}
+
+.register-btn {
+    display: block;
+    margin: 0 auto;
+    margin-top: 1rem;
+}
+
 .logout-message {
     display: block;
     width: 96%;
@@ -1629,6 +1681,7 @@ svg text {
     color: var(--color-white);
     font-size: 30px;
 }
+/* end 'users' app styles */
 
 /*
 ==========================
