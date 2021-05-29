@@ -11,7 +11,7 @@
                 <div class="request-image">
                     <img src="{{ friendship_request.from_user.profileimage.image.url }}">
                 </div>
-                <span class="request-message"><span class="friend-username">@{{ friendship_request.from_user }}</span> wants to be your friend!</span>
+                <span class="request-message font-med"><span class="friend-username">@{{ friendship_request.from_user }}</span> wants to be your friend!</span>
                 <!-- form sends the unique id of the user whom sent the friendship request -->
                 <form class="accept-request-form" action="{% url 'kokoro_app:accept_friendship_request_handler' sent_by=friendship_request.from_user.id %}" method="post">
                     {% csrf_token %}
