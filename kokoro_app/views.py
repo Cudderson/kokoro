@@ -649,6 +649,8 @@ def view_friendships(request):
     # convert ManyRelatedManager object into Queryset
     friendships = friendships.friendships.all()
 
+    friendships = friendships.order_by('username')
+
     # get friendship requests
     pending_requests_from_user = FriendshipRequest.objects.filter(from_user__exact=request.user)
     pending_requests_to_user = FriendshipRequest.objects.filter(to_user__exact=request.user)
