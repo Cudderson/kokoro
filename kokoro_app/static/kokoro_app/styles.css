@@ -1692,8 +1692,15 @@ svg text {
 ===== media queries  =====
 ==========================
 */
+@media screen and (min-width: 500px) {
+    .svg-container::before, .svg-container > div::before {
+        display: none;
+    }
 
-@media screen and (min-width: 1000px) {
+
+}
+
+@media screen and (min-width: 950px) {
     /* remove elements from page */
     /* turn on when necessary */
     .separator,
@@ -1726,7 +1733,7 @@ svg text {
     .activity-form-container {
         grid-column: 1 / 2;
         grid-row: 2 / 3;
-        width: 60%;
+        width: 70%;
         padding: 0;
         margin: 0;
         padding-top: auto;
@@ -1750,6 +1757,7 @@ svg text {
     }
 
     .svg-container::before {
+        display: block;
         transform: perspective(6rem) rotateX(20deg) scale(1, .2);
     }
 
@@ -1777,7 +1785,7 @@ svg text {
         grid-row: 2 / 3;
         position: relative;
         align-self: start;
-        width: 60%;
+        width: 70%;
         height: 55%;
         margin-top: 10%;
         margin-bottom: 10%;
@@ -1856,7 +1864,7 @@ svg text {
 
     .separator-gray {
         width: 100%;
-        background-color: var(--color-white);
+        background-color: gray;
         padding: .025em;
     }
 
