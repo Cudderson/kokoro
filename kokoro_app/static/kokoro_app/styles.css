@@ -908,8 +908,6 @@ svg text {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 2%;
-
-    margin-top: -3rem;
 }
 
 .profile-image {
@@ -1134,13 +1132,6 @@ svg text {
     margin: 0 auto;
     padding: .05rem;
     width: 95%;
-}
-
-.cover-placeholder {
-    padding: 3rem;
-    background: var(--color-midnight-blue);
-    text-align: center;
-    width: 100%;
 }
 
 /*
