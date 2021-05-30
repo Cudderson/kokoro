@@ -1701,6 +1701,9 @@ svg text {
         font-size: 18px;
     }
 
+    .profile-quote-content {
+        margin-top: 2rem;
+    }
 
 }
 
@@ -1972,7 +1975,6 @@ svg text {
 
     .profile-quote-content {
         font-size: 24px;
-        padding-top: 2em;
     }
 
     .profile-quote-author {
