@@ -231,7 +231,7 @@ nav a:hover {
 }
 
 /* change screen size if needed */
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1500px) {
     .nav-toggle-label {
         display: none;
     }
@@ -1695,6 +1695,10 @@ svg text {
 @media screen and (min-width: 500px) {
     .svg-container::before, .svg-container > div::before {
         display: none;
+    }
+
+    .balance-banner-true, .balance-banner-false {
+        font-size: 18px;
     }
 
 
