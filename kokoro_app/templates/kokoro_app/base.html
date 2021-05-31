@@ -67,18 +67,24 @@
               <input class="nav-search font-small" type="text" name="search" placeholder="Search users"><button type="submit"><i class="fa fa-search"></i></button>
             </form>
           </li>
+          <li><button class="theme-btn request-btn">Change Theme</button></li>
         {% else %}
           <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
           <li><a href="{% url 'users:register' %}">Register</a></li>
           <li><a href="{% url 'users:login' %}">Log In</a></li>
         {% endif %}
       </ul>
+
     </nav>
     <label for="nav-toggle" class="nav-toggle-label">
         <span></span>
     </label>
   </header>
 {% block content %}{% endblock content %}
-<script src="{% static '\kokoro_app\kokoro_scripts_home.js' %}"></script>
+
+<script>
+
+</script>
+
 </body>
 </html>

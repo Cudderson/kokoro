@@ -24,15 +24,13 @@ body {
     /* font variables */
     --font-2xl: 36px;
 
-    /* new 3 color scheme */
-    --color-blue: #05406D;
-    --color-tan: #F5A52D;
-    --color-green: #4ABB49;
-
-    --color-midnight-blue: #043052;
-
-    --color-white: white;
-    --color-black: black;
+    /* color scheme (light / dark) */
+    --color-1: #05406D; /* ? / lightblue */
+    --color-2: #043052; /* ? / midnight-blue */
+    --color-3: #4ABB49; /* brand green/brand green */
+    --color-4: #F5A52D; /* ? / tan */
+    --color-white: white; /* ? / white */
+    --color-black: black; /* ? / black */
 
 }
 
@@ -53,7 +51,7 @@ body {
     background-image: url('/static/kokoro_app/tan-wave.svg'); /* getwaves.io, used --color-chemist-paleyellow */
     background-size: cover;
     background-position: 0px -60px;
-    background-color: var(--color-blue); /* color behind svg hill/wave */
+    background-color: var(--color-1); /* color behind svg hill/wave */
 }
 /* reset box-sizing */
 *, *::before, *::after {
@@ -85,7 +83,7 @@ body {
 ===============
 */
 header {
-    background: var(--color-blue);
+    background: var(--color-1);
     text-align: center;
     position: fixed;
     z-index: 999;
@@ -99,7 +97,7 @@ header {
 }
 
 .logo {
-    color: var(--color-green);
+    color: var(--color-3);
 }
 
 nav {
@@ -111,7 +109,7 @@ nav {
     transform: scale(1, 0);
     transform-origin: top;
     transition: transform 400ms ease-in-out;
-    background: var(--color-blue);
+    background: var(--color-1);
     border-bottom: 2px solid var(--color-white);
 }
 
@@ -136,7 +134,7 @@ nav a {
 }
 
 nav a:hover {
-    color: var(--color-green);
+    color: var(--color-3);
 }
 
 .nav-toggle:checked ~ nav {
@@ -172,7 +170,7 @@ nav a:hover {
     width: 2em;
     border-radius: 2px;
     position: relative;
-    background: var(--color-green);
+    background: var(--color-3);
 }
 
 .nav-toggle-label span::before,
@@ -195,7 +193,7 @@ nav a:hover {
     border-radius: 12px 0px 0px 12px;
     padding: .3em .75em;
     padding-right: 0;
-    background: var(--color-blue);
+    background: var(--color-1);
     color: var(--color-white);
     width: 75%;
 }
@@ -207,11 +205,11 @@ nav a:hover {
 .nav-search:focus {
     outline: none;
     vertical-align: bottom;
-    border-color: var(--color-green);
+    border-color: var(--color-3);
 }
 
 .nav-search:focus::placeholder {
-    color: var(--color-blue);
+    color: var(--color-1);
 }
 
 .nav-search + button[type=submit] {
@@ -224,10 +222,14 @@ nav a:hover {
 }
 
 .nav-search + button[type=submit]:hover {
-    background-color: var(--color-green);
-    border-color: var(--color-green);
+    background-color: var(--color-3);
+    border-color: var(--color-3);
     color: var(--color-white);
     transition: .5s;
+}
+
+.theme-btn {
+    background-color: red;
 }
 
 /* change screen size if needed */
@@ -238,7 +240,7 @@ nav a:hover {
     /* make header a grid */
     header {
         display: grid;
-        grid-template-columns: .75fr auto minmax(600px, 2.25fr) .5fr;
+        grid-template-columns: .75fr 1fr 1fr 1fr;
     }
 
     .logo {
@@ -247,10 +249,10 @@ nav a:hover {
 
     nav {
         all: unset; /* maybe don't use this */
-        grid-column: 2 / 4; /* holds our <ul> elements */
+        grid-column: 2 / 5; /* holds our <ul> elements */
         /* center nav elements within grid using flexbox */
         display: flex;
-        justify-content: flex-end;
+        justify-content: flex-start;
         align-items: center;
     }
 
@@ -271,13 +273,17 @@ nav a:hover {
         position: relative;
     }
 
+    .theme-btn {
+        margin: .3em 0;
+    }
+
     /* hover effect */
     nav a::before {
         content: '';
         display: block;
         height: 5px;
         position: absolute;
-        background: var(--color-green);
+        background: var(--color-3);
         border-radius: 4px;
         top: -.75em;
         left: 0;
@@ -334,7 +340,7 @@ nav a:hover {
 }
 
 .dropdown-btn:hover {
-    color: var(--color-green);
+    color: var(--color-3);
 }
 
 .dropdown-btn::before {
@@ -342,7 +348,7 @@ nav a:hover {
     display: block;
     height: 5px;
     position: absolute;
-    background: var(--color-green);
+    background: var(--color-3);
     border-radius: 4px;
     top: -.75em;
     left: 0;
@@ -360,7 +366,7 @@ nav a:hover {
     user-select: none;
     border: none;
     width: 100%;
-    background-color: var(--color-blue);
+    background-color: var(--color-1);
 }
 
 .drop-noti-read {
@@ -385,10 +391,10 @@ nav a:hover {
 }
 
 .separator {
-    background-color: var(--color-midnight-blue);
+    background-color: var(--color-2);
     padding-top: .05em;
-    border-top: 1px solid var(--color-midnight-blue);
-    border-bottom: 1px solid var(--color-midnight-blue);
+    border-top: 1px solid var(--color-2);
+    border-bottom: 1px solid var(--color-2);
 }
 
 .separator-balance {
@@ -406,18 +412,18 @@ nav a:hover {
     text-align: center;
     user-select: none;
     color: lightgray;
-    background-color: var(--color-blue);
+    background-color: var(--color-1);
 }
 
 .balance-banner-div {
-    border-bottom: 1px solid var(--color-midnight-blue);
+    border-bottom: 1px solid var(--color-2);
     padding: .5em;
 }
 
 .balance-banner-div > .act-type {
     margin: 0;
     padding-left: .5rem;
-    color: var(--color-green);
+    color: var(--color-3);
     user-select: none;
 }
 
@@ -432,7 +438,7 @@ nav a:hover {
 .balance-message-container {
     text-align: center;
     padding: .5rem;
-    background-color: var(--color-blue);
+    background-color: var(--color-1);
     color: var(--color-white);
 }
 
@@ -463,7 +469,7 @@ nav a:hover {
     margin: 0;
     cursor: pointer;
     user-select: none;
-    color: var(--color-tan);
+    color: var(--color-4);
 }
 
 /* home.html svg */
@@ -477,7 +483,7 @@ nav a:hover {
     /* this is the pseudo-element representing the shadow */
     content: "";
     position: absolute;
-    background: var(--color-tan);
+    background: var(--color-4);
 
     top: 65%;
     left: 0;
@@ -506,20 +512,20 @@ nav a:hover {
 
 .tri-1 {
     stroke: var(--color-black);;
-    fill: var(--color-green);
+    fill: var(--color-3);
     fill-opacity: 0;
     stroke-width: 1px;
 }
 
 .tri-2 {
-    fill: var(--color-green);
+    fill: var(--color-3);
     fill-opacity: 0;
     stroke: var(--color-black);;
     stroke-width: 1px;
 }
 
 .tri-3 {
-    fill: var(--color-green);
+    fill: var(--color-3);
     fill-opacity: 0;
     stroke: var(--color-black);;
     stroke-width: 1px;
@@ -602,12 +608,12 @@ svg text {
 }
 
 .activated {
-    background: var(--color-green);
-    border-bottom: 1px solid var(--color-green);
+    background: var(--color-3);
+    border-bottom: 1px solid var(--color-3);
 }
 
 .activated-submit {
-    border-bottom: 1px solid var(--color-green);
+    border-bottom: 1px solid var(--color-3);
 }
 
 .mind-label {
@@ -649,7 +655,7 @@ svg text {
     transform-origin: top;
     transition: transform 500ms ease-in-out 10ms;
     border: 1px solid var(--color-black);;
-    border-top: 4px solid var(--color-green);
+    border-top: 4px solid var(--color-3);
     border-radius: 0 0 4px 4px;
     background-color: ;
 }
@@ -657,7 +663,7 @@ svg text {
 .activity-submit input {
     grid-column: 1 / 3;
     border: 0;
-    border-top: 1px solid var(--color-green);
+    border-top: 1px solid var(--color-3);
     border-radius: 0px 0px 0px 4px;
     background: rgba(255, 255, 255, .15);
     padding: 10px 10px 10px 10px;
@@ -677,7 +683,7 @@ svg text {
     border: none;
     border-radius: 0px 0px 4px 0px;
     border-left: 1px solid var(--color-black);;
-    border-top: 1px solid var(--color-green);
+    border-top: 1px solid var(--color-3);
     background-color: rgba(255, 255, 255, 0);
     color: var(--color-black);;
     font-size: 17px;
@@ -685,7 +691,7 @@ svg text {
 }
 
 .activity-submit button:hover {
-    background-color: var(--color-green);
+    background-color: var(--color-3);
     transition: .7s;
 }
 
@@ -766,7 +772,7 @@ svg text {
 }
 
 .help-header {
-    color: var(--color-green);
+    color: var(--color-3);
 }
 
 .help-content {
@@ -774,11 +780,11 @@ svg text {
 }
 
 .help-type {
-    color: var(--color-tan);
+    color: var(--color-4);
 }
 
 .help-warning {
-    color: var(--color-tan);
+    color: var(--color-4);
     display: block;
     text-align: center;
     padding-top: 2em;
@@ -795,7 +801,7 @@ svg text {
     text-align: center;
     cursor: pointer;
     color: var(--color-white);
-    background-color: var(--color-blue);
+    background-color: var(--color-1);
 }
 
 .view-acts {
@@ -804,9 +810,9 @@ svg text {
 }
 
 .manage-form {
-    background-color: var(--color-midnight-blue);
+    background-color: var(--color-2);
     padding: 1em 1.5em;
-    border: 1px solid var(--color-blue);
+    border: 1px solid var(--color-1);
 }
 
 .manage-form-header {
@@ -824,7 +830,7 @@ svg text {
     border: 1px solid lightgray;
     border-radius: 4px;
     margin-top: 1rem;
-    background-color: var(--color-blue);
+    background-color: var(--color-1);
 }
 
 .manage-form-scroll > div {
@@ -835,7 +841,7 @@ svg text {
 
 .manage-form-scroll > div > .manage-act-type {
     margin: 0;
-    color: var(--color-green);
+    color: var(--color-3);
     display: inline-block;
     user-select: none;
 }
@@ -859,8 +865,8 @@ svg text {
     border: 1px solid var(--color-white);
     border-radius: 4px;
     padding: 1em 0em;
-    background-color: var(--color-green);
-    color: var(--color-midnight-blue);
+    background-color: var(--color-3);
+    color: var(--color-2);
     font-weight: bold;
 }
 /* end manage-form on home.html */
@@ -897,7 +903,7 @@ svg text {
     display: grid;
     grid-template-rows: repeat(auto, 2fr);
     padding: 1rem .75rem;
-    background: var(--color-blue);
+    background: var(--color-1);
 }
 
 .profile-grid-header {
@@ -946,7 +952,7 @@ svg text {
     height: 100%;
     border: 1px solid var(--color-white);
     border-radius: 4px;
-    background: var(--color-midnight-blue);
+    background: var(--color-2);
 }
 
 .profile-quote-content {
@@ -957,7 +963,7 @@ svg text {
     margin: auto;
     padding: .8rem .75rem 0 .75rem;
     position: absolute;
-    background: var(--color-midnight-blue);
+    background: var(--color-2);
     color: var(--color-white);
 }
 
@@ -965,7 +971,7 @@ svg text {
     width: 100%;
     text-align: center;
     display: block;
-    color: var(--color-green);
+    color: var(--color-3);
     margin: .5rem 0 .5rem 0;
 }
 
@@ -979,7 +985,7 @@ svg text {
     grid-row: 1 / 2;
     font-weight: bold;
     word-break: break-word;
-    color: var(--color-green);
+    color: var(--color-3);
 }
 
 .profile-username {
@@ -1007,7 +1013,7 @@ svg text {
     font-family: 'Playfair Display', serif;
     float: right;
     color: var(--color-white);
-    background-color: var(--color-blue);
+    background-color: var(--color-1);
     cursor: pointer;
 }
 
@@ -1022,7 +1028,7 @@ svg text {
     margin-top: 1rem;
     margin-bottom: .25rem;
     /*text-decoration: underline;*/
-    color: var(--color-green);
+    color: var(--color-3);
 }
 
 .perfect-mind {
@@ -1040,7 +1046,7 @@ svg text {
 .profile-contact {
     margin-top: .5rem;
     font-size: 15px;
-    color: var(--color-tan);
+    color: var(--color-4);
 }
 
 .write-post-btn {
@@ -1051,7 +1057,7 @@ svg text {
     padding: .25em 1em;
     border: 1px solid var(--color-white);
     border-radius: 16px;
-    background-color: var(--color-blue);
+    background-color: var(--color-1);
     color: var(--color-white);
     transition: .5s;
 }
@@ -1078,14 +1084,14 @@ svg text {
     position: relative;
     overflow: auto;
     border: 1px solid var(--color-white);
-    background: var(--color-midnight-blue);
+    background: var(--color-2);
 }
 
 .profile-post button {
     /* fit button to div (can style more later) */
     width: 100%;
     height: 100%;
-    background: var(--color-midnight-blue);
+    background: var(--color-2);
     padding: 0;
     border: 0;
     cursor: pointer;
@@ -1095,7 +1101,7 @@ svg text {
     display: block;
     text-align: right;
     font-family: 'Playfair Display', serif;
-    color: var(--color-tan);
+    color: var(--color-4);
     padding: .5rem 1rem 0 1rem;
 }
 
@@ -1115,7 +1121,7 @@ svg text {
     display: block;
     text-align: left;
     font-family: 'Playfair Display', serif;
-    color: var(--color-green);
+    color: var(--color-3);
     padding: .75rem 0 .5rem 3%;
 }
 
@@ -1148,7 +1154,7 @@ svg text {
     border-radius: 12px;
     padding: 0 1rem;
     padding-bottom: 2rem;
-    background-color: var(--color-midnight-blue);
+    background-color: var(--color-2);
 }
 
 .edit-profile-form-container span {
@@ -1160,7 +1166,7 @@ svg text {
     padding: .25rem .5rem;
     border: none;
     border-radius: 4px;
-    background-color: var(--color-green);
+    background-color: var(--color-3);
     color: var(--color-white);
 }
 
@@ -1170,7 +1176,7 @@ svg text {
 }
 
 .edit-header {
-    color: var(--color-green);
+    color: var(--color-3);
     font-size: 30px;
     margin-top: 2rem;
     margin-bottom: .75rem;
@@ -1178,7 +1184,7 @@ svg text {
 
 .edit-header-small {
     display: block;
-    color: var(--color-tan);
+    color: var(--color-4);
 }
 
 .edit-input > input {
@@ -1192,7 +1198,7 @@ svg text {
     border-radius: 4px;
     font-size: 18px;
     font-family: 'Playfair Display', serif;
-    background-color: var(--color-blue);
+    background-color: var(--color-1);
     color: var(--color-white);
     /*outline: red; CHANGE OUTLINE STYLES*/
 }
@@ -1200,7 +1206,7 @@ svg text {
 .tz-select {
     display: block;
     font-family: 'Playfair Display', serif;
-    background-color: var(--color-blue);
+    background-color: var(--color-1);
     color: var(--color-white);
 }
 
@@ -1245,7 +1251,7 @@ svg text {
 .super-container {
     width: 100%;
     height: 100%;
-    background: var(--color-blue);
+    background: var(--color-1);
 }
 
 .search-header {
@@ -1268,7 +1274,7 @@ svg text {
     grid-column-gap: .5rem;
     border-radius: 8px;
     margin-bottom: .5rem;
-    background-color: var(--color-midnight-blue);
+    background-color: var(--color-2);
     padding: .5rem;
 }
 
@@ -1296,11 +1302,11 @@ svg text {
 }
 
 .search-display-name {
-    color: var(--color-green);
+    color: var(--color-3);
 }
 
 .search-username {
-    color: var(--color-tan);
+    color: var(--color-4);
 }
 
 .search-bio {
@@ -1354,7 +1360,7 @@ svg text {
     justify-items: start;
     border-radius: 8px;
     margin-bottom: .5rem;
-    background-color: var(--color-midnight-blue);
+    background-color: var(--color-2);
     padding: .5rem;
 }
 
@@ -1366,7 +1372,7 @@ svg text {
     justify-items: start;
     border-radius: 8px;
     margin-bottom: .5rem;
-    background-color: var(--color-midnight-blue);
+    background-color: var(--color-2);
     padding: .5rem;
 }
 
@@ -1381,7 +1387,7 @@ svg text {
 
 .request-btn {
     color: var(--color-white);
-    background-color: var(--color-blue);
+    background-color: var(--color-1);
     border: 1px solid var(--color-white);
     border-radius: 16px;
     padding: .25em 1em;
@@ -1390,8 +1396,8 @@ svg text {
 }
 
 .request-btn:hover {
-    background-color: var(--color-green);
-    border-color: var(--color-green);
+    background-color: var(--color-3);
+    border-color: var(--color-3);
     transition: .5s;
 }
 
@@ -1429,11 +1435,11 @@ svg text {
 }
 
 .friend-display-name {
-    color: var(--color-green);
+    color: var(--color-3);
 }
 
 .friend-username {
-    color: var(--color-tan);
+    color: var(--color-4);
 }
 
 .friend-bio {
@@ -1471,8 +1477,8 @@ svg text {
 .decline-request-form > button:hover,
 .cancel-request-form > button:hover,
 .remove-friend-form > button:hover {
-    background-color: var(--color-tan);
-    border-color: var(--color-tan);
+    background-color: var(--color-4);
+    border-color: var(--color-4);
     color: var(--color-black);
     transition: .5s;
 }
@@ -1523,8 +1529,8 @@ svg text {
 }
 
 .red-btn:hover {
-    background-color: var(--color-tan);
-    border-color: var(--color-tan);
+    background-color: var(--color-4);
+    border-color: var(--color-4);
     color: var(--color-black);
 }
 
@@ -1532,18 +1538,18 @@ svg text {
     display: block;
     padding-bottom: 1rem;
     font-size: 36px;
-    color: var(--color-tan);
+    color: var(--color-4);
     line-height: 1.2em;
 }
 
 .post-author {
     display: block;
-    color: var(--color-green);
+    color: var(--color-3);
 }
 
 .post-published {
     display: block;
-    color: var(--color-tan);
+    color: var(--color-4);
 }
 
 .post-content {
@@ -1578,11 +1584,11 @@ svg text {
     outline: none;
     width: 100%;
     margin-bottom: 2rem;
-    border: 2px solid var(--color-midnight-blue);
+    border: 2px solid var(--color-2);
     border-radius: 4px;
     outline: none;
-    background-color: var(--color-blue);
-    color: var(--color-tan);
+    background-color: var(--color-1);
+    color: var(--color-4);
     font-size: 28px;
     font-family: 'Playfair Display', serif;
 }
@@ -1593,9 +1599,9 @@ svg text {
     outline: none;
     width: 100%;
     margin-bottom: 1rem;
-    border: 2px solid var(--color-midnight-blue);
+    border: 2px solid var(--color-2);
     border-radius: 4px;
-    background-color: var(--color-blue);
+    background-color: var(--color-1);
     color: var(--color-white);
     font-family: 'Playfair Display', serif;
     font-size: 18px;
@@ -1617,7 +1623,7 @@ svg text {
     margin-top: 4rem;
     padding: 2rem;
     border-radius: 8px;
-    background-color: var(--color-midnight-blue);
+    background-color: var(--color-2);
 }
 
 .register-container > form > span {
@@ -1632,11 +1638,11 @@ svg text {
 }
 
 .register-label {
-    color: var(--color-green);
+    color: var(--color-3);
 }
 
 .register-field > input[type=text], .register-field > input[type=password] {
-    background-color: var(--color-blue);
+    background-color: var(--color-1);
     width: 100%;
     margin-bottom: 1rem;
     padding-left: .5rem;
@@ -1648,7 +1654,7 @@ svg text {
 }
 
 .register-help {
-    color: var(--color-tan);
+    color: var(--color-4);
 }
 
 .register-error, .login-error {
@@ -1664,7 +1670,7 @@ svg text {
 .login-container {
     width: 100%;
     height: 100%;
-    background-color: var(--color-blue);
+    background-color: var(--color-1);
 }
 
 .login-btn {
@@ -1862,7 +1868,7 @@ svg text {
 
     .activity-card-content > .act-type-desktop {
         display: block;
-        color: var(--color-green);
+        color: var(--color-3);
     }
 
     .activity-card-content .act-description {
@@ -1918,14 +1924,14 @@ svg text {
         padding: .25em 1.25em;
         border: 1px solid var(--color-white);
         border-radius: 15px;
-        background-color: var(--color-blue);
+        background-color: var(--color-1);
         color: var(--color-white);
         transition: 1s;
     }
 
     .view-acts-desktop:hover, .help-icon-container-desktop:hover {
-        background-color: var(--color-green);
-        border: 1px solid var(--color-green);
+        background-color: var(--color-3);
+        border: 1px solid var(--color-3);
         transition: .7s;
     }
 
@@ -1950,13 +1956,13 @@ svg text {
         border-radius: 2px;
         min-width: 500px;
         max-width: 50vw;
-        background: var(--color-blue);
+        background: var(--color-1);
     }
 
     .cover-placeholder {
         padding: 4rem;
         border-bottom: 1px solid var(--color-black);;
-        background: var(--color-blue);
+        background: var(--color-1);
     }
 
     .profile-display-name {
@@ -1988,13 +1994,13 @@ svg text {
         border: 1px solid var(--color-white);
         border-radius: 16px;
         color: var(--color-white);
-        background-color: var(--color-blue);
+        background-color: var(--color-1);
         transition: .5s;
     }
 
     .edit-profile-or-friendship-btn:hover {
-        background-color: var(--color-green);
-        border-color: var(--color-green);
+        background-color: var(--color-3);
+        border-color: var(--color-3);
         transition: .5s;
     }
 
@@ -2010,21 +2016,21 @@ svg text {
 
     .profile-contact span {
         font-size: 18px;
-        color: var(--color-tan);
+        color: var(--color-4);
     }
 
     .friendship-btn-submit, .write-post-btn-submit {
         font-size: 16px;
         border: 1px solid var(--color-white);
         border-radius: 16px;
-        background-color: var(--color-blue);
+        background-color: var(--color-1);
         color: var(--color-white);
         transition: .5s;
     }
 
     .friendship-btn-submit:hover, .write-post-btn-submit:hover {
-        background-color: var(--color-green);
-        border-color: var(--color-green);
+        background-color: var(--color-3);
+        border-color: var(--color-3);
         transition: .5s;
     }
 
@@ -2101,7 +2107,7 @@ svg text {
     }
 
     ::-webkit-scrollbar-thumb {
-        background: var(--color-green);
+        background: var(--color-3);
         border-radius: 10px;
     }
 
@@ -2117,7 +2123,7 @@ svg text {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-column-gap: 1em;
-        background-color: var(--color-blue);
+        background-color: var(--color-1);
         margin: 0 auto;
         padding: 1em;
         width: 60%;
