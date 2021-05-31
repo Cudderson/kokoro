@@ -32,6 +32,9 @@ def index(request):
 def home(request):
     """Home Page for Kokoro users"""
 
+    # Expire the user session when they close their browser
+    request.session.set_expiry(0)
+
     if request.method == "POST":
         if 'activity_form' in request.POST:
             activity_form = ActivityForm(data=request.POST)
