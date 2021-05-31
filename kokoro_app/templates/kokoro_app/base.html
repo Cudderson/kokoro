@@ -83,19 +83,31 @@
 {% block content %}{% endblock content %}
 
 <script>
-  // get root element
-  var root = document.querySelector(':root');
-  var rootStyles = getComputedStyle(root);
+// #05406D is --color-1
 
-  // set color variable values
-  function setRootStyles() {
-      if (rootStyles.getPropertyValue('--color-1') == '#05406D') {
-          root.style.setProperty('--color-1', 'red');
-      }
-      else {
-          root.style.setProperty('--color-1', '#05406D');
-      }
-  }
+// get root element
+var root = document.querySelector(':root');
+var rootStyles = getComputedStyle(root);
+
+// we should also get <body>'s background-image
+var body = document.querySelector('body');
+var backgroundImage = body.style.backgroundImage;
+
+// set color variable values
+function setRootStyles() {
+    if ( (rootStyles.getPropertyValue('--color-1') === '#05406D') || (rootStyles.getPropertyValue('--color-1') == '' )) {
+        console.log("option1");
+        root.style.setProperty('--color-1', 'red');
+
+        body.style.setProperty('background-image', 'var(--svg-green-wave)');
+    }
+    else {
+        console.log("option2");
+        root.style.setProperty('--color-1', '#05406D');
+
+        body.style.setProperty('background-image', 'var(--svg-tan-wave)');
+    }
+}
 </script>
 
 </body>
