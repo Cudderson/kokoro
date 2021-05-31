@@ -94,8 +94,11 @@ var body = document.querySelector('body');
 var backgroundImage = body.style.backgroundImage;
 
 // set color variable values
+// *** .getPropertyValue == '#05406D' only works if there is no space between color variable and its value (CSS) ***
+// *** adding a space between --color-x and its value requires to put a space before the hex in JS >>> ('--color-1') == ' #05406D'
+
 function setRootStyles() {
-    if ( (rootStyles.getPropertyValue('--color-1') === '#05406D') || (rootStyles.getPropertyValue('--color-1') == '' )) {
+    if ( rootStyles.getPropertyValue('--color-1') == '#05406D' || rootStyles.getPropertyValue('--color-1') == '' ) {
         console.log("option1");
         root.style.setProperty('--color-1', 'red');
 
@@ -103,6 +106,7 @@ function setRootStyles() {
     }
     else {
         console.log("option2");
+        console.log(rootStyles.getPropertyValue('--color-1'));
         root.style.setProperty('--color-1', '#05406D');
 
         body.style.setProperty('background-image', 'var(--svg-tan-wave)');

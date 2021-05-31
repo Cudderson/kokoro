@@ -25,12 +25,12 @@ body {
     --font-2xl: 36px;
 
     /* color scheme (light / dark) */
-    --color-1: #05406D; /* ? / lightblue */
-    --color-2: #043052; /* ? / midnight-blue */
-    --color-3: #4ABB49; /* brand green/brand green */
-    --color-4: #F5A52D; /* ? / tan */
-    --color-white: white; /* ? / white */
-    --color-black: black; /* ? / black */
+    --color-1:#05406D; /* ? / lightblue */
+    --color-2:#043052; /* ? / midnight-blue */
+    --color-3:#4ABB49; /* brand green/brand green */
+    --color-4:#F5A52D; /* ? / tan */
+    --color-white:white; /* ? / white */
+    --color-black:black; /* ? / black */
 
     --svg-tan-wave: url('/static/kokoro_app/tan-wave.svg');
     --svg-green-wave: url('/static/kokoro_app/green-wave.svg');
