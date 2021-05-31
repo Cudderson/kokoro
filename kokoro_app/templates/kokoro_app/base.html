@@ -67,7 +67,7 @@
               <input class="nav-search font-small" type="text" name="search" placeholder="Search users"><button type="submit"><i class="fa fa-search"></i></button>
             </form>
           </li>
-          <li><button class="theme-btn request-btn">Change Theme</button></li>
+          <li><button class="theme-btn request-btn" onclick="setRootStyles()">Change Theme</button></li>
         {% else %}
           <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
           <li><a href="{% url 'users:register' %}">Register</a></li>
@@ -83,7 +83,19 @@
 {% block content %}{% endblock content %}
 
 <script>
+  // get root element
+  var root = document.querySelector(':root');
+  var rootStyles = getComputedStyle(root);
 
+  // set color variable values
+  function setRootStyles() {
+      if (rootStyles.getPropertyValue('--color-1') == '#05406D') {
+          root.style.setProperty('--color-1', 'red');
+      }
+      else {
+          root.style.setProperty('--color-1', '#05406D');
+      }
+  }
 </script>
 
 </body>
