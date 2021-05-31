@@ -32,6 +32,17 @@ body {
     --color-white: white; /* ? / white */
     --color-black: black; /* ? / black */
 
+    --svg-wave: url('/static/kokoro_app/tan-wave.svg');
+
+    /* just for easiness, I'll define the new colors here too (also in JS function)
+    --color-1:
+    --color-2:
+    --color-3: #4ABB49 (unchanged)
+    --color-4:
+    (will determine black&white changes later)
+    */
+
+
 }
 
 html, button {
@@ -48,7 +59,7 @@ body {
     background-image: linear-gradient(to top, #3d3d3f, #495461, #476f81, #3d8d97, #43aa9f, #5fbaa3, #7ccaa6, #9adaaa, #afe3bb, #c4eccc, #d9f5de, #edfef0);
     */
     /*background-image: linear-gradient(to bottom, #f5fff7, #badcbe, #83b984, #4e964a, #067302);*/
-    background-image: url('/static/kokoro_app/tan-wave.svg'); /* getwaves.io, used --color-chemist-paleyellow */
+    background-image: var(--svg-wave); /* getwaves.io */
     background-size: cover;
     background-position: 0px -60px;
     background-color: var(--color-1); /* color behind svg hill/wave */
