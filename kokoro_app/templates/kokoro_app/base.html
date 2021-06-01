@@ -83,8 +83,6 @@
 {% block content %}{% endblock content %}
 
 <script>
-// #05406D is --color-1
-
 // get root element
 var root = document.querySelector(':root');
 var rootStyles = getComputedStyle(root);
@@ -104,8 +102,7 @@ function setRootStyles() {
     if ( rootStyles.getPropertyValue('--color-1') == '#05406D' || rootStyles.getPropertyValue('--color-1') == '' ) {
 
         root.style.setProperty('--color-1', '#FAF8FF'); //off-white
-        root.style.setProperty('--color-2', '#f3f0F9'); //super-light-green (testing light gray)
-        root.style.setProperty('--color-3', '#2CA52C'); //dark-green
+        root.style.setProperty('--color-2', '#FDFFFD');
         root.style.setProperty('--color-4', '#005000'); //super-dark-green
         root.style.setProperty('--color-5', '#003000'); //even-darker-green
         root.style.setProperty('--color-6', 'black'); //black
