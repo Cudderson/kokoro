@@ -93,6 +93,9 @@ var rootStyles = getComputedStyle(root);
 var body = document.querySelector('body');
 var backgroundImage = body.style.backgroundImage;
 
+// activity-card uses opacity, so we'll handle that separately
+var activityCard = document.getElementsByClassName("activity-card-container")[0];
+
 // set color variable values
 // *** .getPropertyValue == '#05406D' only works if there is no space between color variable and its value (CSS) ***
 // *** adding a space between --color-x and its value requires to put a space before the hex in JS >>> ('--color-1') == ' #05406D'
@@ -112,6 +115,9 @@ function setRootStyles() {
 
         // green wave color: #49BB49
         body.style.setProperty('background-image', 'var(--svg-green-wave)');
+
+        // activity-card-container
+        activityCard.style.background = 'rgba(255, 255, 255, .4)';
     }
     else {
         // return colors to original
@@ -122,9 +128,11 @@ function setRootStyles() {
         root.style.setProperty('--color-5', 'white');
         root.style.setProperty('--color-6', 'black');
         root.style.setProperty('--color-7', 'lightgray');
-        root.style.setProperty('color--svg-shadow', '#F5A52D');
+        root.style.setProperty('--color-svg-shadow', '#F5A52D');
 
         body.style.setProperty('background-image', 'var(--svg-tan-wave)');
+
+        activityCard.style.background = 'rgba(0, 0, 0, .4)';
     }
 }
 </script>
