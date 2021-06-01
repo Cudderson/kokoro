@@ -32,6 +32,7 @@ body {
     --color-5:white; /* ? / white */
     --color-6:black; /* ? / black */
     --color-7:lightgray;
+    --color-svg:#49BB49;
 
     --svg-tan-wave: url('/static/kokoro_app/tan-wave.svg');
     --svg-green-wave: url('/static/kokoro_app/green-wave.svg');
@@ -522,25 +523,25 @@ nav a:hover {
 .tri-main {
     stroke-width: 0px;
     stroke: var(--color-6);;
-    fill: #4ABB49;
+    fill: var(--color-svg);
 }
 
 .tri-1 {
     stroke: var(--color-6);;
-    fill: var(--color-3);
+    fill: var(--color-svg);
     fill-opacity: 0;
     stroke-width: 1px;
 }
 
 .tri-2 {
-    fill: var(--color-3);
+    fill: var(--color-svg);
     fill-opacity: 0;
     stroke: var(--color-6);;
     stroke-width: 1px;
 }
 
 .tri-3 {
-    fill: var(--color-3);
+    fill: var(--color-svg);
     fill-opacity: 0;
     stroke: var(--color-6);;
     stroke-width: 1px;
