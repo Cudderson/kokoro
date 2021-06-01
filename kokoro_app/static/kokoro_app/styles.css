@@ -27,7 +27,7 @@ body {
     /* color scheme (light / dark) */
     --color-1:#05406D; /* ? / lightblue */
     --color-2:#043052; /* ? / midnight-blue */
-    --color-3:#4ABB49; /* brand green/brand green */
+    --color-3:#49BB49; /* brand green/brand green */
     --color-4:#F5A52D; /* ? / tan */
     --color-white:white; /* ? / white */
     --color-black:black; /* ? / black */
@@ -36,9 +36,9 @@ body {
     --svg-green-wave: url('/static/kokoro_app/green-wave.svg');
 
     /* just for easiness, I'll define the new colors here too (also in JS function)
-    --color-1:
+    --color-1: #A1E6A1
     --color-2:
-    --color-3: #4ABB49 (unchanged)
+    --color-3: #49BB49 (unchanged)
     --color-4:
     (will determine black&white changes later)
     */

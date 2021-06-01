@@ -99,14 +99,13 @@ var backgroundImage = body.style.backgroundImage;
 
 function setRootStyles() {
     if ( rootStyles.getPropertyValue('--color-1') == '#05406D' || rootStyles.getPropertyValue('--color-1') == '' ) {
-        console.log("option1");
-        root.style.setProperty('--color-1', 'red');
+
+        root.style.setProperty('--color-1', '#A1E6A1');
 
         body.style.setProperty('background-image', 'var(--svg-green-wave)');
     }
     else {
-        console.log("option2");
-        console.log(rootStyles.getPropertyValue('--color-1'));
+
         root.style.setProperty('--color-1', '#05406D');
 
         body.style.setProperty('background-image', 'var(--svg-tan-wave)');
