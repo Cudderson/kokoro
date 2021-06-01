@@ -33,9 +33,11 @@ body {
     --color-6:black; /* ? / black */
     --color-7:lightgray;
     --color-svg:#49BB49;
+    --color-svg-shadow:#F5A52D;
 
     --svg-tan-wave: url('/static/kokoro_app/tan-wave.svg');
     --svg-green-wave: url('/static/kokoro_app/green-wave.svg');
+    /*current-wave: #A2FF98;*/
 
     /* just for easiness, I'll define the new colors here too (also in JS function)
     --color-1:
@@ -499,7 +501,7 @@ nav a:hover {
     /* this is the pseudo-element representing the shadow */
     content: "";
     position: absolute;
-    background: var(--color-4);
+    background: var(--color-svg-shadow);
 
     top: 65%;
     left: 0;
@@ -1800,7 +1802,7 @@ svg text {
         height: 100%;
         margin: 0 auto;
 
-        background: var(--color-4);
+        background: var(--color-svg-shadow);
         transform: perspective(6rem) rotateX(20deg) scale(1, .15);
         filter: blur(6em) brightness(0.75);
         pointer-events: none;
