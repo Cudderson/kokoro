@@ -1797,7 +1797,7 @@ svg text {
         height: 100%;
         margin: 0 auto;
 
-        background: #F5A52D;
+        background: var(--color-4);
         transform: perspective(6rem) rotateX(20deg) scale(1, .15);
         filter: blur(6em) brightness(0.75);
         pointer-events: none;
