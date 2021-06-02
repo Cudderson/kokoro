@@ -32,6 +32,7 @@ body {
     --color-5:white; /* ? / white */
     --color-6:black; /* ? / black */
     --color-7:lightgray;
+    --color-8:#043052;
     --color-svg:#49BB49;
     --color-svg-shadow:#F5A52D;
 
@@ -1650,8 +1651,10 @@ svg text {
     margin: 0 auto;
     margin-top: 4rem;
     padding: 2rem;
+    border: 2px solid;
     border-radius: 8px;
     background-color: var(--color-2);
+    border-color: var(--color-8);
 }
 
 .register-container > form > span {
@@ -1674,7 +1677,8 @@ svg text {
     width: 100%;
     margin-bottom: 1rem;
     padding-left: .5rem;
-    border: none;
+    border: 1px solid;
+    border-color: var(--color-8);
     border-radius: 4px;
     font-size: 24px;
     font-family: 'Playfair Display', serif;
