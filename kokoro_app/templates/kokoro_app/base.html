@@ -24,7 +24,7 @@
       <ul>
 
         {% if user.is_authenticated %}
-          <li class="wwww"><a class="wwww">Hello, {{ request.user.username }}.</a></li>
+          <li><a>Hello, {{ request.user.username }}.</a></li>
           <!--place notification dropdown here-->
           <li class="dropdown">
               <button class="dropdown-btn">Notifications</button>
@@ -49,11 +49,11 @@
                 {% if notifications %}
                   <form action="{% url 'notifications:notification_form_handler' %}" method="post">
                     {% csrf_token %}
-                    <button class="drop-noti" name="mark_all_form">Mark All As Seen</button>
+                    <button class="drop-noti drop-noti-read" name="mark_all_form">Mark All As Seen</button>
                   </form>
                   <form action="{% url 'notifications:notification_form_handler' %}" method="post">
                     {% csrf_token %}
-                    <button class="drop-noti" name="clear_all_form">Clear All</button>
+                    <button class="drop-noti drop-noti-read" name="clear_all_form">Clear All</button>
                   </form>
                 {% endif %}
               </div>
@@ -108,8 +108,9 @@ function setRootStyles() {
         root.style.setProperty('--color-6', 'black'); //black
         root.style.setProperty('--color-7', '#003000'); //darkest green (.post-separator)
         root.style.setProperty('--color-8', '#49BB49'); //register/login containers
+        root.style.setProperty('--color-9', '#49BB49'); //notifications
+        root.style.setProperty('--color-10', '#96FFA1');
         root.style.setProperty('--color-svg-shadow', '#A2FF98');
-        //problem, we aren't using the original green anymore
 
         // green wave color: #49BB49
         body.style.setProperty('background-image', 'var(--svg-green-wave)');
@@ -127,6 +128,8 @@ function setRootStyles() {
         root.style.setProperty('--color-6', 'black');
         root.style.setProperty('--color-7', 'lightgray');
         root.style.setProperty('--color-8', '#043052');
+        root.style.setProperty('--color-9', '#FFFFFF');
+        root.style.setProperty('--color-10', '#05406D');
         root.style.setProperty('--color-svg-shadow', '#F5A52D');
 
         body.style.setProperty('background-image', 'var(--svg-tan-wave)');
