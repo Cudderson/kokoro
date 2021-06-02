@@ -40,6 +40,13 @@
             <button class="font-med" type="submit" name="bio_form">Update Biography</button>
         </form>
 
+        <span class="edit-header">Email/Contact</span>
+        <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
+            {% csrf_token %}
+            <span class="edit-input">{{ contact_form.user_email }}</span>
+            <button class="font-med" type="submit" name="contact_info_form">Update Email</button>
+        </form>
+
         <span class="edit-header">Perfect Balance</span>
         <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post">
             {% csrf_token %}

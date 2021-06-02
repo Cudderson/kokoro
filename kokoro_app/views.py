@@ -201,15 +201,20 @@ def edit_profile(request):
         quote_placeholder_queryset = ProfileQuote.objects.get(owner=request.user)
     except Exception as e:
         quote_placeholder_queryset = None
+    try:
+        contact_info = ContactInfo.objects.get(owner=request.user)
+    except Exception as e:
+        contact_info = None
 
     # Everyone has an image by default
     profile_image_placeholder = ProfileImage.objects.get(owner=request.user)
 
     # Forms for editing profile
-    bio_form = ProfileBioForm(instance=bio_placeholder)
-    perfect_form = PerfectBalanceForm(instance=perfect_placeholder_queryset)
     display_name_form = ProfileDisplayNameForm(instance=display_name_placeholder)
     quote_form = ProfileQuoteForm(instance=quote_placeholder_queryset)
+    bio_form = ProfileBioForm(instance=bio_placeholder)
+    contact_form = ContactInfoForm(instance=contact_info)
+    perfect_form = PerfectBalanceForm(instance=perfect_placeholder_queryset)
     profile_image_form = ProfileImageForm(instance=profile_image_placeholder)
 
     context = {
@@ -221,6 +226,8 @@ def edit_profile(request):
         'quote_placeholder_queryset': quote_placeholder_queryset,
         'bio_form': bio_form,
         'bio_placeholder': bio_placeholder,
+        'contact_info': contact_info,
+        'contact_form': contact_form,
         'perfect_form': perfect_form,
         'perfect_placeholder_queryset': perfect_placeholder_queryset,
         'timezones': pytz.common_timezones,
