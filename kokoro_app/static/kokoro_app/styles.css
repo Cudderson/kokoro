@@ -246,6 +246,10 @@ nav a:hover {
     transition: .5s;
 }
 
+.search-icon {
+    padding: .22em 0;
+}
+
 .theme-btn {
     background-color: red;
 }
