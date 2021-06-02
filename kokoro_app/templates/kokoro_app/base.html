@@ -24,7 +24,7 @@
       <ul>
 
         {% if user.is_authenticated %}
-          <li><a>Hello, {{ request.user.username }}.</a></li>
+          <li class="wwww"><a class="wwww">Hello, {{ request.user.username }}.</a></li>
           <!--place notification dropdown here-->
           <li class="dropdown">
               <button class="dropdown-btn">Notifications</button>
@@ -72,9 +72,9 @@
           <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
           <li><a href="{% url 'users:register' %}">Register</a></li>
           <li><a href="{% url 'users:login' %}">Log In</a></li>
+          <li><button class="theme-btn request-btn font-med" onclick="setRootStyles()">Change Theme</button></li>
         {% endif %}
       </ul>
-
     </nav>
     <label for="nav-toggle" class="nav-toggle-label">
         <span></span>

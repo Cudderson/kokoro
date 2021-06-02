@@ -274,8 +274,9 @@ nav a:hover {
         grid-column: 2 / 5; /* holds our <ul> elements */
         /* center nav elements within grid using flexbox */
         display: flex;
-        justify-content: flex-start;
+        justify-content: flex-end;
         align-items: center;
+        max-width: 1600px;
     }
 
     nav ul {
@@ -295,8 +296,12 @@ nav a:hover {
         position: relative;
     }
 
+    .wwww {
+        align-self: flex-start;
+    }
+
     .theme-btn {
-        margin: .3em 0;
+        margin: 0;
     }
 
     /* hover effect */
