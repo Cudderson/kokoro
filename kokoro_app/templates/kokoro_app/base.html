@@ -67,12 +67,12 @@
               <input class="nav-search font-med" type="text" name="search" placeholder="Search users"><button type="submit"><i class="fa fa-search search-icon"></i></button>
             </form>
           </li>
-          <li><button class="theme-btn request-btn" onclick="setRootStyles()">Change Theme</button></li>
+          <li><button class="theme-btn request-btn font-med" onclick="setThemePreference()">Change Theme</button></li>
         {% else %}
           <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
           <li><a href="{% url 'users:register' %}">Register</a></li>
           <li><a href="{% url 'users:login' %}">Log In</a></li>
-          <li><button class="theme-btn request-btn font-med" onclick="setRootStyles()">Change Theme</button></li>
+          <li><button class="theme-btn request-btn font-med" onclick="setThemePreference()">Change Theme</button></li>
         {% endif %}
       </ul>
     </nav>
@@ -96,48 +96,69 @@ var activityCard = document.getElementsByClassName("activity-card-container")[0]
 
 // set color variable values
 // *** .getPropertyValue == '#05406D' only works if there is no space between color variable and its value (CSS) ***
-// *** adding a space between --color-x and its value requires to put a space before the hex in JS >>> ('--color-1') == ' #05406D'
+// *** adding a space between --color-x and its value (CSS) requires putting a space before the hex in JS >>> ('--color-1') == ' #05406D'
 
-function setRootStyles() {
-    if ( rootStyles.getPropertyValue('--color-1') == '#05406D' || rootStyles.getPropertyValue('--color-1') == '' ) {
+function toggleLightTheme() {
 
-        root.style.setProperty('--color-1', '#FAF8FF');
-        root.style.setProperty('--color-2', '#FDFFFD');
-        root.style.setProperty('--color-3', '#008500'); // testing contrast green
-        root.style.setProperty('--color-4', '#005000');
-        root.style.setProperty('--color-5', '#003000');
-        root.style.setProperty('--color-6', 'black');
-        root.style.setProperty('--color-7', '#003000');
-        root.style.setProperty('--color-8', '#49BB49');
-        root.style.setProperty('--color-9', '#49BB49');
-        root.style.setProperty('--color-10', '#96FFA1');
-        root.style.setProperty('--color-11', '#9A5A00');
-        root.style.setProperty('--color-svg-shadow', '#A2FF98');
+    root.style.setProperty('--color-1', '#05406D');
+    root.style.setProperty('--color-2', '#043052');
+    root.style.setProperty('--color-3', '#49BB49');
+    root.style.setProperty('--color-4', '#F5A52D');
+    root.style.setProperty('--color-5', 'white');
+    root.style.setProperty('--color-6', 'black');
+    root.style.setProperty('--color-7', 'lightgray');
+    root.style.setProperty('--color-8', '#043052');
+    root.style.setProperty('--color-9', '#FFFFFF');
+    root.style.setProperty('--color-10', '#05406D');
+    root.style.setProperty('--color-11', '#F5A52D');
+    root.style.setProperty('--color-svg-shadow', '#F5A52D');
 
-        body.style.setProperty('background-image', 'var(--svg-green-wave)');
+    body.style.setProperty('background-image', 'var(--svg-tan-wave)');
 
-        activityCard.style.background = 'rgba(255, 255, 255, .4)';
+    activityCard.style.background = 'rgba(0, 0, 0, .4)';
+}
+
+function toggleDarkTheme() {
+
+    root.style.setProperty('--color-1', '#FAF8FF');
+    root.style.setProperty('--color-2', '#FDFFFD');
+    root.style.setProperty('--color-3', '#008500');
+    root.style.setProperty('--color-4', '#005000');
+    root.style.setProperty('--color-5', '#003000');
+    root.style.setProperty('--color-6', 'black');
+    root.style.setProperty('--color-7', '#003000');
+    root.style.setProperty('--color-8', '#49BB49');
+    root.style.setProperty('--color-9', '#49BB49');
+    root.style.setProperty('--color-10', '#96FFA1');
+    root.style.setProperty('--color-11', '#9A5A00');
+    root.style.setProperty('--color-svg-shadow', '#A2FF98');
+
+    body.style.setProperty('background-image', 'var(--svg-green-wave)');
+
+    activityCard.style.background = 'rgba(255, 255, 255, .4)';
+}
+
+function setThemePreference() {
+    // this function should first set localStorage themePreference, then call the appropriate toggle____Theme function
+    if (localStorage.getItem("themePreference") === 'light' || localStorage.getItem("themePreference") == null) {
+
+        localStorage.setItem("themePreference", "dark");
+        toggleDarkTheme();
     }
     else {
-        // return colors to original
-        root.style.setProperty('--color-1', '#05406D');
-        root.style.setProperty('--color-2', '#043052');
-        root.style.setProperty('--color-3', '#49BB49');
-        root.style.setProperty('--color-4', '#F5A52D');
-        root.style.setProperty('--color-5', 'white');
-        root.style.setProperty('--color-6', 'black');
-        root.style.setProperty('--color-7', 'lightgray');
-        root.style.setProperty('--color-8', '#043052');
-        root.style.setProperty('--color-9', '#FFFFFF');
-        root.style.setProperty('--color-10', '#05406D');
-        root.style.setProperty('--color-11', '#F5A52D');
-        root.style.setProperty('--color-svg-shadow', '#F5A52D');
-
-        body.style.setProperty('background-image', 'var(--svg-tan-wave)');
-
-        activityCard.style.background = 'rgba(0, 0, 0, .4)';
+        localStorage.setItem("themePreference", "light");
+        toggleLightTheme();
     }
 }
+
+// called before page load to determine if dark theme should be applied
+function applyThemePreference() {
+    if (localStorage.getItem("themePreference") === 'dark') {
+        toggleDarkTheme();
+    }
+}
+
+applyThemePreference();
 </script>
 
 </body>
