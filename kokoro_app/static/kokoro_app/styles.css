@@ -24,39 +24,23 @@ body {
     /* font variables */
     --font-2xl: 36px;
 
-    /* color scheme (light / dark) (dark colors)*/
-    --color-1:#05406D; /* off-white / light-blue */
-    --color-2:#043052; /* light-green / midnight-blue */
-    --color-3:#49BB49; /* brand green/brand green */
-    --color-4:#F5A52D; /* dark-green / tan */
-    --color-5:white; /* super-dark-green / white */
+    /* color scheme (light / dark) */
+    --color-1:#FAF8FF; /* off-white / light-blue */
+    --color-2:#FDFFFD; /* light-green / midnight-blue */
+    --color-3:#008500; /* brand green/brand green */
+    --color-4:#005000; /* dark-green / tan */
+    --color-5:#003000; /* super-dark-green / white */
     --color-6:black; /* black / black */
-    --color-7:lightgray; /* super-dark-green / lightgray */
-    --color-8:#043052; /* brand green / midnight-blue */
-    --color-9:#FFFFFF; /* brand green / white */
-    --color-10:#05406D; /* super-light-green / light-blue */
-    --color-11:#F5A52D; /* dark-tan / tan */
+    --color-7:#003000; /* super-dark-green / lightgray */
+    --color-8:#49BB49; /* brand green / midnight-blue */
+    --color-9:#49BB49; /* brand green / white */
+    --color-10:#96FFA1; /* super-light-green / light-blue */
+    --color-11:#9A5A00; /* dark-tan / tan */
     --color-svg:#49BB49; /* brand-green */
-    --color-svg-shadow:#F5A52D; /* based-off wave color (light-green / tan) */
+    --color-svg-shadow:#A2FF98; /* based-off wave color (light-green / tan) */
 
     --svg-tan-wave: url('/static/kokoro_app/tan-wave.svg');
     --svg-green-wave: url('/static/kokoro_app/green-wave.svg');
-
-    /* just for easiness, I'll define the new colors here too (light-theme) (also in JS function)
-    --color-1:#FAF8FF
-    --color-2:#FDFFFD
-    --color-3:#49BB49 (unchanged)
-    --color-4:#005000
-    --color-5:#003000
-    --color-6:black
-    --color-7:#003000
-    --color-8:#49BB49
-    --color-9:#49BB49
-    --color-10:#96FFA1
-    --color-11:#9A5A00
-    --color-svg: (unchanged)
-    --color-svg-shadow: #A2FF98
-    */
 }
 
 html, button {
@@ -67,13 +51,7 @@ html, button {
 body {
     margin: 0;
     padding-top: 85.5px; /* header height = 80px (depends on logo size)*/
-    /* background-color: rgba(25, 225, 85, .7);  page bg color */
-    /*background-color: var(--color-2);*/
-    /* this is a gradient of the three color variables (3)
-    background-image: linear-gradient(to top, #3d3d3f, #495461, #476f81, #3d8d97, #43aa9f, #5fbaa3, #7ccaa6, #9adaaa, #afe3bb, #c4eccc, #d9f5de, #edfef0);
-    */
-    /*background-image: linear-gradient(to bottom, #f5fff7, #badcbe, #83b984, #4e964a, #067302);*/
-    background-image: var(--svg-tan-wave); /* getwaves.io */
+    background-image: var(--svg-green-wave); /* getwaves.io */
     background-size: cover;
     background-position: 0px -60px;
     background-color: var(--color-1); /* color behind svg hill/wave */
@@ -1838,14 +1816,7 @@ svg text {
         display: flex;
         flex-direction: column;
 
-        /* rgba for white */
-        /*background: rgba(255, 255, 255, .75);*/
-
-        /* new green */
-        /*background: rgba(74, 187, 73, .75);*/
-
-        background: rgba(0, 0, 0, .4);
-
+        background: rgba(255, 255, 255, .4);
     }
 
     .activity-card-container-inner {
