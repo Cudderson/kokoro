@@ -101,21 +101,19 @@ var activityCard = document.getElementsByClassName("activity-card-container")[0]
 function setRootStyles() {
     if ( rootStyles.getPropertyValue('--color-1') == '#05406D' || rootStyles.getPropertyValue('--color-1') == '' ) {
 
-        root.style.setProperty('--color-1', '#FAF8FF'); //off-white
+        root.style.setProperty('--color-1', '#FAF8FF');
         root.style.setProperty('--color-2', '#FDFFFD');
-        root.style.setProperty('--color-4', '#005000'); //super-dark-green
-        root.style.setProperty('--color-5', '#003000'); //even-darker-green
-        root.style.setProperty('--color-6', 'black'); //black
-        root.style.setProperty('--color-7', '#003000'); //darkest green (.post-separator)
-        root.style.setProperty('--color-8', '#49BB49'); //register/login containers
-        root.style.setProperty('--color-9', '#49BB49'); //notifications
+        root.style.setProperty('--color-4', '#005000');
+        root.style.setProperty('--color-5', '#003000');
+        root.style.setProperty('--color-6', 'black');
+        root.style.setProperty('--color-7', '#003000');
+        root.style.setProperty('--color-8', '#49BB49');
+        root.style.setProperty('--color-9', '#49BB49');
         root.style.setProperty('--color-10', '#96FFA1');
         root.style.setProperty('--color-svg-shadow', '#A2FF98');
 
-        // green wave color: #49BB49
         body.style.setProperty('background-image', 'var(--svg-green-wave)');
 
-        // activity-card-container
         activityCard.style.background = 'rgba(255, 255, 255, .4)';
     }
     else {

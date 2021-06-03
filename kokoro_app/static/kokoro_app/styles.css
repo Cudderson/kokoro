@@ -24,35 +24,37 @@ body {
     /* font variables */
     --font-2xl: 36px;
 
-    /* color scheme (light / dark) */
-    --color-1:#05406D; /* ? / lightblue */
-    --color-2:#043052; /* ? / midnight-blue */
+    /* color scheme (light / dark) (dark colors)*/
+    --color-1:#05406D; /* off-white / light-blue */
+    --color-2:#043052; /* light-green / midnight-blue */
     --color-3:#49BB49; /* brand green/brand green */
-    --color-4:#F5A52D; /* ? / tan */
-    --color-5:white; /* ? / white */
-    --color-6:black; /* ? / black */
-    --color-7:lightgray;
-    --color-8:#043052;
-    --color-9:#FFFFFF;
-    --color-10:#05406D;
-    --color-svg:#49BB49;
-    --color-svg-shadow:#F5A52D;
+    --color-4:#F5A52D; /* dark-green / tan */
+    --color-5:white; /* super-dark-green / white */
+    --color-6:black; /* black / black */
+    --color-7:lightgray; /* super-dark-green / lightgray */
+    --color-8:#043052; /* brand green / midnight-blue */
+    --color-9:#FFFFFF; /* brand green / white */
+    --color-10:#05406D; /* super-light-green / light-blue */
+    --color-svg:#49BB49; /* brand-green */
+    --color-svg-shadow:#F5A52D; /* based-off wave color (light-green / tan) */
 
     --svg-tan-wave: url('/static/kokoro_app/tan-wave.svg');
     --svg-green-wave: url('/static/kokoro_app/green-wave.svg');
-    /*current-wave: #A2FF98;*/
 
-    /* just for easiness, I'll define the new colors here too (also in JS function)
-    --color-1:
-    --color-2:
-    --color-3: #49BB49 (unchanged)
-    --color-4:
-    --color-5:
-    --color-6:
-    (will determine black&white changes later)
+    /* just for easiness, I'll define the new colors here too (light-theme) (also in JS function)
+    --color-1:#FAF8FF
+    --color-2:#FDFFFD
+    --color-3:#49BB49 (unchanged)
+    --color-4:#005000
+    --color-5:#003000
+    --color-6:black
+    --color-7:#003000
+    --color-8:#49BB49
+    --color-9:#49BB49
+    --color-10:#96FFA1
+    --color-svg: (unchanged)
+    --color-svg-shadow: #A2FF98
     */
-
-
 }
 
 html, button {
@@ -437,7 +439,7 @@ nav a:hover {
     padding: 1em .05em;
     text-align: center;
     user-select: none;
-    color: lightgray;
+    color: var(--color-5);
     background-color: var(--color-1);
 }
 
