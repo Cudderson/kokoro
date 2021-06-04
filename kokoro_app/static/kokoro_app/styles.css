@@ -815,7 +815,7 @@ svg text {
     padding: 1em;
 }
 
-.manage-form {
+.manage-form, .delete-post-form {
     background-color: var(--color-2);
     padding: 1em 1.5em;
     border: 1px solid var(--color-1);
@@ -1398,6 +1398,7 @@ svg text {
     background-color: rgba(0, 0, 0, 0);
     border: 1px solid var(--color-5);
     border-radius: 16px;
+    margin-top: .125rem;
     padding: .25em 1em;
     cursor: pointer;
     transition: .5s;
@@ -1569,6 +1570,20 @@ svg text {
 .post-content {
     color: var(--color-5);
     font-size: 18px;
+}
+
+/* move to post.html */
+.delete-post-form {
+    height: 25% !important;
+    margin-top: 40% !important;
+}
+
+.delete-post-submit {
+    background-color: #49BB49 !important; /* same for both themes */
+}
+
+.delete-post-cancel {
+    background-color: #F5A52D !important; /* same for both themes */
 }
 
 /* end post.html */

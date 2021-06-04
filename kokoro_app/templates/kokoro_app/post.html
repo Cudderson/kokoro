@@ -36,9 +36,6 @@
                 <form action="{% url 'kokoro_app:edit_post' %}" method="get">
                     <button class="request-btn font-med" type="submit" name="edit_post_form" value="{{ post.post_slug }}">Edit Post</button>
                 </form>
-<!--                    <button class="request-btn red-btn font-med" type="submit" name="delete_post_form" value="{{ post.post_slug }}">-->
-<!--                        Delete Post-->
-<!--                    </button>-->
                 <button class="request-btn red-btn font-med" data-form="delete-post-container" onclick="toggleFormDisplay(this)">Delete Post</button>
             {% endif %}
             <form action="{% url 'kokoro_app:profile' %}" method="get">
@@ -54,11 +51,13 @@
     </div>
     <div class="delete-post-container form-container">
         <div class="close-form" data-form="delete-post-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
-        <form action="{% url 'kokoro_app:posts_form_handler' %}" method="post">
+        <form class="manage-form delete-post-form" action="{% url 'kokoro_app:posts_form_handler' %}" method="post">
             {% csrf_token %}
-            <span>Delete Post?</span>
-            <button type="submit" name="delete_post_form" value="{{ post.post_slug }}">Confirm</button>
-            <button type="reset" data-form="delete-post-container" onclick="toggleFormDisplay(this)">Cancel</button>
+            <div>
+                <span class="manage-form-header">Delete Post?</span>
+                <button class="manage-form-submit delete-post-submit" type="submit" name="delete_post_form" value="{{ post.post_slug }}">Confirm</button>
+                <button class="manage-form-submit delete-post-cancel" type="reset" data-form="delete-post-container" onclick="toggleFormDisplay(this)">Cancel</button>
+            </div>
         </form>
     </div>
 </div>
