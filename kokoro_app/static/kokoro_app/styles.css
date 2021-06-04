@@ -772,6 +772,11 @@ svg text {
     overflow-y: scroll;
 }
 
+.help-title {
+    font-size: 30px;
+    color: var(--color-3);
+}
+
 .help-header {
     color: var(--color-3);
 }
@@ -781,11 +786,11 @@ svg text {
 }
 
 .help-type {
-    color: #F5A52D; /* same for both themes */
+    color: var(--color-11);
 }
 
 .help-warning {
-    color: var(--color-4);
+    color: var(--color-11);
     display: block;
     text-align: center;
     padding-top: 2em;
