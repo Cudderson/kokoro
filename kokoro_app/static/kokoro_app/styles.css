@@ -1537,6 +1537,11 @@ svg text {
     float: left;
 }
 
+.post-container > button {
+    margin-right: .5rem;
+    float: left;
+}
+
 .red-btn:hover {
     background-color: #F5A52D; /* same for both themes */
     border-color: var(--color-4);

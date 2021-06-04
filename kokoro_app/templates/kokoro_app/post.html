@@ -36,12 +36,10 @@
                 <form action="{% url 'kokoro_app:edit_post' %}" method="get">
                     <button class="request-btn font-med" type="submit" name="edit_post_form" value="{{ post.post_slug }}">Edit Post</button>
                 </form>
-                <form action="{% url 'kokoro_app:posts_form_handler' %}" method="post">
-                    {% csrf_token %}
-                    <button class="request-btn red-btn font-med" type="submit" name="delete_post_form" value="{{ post.post_slug }}">
-                        Delete Post
-                    </button>
-                </form>
+<!--                    <button class="request-btn red-btn font-med" type="submit" name="delete_post_form" value="{{ post.post_slug }}">-->
+<!--                        Delete Post-->
+<!--                    </button>-->
+                <button class="request-btn red-btn font-med" data-form="delete-post-container" onclick="toggleFormDisplay(this)">Delete Post</button>
             {% endif %}
             <form action="{% url 'kokoro_app:profile' %}" method="get">
                 <button class="request-btn font-med" type="submit" name="profile_to_visit" value="{{ post.author.id }}">
@@ -54,5 +52,22 @@
             </form>
         {% endlocaltime %}
     </div>
+    <div class="delete-post-container form-container">
+        <div class="close-form" data-form="delete-post-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
+        <form action="{% url 'kokoro_app:posts_form_handler' %}" method="post">
+            {% csrf_token %}
+            <span>Delete Post?</span>
+            <button type="submit" name="delete_post_form" value="{{ post.post_slug }}">Confirm</button>
+            <button type="reset" data-form="delete-post-container" onclick="toggleFormDisplay(this)">Cancel</button>
+        </form>
+    </div>
 </div>
+<script>
+function toggleFormDisplay(clickedBtn) {
+    var formToDisplay = clickedBtn.getAttribute("data-form");
+    var form = document.getElementsByClassName(formToDisplay)[0];
+
+    form.classList.toggle("show-form");
+}
+</script>
 {% endblock content %}
