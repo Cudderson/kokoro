@@ -873,6 +873,7 @@ svg text {
     border-radius: 4px;
     padding: 1em 0em;
     background-color: var(--color-svg-shadow);
+    cursor: pointer;
 }
 /* end manage-form on home.html */
 
@@ -1575,7 +1576,6 @@ svg text {
 /* move to post.html */
 .delete-post-form {
     height: 25% !important;
-    margin-top: 40% !important;
 }
 
 .delete-post-submit {
