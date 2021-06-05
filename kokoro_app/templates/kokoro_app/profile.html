@@ -13,6 +13,7 @@
                     <img src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
                 </div>
                 <div class="profile-quote-container">
+                    {% if user.profilequote.quote %}
                     <div>
                         <span class="profile-quote-content font-med">
                             "{{ user.profilequote.quote }}"
@@ -21,10 +22,24 @@
                             </span>
                         </span>
                     </div>
+                    {% else %}
+                    <div>
+                        <span class="profile-quote-content font-med">
+                            This user has not yet submitted a quote.
+                            <span class="profile-quote-author font-small">
+                                - kokoro
+                            </span>
+                        </span>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="profile-name-grid">
-                <span class="profile-display-name font-xl">{{ user.profiledisplayname.display_name }}</span>
+                {% if user.profiledisplayname.display_name %}
+                    <span class="profile-display-name font-xl">{{ user.profiledisplayname.display_name }}</span>
+                {% else %}
+                    <span class="profile-display-name font-xl">{{ user.username }}</span>
+                {% endif %}
                 {% if user == request.user %}
                     <form class="edit-profile-form" action="{% url 'kokoro_app:edit_profile' %}" method="get">
                         <button class="edit-profile-or-friendship-btn font-small" type="submit">Edit Profile</button>
@@ -60,8 +75,6 @@
             {% if user.perfectbalance.perfect_mind %}
                 <div class="perfect-balance-header font-large">Perfect Balance</div>
                 <div class="profile-perfect-balance">
-                    <!-- could make dynamic 'view perfect balance' option / user decides to display it or not (color-coded) -->
-                    <!-- change how packaged for semantic purposes -->
                     <span class="perfect-mind font-large">{{ user.perfectbalance.perfect_mind }}</span><br>
                     <span class="perfect-body font-large">{{ user.perfectbalance.perfect_body }}</span><br>
                     <span class="perfect-soul font-large">{{ user.perfectbalance.perfect_soul }}</span>
@@ -121,14 +134,16 @@
                     {% endif %}
                 {% empty %}
                     <div class="profile-post">
-                        <span>{{ user }} hasn't created a post yet.</span>
+                        <button>
+                            <span class="profile-post-headline font-xl" style="margin-top: 3rem;">{{ user }} hasn't created a post yet.</span>
+                        </button>
                     </div>
                 {% endfor %}
                 <br>
-
             </div>
             <div class="profile-post-prefix"></div>
         </div>
     </div>
+    <div class="profile-bottom-pad"></div>
     {% endlocaltime %}
 {% endblock content %}

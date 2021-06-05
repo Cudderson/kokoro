@@ -1148,6 +1148,11 @@ svg text {
     width: 95%;
 }
 
+.profile-bottom-pad {
+    padding: 2.5rem;
+    background: var(--color-1);
+}
+
 /*
 =============================
 ===== edit_profile.html =====
@@ -2091,6 +2096,10 @@ svg text {
         width: 98%;
         font-size: 16px;
         padding-top: 1em;
+    }
+
+    .profile-bottom-pad {
+        display: none;
     }
     /* end profile.html desktop */
 
