@@ -394,26 +394,28 @@ nav a:hover {
 ===================================
 */
 
-.brand-container {
-    text-align: center;
-}
-
 .hero-container {
-    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: #96FFA1;
+    background: var(--color-svg-shadow);
 }
 
 .brand-index {
     position: absolute;
-    top: 1%;
-    left: 4%;
+    top: 6vw;
+    left: 28vw;
+    text-align: center;
     color: #003000;
+    font-size: 44px;
 }
 
 .hero-container > div {
-    position: absolute;
-    top: 28%;
-    left: 16%;
-    width: 35vw;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem 2rem 1rem;
+    padding-bottom: 2rem;
+    border-bottom: 4px solid #005000;
 }
 
 .hero-container > div > span {
@@ -421,41 +423,44 @@ nav a:hover {
 }
 
 .cta-prefix {
-    margin: 5rem 0 .75rem 0;
+    margin: 2rem 0 0 0;
 }
 
-.hero-container > div > button {
+.hero-container > div > form > button {
     display: block;
     padding: 1rem 1.5rem;
     margin-top: .5rem;
-    border: 4px solid #003000;
+    border: 3px solid #003000;
     border-radius: 8px;
     cursor: pointer;
     width: 100%;
-    background: rgba(0, 0, 0, .25);
+    background: rgba(255, 255, 255, .25);
     color: #003000;
     font-weight: bold;
     transition: .5s;
 }
 
-.hero-container > div > button:hover {
+.hero-container > div > form > button:hover {
     border-color: #49BB49;
     transition: .5s;
     background: #49BB49;
 }
 
 .hero-container > img {
-    width: 100%;
+    display: block;
+    width: 120%;
+    border-bottom: 4px solid #005000;
 }
 
 .hero-header {
     display: block;
-    font-size: 5.5vw;
+    margin-top: 2rem;
     color: #003000;
+    font-size: 44px;
 }
 
 .hero-caption {
-    color: #003000;
+    font-size: 18px;
 }
 
 /*
@@ -1839,6 +1844,73 @@ svg text {
         margin-bottom: 10em;
         background-position: 0px 0px;
     }
+
+    /*
+    ======================
+    ===== index.html =====
+    ======================
+    */
+
+    .hero-container {
+        position: relative;
+    }
+
+    .brand-index {
+        position: absolute;
+        top: 1%;
+        left: 4%;
+        color: #003000;
+    }
+
+    .hero-container > div {
+        position: absolute;
+        top: 28%;
+        left: 16%;
+        width: 35vw;
+    }
+
+    .hero-container > div > span {
+        display: block;
+    }
+
+    .cta-prefix {
+        margin: 3rem 0 .75rem 0;
+    }
+
+    .hero-container > div > form > button {
+        display: block;
+        padding: 1rem 1.5rem;
+        margin-top: .5rem;
+        border: 4px solid #003000;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 100%;
+        background: rgba(255, 255, 255, .25);
+        color: #003000;
+        font-weight: bold;
+        transition: .5s;
+    }
+
+    .hero-container > div > form > button:hover {
+        border-color: #49BB49;
+        transition: .5s;
+        background: #49BB49;
+    }
+
+    .hero-container > img {
+        width: 100%;
+    }
+
+    .hero-header {
+        display: block;
+        font-size: 5.5vw;
+        color: #003000;
+    }
+
+    .hero-caption {
+        color: #003000;
+    }
+    /* end index.html */
 
     /* activate grid */
     .home-grid-master {

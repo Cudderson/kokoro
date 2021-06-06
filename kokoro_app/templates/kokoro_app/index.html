@@ -18,13 +18,17 @@
             <img src="/static/kokoro_app/balance-rocks.png" alt="Rocks Balancing">
             <div>
                 <span class="hero-header">Find Balance.</span>
-                <span class="hero-caption font-xl">
+                <span class="hero-caption">
                     kokoro is a wellness tool designed to enhance the lives of its users through balancing the mind, body, and soul.
                 </span>
                 <span class="cta-prefix font-large">Sign Up in less than 1 minute</span>
                 <!-- here we need a CTA. Tell users it's free and takes <1 to sign-up -->
-                <button class="font-xl">GET STARTED</button>
-                <button class="font-xl">SIGN IN</button>
+                <form action="{% url 'users:register' %}" method="get">
+                    <button class="font-xl" type="submit">Sign Up</button>
+                </form>
+                <form action="{% url 'users:login' %}" method="get">
+                    <button class="font-xl" type="submit">Log In</button>
+                </form>
             </div>
         </div>
     </div>
