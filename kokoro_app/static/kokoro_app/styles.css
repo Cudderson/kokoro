@@ -396,13 +396,31 @@ nav a:hover {
 
 .brand-container {
     text-align: center;
-    padding:
 }
 
 .hero-container {
+    position: relative;
+}
+
+.hero-container > div {
+    position: absolute;
+    top: 15%;
+    left: 17.5%;
+    width: 35vw;
+}
+
+.hero-container > img {
     width: 100%;
-    padding: 12rem;
-    background: var(--color-3);
+}
+
+.hero-container > span {
+    display: block;
+}
+
+.hero-header {
+    display: block;
+    font-size: 5vw;
+    color: #003000;
 }
 
 /*
