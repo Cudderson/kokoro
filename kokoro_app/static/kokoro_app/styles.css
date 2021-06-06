@@ -402,24 +402,51 @@ nav a:hover {
     position: relative;
 }
 
+.brand-index {
+    position: absolute;
+    top: 1%;
+    left: 4%;
+    color: #003000;
+}
+
 .hero-container > div {
     position: absolute;
-    top: 15%;
+    top: 30%;
     left: 17.5%;
     width: 35vw;
+}
+
+.hero-container > div > span {
+    display: block;
+}
+
+.cta-prefix {
+    margin: 5rem 0 1rem 0;
+}
+
+.hero-container > div > button {
+    display: block;
+    padding: 1rem 1.5rem;
+    margin-top: .5rem;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    background: #49BB49;
+    color: white;
 }
 
 .hero-container > img {
     width: 100%;
 }
 
-.hero-container > span {
-    display: block;
-}
-
 .hero-header {
     display: block;
     font-size: 5vw;
+    color: #003000;
+}
+
+.hero-caption {
     color: #003000;
 }
 
