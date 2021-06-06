@@ -398,40 +398,35 @@ nav a:hover {
     width: 100%;
     overflow: hidden;
     background: #96FFA1;
-    background: var(--color-svg-shadow);
+    padding: 1.25rem;
 }
 
 .brand-index {
-    position: absolute;
-    top: 6vw;
-    left: 28vw;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 1rem;
     text-align: center;
     color: #003000;
-    font-size: 44px;
+    font-size: 28px;
 }
 
 .hero-container > div {
     width: 100%;
     margin: 0 auto;
-    padding: 0 1rem 2rem 1rem;
     padding-bottom: 2rem;
-    border-bottom: 4px solid #005000;
 }
 
 .hero-container > div > span {
     display: block;
 }
 
-.cta-prefix {
-    margin: 2rem 0 0 0;
-}
-
 .hero-container > div > form > button {
     display: block;
-    padding: 1rem 1.5rem;
+    padding: .75rem 0rem;
     margin-top: .5rem;
     border: 3px solid #003000;
     border-radius: 8px;
+    border-radius: 24px;
     cursor: pointer;
     width: 100%;
     background: rgba(255, 255, 255, .25);
@@ -448,19 +443,21 @@ nav a:hover {
 
 .hero-container > img {
     display: block;
-    width: 120%;
-    border-bottom: 4px solid #005000;
+    width: 100%;
+    border: 0px solid #005000;
+    border-radius: 4px;
 }
 
 .hero-header {
     display: block;
     margin-top: 2rem;
-    color: #003000;
+    color: #005000;
     font-size: 44px;
 }
 
 .hero-caption {
     font-size: 18px;
+    margin-bottom: 2rem;
 }
 
 /*
