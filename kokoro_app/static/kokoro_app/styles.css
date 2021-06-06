@@ -41,6 +41,9 @@ body {
 
     --svg-tan-wave: url('/static/kokoro_app/tan-wave.svg');
     --svg-green-wave: url('/static/kokoro_app/green-wave.svg');
+
+    --balance-rocks: url('/static/kokoro_app/balance-rocks.png');
+    --balance-rocks-mobile: url('/static/kokoro_app/balance-rocks-mobile.png');
 }
 
 html, button {
@@ -396,9 +399,12 @@ nav a:hover {
 
 .hero-container {
     width: 100%;
+    height: 100%;
     overflow: hidden;
-    background: #96FFA1;
-    padding: 1.25rem;
+    background-image: var(--balance-rocks-mobile);
+    background-position: -75px 0px;
+    background-repeat: no-repeat;
+    background-size: 600px auto;
 }
 
 .brand-index {
@@ -443,7 +449,7 @@ nav a:hover {
 
 .hero-container > img {
     display: block;
-    width: 100%;
+    width: 200%;
     border: 0px solid #005000;
     border-radius: 4px;
 }
@@ -1850,6 +1856,11 @@ svg text {
 
     .hero-container {
         position: relative;
+        display: block;
+        background-image: var(--balance-rocks);
+        background-size: 100% auto;
+        background-position: 0px 0px;
+
     }
 
     .brand-index {
