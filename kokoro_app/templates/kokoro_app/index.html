@@ -1,20 +1,34 @@
-{% extends "kokoro_app/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>kokoro</title>
 
-{% block content %}
-
-<!-- planning/writing the kokoro landing page -->
-<span>Find Balance.</span>
-<!-- Landing Page Best Practices:
-        Craft a benefit-focused headline. (Find Balance)
-        Choose an image that illustrates the offer. (nature-related)
-        Write compelling copy. (text)
-        Include the lead form above the fold. (Register link)
-        Add a clear and standout call-to-action.
-        Give away a relevant offer.
-        Only ask for what you need.
-        Remove all navigation.
-        Make your page responsive.
-        Optimize for search.
-        Remember to use a thank you page.
- -->
-{% endblock content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="\static\kokoro_app\styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@501&display=swap" rel="stylesheet">
+</head>
+<!-- reset padding used for nav on other pages -->
+<body style="padding-top: 0;">
+    <div class="super-container">
+        <h1 class="brand-container">kokoro</h1>
+        <div class="hero-container"></div>
+    </div>
+    <span>Find Balance.</span>
+    <!-- Landing Page Best Practices:
+            Craft a benefit-focused headline. (Find Balance)
+            Choose an image that illustrates the offer. (nature-related)
+            Write compelling copy. (text)
+            Include the lead form above the fold. (Register link)
+            Add a clear and standout call-to-action.
+            Give away a relevant offer.
+            Only ask for what you need.
+            Remove all navigation.
+            Make your page responsive.
+            Optimize for search.
+            Remember to use a thank you page.
+     -->
+</body>
+</html>

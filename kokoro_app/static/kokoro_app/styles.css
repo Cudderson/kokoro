@@ -131,7 +131,6 @@ nav a {
     color: var(--color-5);
     text-decoration: none;
     font-size: 1rem;
-    /* text-transform: uppercase; <-- don't like this */
     opacity: 0;
     transition: opacity 150ms ease-in-out; /* no delay for link fade */
 }
@@ -388,6 +387,23 @@ nav a:hover {
     content: none !important;
 }
 /* end navbar styles */
+
+/*
+===================================
+===== index.html landing page =====
+===================================
+*/
+
+.brand-container {
+    text-align: center;
+    padding:
+}
+
+.hero-container {
+    width: 100%;
+    padding: 12rem;
+    background: var(--color-3);
+}
 
 /*
 ======================
