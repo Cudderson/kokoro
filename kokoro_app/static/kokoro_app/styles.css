@@ -1846,10 +1846,12 @@ svg text {
         grid-template-columns: 1.25fr 1fr;
         grid-template-rows: auto;
         background-image: var(--balance-rocks);
-        background-size: 100% auto;
-        background-position: 0px 0px;
+        background-size: cover;
+        background-position: center;
         border-bottom: 5px solid #005000;
         margin-top: -25px;
+        min-width: 1200px;
+        overflow: hidden;
     }
 
     .brand-index {
