@@ -404,7 +404,7 @@ nav a:hover {
     background-image: var(--balance-rocks-mobile);
     background-position: -75px 0px;
     background-repeat: no-repeat;
-    background-size: 600px auto;
+    background-size: auto;
 }
 
 .brand-index {
@@ -413,8 +413,9 @@ nav a:hover {
     padding-bottom: 1rem;
     padding-top: 1rem;
     text-align: center;
-    color: #003000;
+    color: #96FFA1;
     font-size: 36px;
+    background: rgba(0, 0, 0, .4);
 }
 
 .hero-content {
@@ -422,9 +423,8 @@ nav a:hover {
     height: auto;
     margin: 0 auto;
     padding: 1.5rem;
-    padding-bottom: 9rem;
-    border-bottom: 4px solid #49BB49;
-    background: rgba(0, 0, 0, .75);
+    padding-bottom: 400px;
+    background: rgba(0, 0, 0, .4);
 }
 
 .hero-container > div > span {
@@ -465,12 +465,14 @@ nav a:hover {
     margin-top: 4rem;
     color: white;
     font-size: 44px;
+    text-align: center;
 }
 
 .hero-caption {
     font-size: 18px;
     margin-bottom: 2rem;
     color: #96FFA1;
+    text-align: center;
 }
 
 /*
@@ -1836,30 +1838,8 @@ svg text {
 
 }
 
-@media screen and (min-width: 950px) {
-    /* remove elements from page */
-    /* turn on when necessary */
-    .separator,
-    .balance-banner-container,
-    .balance-message-container,
-    .help-icon-container,
-    .view-all-activities {
-
-        display: none;
-
-    }
-
-    body {
-        /* give spacing below shadow effect on svg */
-        margin-bottom: 10em;
-        background-position: 0px 0px;
-    }
-
-    /*
-    ======================
-    ===== index.html =====
-    ======================
-    */
+/* special query for index.html */
+@media screen and (min-width: 770px) {
 
     .hero-container {
         position: relative;
@@ -1867,29 +1847,29 @@ svg text {
         background-image: var(--balance-rocks);
         background-size: 100% auto;
         background-position: 0px 0px;
-
+        border-bottom: 5px solid #005000;
+        margin-top: -25px;
     }
 
     .brand-index {
         position: absolute;
-        top: 1%;
-        left: 4%;
+        top: 40px;
+        left: 60px;
         color: #003000;
+        background: none;
     }
 
-    .hero-container > div {
+    .hero-content {
         position: absolute;
-        top: 28%;
-        left: 16%;
-        width: 35vw;
+        top: 200px;
+        left: 200px;
+        width: 40vw;
+        background: none;
+        border: none;
     }
 
     .hero-container > div > span {
         display: block;
-    }
-
-    .cta-prefix {
-        margin: 3rem 0 .75rem 0;
     }
 
     .hero-container > div > form > button {
@@ -1912,20 +1892,38 @@ svg text {
         background: #49BB49;
     }
 
-    .hero-container > img {
-        width: 100%;
-    }
-
     .hero-header {
         display: block;
         font-size: 5.5vw;
         color: #003000;
+        margin: 0;
     }
 
     .hero-caption {
         color: #003000;
+        font-size: 1.25vw;
     }
     /* end index.html */
+}
+
+@media screen and (min-width: 950px) {
+    /* remove elements from page */
+    /* turn on when necessary */
+    .separator,
+    .balance-banner-container,
+    .balance-message-container,
+    .help-icon-container,
+    .view-all-activities {
+
+        display: none;
+
+    }
+
+    body {
+        /* give spacing below shadow effect on svg */
+        margin-bottom: 10em;
+        background-position: 0px 0px;
+    }
 
     /* activate grid */
     .home-grid-master {
