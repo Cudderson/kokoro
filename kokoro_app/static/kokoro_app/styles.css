@@ -411,15 +411,20 @@ nav a:hover {
     margin: 0;
     padding: 0;
     padding-bottom: 1rem;
+    padding-top: 1rem;
     text-align: center;
     color: #003000;
-    font-size: 28px;
+    font-size: 36px;
 }
 
-.hero-container > div {
+.hero-content {
     width: 100%;
+    height: auto;
     margin: 0 auto;
-    padding-bottom: 2rem;
+    padding: 1.5rem;
+    padding-bottom: 9rem;
+    border-bottom: 4px solid #49BB49;
+    background: rgba(0, 0, 0, .75);
 }
 
 .hero-container > div > span {
@@ -430,40 +435,42 @@ nav a:hover {
     display: block;
     padding: .75rem 0rem;
     margin-top: .5rem;
-    border: 3px solid #003000;
+    border: 3px solid #49BB49;
     border-radius: 8px;
     border-radius: 24px;
     cursor: pointer;
     width: 100%;
     background: rgba(255, 255, 255, .25);
-    color: #003000;
-    font-weight: bold;
+    background: rgba(0, 0, 0, .25);
+    color: white;
     transition: .5s;
 }
 
 .hero-container > div > form > button:hover {
     border-color: #49BB49;
+    color: black;
     transition: .5s;
     background: #49BB49;
 }
 
 .hero-container > img {
+    /* doesn't exist anymore */
     display: block;
     width: 200%;
-    border: 0px solid #005000;
-    border-radius: 4px;
+    border-bottom: 4px solid #005000;
 }
 
 .hero-header {
     display: block;
-    margin-top: 2rem;
-    color: #005000;
+    margin-top: 4rem;
+    color: white;
     font-size: 44px;
 }
 
 .hero-caption {
     font-size: 18px;
     margin-bottom: 2rem;
+    color: #96FFA1;
 }
 
 /*
