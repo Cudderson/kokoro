@@ -1920,6 +1920,10 @@ svg text {
 
     }
 
+    html {
+        background: #96FFA1;
+    }
+
     body {
         /* give spacing below shadow effect on svg */
         margin-bottom: 10em;
@@ -1934,6 +1938,7 @@ svg text {
         align-items: end;
         justify-items: center;
         margin: 0 7.5vw 10em 7.5vw;
+        min-width: 1100px;
     }
 
     /* place elements in grid */
@@ -1943,8 +1948,6 @@ svg text {
         width: 70%;
         padding: 0;
         margin: 0;
-        padding-top: auto;
-        position: relative;
     }
 
     .activity-select, .activity-submit {
@@ -1964,8 +1967,9 @@ svg text {
     }
 
     .svg-container::before {
-        display: block;
+        display: inline-block;
         transform: perspective(6rem) rotateX(20deg) scale(1, .2);
+        z-index: 1;
     }
 
     .svg-container > div::before {
@@ -1981,7 +1985,6 @@ svg text {
         transform: perspective(6rem) rotateX(20deg) scale(1, .15);
         filter: blur(6em) brightness(0.75);
         pointer-events: none;
-        z-index: -1;
 
         display: block;
     }
@@ -2101,7 +2104,7 @@ svg text {
 
     .help-and-manage-container-outer {
         display: inline-block;
-        position: absolute;
+        position: fixed;
         right: 12.75%;
     }
 
