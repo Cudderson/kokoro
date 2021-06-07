@@ -1844,7 +1844,7 @@ svg text {
     .hero-container {
         display: grid;
         grid-template-columns: 1.25fr 1fr;
-        grid-template-rows: 1fr 6fr;
+        grid-template-rows: auto;
         background-image: var(--balance-rocks);
         background-size: 100% auto;
         background-position: 0px 0px;
@@ -1870,6 +1870,8 @@ svg text {
         margin-top: calc(23% - 180px);
         background: none;
         border: none;
+        padding-bottom: 0;
+        display: inline-block;
     }
 
     .hero-container > div > span {
