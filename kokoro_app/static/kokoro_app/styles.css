@@ -446,13 +446,6 @@ nav a:hover {
     transition: .5s;
 }
 
-.hero-container > div > form > button:hover {
-    border-color: #49BB49;
-    color: black;
-    transition: .5s;
-    background: #49BB49;
-}
-
 .hero-container > img {
     /* doesn't exist anymore */
     display: block;
@@ -1896,7 +1889,7 @@ svg text {
     .hero-container > div > form > button:hover {
         border-color: #49BB49;
         transition: .5s;
-        background: #49BB49;
+        background: #96FFA1;
     }
 
     .hero-header {
