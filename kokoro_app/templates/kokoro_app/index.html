@@ -24,7 +24,8 @@
                 <form action="{% url 'users:register' %}" method="get">
                     <button class="font-large" type="submit">Sign Up</button>
                 </form>
-                <form action="{% url 'users:login' %}" method="get">
+                <!-- route to home, if user not logged in, they will be redirected to login page -->
+                <form action="{% url 'kokoro_app:home' %}" method="get">
                     <button class="font-large" type="submit">Log In</button>
                 </form>
             </div>
