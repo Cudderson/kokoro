@@ -402,7 +402,7 @@ nav a:hover {
     height: 100%;
     overflow: hidden;
     background-image: var(--balance-rocks-mobile);
-    background-position: -100px 0px;
+    background-position: -75px 0px;
     background-repeat: no-repeat;
     background-size: auto;
 }
@@ -457,7 +457,7 @@ nav a:hover {
     /* doesn't exist anymore */
     display: block;
     width: 200%;
-    border-bottom: 4px solid #005000;
+    border-bottom: 4px solid #003000;
 }
 
 .hero-header {
@@ -1847,8 +1847,8 @@ svg text {
         background-image: var(--balance-rocks);
         background-size: cover;
         background-position: center;
-        border-bottom: 5px solid #005000;
-        min-width: 1200px;
+        border-bottom: 5px solid #003000;
+        min-width: 770px;
         overflow: hidden;
     }
 
