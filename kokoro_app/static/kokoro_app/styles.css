@@ -415,15 +415,16 @@ nav a:hover {
     text-align: center;
     color: #96FFA1;
     font-size: 36px;
+    background: rgba(0, 0, 0, .4);
 }
 
 .hero-content {
-    width: 95%;
-    height: auto;
+    width: 100%;
+    height: 100%;
     margin: 0 auto;
-    margin-top: 30%;
     padding: 1.5rem;
-    background: rgba(0, 0, 0, .33);
+    padding-top: 6rem;
+    background: rgba(0, 0, 0, .4);
     border-radius: 4px;
 }
 
@@ -456,15 +457,14 @@ nav a:hover {
 .hero-header {
     display: block;
     color: white;
-    font-size: 44px;
-    text-align: center;
+    font-size: 77px;
+    line-height: 1.1;
 }
 
 .hero-caption {
     font-size: 18px;
-    margin-bottom: 2rem;
+    margin-bottom: 6rem;
     color: #96FFA1;
-    text-align: center;
 }
 
 /*
@@ -1849,7 +1849,7 @@ svg text {
         grid-row: 1 / 2;
         grid-column: 1 / 2;
         margin-right: auto;
-        padding-top: 1.5rem;
+        padding-top: 1rem;
         padding-left: 2.5rem;
         color: #003000;
         background: none;
@@ -1865,7 +1865,7 @@ svg text {
         background: none;
         border: none;
         padding-bottom: 0;
-        display: inline-block;
+        text-align: center;
     }
 
     .hero-container > div > span {
@@ -1902,6 +1902,7 @@ svg text {
     .hero-caption {
         color: #003000;
         font-size: 18px;
+        margin-bottom: 3rem;
     }
     /* end index.html */
 }
