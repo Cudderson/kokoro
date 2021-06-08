@@ -1904,10 +1904,12 @@ svg text {
         transition: .5s;
     }
 
-    .hero-container > div > form > button:hover {
+    .hero-container > div > form > button:hover,
+    .hero-container > div > form > button:focus {
         border-color: #49BB49;
         transition: .5s;
         background: #96FFA1;
+        outline: none;
     }
 
     .hero-header {
@@ -2210,11 +2212,12 @@ svg text {
         transition: .5s;
     }
 
-    .edit-profile-or-friendship-btn:hover {
+    .edit-profile-or-friendship-btn:hover, .edit-profile-or-friendship-btn:focus {
         background-color: var(--color-3);
         border-color: var(--color-3);
         color: white; /* off-white both themes */
         transition: .5s;
+        outline: none;
     }
 
     .profile-biography {
@@ -2240,11 +2243,13 @@ svg text {
         transition: .5s;
     }
 
-    .friendship-btn-submit:hover, .write-post-btn-submit:hover {
+    .friendship-btn-submit:hover, .write-post-btn-submit:hover,
+    .friendship-btn-submit:focus, .write-post-btn-submit:focus {
         background-color: var(--color-3);
         border-color: var(--color-3);
         color: white; /* same for both themes */
         transition: .5s;
+        outline: none;
     }
 
     .profile-post-label {
