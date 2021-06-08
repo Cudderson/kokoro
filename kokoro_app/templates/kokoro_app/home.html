@@ -112,13 +112,13 @@
             <polygon class="tri-main" points="75,170.01 225,170.01 150,300"></polygon>
 
             <!--make smaller triangles overlay-->
-            <polygon class="tri tri-1" points="75,170.01 225,170.01 150,40.1925"></polygon>
+            <polygon tabindex="4" class="tri tri-1" points="75,170.01 225,170.01 150,40.1925"></polygon>
             <text x="125" y="135" class="text-1">Mind</text>
 
-            <polygon class="tri tri-2" points="0,300 150,300 75,170.01"></polygon>
+            <polygon tabindex="5" class="tri tri-2" points="0,300 150,300 75,170.01"></polygon>
             <text x="50" y="265" class="text-2">Body</text>
 
-            <polygon class="tri tri-3" points="150,300 300,300 225,170.01"></polygon>
+            <polygon tabindex="6" class="tri tri-3" points="150,300 300,300 225,170.01"></polygon>
             <text x="203" y="265" class="text-3">Soul</text>
         </svg>
     </div>
@@ -128,12 +128,12 @@
         <form action="{% url 'kokoro_app:home' %}" method="post" autocomplete="off">
             {% csrf_token %}
             <div class="activity-select"> <!--flexbox-->
-                <input class="activity-radio" type="radio" name="activity" value="mind" required="" id="id_activity_1">
-                <label class="activity-label mind-label" onclick="collapse()" for="id_activity_1">{{ activity_form.activity.1 }}</label>
-                <input class="activity-radio" type="radio" name="activity" value="body" required="" id="id_activity_2">
-                <label class="activity-label body-label" onclick="collapse()" for="id_activity_2">{{ activity_form.activity.2 }}</label>
-                <input class="activity-radio" type="radio" name="activity" value="soul" required="" id="id_activity_3">
-                <label class="activity-label soul-label" onclick="collapse()" for="id_activity_3">{{ activity_form.activity.3 }}</label>
+                <input tabindex="1" onclick="collapse()" class="activity-radio" type="radio" name="activity" value="mind" required="" id="id_activity_1">
+                <label class="activity-label mind-label" for="id_activity_1">{{ activity_form.activity.1 }}</label>
+                <input tabindex="2" onclick="collapse()" class="activity-radio" type="radio" name="activity" value="body" required="" id="id_activity_2">
+                <label class="activity-label body-label" for="id_activity_2">{{ activity_form.activity.2 }}</label>
+                <input tabindex="3" onclick="collapse()" class="activity-radio" type="radio" name="activity" value="soul" required="" id="id_activity_3">
+                <label class="activity-label soul-label" for="id_activity_3">{{ activity_form.activity.3 }}</label>
             </div>
             <div class="activity-submit">
                   <input type="text" name="description" maxlength="100" required="" id="id_description" placeholder="Describe your activity...">
@@ -165,7 +165,7 @@
 </div>
 <!-- Manage Activity Form  -->
 <div class="manage-form-container form-container">
-    <div class="close-form" data-form="manage-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
+    <button type="reset" tabindex="10" class="close-form" data-form="manage-form-container" onclick="toggleFormDisplay(this)"><span>&times;</span></button>
     <form class="manage-form" action="{% url 'kokoro_app:home' %}" method="post">
         {% csrf_token %}
         <span class="manage-form-header">Manage Activities</span>
@@ -199,7 +199,7 @@
 </div>
 <!-- help icon display -->
 <div class="help-form-container form-container">
-    <div class="close-form" data-form="help-form-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
+    <button type="reset" tabindex="11" class="close-form" data-form="help-form-container" onclick="toggleFormDisplay(this)"><span>&times;</span></button>
     <form class="manage-form help-form">
         <span class="help-title">Finding Balance</span>
         <br>
@@ -268,6 +268,7 @@ window.addEventListener("load", function () {
 
     // activity-form scripts/logic
     let activityLabel = document.getElementsByClassName("activity-label");
+    let activityRadio = document.getElementsByClassName("activity-radio");
     let activitySelect = document.getElementsByClassName("activity-select")[0];
     var activityInput = document.getElementById("id_description");
     let activityTypes = ["Mind", "Body", "Soul"];
@@ -275,9 +276,11 @@ window.addEventListener("load", function () {
     // On click, check if any labels have class 'activated', if so, labelSelected == true, and we remove 'activated' from classList
     // If none had 'activated' in classList, second 'if' condition triggers to add class 'activated'.
 
+    //Change script to listen for click on radio rather than label
+
     for (let i = 0; i < 3; i++) {
 
-        activityLabel[i].addEventListener("click", function () {
+        activityRadio[i].addEventListener("click", function () {
 
             let labelSelected = false;
 

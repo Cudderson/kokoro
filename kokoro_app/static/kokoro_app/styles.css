@@ -227,11 +227,12 @@ nav a:hover, nav a:focus {
     vertical-align: bottom;
 }
 
-.nav-search + button[type=submit]:hover {
+.nav-search + button[type=submit]:hover, .nav-search + button[type=submit]:focus {
     background-color: var(--color-3);
     border-color: var(--color-3);
     color: white; /* same for both themes */
     transition: .5s;
+    outline: none;
 }
 
 .search-icon {
@@ -333,8 +334,9 @@ nav a:hover, nav a:focus {
     border: 1px solid var(--color-9);
 }
 
-.dropdown-content button:hover {
+.dropdown-content button:hover, .dropdown-content button:focus {
     border: 4px solid var(--color-9);
+    outline: none;
 }
 
 .dropdown:hover .dropdown-content {
@@ -628,26 +630,34 @@ nav a:hover, nav a:focus {
     stroke-width: 1px;
 }
 
-.tri-1:hover {
+.tri-1:hover, .tri-1:focus {
     fill-opacity: 1;
+    outline: none;
 }
-.tri-1:hover + .text-1 {
+
+.tri-1:hover + .text-1,
+.tri-1:focus + .text-1{
     opacity: 100%;
     transition: 1.5s;
 }
 
-.tri-2:hover {
+.tri-2:hover, .tri-2:focus {
     fill-opacity: 1;
+    outline: none;
 }
-.tri-2:hover + .text-2 {
+.tri-2:hover + .text-2,
+.tri-2:focus + .text-2 {
     opacity: 100%;
     transition: 1.5s;
 }
 
-.tri-3:hover {
+.tri-3:hover, .tri-3:focus {
     fill-opacity: 1;
+    outline: none;
 }
-.tri-3:hover + .text-3 {
+
+.tri-3:hover + .text-3,
+.tri-3:focus + .text-3 {
     opacity: 100%;
     transition: 1.5s;
 }
@@ -688,8 +698,11 @@ svg text {
 
 .activity-radio {
     position: absolute;
-    visibility: hidden;
-    display: none;
+    top: -999px;
+    left: -999px;
+    width: 1px;
+    height: 1px;
+    scale: (0, 0);
 }
 
 .activity-label {
@@ -700,7 +713,6 @@ svg text {
     padding: 10px 10px 10px 10px;
     font-size: 18px; /*  make label text responsive [] */
     cursor: pointer;
-    user-select: none;
     transition: 1s;
 }
 
@@ -715,11 +727,6 @@ svg text {
 
 .mind-label {
     border-radius: 4px 0px 0px 0px;
-    background:;
-}
-
-.body-label {
-    background:;
 }
 
 .soul-label {
@@ -737,7 +744,7 @@ svg text {
 
 .activity-label option {
     /* remove default padding for option text */
-    padding: 0px;
+    padding: 0;
     margin: 0;
 }
 
@@ -787,7 +794,7 @@ svg text {
     transition: .7s;
 }
 
-.activity-submit button:hover {
+.activity-submit button:hover, .activity-submit button:focus {
     background: var(--color-3);
     transition: .7s;
     border-top: 1px solid var(--color-6);
@@ -975,13 +982,14 @@ svg text {
     border-radius: 4px;
     margin: .5em .5em .5em .5em;
     cursor: pointer;
+    font-weight: bold;
 }
 
-.close-form div {
+.close-form span {
     /* for the 'x' close symbol */
     width: 3rem;
     height: 3rem;
-    line-height: 2.75rem; /* match div height to vertically center */
+    line-height: 2.4rem; /* match div height to vertically center */
     text-align: center;
     font-size: 4rem;
     font-weight: bold;
@@ -1504,6 +1512,7 @@ svg text {
     border-color: var(--color-3);
     color: white;
     transition: .5s;
+    outline: none;
 }
 
 .friend-card {
@@ -2134,6 +2143,7 @@ svg text {
         color: white; /* same for both themes */
         border: 1px solid var(--color-3);
         transition: .7s;
+        outline: none;
     }
 
     .manage-act-desc {
