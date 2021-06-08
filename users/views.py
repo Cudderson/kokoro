@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 
 
 def register(request):
@@ -14,13 +15,33 @@ def register(request):
         register_form = UserCreationForm(data=request.POST)
 
         if register_form.is_valid():
-            new_user = register_form.save()
 
-            # Log in the new user and return to home page
-            login(request, new_user)
-            return redirect('kokoro_app:index')
+            try:
+                new_user = register_form.save()
+
+                # Log in the new user and return to home page
+                login(request, new_user)
+                return redirect('users:thank_you')
+
+            except Exception as e:
+                return redirect('kokoro_app:index')
 
     # Display blank or invalid form
     context = {'register_form': register_form}
 
     return render(request, 'registration/register.html', context)
+
+
+@login_required()
+def thank_you(request):
+    """
+    Page to thank newly-registerd users
+    :param request: http data
+    :return: render of thank_you.html
+    """
+
+    context = {
+        'message': f'Thank you for joining kokoro, {request.user}!',
+    }
+
+    return render(request, 'registration/thank_you.html', context)

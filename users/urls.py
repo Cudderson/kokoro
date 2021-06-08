@@ -11,4 +11,7 @@ urlpatterns = [
 
     # Registration page for new users
     path('register/', views.register, name='register'),
+
+    # Thank You page for newly-registered users
+    path('thank_you/', views.thank_you, name='thank_you'),
 ]
