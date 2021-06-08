@@ -275,7 +275,7 @@ nav a:hover, nav a:focus {
 
     nav li {
         /* turn off bottom margin of <li> elements and space them with left margin */
-        margin-right: 3vw;
+        margin-right: 2vw;
         margin-bottom: 0;
     }
 

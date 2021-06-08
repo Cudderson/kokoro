@@ -58,6 +58,7 @@
           <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
           <li><a href="{% url 'kokoro_app:profile' %}">Profile</a></li>
           <li><a href="{% url 'users:logout' %}">Log Out</a></li>
+          <li><a href="{% url 'kokoro_app:support' %}">Contact</a></li>
           <!--search bar-->
           <li>
             <form action="{% url 'kokoro_app:search' %}" method="get" autocomplete="off">
@@ -69,6 +70,7 @@
           <li><a href="{% url 'kokoro_app:home' %}">Home</a></li>
           <li><a href="{% url 'users:register' %}">Register</a></li>
           <li><a href="{% url 'users:login' %}">Log In</a></li>
+          <li><a href="{% url 'kokoro_app:support' %}">Contact</a></li>
           <li><button class="theme-btn request-btn font-med" onclick="setThemePreference()">Change Theme</button></li>
         {% endif %}
       </ul>
