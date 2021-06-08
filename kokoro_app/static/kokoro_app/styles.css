@@ -138,8 +138,9 @@ nav a {
     transition: opacity 150ms ease-in-out; /* no delay for link fade */
 }
 
-nav a:hover {
+nav a:hover, nav a:focus {
     color: var(--color-3);
+    outline: none;
 }
 
 .nav-toggle:checked ~ nav {
@@ -302,7 +303,7 @@ nav a:hover {
         transition: transform ease-in-out 250ms;
     }
 
-    nav a:hover::before {
+    nav a:hover::before, nav a:focus::before {
         transform: scale(1, 1);
     }
 }
@@ -340,6 +341,10 @@ nav a:hover {
     display: block;
 }
 
+.dropdown:focus-within .dropdown-content {
+    display: block;
+}
+
 .dropdown-btn {
     /* style button like other <li> in nav */
     border: none;
@@ -351,7 +356,7 @@ nav a:hover {
     font-family: 'Playfair Display', serif;
 }
 
-.dropdown-btn:hover {
+.dropdown-btn:hover, .dropdown-btn:focus {
     color: var(--color-3);
 }
 
@@ -369,7 +374,11 @@ nav a:hover {
     transition: transform ease-in-out 250ms;
 }
 
-.dropdown-btn:hover::before {
+.dropdown-btn:hover::before, .dropdown-btn:focus::before {
+    transform: scale(1, 1);
+}
+
+.greeting:focus::before {
     transform: scale(1, 1);
 }
 
@@ -1490,7 +1499,7 @@ svg text {
     transition: .5s;
 }
 
-.request-btn:hover {
+.request-btn:hover, .request-btn:focus {
     background-color: var(--color-3);
     border-color: var(--color-3);
     color: white;
@@ -2119,7 +2128,8 @@ svg text {
         transition: 1s;
     }
 
-    .view-acts-desktop:hover, .help-icon-container-desktop:hover {
+    .view-acts-desktop:hover, .help-icon-container-desktop:hover,
+    .view-acts-desktop:focus, .help-icon-container-desktop:focus {
         background-color: var(--color-3);
         color: white; /* same for both themes */
         border: 1px solid var(--color-3);

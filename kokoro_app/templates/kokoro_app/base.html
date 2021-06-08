@@ -22,8 +22,7 @@
       <ul>
 
         {% if user.is_authenticated %}
-          <li><a>Hello, {{ request.user.username }}.</a></li>
-          <!--place notification dropdown here-->
+          <li><a tabindex="0" class="greeting">Hello, {{ request.user.username }}.</a></li>
           <li class="dropdown">
               <button class="dropdown-btn">Notifications</button>
               <div class="dropdown-content">
