@@ -690,3 +690,17 @@ def remove_friendship_handler(request, friendship_to_remove_id):
         return redirect('/view_friendships')
     else:
         raise Http404("There was an error redirecting you to page. Friendship Removed.")
+
+
+def support(request):
+    """
+    Page for contacting kokoro
+    :param request: http get data
+    :return: render of support.html
+    """
+
+    context = {
+        'message': 'This is the support page.'
+    }
+
+    return render(request, 'kokoro_app/support.html', context)

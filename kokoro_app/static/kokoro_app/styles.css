@@ -443,12 +443,11 @@ nav a:hover, nav a:focus {
     display: block;
 }
 
-.hero-container > div > form > button {
+.index-btn {
     display: block;
     padding: .75rem 0rem;
     margin-top: .5rem;
     border: 3px solid #49BB49;
-    border-radius: 8px;
     border-radius: 24px;
     cursor: pointer;
     width: 100%;
@@ -456,6 +455,21 @@ nav a:hover, nav a:focus {
     background: rgba(0, 0, 0, .25);
     color: white;
     transition: .5s;
+}
+
+.support-link {
+    width: 35%;
+    margin: 0 auto;
+    margin-top: .5rem;
+}
+
+.support-link-btn {
+    width: 100%;
+    padding: 0;
+    border: none;
+    border-radius: 24px;
+    background: rgba(0, 0, 0, .25);
+    color: white;
 }
 
 .hero-container > img {
@@ -1901,7 +1915,7 @@ svg text {
         display: block;
     }
 
-    .hero-container > div > form > button {
+    .index-btn {
         display: block;
         padding: 1rem 1.5rem;
         margin-top: .5rem;
@@ -1915,12 +1929,35 @@ svg text {
         transition: .5s;
     }
 
-    .hero-container > div > form > button:hover,
-    .hero-container > div > form > button:focus {
+    .index-btn:hover,
+    .index-btn:focus {
         border-color: #49BB49;
         transition: .5s;
         background: #96FFA1;
         outline: none;
+    }
+
+    .support-link {
+        width: 42%;
+        margin: 0 auto;
+        margin-top: 1rem;
+    }
+
+    .support-link-btn {
+        width: 100%;
+        padding: .25rem 0;
+        border: none;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0);
+        color: black;
+        cursor: pointer;
+        transition: .5s;
+        font-weight: bold;
+    }
+
+    .support-link-btn:hover, .support-link-btn:focus {
+        transition: .5s;
+        background: #96FFA1;
     }
 
     .hero-header {

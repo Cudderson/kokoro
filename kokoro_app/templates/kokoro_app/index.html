@@ -20,13 +20,16 @@
                 <span class="hero-caption">
                     kokoro is a wellness tool designed to enhance the lives of its users through balancing the mind, body, and soul.
                 </span>
-                <!-- here we need a CTA. Tell users it's free and takes <1 to sign-up -->
                 <form action="{% url 'users:register' %}" method="get">
-                    <button class="font-large" type="submit">Sign Up</button>
+                    <button class="font-large index-btn" type="submit">Sign Up</button>
                 </form>
                 <!-- route to home, if user not logged in, they will be redirected to login page -->
                 <form action="{% url 'kokoro_app:home' %}" method="get">
-                    <button class="font-large" type="submit">Log In</button>
+                    <button class="font-large index-btn" type="submit">Log In</button>
+                </form>
+                <!-- support page link -->
+                <form class="support-link" action="{% url 'kokoro_app:support' %}" method="get">
+                    <button class="font-med support-link-btn" type="submit">Contact/Support</button>
                 </form>
             </div>
         </div>
