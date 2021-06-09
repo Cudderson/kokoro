@@ -1788,6 +1788,10 @@ svg text {
     border: 1px solid;
 }
 
+.support-span {
+    display: block;
+}
+
 /* 'users' app styles */
 .register-container {
     width: 98%;

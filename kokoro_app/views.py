@@ -5,13 +5,14 @@ from django.utils.crypto import get_random_string
 from django.db import IntegrityError
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName,\
                     ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User, PinnedProfilePost,\
                     FriendshipRequest, Friendships
 
 from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, \
-                   ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm, ProfilePostForm
+                   ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm, ProfilePostForm, SupportEmailForm
 from . import balance, profile_utils, friendship_utils
 import pytz
 import datetime
@@ -699,8 +700,44 @@ def support(request):
     :return: render of support.html
     """
 
-    context = {
-        'message': 'This is the support page.'
-    }
+    context = {}
+
+    if request.method == 'POST':
+
+        # validate form
+        submitted_support_form = SupportEmailForm(data=request.POST)
+
+        if submitted_support_form.is_valid():
+            try:
+                subject = submitted_support_form.cleaned_data['subject']
+                message = submitted_support_form.cleaned_data['message']
+                sent_from = submitted_support_form.cleaned_data['sent_from']
+                recipients = ['kokoro.help.contact@gmail.com']
+            except Exception as e:
+                raise Http404("Something went wrong while processing your report. Please try again later.")
+
+            # Send Email
+            try:
+                # requires: subject, message, from_email, recipient list
+                mail_sent = send_mail(subject, message, sent_from, recipients)
+            except Exception as e:
+                raise Http404("Something went wrong while preparing your report. Please try again later.")
+
+            # send_mail() returns 0 or 1, representing the amount of emails that were sent
+            if mail_sent == 1:
+                # successful, define success message and render support.html
+                success_message = "Your report was sent successfully. We will get back to you as soon as we can. Thank you."
+                context['success_message'] = success_message
+            else:
+                raise Http404("Something went wrong while sending your report. Please try again later.")
+
+        else:
+            raise Http404("Your report was not valid.")
+
+    elif request.method == 'GET':
+        # instantiate blank form
+        support_form = SupportEmailForm()
+
+        context['support_form'] = support_form
 
     return render(request, 'kokoro_app/support.html', context)

@@ -69,3 +69,15 @@ class ProfilePostForm(forms.ModelForm):
     class Meta:
         model = ProfilePost
         fields = ['headline', 'content']
+
+
+class SupportEmailForm(forms.Form):
+    """
+    Form for sending an email to kokoro support
+    """
+
+    sent_from = forms.EmailField()
+
+    subject = forms.CharField(max_length=100)
+
+    message = forms.CharField(widget=forms.Textarea)
