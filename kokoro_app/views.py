@@ -715,14 +715,13 @@ def support(request):
                 username = submitted_support_form.cleaned_data['username']
                 message = submitted_support_form.cleaned_data['message']
                 message = f'{message} || From: @{username}/{sent_from}'
-                recipient = os.getenv('KOKORO_EMAIL_HOST_USER')
-                recipients = [].append(recipient)
+                recipient = os.environ.get('KOKORO_EMAIL_HOST_USER')
+                recipients = [recipient]
             except Exception as e:
                 raise Http404("Something went wrong while processing your report. Please try again later.", e)
 
             # Send Email
             try:
-                print(sent_from, subject, username, message, recipient, recipients)
                 # requires: subject, message, from_email, recipient list
                 mail_sent = send_mail(subject, message, sent_from, recipients)
             except Exception as e:
