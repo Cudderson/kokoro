@@ -721,6 +721,7 @@ def support(request):
                 # requires: subject, message, from_email, recipient list
                 mail_sent = send_mail(subject, message, sent_from, recipients)
             except Exception as e:
+                print(e)
                 raise Http404("Something went wrong while preparing your report. Please try again later.")
 
             # send_mail() returns 0 or 1, representing the amount of emails that were sent
@@ -728,6 +729,8 @@ def support(request):
                 # successful, define success message and render support.html
                 success_message = "Your report was sent successfully. We will get back to you as soon as we can. Thank you."
                 context['success_message'] = success_message
+
+                return render(request, 'kokoro_app/support.html', context)
             else:
                 raise Http404("Something went wrong while sending your report. Please try again later.")
 

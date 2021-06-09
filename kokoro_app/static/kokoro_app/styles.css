@@ -1788,6 +1788,11 @@ svg text {
     border: 1px solid;
 }
 
+.support-header {
+    color: var(--color-5);
+    font-size: 24px;
+}
+
 .support-span {
     display: block;
 }
@@ -1820,7 +1825,9 @@ svg text {
     color: var(--color-3);
 }
 
-.register-field > input[type=text], .register-field > input[type=password] {
+.register-field > input[type=text],
+.register-field > input[type=password],
+.register-field > input[type=email] {
     background-color: var(--color-1);
     width: 100%;
     margin-bottom: 1rem;

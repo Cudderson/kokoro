@@ -4,21 +4,22 @@
 
 <div class="register-container">
     {% if support_form %}
-        <span class="register-header support-span" style="margin-bottom: 1rem;">Support</span>
+        <span class="register-header support-span" style="margin-bottom: .5rem;">Support</span>
         <span class="register-label support-span font-xl">Contact us with any problems you're having with kokoro.</span>
         <br>
+        <span class="font-xl support-header">No problems?</span>
         <span class="register-label support-span font-large">Feel free to tell us about your experience with kokoro, suggestions to improve the site, or ask any questions you have.</span>
         <br>
-        <span class="register-label font-large">Send a report and we will get back to you!</span>
         <br>
+        <span class="support-header support-span font-large" style="text-align: center;">Send a report and we will get back to you!</span>
         <br>
         <form action="{% url 'kokoro_app:support' %}" method="post">
             {% csrf_token %}
-            <span class="register-label">{{ support_form.subject.label }}</span>
+            <span class="register-help">{{ support_form.subject.label }}</span>
             <span class="register-field">{{ support_form.subject }}</span>
-            <span class="register-label">{{ support_form.message.label }}</span>
-            <span class="register-field">{{ support_form.message }}</span>
-            <span class="register-label">Your Email Address:</span>
+            <span class="register-help">{{ support_form.message.label }}</span>
+            <span class="register-field post-form-content">{{ support_form.message }}</span>
+            <span class="register-help">Your Email Address:</span>
             <span class="register-field">{{ support_form.sent_from }}</span>
             <span class="register-error">{{ support_form.sent_from.errors }}</span>
             <button class="request-btn register-btn font-xl" type="submit">Submit Report</button>
