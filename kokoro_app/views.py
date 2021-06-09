@@ -16,6 +16,7 @@ from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisp
 from . import balance, profile_utils, friendship_utils
 import pytz
 import datetime
+import os
 
 # testing returning to same page after sending friend request
 from django.http import HttpResponseRedirect
@@ -709,15 +710,19 @@ def support(request):
 
         if submitted_support_form.is_valid():
             try:
-                subject = submitted_support_form.cleaned_data['subject']
-                message = submitted_support_form.cleaned_data['message']
                 sent_from = submitted_support_form.cleaned_data['sent_from']
-                recipients = ['kokoro.help.contact@gmail.com']
+                subject = submitted_support_form.cleaned_data['subject']
+                username = submitted_support_form.cleaned_data['username']
+                message = submitted_support_form.cleaned_data['message']
+                message = f'{message} || From: @{username}/{sent_from}'
+                recipient = os.getenv('KOKORO_EMAIL_HOST_USER')
+                recipients = [].append(recipient)
             except Exception as e:
-                raise Http404("Something went wrong while processing your report. Please try again later.")
+                raise Http404("Something went wrong while processing your report. Please try again later.", e)
 
             # Send Email
             try:
+                print(sent_from, subject, username, message, recipient, recipients)
                 # requires: subject, message, from_email, recipient list
                 mail_sent = send_mail(subject, message, sent_from, recipients)
             except Exception as e:
@@ -726,14 +731,11 @@ def support(request):
 
             # send_mail() returns 0 or 1, representing the amount of emails that were sent
             if mail_sent == 1:
-                # successful, define success message and render support.html
-                success_message = "Your report was sent successfully. We will get back to you as soon as we can. Thank you."
-                context['success_message'] = success_message
+                # successful, render support_success.html
+                return render(request, 'kokoro_app/support_success.html')
 
-                return render(request, 'kokoro_app/support.html', context)
             else:
-                raise Http404("Something went wrong while sending your report. Please try again later.")
-
+                raise Http404("Something went wrong while sending your report. Please try again later.", mail_sent)
         else:
             raise Http404("Your report was not valid.")
 

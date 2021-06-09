@@ -1,9 +1,8 @@
 {% extends 'kokoro_app/base.html' %}
 
 {% block content %}
-
-<div class="register-container">
-    {% if support_form %}
+<div class="super-container">
+    <div class="register-container">
         <span class="register-header support-span" style="margin-bottom: .5rem;">Support</span>
         <span class="register-label support-span font-xl">Contact us with any problems you're having with kokoro.</span>
         <br>
@@ -19,15 +18,13 @@
             <span class="register-field">{{ support_form.subject }}</span>
             <span class="register-help">{{ support_form.message.label }}</span>
             <span class="register-field post-form-content">{{ support_form.message }}</span>
+            <span class="register-help">{{ support_form.username.label }}</span>
+            <span class="register-field">{{ support_form.username }}</span>
             <span class="register-help">Your Email Address:</span>
             <span class="register-field">{{ support_form.sent_from }}</span>
             <span class="register-error">{{ support_form.sent_from.errors }}</span>
             <button class="request-btn register-btn font-xl" type="submit">Submit Report</button>
         </form>
-    {% elif success_message %}
-        <span>Thank You!</span>
-        <span>{{ success_message }}</span>
-    {% endif %}
+    </div>
 </div>
-
 {% endblock content %}

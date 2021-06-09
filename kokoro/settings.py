@@ -148,6 +148,13 @@ MEDIA_URL = '/media/'
 # My settings
 LOGIN_URL = 'users:login'
 
+# Email Setup
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('KOKORO_EMAIL_HOST')
+EMAIL_USE_TLS = True
+EMAIL_PORT = os.getenv('KOKORO_EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('KOKORO_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('KOKORO_EMAIL_HOST_PASSWORD')
 
 warnings.filterwarnings(
     'error', r"DateTimeField .* received a naive datetime",

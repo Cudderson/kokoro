@@ -78,6 +78,8 @@ class SupportEmailForm(forms.Form):
 
     sent_from = forms.EmailField()
 
+    username = forms.CharField(max_length=150)
+
     subject = forms.CharField(max_length=100)
 
     message = forms.CharField(widget=forms.Textarea)
