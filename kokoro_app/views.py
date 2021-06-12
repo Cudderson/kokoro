@@ -481,7 +481,6 @@ def posts_form_handler(request):
 
             # check validity
             if post_submitted.is_valid():
-                print('Valid Profile Post.')
                 new_post = post_submitted.save(commit=False)
                 # Title-ize headline
                 new_post.headline = new_post.headline.title()

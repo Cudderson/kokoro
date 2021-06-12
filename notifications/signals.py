@@ -128,7 +128,9 @@ def new_profile_post_notification(sender, instance, created, **kwargs):
     if created:
 
         # get author of the ProfilePost object
-        author_id = instance.author.id
+        # author_id = instance.author.id
+        # for some reason, with MySQL, only this works: ??
+        author_id = instance.author
 
         # get user friendships
         # return type = <class 'kokoro_app.models.Friendships'> (ManyRelatedManager object)
