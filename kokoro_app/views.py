@@ -144,11 +144,20 @@ def profile(request):
             'post_model': ProfilePost,
             'pinned_post_model': PinnedProfilePost,
             'balance_streak_model': BalanceStreak,
-            'profile_timezone_model': ProfileTimezone,
         }
 
         # Pass profile_models to helper (returns dictionary of user-specific data to build profile page)
         profile_data = profile_utils.get_profile_data(user, profile_models)
+
+        # Retrieve TZ info separately, as we always want request.user's TZ data
+        user_timezone_object, user_timezone = profile_utils.get_user_timezone(
+            request.user, ProfileTimezone
+        )
+
+        for post in profile_data['posts']:
+            date_published_utc = post.date_published
+            date_published_user_tz = balance.convert_to_user_tz(date_published_utc, str(user_timezone_object))
+            post.date_published = date_published_user_tz
 
         context = {
             'user': user,
@@ -157,9 +166,7 @@ def profile(request):
             'contact_info': profile_data['contact_info'],  # Determine usage of contact info
             'posts': profile_data['posts'],
             'balance_streak': profile_data['balance_streak'],  # Determine usage of balance streak on profile page
-            'user_timezone_object': profile_data['user_timezone_object'],
-            'user_timezone': profile_data['user_timezone'],
-            'timezones': pytz.common_timezones,
+            # removed user-specific TZ data from template, not needed (datetimes converted server-side)
         }
 
         return render(request, 'kokoro_app/profile.html', context)

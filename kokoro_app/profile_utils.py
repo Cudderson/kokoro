@@ -352,14 +352,11 @@ def get_profile_data(user, profile_models):
     posts = sort_posts_together(profile_posts, pinned_posts)
 
     balance_streak = get_user_balance_streak(user, profile_models['balance_streak_model'])
-    user_timezone_object, user_timezone = get_user_timezone(user, profile_models['profile_timezone_model'])
 
     profile_data = {
         'contact_info': contact_info,
         'posts': posts,
         'balance_streak': balance_streak,
-        'user_timezone_object': user_timezone_object,
-        'user_timezone': user_timezone,
     }
 
     return profile_data
