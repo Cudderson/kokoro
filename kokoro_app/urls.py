@@ -52,7 +52,7 @@ urlpatterns = [
     path('view_friendships/', views.view_friendships, name='view_friendships'),
 
     # Called when user wants to remove a friendship with another user
-    path('remove_friendship_handler/<friendship_to_remove_id>/', views.remove_friendship_handler, name='remove_friendship_handler'),
+    path('remove_friendship_handler/', views.remove_friendship_handler, name='remove_friendship_handler'),
 
     # Support page for contacting kokoro
     path('support/', views.support, name='support')

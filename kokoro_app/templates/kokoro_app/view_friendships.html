@@ -75,19 +75,12 @@
                 Profile
             </button>
         </form>
-        <button class="request-btn" data-form="remove-friend-form" onclick="toggleFormDisplay(this, {{ forloop.counter0 }})">Remove</button>
-    </div>
-    <div class="delete-post-container form-container remove-friend-form">
-        <button class="close-form" data-form="remove-friend-form" onclick="toggleFormDisplay(this)"><span>&times;</span></button>
-        <form class="manage-form delete-post-form" action="{% url 'kokoro_app:remove_friendship_handler' friendship_to_remove_id=friendship.id %}" method="post">
+        <form action="{% url 'kokoro_app:remove_friendship_handler' %}" method="post">
             {% csrf_token %}
-            <div>
-                <span class="manage-form-header">Remove @{{ friendship.profilequote }} From Friendships?</span>
-                <button class="manage-form-submit delete-post-submit" type="submit" name="remove_friendship_form">Confirm</button>
-                <button class="manage-form-submit delete-post-cancel" type="reset" data-form="remove-friend-form" onclick="toggleFormDisplay(this)">Cancel</button>
-            </div>
+            <button class="request-btn" type="submit" value="{{ friendship.id }}" name="remove_friendship_form">Remove</button>
         </form>
     </div>
+
     {% endfor %}
 </div>
 <!-- script for hiding friendship requests -->
@@ -102,13 +95,6 @@
         else {
             btn.innerHTML = "Hide";
         }
-    }
-
-    function toggleFormDisplay(clickedBtn, f) {
-        var formToDisplay = clickedBtn.getAttribute("data-form");
-        var form = document.getElementsByClassName(formToDisplay)[0];
-        form.classList.toggle("show-form");
-        console.log(f);
     }
 </script>
 {% endblock content %}
