@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 
 
 def register(request):
@@ -15,7 +16,6 @@ def register(request):
         register_form = UserCreationForm(data=request.POST)
 
         if register_form.is_valid():
-
             try:
                 new_user = register_form.save()
 
@@ -24,7 +24,7 @@ def register(request):
                 return redirect('users:thank_you')
 
             except Exception as e:
-                return redirect('kokoro_app:index')
+                raise Http404("Something went wrong during registration. Please try again later.")
 
     # Display blank or invalid form
     context = {'register_form': register_form}
