@@ -14,13 +14,11 @@ def pass_notifications_to_context(request):
 
     try:
         user_notifications = Notification.objects.filter(recipient__exact=request.user).order_by('-id')
-
         return {
             'notifications': user_notifications
         }
 
     except Exception as e:
-        print(e)
         return {
             'notifications': 'None'
         }

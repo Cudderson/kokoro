@@ -10,6 +10,6 @@ print(app_name)
 urlpatterns = [
 
     # Called when a Notification object needs to be altered
-    path('notifications/notifications_form_handler', views.notification_form_handler, name='notification_form_handler'),
+    path('notifications/notifications_form_handler/', views.notification_form_handler, name='notification_form_handler'),
 
 ]

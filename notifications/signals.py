@@ -6,13 +6,11 @@ from django.dispatch import receiver
 
 from kokoro_app.models import FriendshipRequest, Friendships, PinnedProfilePost, ProfilePost
 from .models import Notification
-
-from django.core.signals import request_finished
-
 from django.core.exceptions import ValidationError
 
+# Use this to test signals if not working
+# from django.core.signals import request_finished
 
-# Use this  to test signals if not working
 # @receiver(request_finished)
 # def test_signal(sender, **kwargs):
 #     print("Your signal is working.")
@@ -46,7 +44,6 @@ def create_friendship_request_notification(sender, instance, created, **kwargs):
 
         try:
             friendship_request_notification.full_clean()
-            print("CLEAN")
             friendship_request_notification.save()
         except ValidationError as e:
             print(e)

@@ -20,7 +20,7 @@ def notification_form_handler(request):
         if 'notification_form' in request.POST:
             # User selected a notification from nav
 
-            # get form data (id (str))
+            # get form data (id == (str))
             notification_id = request.POST.get('notification_form')
 
             # get Notification object matching id, mark as 'read'
@@ -32,8 +32,7 @@ def notification_form_handler(request):
 
             # Type 1: Someone sent you a friendship request
             if notification.type == 1:
-                # On click, should bring user to 'friendship_requests.html'
-
+                # On click, should bring user to 'view_friendships.html'
                 return redirect('/view_friendships')
 
             # Type 2: Someone accepted your friendship request
@@ -52,7 +51,7 @@ def notification_form_handler(request):
             elif notification.type == 4:
 
                 # bring user to new profile post
-                # get post_slug of post
+
                 reference_post = notification.reference
                 reference_post_author = notification.sent_from
 
