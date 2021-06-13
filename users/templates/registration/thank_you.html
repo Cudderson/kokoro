@@ -3,6 +3,11 @@
 {% block content %}
 <div class="super-container">
     <span class="logout-message">{{ message }}</span>
-    <span class="logout-message">[ support email here ]</span>
+    <br>
+    <span class="logout-sub-message font-xl">{{ sub_message }}</span>
+    <br>
+    <form class="thank-you-form" action="{% url 'kokoro_app:edit_profile' %}" method="get">
+        <button class="request-btn font-large" type="submit">Set Up My Profile</button>
+    </form>
 </div>
 {% endblock content %}

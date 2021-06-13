@@ -35,13 +35,14 @@ def register(request):
 @login_required()
 def thank_you(request):
     """
-    Page to thank newly-registerd users
+    Page to thank newly-registered users
     :param request: http data
     :return: render of thank_you.html
     """
 
     context = {
-        'message': f'Thank you for joining kokoro, {request.user}!',
+        'message': f'Thank you, {request.user}!',
+        'sub_message': "We hope you enjoy kokoro!",
     }
 
     return render(request, 'registration/thank_you.html', context)

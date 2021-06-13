@@ -1869,14 +1869,17 @@ svg text {
     padding-bottom: 1rem;
 }
 
-.logout-message {
+.logout-message, .logout-sub-message, .thank-you-form {
     display: block;
     width: 96%;
-    max-width: 500px;
+    max-width: 700px;
     margin: 0 auto;
+    color: var(--color-4);
+}
+
+.logout-message {
+    font-size: 40px;
     padding-top: 5rem;
-    color: var(--color-5);
-    font-size: 30px;
 }
 /* end 'users' app styles */
 
@@ -2457,6 +2460,10 @@ svg text {
 
     .hide-requests {
         display: none;
+    }
+
+    .logout-message {
+        font-size: 55px;
     }
 }
 /* end view_friendships.html media query */
