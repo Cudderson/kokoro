@@ -56,10 +56,14 @@
 
     <div class="separator-thin"></div>
     <span class="friendships-header">Friendships:</span>
-    {% for friendship in friendships %}
+    {% for friendship in friendships.all %}
     <div class="search-card friend-card">
         <div class="friend-info">
-            <span class="friend-display-name font-large">{{ friendship.profiledisplayname.display_name }}</span>
+            {% if friendship.profiledisplayname.display_name %}
+                <span class="friend-display-name font-large">{{ friendship.profiledisplayname.display_name }}</span>
+            {% else %}
+                <span class="friend-display-name font-large">{{ friendship }}</span>
+            {% endif %}
             <span class="friend-username font-small">@{{ friendship }}</span>
             <span class="friend-bio font-small">{{ friendship.profilebio.biography }}</span>
         </div>
@@ -71,11 +75,17 @@
                 Profile
             </button>
         </form>
-        <form class="remove-friend-form" action="{% url 'kokoro_app:remove_friendship_handler' friendship_to_remove_id=friendship.id %}" method="post">
+        <button class="request-btn" data-form="remove-friend-form" onclick="toggleFormDisplay(this, {{ forloop.counter0 }})">Remove</button>
+    </div>
+    <div class="delete-post-container form-container remove-friend-form">
+        <button class="close-form" data-form="remove-friend-form" onclick="toggleFormDisplay(this)"><span>&times;</span></button>
+        <form class="manage-form delete-post-form" action="{% url 'kokoro_app:remove_friendship_handler' friendship_to_remove_id=friendship.id %}" method="post">
             {% csrf_token %}
-            <button class="request-btn" type="submit" name="remove_friendship_form">
-                Remove
-            </button>
+            <div>
+                <span class="manage-form-header">Remove @{{ friendship.profilequote }} From Friendships?</span>
+                <button class="manage-form-submit delete-post-submit" type="submit" name="remove_friendship_form">Confirm</button>
+                <button class="manage-form-submit delete-post-cancel" type="reset" data-form="remove-friend-form" onclick="toggleFormDisplay(this)">Cancel</button>
+            </div>
         </form>
     </div>
     {% endfor %}
@@ -92,6 +102,13 @@
         else {
             btn.innerHTML = "Hide";
         }
+    }
+
+    function toggleFormDisplay(clickedBtn, f) {
+        var formToDisplay = clickedBtn.getAttribute("data-form");
+        var form = document.getElementsByClassName(formToDisplay)[0];
+        form.classList.toggle("show-form");
+        console.log(f);
     }
 </script>
 {% endblock content %}

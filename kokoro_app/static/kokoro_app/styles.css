@@ -843,7 +843,6 @@ svg text {
 }
 
 .form-container form {
-    height: 75%;
     width: 96%;
     max-width: 700px;
     border-radius: 8px;
@@ -1702,9 +1701,6 @@ svg text {
 }
 
 /* move to post.html */
-.delete-post-form {
-    height: 25% !important;
-}
 
 .delete-post-submit {
     background-color: #49BB49 !important; /* same for both themes */
