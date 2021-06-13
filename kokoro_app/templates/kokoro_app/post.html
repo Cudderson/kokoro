@@ -50,7 +50,7 @@
         {% endlocaltime %}
     </div>
     <div class="delete-post-container form-container">
-        <div class="close-form" data-form="delete-post-container" onclick="toggleFormDisplay(this)"><div>&times;</div></div>
+        <button class="close-form" data-form="delete-post-container" onclick="toggleFormDisplay(this)"><span>&times;</span></button>
         <form class="manage-form delete-post-form" action="{% url 'kokoro_app:posts_form_handler' %}" method="post">
             {% csrf_token %}
             <div>
