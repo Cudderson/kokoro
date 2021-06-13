@@ -19,7 +19,11 @@
             <img src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
         </div>
         <div class="search-info">
-            <span class="search-display-name font-large">{{ user.profiledisplayname.display_name }}</span>
+            {% if user.profiledisplayname.display_name %}
+                <span class="search-display-name font-large">{{ user.profiledisplayname.display_name }}</span>
+            {% else %}
+                <span class="search-display-name font-large">{{ user.username }}</span>
+            {% endif %}
             <span class="search-username font-small">@{{ user.username }}</span>
         </div>
         <span class="search-bio font-small">{{ user.profilebio.biography }}</span>
