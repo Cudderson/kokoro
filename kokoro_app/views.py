@@ -687,12 +687,13 @@ def remove_friendship_handler(request):
     """
     Helper for removing a friendship from a user's friendships (remove User from Friendships object)
     :param request: http post data
-    :param friendship_to_remove_id: unique id of a User object
     :return: redirect to view_friendships.html
     """
 
-    friendship_to_remove_id = request.POST.get('remove_friendship_form')
-    print(friendship_to_remove_id)
+    try:
+        friendship_to_remove_id = request.POST['friend-to-remove']
+    except Exception as e:
+        raise Http404("Something went wrong while updating your friendships. Nothing was altered.")
 
     successful = friendship_utils.remove_friendship(request, friendship_to_remove_id)
 

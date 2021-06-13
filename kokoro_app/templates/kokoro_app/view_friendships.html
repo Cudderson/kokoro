@@ -75,12 +75,23 @@
                 Profile
             </button>
         </form>
-        <form action="{% url 'kokoro_app:remove_friendship_handler' %}" method="post">
+        <form class="remove-friendship" action="{% url 'kokoro_app:remove_friendship_handler' %}" method="post">
             {% csrf_token %}
-            <button class="request-btn" type="submit" value="{{ friendship.id }}" name="remove_friendship_form">Remove</button>
+            <button class="request-btn" type="button" data-form="remove-friend" onclick="toggleFormDisplay(this, {{ forloop.counter0 }})">Remove</button>
+            <input type="hidden" name="friend-to-remove" value="{{ friendship.id }}">
         </form>
     </div>
-
+    <div class="delete-post-container form-container remove-friend">
+        <button class="close-form" data-form="remove-friend" onclick="toggleFormDisplay(this, {{ forloop.counter0 }} )"><span>&times;</span></button>
+        <form class="manage-form delete-post-form" action="#" method="post">
+            {% csrf_token %}
+            <div>
+                <span class="manage-form-header">Remove Friendship with @{{ friendship }}?</span>
+                <button class="manage-form-submit delete-post-submit" type="button" onclick="submitForm( '{{ forloop.counter0 }}' )">Confirm</button>
+                <button class="manage-form-submit delete-post-cancel" type="reset" data-form="remove-friend" onclick="toggleFormDisplay(this, {{ forloop.counter0 }} )">Cancel</button>
+            </div>
+        </form>
+    </div>
     {% endfor %}
 </div>
 <!-- script for hiding friendship requests -->
@@ -95,6 +106,21 @@
         else {
             btn.innerHTML = "Hide";
         }
+    }
+
+    function toggleFormDisplay(clickedBtn, counter) {
+        var formToDisplay = clickedBtn.getAttribute("data-form");
+        var form = document.getElementsByClassName(formToDisplay)[counter];
+
+        form.classList.toggle("show-form");
+
+        console.log(counter);
+    }
+
+    function submitForm(counter) {
+        // counter represents the form to submit
+        var formToSubmit = document.getElementsByClassName("remove-friendship")[counter];
+        formToSubmit.submit();
     }
 </script>
 {% endblock content %}
