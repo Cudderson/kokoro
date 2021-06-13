@@ -570,6 +570,10 @@ def search(request):
     # returns text entered into search box
     search_input = request.GET.get('search')
 
+    if not search_input:
+        # Don't allow blank searches
+        return redirect('/home')
+
     # returns queryset of User(s) with username value of search_input
     users_queryset = User.objects.filter(username__icontains=f'{search_input}')
 
