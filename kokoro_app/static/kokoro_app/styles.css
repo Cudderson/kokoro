@@ -2177,6 +2177,7 @@ svg text {
         margin-top: 2em;
         margin-bottom: 3em;
         color: var(--color-5);
+        position: relative;
     }
 
     .desktop-home-header .separator-thin {
@@ -2202,8 +2203,8 @@ svg text {
 
     .help-and-manage-container-outer {
         display: inline-block;
-        position: fixed;
-        right: 12.75%;
+        position: absolute;
+        right: 10%;
     }
 
     .view-acts-desktop, .help-icon-container-desktop {
