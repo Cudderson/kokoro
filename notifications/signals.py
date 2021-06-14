@@ -73,7 +73,6 @@ def accept_friendship_request_notification(sender, instance, **kwargs):
         try:
             friendship_accepted_notification.full_clean()
             friendship_accepted_notification.save()
-            print("Accepted FriendshipRequest Notification created!")
         except ValidationError as e:
             print(e)
 
@@ -106,7 +105,6 @@ def pinned_profile_post_notification(sender, instance, created, **kwargs):
         try:
             pinned_post_notification.full_clean()
             pinned_post_notification.save()
-            print("ayo")
         except ValidationError as e:
             print(e)
 

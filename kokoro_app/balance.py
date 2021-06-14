@@ -1,6 +1,5 @@
 # File for 'balance' feature & 'BalanceStreak' helper functions/queries
 
-from django.utils.timezone import is_aware
 from kokoro_app.models import Activity, ProfileTimezone, BalanceStreak
 import datetime
 import pytz
@@ -182,7 +181,7 @@ def reset_balance_streak(user_balance_streak_object):
     user_balance_streak_object.save(update_fields=['balance_streak'])
 
     # make better return
-    return 'streak reset'
+    return True
 
 
 def get_today_date(request):
@@ -254,10 +253,6 @@ def update_balance_streak(request, expiration_date):
     user_balance_streak.date_last_incremented = datetime.datetime.now(tz=pytz.UTC)
 
     # save new streak, incremented_date(UTC) and expiration_date(UTC) to database
-    print("These values were saved to db:")
-    print(f'expiration date: {expiration_date}')
-    print(f'date last incremented: {datetime.datetime.now(tz=pytz.UTC)}')
-
     user_balance_streak.save(
         update_fields=[
             'balance_streak',
@@ -311,12 +306,10 @@ def balance(request, daily_mind_queryset, daily_body_queryset, daily_soul_querys
     # Check if we should reset the user's streak to 0
     if current_time_user_tz > balance_streak_expiration_date_user_tz:
 
-        # add condition to check if streak == 0. If it does, no need to reset it.
         balance_streak_value = get_user_balance_streak_value(request)
 
+        # check if streak == 0. If it does, no need to reset it.
         if balance_streak_value != 0:
-
-            print("Streak reset to 0 (current time > expiration date)")
             reset_balance_streak(user_balance_streak_object)
 
     # If all true, user has found balance

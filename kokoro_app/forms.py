@@ -4,6 +4,8 @@ from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, Pr
                     ProfileImage, ProfileTimezone, ContactInfo, ProfilePost
 
 
+# Create forms based on defined models
+
 class ActivityForm(forms.ModelForm):
     class Meta:
         model = Activity
@@ -15,13 +17,6 @@ class PerfectBalanceForm(forms.ModelForm):
     class Meta:
         model = PerfectBalance
         fields = ['perfect_mind', 'perfect_body', 'perfect_soul']
-
-        # turn off labels when ready:
-        # labels = {
-        #     'perfect_mind': '',
-        #     'perfect_body': '',
-        #     'perfect_soul': '',
-        # }
 
 
 class ProfileBioForm(forms.ModelForm):
@@ -46,11 +41,6 @@ class ProfileImageForm(forms.ModelForm):
     class Meta:
         model = ProfileImage
         fields = ['image']
-
-        # turn on if needed
-        #labels = {
-        #    'image': ''
-        #}
 
 
 class ProfileTimezoneForm(forms.ModelForm):

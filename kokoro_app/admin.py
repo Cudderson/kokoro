@@ -15,10 +15,7 @@ admin.site.register(ProfileImage)
 admin.site.register(ProfileTimezone)
 admin.site.register(BalanceStreak)
 admin.site.register(ContactInfo)
-# testing pinned posts
 admin.site.register(PinnedProfilePost)
-
-# testing Friendship & FriendRequest
 admin.site.register(Friendships)
 admin.site.register(FriendshipRequest)
 

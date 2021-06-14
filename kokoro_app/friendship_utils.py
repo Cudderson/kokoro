@@ -76,9 +76,7 @@ def send_friendship_request(request, sending_to_id):
         # create FriendRequest object and save
         new_friendship_request, created = FriendshipRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
         new_friendship_request.save()
-        print("Friendship Request Sent!")
     except Exception as e:
-        print(e)
         raise Http404("Something went wrong while processing your friendship request.")
 
     return True
@@ -104,7 +102,6 @@ def accept_friendship_request(request, sent_by):
         user_friendships, created_for_user = Friendships.objects.get_or_create(owner=request.user)
         new_friend_friendships, created_for_friend = Friendships.objects.get_or_create(owner=new_friend)
     except Exception as e:
-        print(e)
         raise Http404("Something went wrong while retrieving friendships.")
 
     try:
@@ -114,14 +111,13 @@ def accept_friendship_request(request, sent_by):
         # add user to new friend's friendships
         new_friend_friendships.friendships.add(request.user)
 
-        print(f'{request.user} is now friends with {new_friend}')
     except Exception as e:
         raise Http404("Something went wrong while establishing friendship.")
 
     try:
         # Get friendship request object to delete
         friendship_request = FriendshipRequest.objects.get(from_user=new_friend, to_user=request.user)
-        # new code testing pre_delete signal (works)
+        # uses pre_delete signal to create notification that the friendship request was accepted
         friendship_request.accepted = True
         friendship_request.delete()
     except Exception as e:
