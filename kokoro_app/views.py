@@ -141,7 +141,6 @@ def profile(request):
             'contact_info_model': ContactInfo,
             'post_model': ProfilePost,
             'pinned_post_model': PinnedProfilePost,
-            'balance_streak_model': BalanceStreak,
         }
 
         # Pass profile_models to helper (returns dictionary of user-specific data to build profile page)
@@ -163,7 +162,6 @@ def profile(request):
             'pending_friendship_request': pending_friendship_request,
             'contact_info': profile_data['contact_info'],  # Determine usage of contact info
             'posts': profile_data['posts'],
-            'balance_streak': profile_data['balance_streak'],  # Determine usage of balance streak on profile page
         }
 
         return render(request, 'kokoro_app/profile.html', context)

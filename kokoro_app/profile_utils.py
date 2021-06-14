@@ -351,12 +351,9 @@ def get_profile_data(user, profile_models):
     # returns list of User ProfilePost & PinnedPost objects sorted together by date_published (reversed)
     posts = sort_posts_together(profile_posts, pinned_posts)
 
-    balance_streak = get_user_balance_streak(user, profile_models['balance_streak_model'])
-
     profile_data = {
         'contact_info': contact_info,
         'posts': posts,
-        'balance_streak': balance_streak,
     }
 
     return profile_data
