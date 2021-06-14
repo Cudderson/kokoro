@@ -4,24 +4,21 @@ from django.utils.text import slugify
 from django.utils.crypto import get_random_string
 from django.db import IntegrityError
 from django.http import Http404
-from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
+from django.http import HttpResponseRedirect
 
-from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName,\
-                    ProfileQuote, ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User, PinnedProfilePost,\
+from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote, ProfileImage, \
+                    ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User, PinnedProfilePost,\
                     FriendshipRequest, Friendships
 
 from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, \
-                   ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm, ProfilePostForm, SupportEmailForm
+                   ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm, \
+                   ProfilePostForm, SupportEmailForm
+
 from . import balance, profile_utils, friendship_utils
 import pytz
 import datetime
 import os
-
-# testing returning to same page after sending friend request
-from django.http import HttpResponseRedirect
-# success messages
-from django.contrib import messages
 
 
 def index(request):
@@ -34,7 +31,7 @@ def index(request):
 def home(request):
     """Home Page for Kokoro users"""
 
-    # Expire the user session when they close their browser
+    # Expire the user session on browser close ( 0 secs )
     request.session.set_expiry(0)
 
     if request.method == "POST":
@@ -50,8 +47,9 @@ def home(request):
                 return redirect('/home')
 
         elif 'manage_form' in request.POST:
+
             raw_post_data = request.POST
-            # should probably move this logic to helper file
+
             # checkbox attrs are key=id_of_entry, value=on/off
             # By retrieving the key(s), we know what values to delete from database
             # '[1:len(result) - 1]' removes the csrf_token and button name from result
@@ -166,7 +164,6 @@ def profile(request):
             'contact_info': profile_data['contact_info'],  # Determine usage of contact info
             'posts': profile_data['posts'],
             'balance_streak': profile_data['balance_streak'],  # Determine usage of balance streak on profile page
-            # removed user-specific TZ data from template, not needed (datetimes converted server-side)
         }
 
         return render(request, 'kokoro_app/profile.html', context)
@@ -255,12 +252,10 @@ def profile_form_handler(request):
     :return: A redirect to profile() view
     """
 
-    # checking when moved from here to edit_profile()
-
     if request.method == "POST":
 
-        # user timezone testing
-        if 'tz_form' in request.POST:   # [x]
+        if 'tz_form' in request.POST:
+
             # timezone the user selected
             user_timezone_form = ProfileTimezoneForm(request.POST, instance=request.user.profiletimezone)
             # check validity
@@ -274,6 +269,7 @@ def profile_form_handler(request):
         elif 'perfect_form' in request.POST:
             perfect_form_submitted = PerfectBalanceForm(data=request.POST)
             if perfect_form_submitted.is_valid():
+
                 # retrieve user PerfectBalance object
                 current_perfect_balance, created = PerfectBalance.objects.get_or_create(owner=request.user)
                 # save new perfect balance form with helper function
@@ -285,6 +281,7 @@ def profile_form_handler(request):
             # user is submitting a biography
             bio_form_submitted = ProfileBioForm(data=request.POST)
             if bio_form_submitted.is_valid():
+
                 # retrieve user biography
                 current_biography, created = ProfileBio.objects.get_or_create(owner=request.user)
                 # save new biography
@@ -296,6 +293,7 @@ def profile_form_handler(request):
             # get submitted form data
             display_name_form_submitted = ProfileDisplayNameForm(data=request.POST)
             if display_name_form_submitted.is_valid():
+
                 # retrieve or create ProfileDisplayName object for user
                 current_display_name, created = ProfileDisplayName.objects.get_or_create(owner=request.user)
                 # save new display name with helper function
@@ -308,6 +306,7 @@ def profile_form_handler(request):
             quote_form_submitted = ProfileQuoteForm(data=request.POST)
             # check validity
             if quote_form_submitted.is_valid():
+
                 # retrieve current ProfileQuote object for user
                 current_quote, created = ProfileQuote.objects.get_or_create(owner=request.user)
                 # save new quote & author
@@ -316,30 +315,27 @@ def profile_form_handler(request):
                 return redirect('/profile')
 
         elif 'profile_image_form' in request.POST:
-            # Make more robust
             # get form data
             profile_image_submitted = ProfileImageForm(request.POST, request.FILES, instance=request.user.profileimage)
             # check validity
             if profile_image_submitted.is_valid():
+
                 profile_image_submitted.save()
 
                 return redirect('/profile')
 
         elif 'contact_info_form' in request.POST:
             # get form data
-            # try to retrieve user's ContactInfo object with POST data
             try:
                 contact_info_submitted = ContactInfoForm(data=request.POST, instance=request.user.contactinfo)
 
             except Exception as e:
                 # User likely doesn't have ContactInfo yet.
                 # Create default ContactInfo instance for user, then override with POST data
-                print(e)
-                print(f'Creating ContactInfo for {request.user}...')
                 ContactInfo.objects.create(owner=request.user)
                 contact_info_submitted = ContactInfoForm(data=request.POST, instance=request.user.contactinfo)
 
-            # check validity
+            # check validity and save
             if contact_info_submitted.is_valid():
                 contact_info_submitted.save(commit=False)
                 contact_info_submitted.owner = request.user
@@ -348,7 +344,7 @@ def profile_form_handler(request):
                 return redirect('/profile')
 
 
-# consider if login should be required
+@login_required()
 def post(request, post_slug):
     """
     A page for viewing a user's individual profile post
@@ -374,7 +370,6 @@ def post(request, post_slug):
         pinned = True
     except Exception as e:
         pinned = False
-        print(e)
 
     # get user's saved time zone (outsource to helper?)
     user_timezone_object = ProfileTimezone.objects.get(owner__exact=request.user)
@@ -404,7 +399,7 @@ def write_post(request):
 
     # testing profile posts
     if request.method == 'POST':
-        print("this shouldn't happen.")
+        raise Http404("Something is wrong.")
     else:
         profile_post_form = ProfilePostForm()
         context = {'profile_post_form': profile_post_form}
@@ -425,7 +420,6 @@ def edit_post(request):
     if request.method == 'GET':
 
         try:
-            # get the specific post to edit
             # get unique slug of ProfilePost object
             post_slug = request.GET.get('edit_post_form')
 
@@ -440,7 +434,7 @@ def edit_post(request):
                 'post_form': post_form,
             }
         except Exception as e:
-            raise Http404("Something went wrong retrieving your post to edit.", e)
+            raise Http404("Something went wrong retrieving your post to edit.")
 
     elif request.method == 'POST':
 
@@ -464,7 +458,7 @@ def edit_post(request):
             post_to_update.save(update_fields=['headline', 'content', 'post_slug'])
 
         except Exception as e:
-            raise Http404("Something went wrong while updating your post. Sorry :( ", e)
+            raise Http404("Something went wrong while updating your post. Sorry :( ")
 
         return post(request, new_post_slug)
 
@@ -488,27 +482,27 @@ def posts_form_handler(request):
 
             # check validity
             if post_submitted.is_valid():
+
                 new_post = post_submitted.save(commit=False)
                 # Title-ize headline
                 new_post.headline = new_post.headline.title()
                 # add author and unique slug to post
                 new_post.author = request.user
                 new_post.post_slug = slugify(new_post.headline)
+
                 try:
                     new_post.save()
                 except IntegrityError:
                     # The generated slug was not unique
                     new_slug_id = get_random_string(length=6)
                     unique_slug = f'{new_post.post_slug}-{new_slug_id}'
-                    print(f'Generated unique slug: {unique_slug}')
                     new_post.post_slug = unique_slug
                     new_post.save()
 
                 return redirect('/profile')
 
         elif 'pin_post_form' in request.POST:
-            # get form data
-            # returns unique slug
+            # get form data, returns unique slug
             post_to_pin_slug = request.POST.get('pin_post_form')
 
             # get post with matching slug
@@ -522,7 +516,10 @@ def posts_form_handler(request):
             new_pinned_post.pinned_by = request.user
             new_pinned_post.save()
 
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            try:
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            except Exception as e:
+                return redirect("/profile")
 
         elif 'unpin_post_form' in request.POST:
             # get form data
@@ -537,10 +534,8 @@ def posts_form_handler(request):
 
                 # Delete PinnedProfilePost object
                 post_to_unpin.delete()
-                print('Post successfully un-pinned!')
 
             except Exception as e:
-                print(e)
                 raise Http404('Something went wrong while un-pinning the post.')
 
             return redirect('/profile')
@@ -551,15 +546,14 @@ def posts_form_handler(request):
                 post_to_delete_slug = request.POST.get('delete_post_form')
                 post_to_delete = ProfilePost.objects.get(post_slug__exact=post_to_delete_slug)
                 post_to_delete.delete()
-                print('Post Deleted.')
+
             except Exception as e:
-                print(e)
                 raise Http404("Something went wrong while deleting your post.")
 
             return redirect('/profile')
 
 
-# consider a new app
+@login_required()
 def search(request):
     """
     Search kokoro user-base based on user-input and display results
@@ -599,9 +593,9 @@ def send_friendship_request_handler(request, sending_to_id):
         # Bring user back to profile they were viewing with success message
         try:
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
         except Exception as e:
             # user/browser may not have 'HTTP_REFERER' turned on, bring user back to friendships
-            print(e)
             return redirect('/view_friendships')
 
 
@@ -617,7 +611,6 @@ def accept_friendship_request_handler(request, sent_by):
     successful = friendship_utils.accept_friendship_request(request, sent_by)
 
     if successful:
-        # could return dynamic message where "Cancel" was
         return redirect('/view_friendships')
 
 
@@ -633,7 +626,6 @@ def cancel_friendship_request_handler(request, friendship_request):
     successful = friendship_utils.cancel_friendship_request(request, friendship_request)
 
     if successful:
-        # consider success message
         return redirect('/view_friendships')
     else:
         raise Http404("There was an error redirecting you to page. Friendship Request cancelled.")
@@ -673,7 +665,7 @@ def view_friendships(request):
 
     friendships = friendships.order_by('username')
 
-    # get friendship requests
+    # get friendship request pbjects for both users
     pending_requests_from_user = FriendshipRequest.objects.filter(from_user__exact=request.user)
     pending_requests_to_user = FriendshipRequest.objects.filter(to_user__exact=request.user)
 
@@ -702,7 +694,6 @@ def remove_friendship_handler(request):
     successful = friendship_utils.remove_friendship(request, friendship_to_remove_id)
 
     if successful:
-        print('Friendship removed successfully.')
         return redirect('/view_friendships')
     else:
         raise Http404("There was an error redirecting you to page. Friendship Removed.")
@@ -724,6 +715,7 @@ def support(request):
 
         if submitted_support_form.is_valid():
             try:
+                # get data from submitted form
                 sent_from = submitted_support_form.cleaned_data['sent_from']
                 subject = submitted_support_form.cleaned_data['subject']
                 username = submitted_support_form.cleaned_data['username']
@@ -739,7 +731,6 @@ def support(request):
                 # requires: subject, message, from_email, recipient list
                 mail_sent = send_mail(subject, message, sent_from, recipients)
             except Exception as e:
-                print(e)
                 raise Http404("Something went wrong while preparing your report. Please try again later.")
 
             # send_mail() returns 0 or 1, representing the amount of emails that were sent
