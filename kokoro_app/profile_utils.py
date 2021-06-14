@@ -4,6 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from itertools import chain
 import datetime
 import pytz
+import os
 
 
 def get_profile_to_visit(request):
@@ -34,6 +35,28 @@ def get_profile_to_visit(request):
 
     except Exception as e:
         raise Http404("Something went wrong while retrieving the profile you requested.", e)
+
+
+def remove_current_profile_image(current_image):
+    """
+    Called to remove a User's current ProfileImage object before saving a new one
+    :param current_image: the current ProfileImage object for a User
+    :return: n/a
+    """
+
+    # define path to current_image within media directory
+    current_image_media = f'media/{current_image.image}'
+
+    try:
+        # do not remove default image from media/profile_images
+        if current_image_media != 'media/profile_images/default.jpg':
+            # remove current_image from media directory
+            os.remove(current_image_media)
+            return 0
+        else:
+            return 1
+    except Exception as e:
+        return 2
 
 
 def get_user_display_name(user, model):

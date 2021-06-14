@@ -313,6 +313,12 @@ def profile_form_handler(request):
                 return redirect('/profile')
 
         elif 'profile_image_form' in request.POST:
+            # get User's current Profile Image
+            current_image = request.user.profileimage
+
+            # remove current_image from media directory
+            profile_utils.remove_current_profile_image(current_image)
+
             # get form data
             profile_image_submitted = ProfileImageForm(request.POST, request.FILES, instance=request.user.profileimage)
             # check validity
