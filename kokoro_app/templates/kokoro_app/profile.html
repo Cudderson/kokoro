@@ -4,148 +4,148 @@
 
 {% load tz %}
 {% localtime off %}
-    <div class="profile-wrapper">
-        <!-- container grid holding all-grids -->
-        <div class="profile-grid-master">
-            <!-- this grid contains profile_photo and profile_quote -->
-            <div class="profile-grid-header">
-                <div class="profile-image">
-                    <img src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
-                </div>
-                <div class="profile-quote-container">
-                    {% if user.profilequote.quote %}
-                    <div>
-                        <span class="profile-quote-content font-med">
-                            "{{ user.profilequote.quote }}"
-                            <span class="profile-quote-author font-small">
-                                - {{ user.profilequote.quote_author }}
-                            </span>
+<div class="profile-wrapper">
+    <!-- container grid holding all-grids -->
+    <div class="profile-grid-master">
+        <!-- this grid contains profile_photo and profile_quote -->
+        <div class="profile-grid-header">
+            <div class="profile-image">
+                <img src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
+            </div>
+            <div class="profile-quote-container">
+                {% if user.profilequote.quote %}
+                <div>
+                    <span class="profile-quote-content font-med">
+                        "{{ user.profilequote.quote }}"
+                        <span class="profile-quote-author font-small">
+                            - {{ user.profilequote.quote_author }}
                         </span>
-                    </div>
-                    {% else %}
-                    <div>
-                        <span class="profile-quote-content font-med">
-                            This user has not yet submitted a quote.
-                            <span class="profile-quote-author font-small">
-                                - kokoro
-                            </span>
+                    </span>
+                </div>
+                {% else %}
+                <div>
+                    <span class="profile-quote-content font-med">
+                        This user has not yet submitted a quote.
+                        <span class="profile-quote-author font-small">
+                            - kokoro
                         </span>
-                    </div>
-                    {% endif %}
+                    </span>
                 </div>
-            </div>
-            <div class="profile-name-grid">
-                {% if user.profiledisplayname.display_name %}
-                    <span class="profile-display-name font-xl">{{ user.profiledisplayname.display_name }}</span>
-                {% else %}
-                    <span class="profile-display-name font-xl">{{ user.username }}</span>
                 {% endif %}
-                {% if user == request.user %}
-                    <form class="edit-profile-form" action="{% url 'kokoro_app:edit_profile' %}" method="get">
-                        <button class="edit-profile-or-friendship-btn font-small" type="submit">Edit Profile</button>
-                    </form>
-                {% else %}
-                    {% if already_friends %}
-                        <form class="edit-profile-form" action="{% url 'kokoro_app:view_friendships' %}">
-                            <button type="submit" class="edit-profile-or-friendship-btn font-small">Friends</button>
-                        </form>
-                    {% else %}
-                        {% if pending_friendship_request == True %}
-                            <form class="edit-profile-form" action="{% url 'kokoro_app:view_friendships' %}" method="get">
-                                {% csrf_token %}
-                                <button class="edit-profile-or-friendship-btn font-small" type="submit" name="view_friendships_form">
-                                    Pending...
-                                </button>
-                            </form>
-                        {% else %}
-                            <form class="edit-profile-form" action="{% url 'kokoro_app:send_friendship_request_handler' sending_to_id=user.id %}" method="post">
-                                {% csrf_token %}
-                                <button class="edit-profile-or-friendship-btn font-small" type="submit" name="send_friendship_request_form" value="{{ user }}">
-                                    Request Friendship
-                                </button>
-                            </form>
-                        {% endif %}
-                    {% endif %}
-                {% endif %}
-                <span class="profile-username font-med">@{{ user }}</span>
             </div>
-            <div class="profile-biography font-large">
-                <span>{{ user.profilebio.biography }}</span>
-            </div>
-            {% if user.perfectbalance.perfect_mind %}
-                <div class="perfect-balance-header font-large">Perfect Balance</div>
-                <div class="profile-perfect-balance">
-                    <span class="perfect-mind font-large">{{ user.perfectbalance.perfect_mind }}</span><br>
-                    <span class="perfect-body font-large">{{ user.perfectbalance.perfect_body }}</span><br>
-                    <span class="perfect-soul font-large">{{ user.perfectbalance.perfect_soul }}</span>
-                </div>
-            {% endif %}
-            {% if already_friends %}
-                <div class="profile-contact">
-                    {% for info in contact_info %}
-                        <span>{{ info }}</span>
-                    {% endfor %}
-                </div>
-            {% endif %}
-            <!-- only for when viewing own profile -->
-            <br>
-            {% if user == request.user %}
-                <div class="friendship-btn">
-                    <div>
-                        <form action="{% url 'kokoro_app:view_friendships' %}" method="get">
-                            <button class="friendship-btn-submit" type="submit">
-                                View Friendships
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                <div class="write-post-btn">
-                    <form action="{% url 'kokoro_app:write_post' %}" method="get">
-                        <button class="write-post-btn-submit" type="submit">
-                            Write a Post
-                        </button>
-                    </form>
-                </div>
-            {% endif %}
-            <!-- end viewing own profile -->
-            <span class="profile-post-label">Posts</span>
-            <div class="profile-post-prefix"></div>
-            <div class="profile-post-container">
-                {% for post in posts %}
-                    {% if post.post_slug %}
-                        <!-- post == ProfilePost object -->
-                        <form class="profile-post" action="{% url 'kokoro_app:post' post.post_slug %}" method="get">
-                            <button type="submit">
-                                <span class="profile-post-headline font-xl">{{ post.headline }}</span>
-                                <span class="profile-post-author font-med">- {{ post.author }}</span>
-                                <span class="post-date font-med">{{ post.date_published }}</span>
-                            </button>
-                        </form>
-                        <div class="post-separator"></div>
-                    {% else %}
-                        <!-- post == PinnedProfilePost object -->
-                        <form class="profile-post" action="{% url 'kokoro_app:post' post.original.post_slug %}" method="get">
-                            <button type="submit">
-                                <span class="profile-pinned-message font-small">*pinned</span>
-                                <span class="profile-post-headline profile-post-headline-pinned font-xl">{{ post.original.headline }}</span>
-                                <span class="profile-post-author font-med">- {{ post.original.author }}</span>
-                                <span class="post-date font-med">{{ post.date_published }}</span>
-                            </button>
-                        </form>
-                        <div class="post-separator"></div>
-                    {% endif %}
-                {% empty %}
-                    <div class="profile-post">
-                        <button>
-                            <span class="profile-post-headline font-xl" style="margin-top: 3rem;">{{ user }} hasn't created a post yet.</span>
-                        </button>
-                    </div>
-                {% endfor %}
-                <br>
-            </div>
-            <div class="profile-post-prefix"></div>
         </div>
+        <div class="profile-name-grid">
+            {% if user.profiledisplayname.display_name %}
+                <span class="profile-display-name font-xl">{{ user.profiledisplayname.display_name }}</span>
+            {% else %}
+                <span class="profile-display-name font-xl">{{ user.username }}</span>
+            {% endif %}
+            {% if user == request.user %}
+                <form class="edit-profile-form" action="{% url 'kokoro_app:edit_profile' %}" method="get">
+                    <button class="edit-profile-or-friendship-btn font-small" type="submit">Edit Profile</button>
+                </form>
+            {% else %}
+                {% if already_friends %}
+                    <form class="edit-profile-form" action="{% url 'kokoro_app:view_friendships' %}">
+                        <button type="submit" class="edit-profile-or-friendship-btn font-small">Friends</button>
+                    </form>
+                {% else %}
+                    {% if pending_friendship_request == True %}
+                        <form class="edit-profile-form" action="{% url 'kokoro_app:view_friendships' %}" method="get">
+                            {% csrf_token %}
+                            <button class="edit-profile-or-friendship-btn font-small" type="submit" name="view_friendships_form">
+                                Pending...
+                            </button>
+                        </form>
+                    {% else %}
+                        <form class="edit-profile-form" action="{% url 'kokoro_app:send_friendship_request_handler' sending_to_id=user.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="edit-profile-or-friendship-btn font-small" type="submit" name="send_friendship_request_form" value="{{ user }}">
+                                Request Friendship
+                            </button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            <span class="profile-username font-med">@{{ user }}</span>
+        </div>
+        <div class="profile-biography font-large">
+            <span>{{ user.profilebio.biography }}</span>
+        </div>
+        {% if user.perfectbalance.perfect_mind %}
+            <div class="perfect-balance-header font-large">Perfect Balance</div>
+            <div class="profile-perfect-balance">
+                <span class="perfect-mind font-large">{{ user.perfectbalance.perfect_mind }}</span><br>
+                <span class="perfect-body font-large">{{ user.perfectbalance.perfect_body }}</span><br>
+                <span class="perfect-soul font-large">{{ user.perfectbalance.perfect_soul }}</span>
+            </div>
+        {% endif %}
+        {% if already_friends %}
+            <div class="profile-contact">
+                {% for info in contact_info %}
+                    <span>{{ info }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <!-- only for when viewing own profile -->
+        <br>
+        {% if user == request.user %}
+            <div class="friendship-btn">
+                <div>
+                    <form action="{% url 'kokoro_app:view_friendships' %}" method="get">
+                        <button class="friendship-btn-submit" type="submit">
+                            View Friendships
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="write-post-btn">
+                <form action="{% url 'kokoro_app:write_post' %}" method="get">
+                    <button class="write-post-btn-submit" type="submit">
+                        Write a Post
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+        <!-- end viewing own profile -->
+        <span class="profile-post-label">Posts</span>
+        <div class="profile-post-prefix"></div>
+        <div class="profile-post-container">
+            {% for post in posts %}
+                {% if post.post_slug %}
+                    <!-- post == ProfilePost object -->
+                    <form class="profile-post" action="{% url 'kokoro_app:post' post.post_slug %}" method="get">
+                        <button type="submit">
+                            <span class="profile-post-headline font-xl">{{ post.headline }}</span>
+                            <span class="profile-post-author font-med">- {{ post.author }}</span>
+                            <span class="post-date font-med">{{ post.date_published }}</span>
+                        </button>
+                    </form>
+                    <div class="post-separator"></div>
+                {% else %}
+                    <!-- post == PinnedProfilePost object -->
+                    <form class="profile-post" action="{% url 'kokoro_app:post' post.original.post_slug %}" method="get">
+                        <button type="submit">
+                            <span class="profile-pinned-message font-small">*pinned</span>
+                            <span class="profile-post-headline profile-post-headline-pinned font-xl">{{ post.original.headline }}</span>
+                            <span class="profile-post-author font-med">- {{ post.original.author }}</span>
+                            <span class="post-date font-med">{{ post.date_published }}</span>
+                        </button>
+                    </form>
+                    <div class="post-separator"></div>
+                {% endif %}
+            {% empty %}
+                <div class="profile-post">
+                    <button>
+                        <span class="profile-post-headline font-xl" style="margin-top: 3rem;">{{ user }} hasn't created a post yet.</span>
+                    </button>
+                </div>
+            {% endfor %}
+            <br>
+        </div>
+        <div class="profile-post-prefix"></div>
     </div>
-    <div class="profile-bottom-pad"></div>
-    {% endlocaltime %}
+</div>
+<div class="profile-bottom-pad"></div>
+{% endlocaltime %}
 {% endblock content %}

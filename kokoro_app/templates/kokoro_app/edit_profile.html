@@ -10,7 +10,7 @@
         <form action="{% url 'kokoro_app:profile_form_handler' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="profile-image-edit">
-                <img src="{{ profile_image_placeholder.image.url }}">
+                <img src="{{ profile_image_placeholder.image.url }}" alt="Profile Image">
             </div>
             <span class="edit-header-small image-details">{{ profile_image_form.image }}</span>
             <button class="font-med" type="submit" name="profile_image_form">Update Profile Photo</button>

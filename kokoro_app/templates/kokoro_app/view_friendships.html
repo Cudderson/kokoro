@@ -9,7 +9,7 @@
         {% for friendship_request in requests_to_user %}
             <div class="received-request">
                 <div class="request-image">
-                    <img src="{{ friendship_request.from_user.profileimage.image.url }}">
+                    <img src="{{ friendship_request.from_user.profileimage.image.url }}" alt="Profile Photo">
                 </div>
                 <span class="request-message font-med"><span class="friend-username">@{{ friendship_request.from_user }}</span> wants to be your friend!</span>
                 <!-- form sends the unique id of the user whom sent the friendship request -->
@@ -40,7 +40,7 @@
         {% for friendship_request in requests_from_user %}
             <div class="sent-request">
                 <div class="request-image">
-                    <img src="{{ friendship_request.to_user.profileimage.image.url }}">
+                    <img src="{{ friendship_request.to_user.profileimage.image.url }}" alt="Profile Photo">
                 </div>
                 <span class="request-message">Pending Request to <span class="friend-username">@{{ friendship_request.to_user }}</span></span>
                 <form class="cancel-request-form" action="{% url 'kokoro_app:cancel_friendship_request_handler' friendship_request=friendship_request.id %}" method="post">
@@ -68,7 +68,7 @@
             <span class="friend-bio font-small">{{ friendship.profilebio.biography }}</span>
         </div>
         <div class="request-image">
-            <img src="{{ friendship.profileimage.image.url }}">
+            <img src="{{ friendship.profileimage.image.url }}" alt="Profile Photo">
         </div>
         <form class="friend-profile-form" action="{% url 'kokoro_app:profile' %}" method="get">
             <button class="request-btn" type="submit" name="profile_to_visit" value="{{ friendship.id }}">
