@@ -141,7 +141,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# prod setting
+# prod settings
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'kokoro_app/static')
+]
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Location where uploaded media files will be located on file system
