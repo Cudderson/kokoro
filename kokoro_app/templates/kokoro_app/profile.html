@@ -82,9 +82,7 @@
         {% endif %}
         {% if already_friends or user == request.user %}
             <div class="profile-contact">
-                {% for info in contact_info %}
-                    <span>{{ info }}</span>
-                {% endfor %}
+                <span>{{ contact_info }}</span>
             </div>
         {% endif %}
         <!-- only for when viewing own profile -->

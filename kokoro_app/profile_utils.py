@@ -314,7 +314,7 @@ def get_user_contact_info(user, model):
     """
 
     try:
-        contact_info = model.objects.filter(owner__exact=user.id)
+        contact_info = user.contactinfo
     except ObjectDoesNotExist:
         contact_info = ""
 
@@ -329,7 +329,7 @@ def get_user_balance_streak(user, model):
     :return: BalanceStreak object
     """
 
-    balance_streak_object = model.objects.get(owner__exact=user)
+    balance_streak_object = user.balancestreak
     balance_streak = balance_streak_object.balance_streak
 
     return balance_streak
@@ -347,7 +347,7 @@ def get_user_timezone(user, model):
     utc_timezone = datetime.datetime.now(tz=pytz.UTC)
 
     # get user's saved time zone
-    user_timezone_object = model.objects.get(owner__exact=user.id)
+    user_timezone_object = user.profiletimezone
 
     # convert utc_timezone to user timezone (aware) using string of timezone_object
     user_timezone = utc_timezone.astimezone(pytz.timezone(str(user_timezone_object)))
