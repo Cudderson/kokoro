@@ -15,7 +15,7 @@ ALLOWED_HOSTS = [
     'localhost',
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'kokoro/staticfiles')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
