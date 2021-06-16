@@ -1,23 +1,20 @@
 /* new home page design/layout */
 
 /* project styles */
-
-/* vertically-center page if its contents don't span 100vh */
 html,
 body {
     width: 100%;
     height: 100%;
 }
 html {
+    /* ensures background-image appears successfully */
     display: table;
 }
-/*
-body {
-    display: table-cell;
-    vertical-align: middle;
+
+html, button {
+    /*font-family: 'Open Sans', sans-serif;*/
+    font-family: 'Playfair Display', serif;
 }
-*/
-/* end vertically-center page stuff */
 
 :root {
     --background: rgba(100, 250, 100, 75);
@@ -44,11 +41,6 @@ body {
 
     --balance-rocks: url('/static/kokoro_app/balance-rocks.png');
     --balance-rocks-mobile: url('/static/kokoro_app/balance-rocks-mobile.png');
-}
-
-html, button {
-    /*font-family: 'Open Sans', sans-serif;*/
-    font-family: 'Playfair Display', serif;
 }
 
 body {
@@ -80,7 +72,6 @@ body {
 .font-xl {
     font-size: 21px;
 }
-
 /* end project styles */
 
 /*
@@ -89,16 +80,15 @@ body {
 ===============
 */
 header {
-    background: var(--color-1);
-    text-align: center;
     position: fixed;
     z-index: 999;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    /* use if navbar doesnt fit correctly: */
     top: 0;
     left: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background: var(--color-1);
+    text-align: center;
 
 }
 
@@ -108,15 +98,15 @@ header {
 
 nav {
     position: absolute;
-    text-align: left;
     top: 100%;
     left: 0;
-    width: 100%;
     transform: scale(1, 0);
     transform-origin: top;
     transition: transform 400ms ease-in-out;
-    background: var(--color-1);
     border-bottom: 2px solid var(--color-5);
+    width: 100%;
+    background: var(--color-1);
+    text-align: left;
 }
 
 nav ul {
@@ -131,11 +121,11 @@ nav li {
 }
 
 nav a {
-    color: var(--color-5);
-    text-decoration: none;
-    font-size: 1rem;
     opacity: 0;
     transition: opacity 150ms ease-in-out; /* no delay for link fade */
+    color: var(--color-5);
+    font-size: 1rem;
+    text-decoration: none;
 }
 
 nav a:hover, nav a:focus {
@@ -159,30 +149,30 @@ nav a:hover, nav a:focus {
 
 /* position drop-down links */
 .nav-toggle-label {
+    display: flex;
+    align-items: center;
     position: absolute;
     top: 0;
     left: 0;
     margin-left: 1em;
     height: 100%;
-    display: flex;
-    align-items: center;
 }
 
 .nav-toggle-label span,
 .nav-toggle-label span::before,
 .nav-toggle-label span::after {
-    display: block;
-    height: 2px;
-    width: 2em;
-    border-radius: 2px;
     position: relative;
+    display: block;
+    border-radius: 2px;
+    width: 2em;
+    height: 2px;
     background: var(--color-3);
 }
 
 .nav-toggle-label span::before,
 .nav-toggle-label span::after {
-    content: ''; /* required to make elements appear. (default = none) */
     position: absolute;
+    content: ''; /* required to make elements appear. (default = none) */
 }
 
 .nav-toggle-label span::before {
@@ -199,9 +189,9 @@ nav a:hover, nav a:focus {
     border-radius: 12px 0px 0px 12px;
     padding: .3em .75em;
     padding-right: 0;
+    width: 75%;
     background: var(--color-1);
     color: var(--color-5);
-    width: 75%;
 }
 
 .nav-search::placeholder {
@@ -219,19 +209,19 @@ nav a:hover, nav a:focus {
 }
 
 .nav-search + button[type=submit] {
+    transition: .5s;
     border: 1px solid var(--color-5);
     border-left: 0px;
     border-radius: 0px 12px 12px 0px;
     padding: .29em 1em;
-    transition: .5s;
     vertical-align: bottom;
 }
 
 .nav-search + button[type=submit]:hover, .nav-search + button[type=submit]:focus {
-    background-color: var(--color-3);
-    border-color: var(--color-3);
-    color: white; /* same for both themes */
     transition: .5s;
+    border-color: var(--color-3);
+    background-color: var(--color-3);
+    color: white; /* same for both themes */
     outline: none;
 }
 
@@ -269,8 +259,8 @@ nav a:hover, nav a:focus {
     }
 
     nav ul {
-        margin-top: 20px;
         display: flex; /* make <li> elements appear side-by-side rather than vertically using flex */
+        margin-top: 20px;
     }
 
     nav li {
@@ -281,8 +271,8 @@ nav a:hover, nav a:focus {
 
     nav a {
         /* restore <a> elements' opacity */
-        opacity: 1;
         position: relative;
+        opacity: 1;
     }
 
     .theme-btn {
@@ -291,17 +281,17 @@ nav a:hover, nav a:focus {
 
     /* hover effect */
     nav a::before {
-        content: '';
-        display: block;
-        height: 5px;
         position: absolute;
-        background: var(--color-3);
-        border-radius: 4px;
+        content: '';
         top: -.75em;
-        left: 0;
         right: 0;
+        left: 0;
+        display: block;
         transform: scale(0, 1);
         transition: transform ease-in-out 250ms;
+        border-radius: 4px;
+        height: 5px;
+        background: var(--color-3);
     }
 
     nav a:hover::before, nav a:focus::before {
@@ -316,22 +306,22 @@ nav a:hover, nav a:focus {
 }
 
 .dropdown-content {
-    display: none;
     position: absolute;
-    background-color: #f9f9f9;
     z-index: 1000;
+    display: none;
+    overflow-y: scroll;
     min-width: 20rem;
     max-height: 60vh;
-    overflow-y: scroll;
+    background-color: #f9f9f9;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .dropdown-content button {
     display: block;
-    color: var(--color-5);
-    padding: 12px 16px;
-    font-size: 16px;
     border: 1px solid var(--color-9);
+    padding: 12px 16px;
+    color: var(--color-5);
+    font-size: 16px;
 }
 
 .dropdown-content button:hover, .dropdown-content button:focus {
@@ -339,10 +329,7 @@ nav a:hover, nav a:focus {
     outline: none;
 }
 
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
+.dropdown:hover .dropdown-content,
 .dropdown:focus-within .dropdown-content {
     display: block;
 }
@@ -351,11 +338,11 @@ nav a:hover, nav a:focus {
     /* style button like other <li> in nav */
     border: none;
     padding: 0;
-    outline: none;
-    font-size: 16px;
     background: none;
     color: var(--color-5);
     font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    outline: none;
 }
 
 .dropdown-btn:hover, .dropdown-btn:focus {
@@ -363,17 +350,17 @@ nav a:hover, nav a:focus {
 }
 
 .dropdown-btn::before {
-    content: '';
-    display: block;
-    height: 5px;
     position: absolute;
-    background: var(--color-3);
-    border-radius: 4px;
+    content: '';
     top: -.75em;
-    left: 0;
     right: 0;
+    left: 0;
+    display: block;
     transform: scale(0, 1);
     transition: transform ease-in-out 250ms;
+    border-radius: 4px;
+    height: 5px;
+    background: var(--color-3);
 }
 
 .dropdown-btn:hover::before, .dropdown-btn:focus::before {
@@ -385,11 +372,11 @@ nav a:hover, nav a:focus {
 }
 
 .drop-noti {
-    cursor: pointer;
-    user-select: none;
     border: none;
     width: 100%;
     background-color: var(--color-10);
+    cursor: pointer;
+    user-select: none;
 }
 
 .drop-noti-read {
@@ -409,9 +396,9 @@ nav a:hover, nav a:focus {
 */
 
 .hero-container {
+    overflow: hidden;
     width: 100%;
     height: 100%;
-    overflow: hidden;
     background-image: var(--balance-rocks-mobile);
     background-position: -75px 0px;
     background-repeat: no-repeat;
@@ -421,22 +408,22 @@ nav a:hover, nav a:focus {
 .brand-index {
     margin: 0;
     padding: 0;
-    padding-bottom: 1rem;
     padding-top: 1rem;
-    text-align: center;
+    padding-bottom: 1rem;
     color: #96FFA1;
-    font-size: 36px;
     background: rgba(0, 0, 0, .4);
+    font-size: 36px;
+    text-align: center;
 }
 
 .hero-content {
-    width: 100%;
-    height: 100%;
     margin: 0 auto;
+    border-radius: 4px;
     padding: 1.5rem;
     padding-top: 6rem;
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, .4);
-    border-radius: 4px;
 }
 
 .hero-container > div > span {
@@ -445,29 +432,28 @@ nav a:hover, nav a:focus {
 
 .index-btn {
     display: block;
-    padding: .75rem 0rem;
+    transition: .5s;
     margin-top: .5rem;
     border: 3px solid #49BB49;
     border-radius: 24px;
-    cursor: pointer;
+    padding: .75rem 0rem;
     width: 100%;
-    background: rgba(255, 255, 255, .25);
     background: rgba(0, 0, 0, .25);
     color: white;
-    transition: .5s;
+    cursor: pointer;
 }
 
 .support-link {
-    width: 35%;
     margin: 0 auto;
     margin-top: .5rem;
+    width: 35%;
 }
 
 .support-link-btn {
-    width: 100%;
-    padding: 0;
     border: none;
     border-radius: 24px;
+    padding: 0;
+    width: 100%;
     background: rgba(0, 0, 0, .25);
     color: white;
 }
@@ -475,8 +461,8 @@ nav a:hover, nav a:focus {
 .hero-container > img {
     /* doesn't exist anymore */
     display: block;
-    width: 200%;
     border-bottom: 4px solid #003000;
+    width: 200%;
 }
 
 .hero-header {
@@ -487,8 +473,8 @@ nav a:hover, nav a:focus {
 }
 
 .hero-caption {
-    font-size: 18px;
     margin-bottom: 6rem;
+    font-size: 18px;
     color: #96FFA1;
 }
 
@@ -504,28 +490,28 @@ nav a:hover, nav a:focus {
 }
 
 .separator {
-    background-color: var(--color-8);
-    padding-top: .05em;
     border-top: 1px solid var(--color-8);
     border-bottom: 1px solid var(--color-8);
+    padding-top: .05em;
+    background-color: var(--color-8);
 }
 
 .separator-balance {
+    margin: 0 auto;
+    padding-top: 0em; /* makes disappear */
     width: 90%;
     background-color: var(--color-6);
-    padding-top: 0em; /* makes disappear */
-    margin: 0 auto;
 }
 
 .balance-banner-true, .balance-banner-false {
     display: block;
     margin: 0 auto;
-    width: 95%;
     padding: 1em .05em;
+    width: 95%;
+    background-color: var(--color-1);
+    color: var(--color-5);
     text-align: center;
     user-select: none;
-    color: var(--color-5);
-    background-color: var(--color-1);
 }
 
 .balance-banner-div {
@@ -549,10 +535,10 @@ nav a:hover, nav a:focus {
 }
 
 .balance-message-container {
-    text-align: center;
     padding: .5rem;
     background-color: var(--color-1);
     color: var(--color-5);
+    text-align: center;
 }
 
 .balance-message-container > span {
@@ -562,10 +548,10 @@ nav a:hover, nav a:focus {
 }
 
 .separator-thin {
-    padding: .025rem;
-    background-color: var(--color-5);
-    width: 80%;
     margin: 0 auto;
+    padding: .025rem;
+    width: 80%;
+    background-color: var(--color-5);
 }
 
 .balance-streak {
@@ -573,47 +559,45 @@ nav a:hover, nav a:focus {
 }
 
 .help-icon-container {
-    text-align: right;
     padding: 1rem;
+    text-align: right;
 }
 
 .help-icon-container > h6 {
-    font-size: 1em;
     margin: 0;
+    color: var(--color-4);
+    font-size: 1em;
     cursor: pointer;
     user-select: none;
-    color: var(--color-4);
 }
 
 /* home.html svg */
 .svg-container {
-    width: 50%;
-    margin: 0 auto;
     position: relative;
+    margin: 0 auto;
+    width: 50%;
 }
 
 .svg-container::before {
     /* this is the pseudo-element representing the shadow */
-    content: "";
     position: absolute;
-    background: var(--color-svg-shadow);
-
+    content: "";
     top: 65%;
     left: 0;
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-
     /* give perspective to shadow */
     transform: perspective(2rem) rotateX(20deg) scale(1, .2);
     filter: blur(3em) brightness(0.75);
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    background: var(--color-svg-shadow);
     pointer-events: none;
     z-index: -1;
 }
 
 .text-1, .text-2, .text-3 {
-    fill: var(--color-6);;
     transition: 1s;
+    fill: var(--color-6);;
     font-size: 20px;
 }
 
@@ -625,9 +609,9 @@ nav a:hover, nav a:focus {
 
 .tri-1 {
     stroke: var(--color-6);;
+    stroke-width: 1px;
     fill: var(--color-svg);
     fill-opacity: 0;
-    stroke-width: 1px;
 }
 
 .tri-2 {
@@ -679,6 +663,7 @@ nav a:hover, nav a:focus {
 .tri {
     transition: .7s;
 }
+
 .completed_act {
     fill-opacity: 1;
 }
@@ -690,11 +675,9 @@ svg text {
     fill: var(--color-5);
     pointer-events: none;
 }
-
 /* end home.html svg */
 
 /* home.html Daily Activity Form */
-
 .activity-form-container {
     display: block;
 }
@@ -703,10 +686,10 @@ svg text {
     display: flex;
     justify-content: center;
     overflow: hidden;
-    width: 90%; /* flexbox overrides width property. have to define width here too */
-    margin: 5em auto 0 auto;
     border: 1px solid var(--color-6);;
     border-radius: 4px 4px 0 0;
+    width: 90%; /* flexbox overrides width property. have to define width here too */
+    margin: 5em auto 0 auto;
     background:; /* this fixes white-space */
 }
 
@@ -714,25 +697,25 @@ svg text {
     position: absolute;
     top: -999px;
     left: -999px;
+    scale: (0, 0);
     width: 1px;
     height: 1px;
-    scale: (0, 0);
 }
 
 .activity-label {
     flex-grow: 1;
-    text-align: center;
-    color: var(--color-6);
-    background: rgba(255, 255, 255, 0);
-    padding: 10px 10px 10px 10px;
-    font-size: 18px; /*  make label text responsive [] */
-    cursor: pointer;
     transition: 1s;
+    padding: 10px 10px 10px 10px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0);
+    color: var(--color-6);
+    text-align: center;
+    font-size: 18px; /*  make label text responsive [] */
 }
 
 .activated {
-    background: var(--color-3);
     border-bottom: 1px solid var(--color-3);
+    background: var(--color-3);
 }
 
 .activated-submit {
@@ -748,33 +731,33 @@ svg text {
 }
 
 .activity-label:hover {
-    background: rgba(74, 187, 73, 1); !important; /* this makes hover work even after selection */
     transition: 1s;
+    background: rgba(74, 187, 73, 1); /* this makes hover work even after selection */
 }
 
 .activity-label + .activity-radio + .activity-label {
-    border-left: solid 1px var(--color-6);;
+    border-left: solid 1px var(--color-6);
 }
 
 .activity-label option {
     /* remove default padding for option text */
-    padding: 0;
     margin: 0;
+    padding: 0;
 }
 
 .activity-submit {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    /* grid contains text input + submit button */
-    margin: 0 auto 1rem auto;
-    width: 90%;
     /* closing transition */
     transform: scale(1, 0);
     transform-origin: top;
     transition: transform 500ms ease-in-out 10ms;
+    /* grid contains text input + submit button */
+    margin: 0 auto 1rem auto;
     border: 1px solid var(--color-6);;
     border-top: 4px solid var(--color-3);
     border-radius: 0 0 4px 4px;
+    width: 90%;
 }
 
 .activity-submit input {
@@ -782,9 +765,9 @@ svg text {
     border: 0;
     border-top: 1px solid var(--color-3);
     border-radius: 0px 0px 0px 4px;
-    background-color: rgba(255, 255, 255, .15);
     padding: 10px 10px 10px 10px;
     padding-left: .8rem; /* gives placeholder text padding */
+    background-color: rgba(255, 255, 255, .15);
     font-size: 16px;
     font-family: 'Playfair Display', serif;
     outline: none;
@@ -796,22 +779,22 @@ svg text {
 
 .activity-submit button {
     grid-column: 3 / 4;
-    color: var(--color-6);;
+    transition: .7s;
     /* remove default border */
     border: none;
-    border-radius: 0px 0px 4px 0px;
-    border-left: 1px solid var(--color-6);
     border-top: 1px solid var(--color-3);
-    background-color: rgba(255, 255, 255, 0);
-    font-size: 17px;
+    border-left: 1px solid var(--color-6);
+    border-radius: 0px 0px 4px 0px;
     padding: 0;
-    transition: .7s;
+    background-color: rgba(255, 255, 255, 0);
+    color: var(--color-6);;
+    font-size: 17px;
 }
 
 .activity-submit button:hover, .activity-submit button:focus {
-    background: var(--color-3);
     transition: .7s;
     border-top: 1px solid var(--color-6);
+    background: var(--color-3);
 }
 
 .activity-submit.collapse {
@@ -828,13 +811,13 @@ svg text {
     /* javascript changes display value on button click */
     flex-direction: column;
     align-items: center;
-    height: 100%;
-    width: 100%;
     position: fixed;
+    z-index: 999;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0,0,0, 0.75);
-    z-index: 999;
 }
 
 .show-form {
@@ -843,33 +826,33 @@ svg text {
 }
 
 .form-container form {
+    margin-top: 2em;
+    border-radius: 8px;
     width: 96%;
     max-width: 700px;
-    border-radius: 8px;
-    margin-top: 2em;
 }
 
 .form-container form label {
-    color: var(--color-5);
     display: flow-root; /* change context */
     padding-top: 1em;
+    color: var(--color-5);
     font-size: 1.25vw;
 }
 
 .form-container input[type=text] {
-    width: 100%;
-    padding: 15px 0px;
     margin: 0;
-    line-height: 1.5vw;
+    padding: 15px 0px;
+    width: 100%;
     font-size: 1.25vw;
+    line-height: 1.5vw;
 }
 
 .form-container input[type=email] {
-    width: 100%;
-    padding: 15px 0px;
     margin: 0;
-    line-height: 1.5vw;
+    padding: 15px 0px;
+    width: 100%;
     font-size: 1.25vw;
+    line-height: 1.5vw;
 }
 
 /* help icon */
@@ -899,10 +882,10 @@ svg text {
 }
 
 .help-warning {
-    color: var(--color-11);
     display: block;
-    text-align: center;
     padding-top: 2em;
+    color: var(--color-11);
+    text-align: center;
 }
 /* end form-container stuff */
 
@@ -913,10 +896,10 @@ svg text {
 */
 
 .view-all-activities {
-    text-align: center;
     cursor: pointer;
-    color: var(--color-5);
     background-color: var(--color-1);
+    color: var(--color-5);
+    text-align: center;
 }
 
 .view-acts {
@@ -925,27 +908,27 @@ svg text {
 }
 
 .manage-form, .delete-post-form {
-    background-color: var(--color-2);
-    padding: 1em 1.5em;
     border: 1px solid var(--color-1);
+    padding: 1em 1.5em;
+    background-color: var(--color-2);
 }
 
 .manage-form-header {
     display: block;
-    text-align: center;
-    font-size: 24px;
     margin-top: 0;
     margin-bottom: .5rem;
     color: var(--color-5);
+    font-size: 24px;
+    text-align: center;
 }
 
 .manage-form-scroll {
     overflow: auto;
-    width: 100%;
-    height: 75%;
+    margin-top: 1rem;
     border: 1px solid lightgray;
     border-radius: 4px;
-    margin-top: 1rem;
+    width: 100%;
+    height: 75%;
     background-color: var(--color-1);
 }
 
@@ -956,10 +939,10 @@ svg text {
 }
 
 .manage-form-scroll > div > .manage-act-type {
-    margin: 0;
-    color: var(--color-3);
     display: inline-block;
+    margin: 0;
     user-select: none;
+    color: var(--color-3);
 }
 
 .manage-form-scroll > div > input[type=checkbox] {
@@ -967,20 +950,20 @@ svg text {
 }
 
 .manage-form-scroll > div > .manage-act-desc {
-    margin: 0;
     display: block;
-    color: var(--color-5);
+    margin: 0;
     padding-left: 1rem;
+    color: var(--color-5);
     user-select: none;
 }
 
 .manage-form-submit {
     display: block;
-    width: 100%;
     margin-top: 1em;
     border: 1px solid var(--color-6);
     border-radius: 4px;
     padding: 1em 0em;
+    width: 100%;
     background-color: var(--color-svg-shadow);
     cursor: pointer;
 }
@@ -989,11 +972,11 @@ svg text {
 /* 'X' symbol for closing form */
 .close-form {
     align-self: flex-end;
+    margin: .5em .5em .5em .5em;
+    border-radius: 4px;
     width: 3rem;
     height: 3rem;
     background: var(--color-svg-shadow);
-    border-radius: 4px;
-    margin: .5em .5em .5em .5em;
     cursor: pointer;
     font-weight: bold;
 }
@@ -1025,7 +1008,6 @@ svg text {
 .profile-grid-header {
     /* place in grid-master */
     grid-row: 1 / 2;
-
     /* define own grid properties */
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1033,62 +1015,58 @@ svg text {
 }
 
 .profile-image {
+    position: relative;
+    float:left;
     grid-row: 1 / 3;
+    /* make image square */
+    overflow: hidden;
+    padding-bottom : 100%; /* = width for a 1:1 aspect ratio */
     width: 100%;
     background-size: cover;
-
-    /* make image square */
-    float:left;
-    position: relative;
-    padding-bottom : 100%; /* = width for a 1:1 aspect ratio */
-    overflow: hidden;
 }
 
 .profile-image > img {
-    width: 100%;
-    margin: auto;
-    border-radius: 8px;
-    background-color: var(--color-5);
-    vertical-align: bottom;
-    /*background-color: green;*/ /* change to page bg-color if whitespace showing */
-
     /* make image square */
     position: absolute;
-    height: 100%;
     object-fit: cover;
+    margin: auto;
+    border-radius: 8px;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-5);
+    vertical-align: bottom;
 }
 
 .profile-quote-container {
+    position: relative;
     grid-column: 2 / 5;
     grid-row: 1 / 3;
     align-items: center;
-    /* position: absolute;*/
-    position: relative;
     overflow: auto;
-    height: 100%;
     border: 1px solid var(--color-5);
     border-radius: 4px;
+    height: 100%;
     background: var(--color-2);
 }
 
 .profile-quote-content {
     /* we can use 'clamp()' to set a min, desired, and max font size! */
+    position: absolute;
     justify-self: center;
-    width: 100%;
-    text-align: center;
     margin: auto;
     padding: .8rem .75rem 0 .75rem;
-    position: absolute;
+    width: 100%;
     background: var(--color-2);
     color: var(--color-5);
+    text-align: center;
 }
 
 .profile-quote-author {
-    width: 100%;
-    text-align: center;
     display: block;
-    color: var(--color-3);
     margin: .5rem 0 .5rem 0;
+    width: 100%;
+    color: var(--color-3);
+    text-align: center;
 }
 
 .profile-name-grid {
@@ -1113,28 +1091,26 @@ svg text {
 .edit-profile-form {
     grid-row: 2 / 3;
     grid-column: 2 / 3;
-    width: 100%;
     align-self: end;
     justify-self: end;
     margin-right: .5rem;
+    width: 100%;
 }
 
 .edit-profile-or-friendship-btn {
-    /* needs fixing for visiting profiles */
-    border: 1px solid var(--color-5);
-    border-radius: 16px;
     align-self: end;
     justify-self: end;
-    padding: .25em 1em;
-    font-family: 'Playfair Display', serif;
     float: right;
-    color: var(--color-5);
+    border: 1px solid var(--color-5);
+    border-radius: 16px;
+    padding: .25em 1em;
     background-color: var(--color-1);
+    font-family: 'Playfair Display', serif;
+    color: var(--color-5);
     cursor: pointer;
 }
 
 .profile-biography {
-    /* not in a sub-grid */
     margin-top: .5rem;
     width: 95%;
     color: var(--color-5);
@@ -1143,19 +1119,10 @@ svg text {
 .perfect-balance-header {
     margin-top: 1rem;
     margin-bottom: .25rem;
-    /*text-decoration: underline;*/
     color: var(--color-3);
 }
 
-.perfect-mind {
-    color: var(--color-5);
-}
-
-.perfect-body {
-    color: var(--color-5);
-}
-
-.perfect-soul {
+.perfect-mind, .perfect-body, .perfect-soul {
     color: var(--color-5);
 }
 
@@ -1170,62 +1137,62 @@ svg text {
 }
 
 .write-post-btn-submit, .friendship-btn-submit {
-    padding: .25em 1em;
+    transition: .5s;
     border: 1px solid var(--color-5);
     border-radius: 16px;
+    padding: .25em 1em;
     background-color: var(--color-1);
     color: var(--color-5);
-    transition: .5s;
 }
 
 .profile-post-label {
-    margin: 1rem .5em 0 auto;
     display: inline-block;
-    width: fit-content;
+    margin: 1rem .5em 0 auto;
     border: 1px solid var(--color-5);
     border-bottom: 0;
     border-radius: 4px 4px 0 0;
     padding: .125rem 1rem;
+    width: fit-content;
     color: var(--color-5);
 }
 
 .profile-post-prefix {
-    width: 100%;
     padding: .05rem;
+    width: 100%;
     background: var(--color-5);
 }
 
 .profile-post-container {
-    height: 40vh;
     position: relative;
     overflow: auto;
     border: 1px solid var(--color-5);
+    height: 40vh;
     background: var(--color-2);
 }
 
 .profile-post button {
     /* fit button to div (can style more later) */
+    border: 0;
+    padding: 0;
     width: 100%;
     height: 100%;
     background: var(--color-2);
-    padding: 0;
-    border: 0;
     cursor: pointer;
 }
 
 .profile-pinned-message {
     display: block;
-    text-align: right;
+    padding: .5rem 1rem 0 1rem;
     font-family: 'Playfair Display', serif;
     color: var(--color-11); /* same for both themes */
-    padding: .5rem 1rem 0 1rem;
+    text-align: right;
 }
 
 .profile-post-headline {
     display: block;
-    text-align: left;
-    font-family: 'Playfair Display', serif;
     padding: 1.5rem 3% 0 3%;
+    font-family: 'Playfair Display', serif;
+    text-align: left;
     color: var(--color-5);
 }
 
@@ -1235,25 +1202,25 @@ svg text {
 
 .profile-post-author {
     display: block;
-    text-align: left;
+    padding: .75rem 0 .5rem 3%;
     font-family: 'Playfair Display', serif;
     color: var(--color-3);
-    padding: .75rem 0 .5rem 3%;
+    text-align: left;
 }
 
 .post-date {
     display: block;
+    padding-right: 3%;
     font-family: 'Playfair Display', serif;
     text-align: right;
-    padding-right: 3%;
     color: var(--color-5);
 }
 
 .post-separator {
-    background: var(--color-7);
     margin: 0 auto;
     padding: .05rem;
     width: 95%;
+    background: var(--color-7);
 }
 
 .profile-bottom-pad {
@@ -1268,14 +1235,14 @@ svg text {
 */
 
 .edit-profile-form-container {
-    width: 98%;
-    max-width: 900px;
     margin: 0 auto;
     margin-top: 2rem;
     border: 1px solid var(--color-8);
     border-radius: 12px;
     padding: 1rem 1rem;
     padding-bottom: 2rem;
+    width: 98%;
+    max-width: 900px;
     background-color: var(--color-2);
 }
 
@@ -1285,33 +1252,33 @@ svg text {
 
 .edit-profile-form-container > form > button {
     display: block;
+    transition: .5s;
     margin-bottom: 3rem;
-    padding: .5rem 1.25rem;
     border: none;
     border-radius: 4px;
+    padding: .5rem 1.25rem;
     background-color: #96FFA1;
     color: black;
     cursor: pointer;
-    transition: .5s;
 }
 
 .edit-profile-form-container > form > button:hover,
 .edit-profile-form-container > form > button:focus {
+    transition: .5s;
     background-color: #49BB49;
     outline: none;
-    transition: .5s;
 }
 
 .edit-header-large {
-    font-size: 44px;
     color: var(--color-5);
+    font-size: 44px;
 }
 
 .edit-header {
-    color: var(--color-3);
-    font-size: 30px;
     margin-top: 2rem;
     margin-bottom: .75rem;
+    color: var(--color-3);
+    font-size: 30px;
 }
 
 .edit-header-small {
@@ -1322,17 +1289,16 @@ svg text {
 .edit-input > input {
     /* this allows us to access django's 'hidden' form inputs */
     display: block;
-    width: 100%;
     margin-top: .5rem;
     margin-bottom: 1rem;
-    padding: .25rem .5rem;
     border: 1px solid var(--color-8);
     border-radius: 4px;
+    padding: .25rem .5rem;
+    width: 100%;
     font-size: 18px;
     font-family: 'Playfair Display', serif;
     background-color: var(--color-1);
     color: var(--color-5);
-    /*outline: red; CHANGE OUTLINE STYLES*/
 }
 
 .tz-select {
@@ -1354,8 +1320,8 @@ svg text {
 }
 
 .profile-image-edit > img {
-    width: 100%;
     border-radius: 8px;
+    width: 100%;
 }
 
 .image-details > a {
@@ -1367,11 +1333,7 @@ svg text {
 }
 
 /* things to hide on mobile */
-.desktop-home-header {
-    display: none;
-}
-
-.activity-card-container {
+.desktop-home-header, .activity-card-container {
     display: none;
 }
 
@@ -1388,15 +1350,15 @@ svg text {
 
 .search-header {
     display: block;
-    color: var(--color-5);
     margin-bottom: 1rem;
+    color: var(--color-5);
 }
 
 .search-container {
-    width: 100%;
-    max-width: 600px;
     margin: 0 auto;
     padding-top: 2rem;
+    width: 100%;
+    max-width: 600px;
 }
 
 .search-card {
@@ -1404,11 +1366,11 @@ svg text {
     grid-template-columns: 75px 4fr 1fr;
     grid-template-rows: auto;
     grid-column-gap: .5rem;
-    border-radius: 8px;
     margin-bottom: .5rem;
-    background-color: var(--color-2);
     border: 1px solid var(--color-8);
+    border-radius: 8px;
     padding: .5rem;
+    background-color: var(--color-2);
 }
 
 .search-card span {
@@ -1423,10 +1385,10 @@ svg text {
 .search-image > img {
     /* make image square */
     float: left;
-    width:  75px;
-    height: 75px;
     object-fit: cover;
     border-radius: 4px;
+    width:  75px;
+    height: 75px;
 }
 
 .search-info {
@@ -1464,21 +1426,21 @@ svg text {
 =================================
 */
 .request-grid {
-    width: 98%;
-    max-width: 500px;
     margin: 0 auto;
     margin-top: 4em;
+    width: 98%;
+    max-width: 500px;
 }
 
 .request-header {
     display: block;
-    width: 98%;
-    max-width: 500px;
     margin: 0 auto;
     margin-top: 3rem;
     padding-left: .25rem;
-    font-size: 30px;
+    width: 98%;
+    max-width: 500px;
     color: var(--color-5);
+    font-size: 30px;
 }
 
 .received-request-container, .sent-request-container {
@@ -1491,11 +1453,11 @@ svg text {
     grid-template-rows: 1fr 1fr;
     grid-column-gap: .5em;
     justify-items: start;
-    border-radius: 8px;
     margin-bottom: .5rem;
-    background-color: var(--color-2);
     border: 1px solid var(--color-8);
+    border-radius: 8px;
     padding: .5rem;
+    background-color: var(--color-2);
 }
 
 .received-request {
@@ -1504,46 +1466,46 @@ svg text {
     grid-template-rows: 1fr 1fr;
     grid-column-gap: .5em;
     justify-items: start;
-    border-radius: 8px;
     margin-bottom: .5rem;
-    background-color: var(--color-2);
     border: 1px solid var(--color-8);
+    border-radius: 8px;
     padding: .5rem;
+    background-color: var(--color-2);
 }
 
 .request-image > img {
     /* make image square */
     float: left;
-    width:  75px;
-    height: 75px;
     object-fit: cover;
     border-radius: 4px;
+    width:  75px;
+    height: 75px;
 }
 
 .request-btn {
-    color: var(--color-5);
-    background-color: rgba(0, 0, 0, 0);
+    transition: .5s;
+    margin-top: .125rem;
     border: 1px solid var(--color-5);
     border-radius: 16px;
-    margin-top: .125rem;
     padding: .25em 1em;
+    color: var(--color-5);
+    background-color: rgba(0, 0, 0, 0);
     cursor: pointer;
-    transition: .5s;
 }
 
 .request-btn:hover, .request-btn:focus {
-    background-color: var(--color-3);
-    border-color: var(--color-3);
-    color: white;
     transition: .5s;
+    border-color: var(--color-3);
+    background-color: var(--color-3);
+    color: white;
     outline: none;
 }
 
 .friend-card {
-    width: 98%;
-    max-width: 500px;
     margin: 0 auto;
     margin-bottom: .5rem;
+    width: 98%;
+    max-width: 500px;
 }
 
 .friend-card > .friend-profile-form {
@@ -1615,20 +1577,20 @@ svg text {
 .decline-request-form > button:hover,
 .cancel-request-form > button:hover,
 .remove-friend-form > button:hover {
-    background-color: var(--color-4);
-    border-color: var(--color-4);
-    color: white;
     transition: .5s;
+    border-color: var(--color-4);
+    background-color: var(--color-4);
+    color: white;
 }
 
 .friendships-header {
     display: block;
     margin: 0 auto;
     margin-top: 1em;
-    font-size: 30px;
-    color: var(--color-5);
     padding-left: .5rem;
     max-width: 500px;
+    color: var(--color-5);
+    font-size: 30px;
 }
 
 .request-type {
@@ -1645,7 +1607,6 @@ svg text {
 .hide-requests {
     display: none;
 }
-
 /* end view_friendships.html */
 
 /*
@@ -1653,27 +1614,26 @@ svg text {
 ===== post.html =====
 =====================
 */
-
 .post-container {
-    width: 96%;
-    max-width: 700px;
     margin: 0 auto;
     margin-top: 5rem;
+    width: 96%;
+    max-width: 700px;
 }
 
 .post-container > form > button {
-    margin-right: .5rem;
     float: left;
+    margin-right: .5rem;
 }
 
 .post-container > button {
-    margin-right: .5rem;
     float: left;
+    margin-right: .5rem;
 }
 
 .red-btn:hover {
-    background-color: #F5A52D; /* same for both themes */
     border-color: var(--color-4);
+    background-color: #F5A52D; /* same for both themes */
     color: var(--color-6);
 }
 
@@ -1700,8 +1660,6 @@ svg text {
     font-size: 18px;
 }
 
-/* move to post.html */
-
 .delete-post-submit {
     background-color: #49BB49 !important; /* same for both themes */
 }
@@ -1709,7 +1667,6 @@ svg text {
 .delete-post-cancel {
     background-color: #F5A52D !important; /* same for both themes */
 }
-
 /* end post.html */
 /*
 ===========================
@@ -1734,29 +1691,28 @@ svg text {
 /* access django form */
 .post-form-headline > input[type=text] {
     display: block;
-    outline: none;
-    width: 100%;
     margin-bottom: 2rem;
     border: 1px solid var(--color-8);
     border-radius: 4px;
-    outline: none;
+    width: 100%;
     background-color: var(--color-1);
+    font-family: 'Playfair Display', serif;
     color: var(--color-4);
     font-size: 28px;
-    font-family: 'Playfair Display', serif;
+    outline: none;
 }
 
 .post-form-content > textarea {
     display: block;
     resize: none;
     outline: none;
-    width: 100%;
     margin-bottom: 1rem;
     border: 1px solid var(--color-8);
     border-radius: 4px;
+    width: 100%;
     background-color: var(--color-1);
-    color: var(--color-5);
     font-family: 'Playfair Display', serif;
+    color: var(--color-5);
     font-size: 18px;
 }
 
@@ -1766,8 +1722,6 @@ svg text {
 }
 /* end write_post.html */
 
-/* edit_post.html uses no additional styles */
-
 /*
 ========================
 ===== support.html =====
@@ -1776,12 +1730,12 @@ svg text {
 /* re-use register.html styles where possible  */
 
 .support-container {
-    width: 98%;
-    max-width: 700px;
     margin: 0 auto;
     margin-top: 4rem;
-    padding: 2rem;
     border: 1px solid;
+    padding: 2rem;
+    width: 98%;
+    max-width: 700px;
 }
 
 .support-header {
@@ -1795,15 +1749,15 @@ svg text {
 
 /* 'users' app styles */
 .register-container {
-    width: 98%;
-    max-width: 700px;
     margin: 0 auto;
     margin-top: 4rem;
-    padding: 2rem;
     border: 2px solid;
     border-radius: 8px;
-    background-color: var(--color-2);
     border-color: var(--color-8);
+    padding: 2rem;
+    width: 98%;
+    max-width: 700px;
+    background-color: var(--color-2);
 }
 
 .register-container > form > span {
@@ -1812,9 +1766,9 @@ svg text {
 
 .register-header {
     display: block;
-    font-size: 50px;
-    color: var(--color-5);
     margin-bottom: 3rem;
+    color: var(--color-5);
+    font-size: 50px;
 }
 
 .register-label {
@@ -1824,16 +1778,16 @@ svg text {
 .register-field > input[type=text],
 .register-field > input[type=password],
 .register-field > input[type=email] {
-    background-color: var(--color-1);
-    width: 100%;
     margin-bottom: 1rem;
-    padding-left: .5rem;
     border: 1px solid;
     border-color: var(--color-8);
     border-radius: 4px;
-    font-size: 24px;
+    padding-left: .5rem;
+    width: 100%;
+    background-color: var(--color-1);
     font-family: 'Playfair Display', serif;
     color: var(--color-5);
+    font-size: 24px;
 }
 
 .register-help {
@@ -1867,15 +1821,15 @@ svg text {
 
 .logout-message, .logout-sub-message, .thank-you-form {
     display: block;
+    margin: 0 auto;
     width: 96%;
     max-width: 700px;
-    margin: 0 auto;
     color: var(--color-4);
 }
 
 .logout-message {
-    font-size: 40px;
     padding-top: 5rem;
+    font-size: 40px;
 }
 /* end 'users' app styles */
 
@@ -1906,12 +1860,12 @@ svg text {
         display: grid;
         grid-template-columns: 1.25fr 1fr;
         grid-template-rows: auto;
+        overflow: hidden;
+        border-bottom: 5px solid #003000;
+        min-width: 770px;
         background-image: var(--balance-rocks);
         background-size: cover;
         background-position: center;
-        border-bottom: 5px solid #003000;
-        min-width: 770px;
-        overflow: hidden;
     }
 
     .brand-index {
@@ -1920,20 +1874,20 @@ svg text {
         margin-right: auto;
         padding-top: 1rem;
         padding-left: 2.5rem;
-        color: #003000;
         background: none;
+        color: #003000;
     }
 
     .hero-content {
         grid-column: 1 / 2;
         grid-row: 2 / 3;
-        width: 75%;
         margin: 0;
-        margin-left: auto;
         margin-top: calc(12.5% - 180px);
-        background: none;
+        margin-left: auto;
         border: none;
         padding-bottom: 0;
+        width: 75%;
+        background: none;
         text-align: center;
     }
 
@@ -1943,42 +1897,42 @@ svg text {
 
     .index-btn {
         display: block;
-        padding: 1rem 1.5rem;
+        transition: .5s;
         margin-top: .5rem;
         border: 4px solid #003000;
         border-radius: 8px;
-        cursor: pointer;
+        padding: 1rem 1.5rem;
         width: 100%;
         background: rgba(255, 255, 255, .25);
         color: #003000;
         font-weight: bold;
-        transition: .5s;
+        cursor: pointer;
     }
 
     .index-btn:hover,
     .index-btn:focus {
-        border-color: #49BB49;
         transition: .5s;
+        border-color: #49BB49;
         background: #96FFA1;
         outline: none;
     }
 
     .support-link {
-        width: 42%;
         margin: 0 auto;
         margin-top: 1rem;
+        width: 42%;
     }
 
     .support-link-btn {
-        width: 100%;
-        padding: .25rem 0;
+        transition: .5s;
         border: none;
         border-radius: 24px;
+        padding: .25rem 0;
+        width: 100%;
         background: rgba(255, 255, 255, 0);
         color: black;
-        cursor: pointer;
-        transition: .5s;
         font-weight: bold;
+        cursor: pointer;
     }
 
     .support-link-btn:hover, .support-link-btn:focus {
@@ -1988,15 +1942,15 @@ svg text {
 
     .hero-header {
         display: block;
-        font-size: 5.5vw;
-        color: #003000;
         margin: 0;
+        color: #003000;
+        font-size: 5.5vw;
     }
 
     .hero-caption {
+        margin-bottom: 3rem;
         color: #003000;
         font-size: 18px;
-        margin-bottom: 3rem;
     }
     /* end index.html */
 }
@@ -2039,21 +1993,21 @@ svg text {
     .activity-form-container {
         grid-column: 1 / 2;
         grid-row: 2 / 3;
-        width: 70%;
-        padding: 0;
         margin: 0;
+        padding: 0;
+        width: 70%;
     }
 
     .activity-select, .activity-submit {
-        width: 100%;
         margin: 0;
+        width: 100%;
     }
 
     .svg-container {
         grid-column: 2 / 3;
         grid-row: 2 / 3;
-        width: 60%;
         align-self: start;
+        width: 60%;
     }
 
     svg {
@@ -2062,64 +2016,60 @@ svg text {
 
     .svg-container::before {
         display: inline-block;
-        transform: perspective(6rem) rotateX(20deg) scale(1, .2);
         z-index: 1;
+        transform: perspective(6rem) rotateX(20deg) scale(1, .2);
     }
 
     .svg-container > div::before {
-        content: "";
         position: absolute;
+        content: "";
         top: 65%;
         left: -175%;
+        display: block;
+        transform: perspective(6rem) rotateX(20deg) scale(1, .15);
+        margin: 0 auto;
         width: 120%;
         height: 100%;
-        margin: 0 auto;
-
         background: var(--color-svg-shadow);
-        transform: perspective(6rem) rotateX(20deg) scale(1, .15);
         filter: blur(6em) brightness(0.75);
         pointer-events: none;
-
-        display: block;
     }
 
     .activity-card-container {
         /* activities above activity-form */
+        display: flex;
+        flex-direction: column;
         grid-column: 1 / 2;
         grid-row: 2 / 3;
         position: relative;
         align-self: start;
-        width: 70%;
-        height: 55%;
         margin-top: 10%;
         margin-bottom: 10%;
         border: 1px solid var(--color-6);;
         border-radius: 4px;
         padding: 0 .5rem;
-
-        display: flex;
-        flex-direction: column;
-
+        width: 70%;
+        height: 55%;
         background: rgba(255, 255, 255, .4);
     }
 
     .activity-card-container-inner {
-        height: 22vh;
         overflow-y: auto;
+        height: 22vh;
         color: var(--color-5);
     }
 
     .instructions-header {
-        text-align: center;
         display: block;
         padding: .5em 0 .5em 0;
+        text-align: center;
     }
 
     .daily-acts-header {
         display: block;
         padding: .5em 0 .5em 0;
-        text-align: center;
         color: var(--color-5);
+        text-align: center;
     }
 
     .daily-acts-header ~ .separator-thin {
@@ -2141,9 +2091,9 @@ svg text {
     }
 
     .activity-card-content {
-        padding: .5em 0 .5em .5em;
         opacity: 0;
         transition: opacity .7s ease-in-out;
+        padding: .5em 0 .5em .5em;
     }
 
     .activity-card-content.text-fade {
@@ -2160,20 +2110,20 @@ svg text {
     }
 
     .separator-gray {
+        padding: .025em;
         width: 100%;
         background-color: gray;
-        padding: .025em;
     }
 
     .desktop-home-header {
+        position: relative;
         display: block;
         grid-column: 1 / 3;
         grid-row: 1 / 2;
-        width: 110%;
         margin-top: 2em;
         margin-bottom: 3em;
+        width: 110%;
         color: var(--color-5);
-        position: relative;
     }
 
     .desktop-home-header .separator-thin {
@@ -2193,33 +2143,33 @@ svg text {
 
     .balance-streak-container {
         display: inline-block;
-        text-align: center;
         width: 100%;
+        text-align: center;
     }
 
     .help-and-manage-container-outer {
-        display: inline-block;
         position: absolute;
         right: 10%;
+        display: inline-block;
     }
 
     .view-acts-desktop, .help-icon-container-desktop {
-        font-weight: 500;
-        cursor: pointer;
-        padding: .25em 1.25em;
+        transition: 1s;
         border: 1px solid var(--color-5);
         border-radius: 15px;
+        padding: .25em 1.25em;
         background-color: var(--color-1);
         color: var(--color-5);
-        transition: 1s;
+        font-weight: 500;
+        cursor: pointer;
     }
 
     .view-acts-desktop:hover, .help-icon-container-desktop:hover,
     .view-acts-desktop:focus, .help-icon-container-desktop:focus {
         background-color: var(--color-3);
-        color: white; /* same for both themes */
-        border: 1px solid var(--color-3);
         transition: .7s;
+        border: 1px solid var(--color-3);
+        color: white; /* same for both themes */
         outline: none;
     }
 
@@ -2238,24 +2188,23 @@ svg text {
     */
 
     .profile-wrapper {
+        overflow: hidden;
         margin: 0 auto;
         margin-top: 2em;
         border: 1px solid var(--color-5);
         border-radius: 4px;
-        overflow: hidden;
         min-width: 500px;
         max-width: 50vw;
         background: var(--color-1);
     }
 
     .cover-placeholder {
-        padding: 4rem;
         border-bottom: 1px solid var(--color-6);;
+        padding: 4rem;
         background: var(--color-1);
     }
 
     .profile-display-name {
-        /* turn all fonts into variables */
         font-size: var(--font-2xl);
     }
 
@@ -2264,8 +2213,8 @@ svg text {
     }
 
     .profile-quote-container {
-        height: 100%;
         border: 1px solid var(--color-5);
+        height: 100%;
     }
 
     .profile-quote-content {
@@ -2273,36 +2222,36 @@ svg text {
     }
 
     .profile-quote-author {
-        font-size: 18px;
         padding-top: 1em;
+        font-size: 18px;
     }
 
     .edit-profile-or-friendship-btn {
-        font-size: 16px;
-        cursor: pointer;
+        transition: .5s;
         border: 1px solid var(--color-5);
         border-radius: 16px;
-        color: var(--color-5);
         background-color: var(--color-1);
-        transition: .5s;
+        color: var(--color-5);
+        font-size: 16px;
+        cursor: pointer;
     }
 
     .edit-profile-or-friendship-btn:hover, .edit-profile-or-friendship-btn:focus {
-        background-color: var(--color-3);
-        border-color: var(--color-3);
-        color: white; /* off-white both themes */
         transition: .5s;
+        border-color: var(--color-3);
+        background-color: var(--color-3);
+        color: white; /* both themes */
         outline: none;
     }
 
     .profile-biography {
-        font-size: 20px;
         margin-top: 1em;
+        font-size: 20px;
     }
 
     .perfect-balance-header {
-        font-weight: 600;
         margin-top: 1.5em;
+        font-weight: 600;
     }
 
     .profile-contact span {
@@ -2310,39 +2259,39 @@ svg text {
     }
 
     .friendship-btn-submit, .write-post-btn-submit {
-        font-size: 16px;
+        transition: .5s;
         border: 1px solid var(--color-5);
         border-radius: 16px;
         background-color: var(--color-1);
         color: var(--color-5);
-        transition: .5s;
+        font-size: 16px;
     }
 
     .friendship-btn-submit:hover, .write-post-btn-submit:hover,
     .friendship-btn-submit:focus, .write-post-btn-submit:focus {
-        background-color: var(--color-3);
-        border-color: var(--color-3);
-        color: white; /* same for both themes */
         transition: .5s;
+        border-color: var(--color-3);
+        background-color: var(--color-3);
+        color: white; /* same for both themes */
         outline: none;
     }
 
     .profile-post-label {
-        font-size: 18px;
-        padding: .25em 1.5em;
         border: 1px solid var(--color-5);
         border-bottom: none;
+        padding: .25em 1.5em;
         color: var(--color-5);
+        font-size: 18px;
     }
 
     .profile-post-headline {
-        font-size: 30px;
         padding-top: 2em;
+        font-size: 30px;
     }
 
     .profile-post-author {
-        font-size: 18px;
         padding-bottom: 1em;
+        font-size: 18px;
     }
 
     .post-date {
@@ -2351,9 +2300,9 @@ svg text {
 
     .profile-pinned-message {
         position: absolute;
+        padding-top: 1em;
         width: 98%;
         font-size: 16px;
-        padding-top: 1em;
     }
 
     .profile-bottom-pad {
@@ -2397,15 +2346,15 @@ svg text {
     }
 
     ::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 5px grey;
-        border-radius: 10px;
         margin-top: 1em;
         margin-bottom: 1em;
+        border-radius: 10px;
+        box-shadow: inset 0 0 5px grey;
     }
 
     ::-webkit-scrollbar-thumb {
-        background: var(--color-3);
         border-radius: 10px;
+        background: var(--color-3);
     }
 
     ::-webkit-scrollbar-thumb:hover {
@@ -2420,11 +2369,11 @@ svg text {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-column-gap: 1em;
-        background-color: var(--color-1);
         margin: 0 auto;
         padding: 1em;
         width: 60%;
         max-width: 1000px;
+        background-color: var(--color-1);
     }
 
     .request-header {
