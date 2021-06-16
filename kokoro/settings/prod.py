@@ -17,7 +17,10 @@ ALLOWED_HOSTS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+STATICFILES_DIRS = [
+    '/static/'
+]
+
 # Heroku settings
 import django_heroku
 django_heroku.settings(locals())
-
