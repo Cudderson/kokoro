@@ -245,13 +245,12 @@ nav a:hover, nav a:focus {
     }
 
     .logo {
-        grid-column: 1 / 2; /* place logo in header grid */
+        grid-column: 1 / 2;
     }
 
     nav {
-        all: unset; /* maybe don't use this */
-        grid-column: 2 / 5; /* holds our <ul> elements */
-        /* center nav elements within grid using flexbox */
+        all: unset;
+        grid-column: 2 / 5;
         display: flex;
         justify-content: flex-end;
         align-items: center;
@@ -259,18 +258,16 @@ nav a:hover, nav a:focus {
     }
 
     nav ul {
-        display: flex; /* make <li> elements appear side-by-side rather than vertically using flex */
+        display: flex;
         margin-top: 20px;
     }
 
     nav li {
-        /* turn off bottom margin of <li> elements and space them with left margin */
         margin-right: 2vw;
         margin-bottom: 0;
     }
 
     nav a {
-        /* restore <a> elements' opacity */
         position: relative;
         opacity: 1;
     }
@@ -299,7 +296,6 @@ nav a:hover, nav a:focus {
     }
 }
 
-/* testing notification dropdown in nav */
 .dropdown {
     position: relative;
     display: inline-block;
@@ -335,7 +331,6 @@ nav a:hover, nav a:focus {
 }
 
 .dropdown-btn {
-    /* style button like other <li> in nav */
     border: none;
     padding: 0;
     background: none;
@@ -459,7 +454,6 @@ nav a:hover, nav a:focus {
 }
 
 .hero-container > img {
-    /* doesn't exist anymore */
     display: block;
     border-bottom: 4px solid #003000;
     width: 200%;
@@ -498,7 +492,7 @@ nav a:hover, nav a:focus {
 
 .separator-balance {
     margin: 0 auto;
-    padding-top: 0em; /* makes disappear */
+    padding-top: 0em;
     width: 90%;
     background-color: var(--color-6);
 }
@@ -579,7 +573,6 @@ nav a:hover, nav a:focus {
 }
 
 .svg-container::before {
-    /* this is the pseudo-element representing the shadow */
     position: absolute;
     content: "";
     top: 65%;
@@ -670,7 +663,7 @@ nav a:hover, nav a:focus {
 
 /* make svg text non-responsive */
 svg text {
-    opacity: 0; /* text only shows on hover/focus */
+    opacity: 0;
     stroke: none;
     fill: var(--color-5);
     pointer-events: none;
@@ -686,9 +679,9 @@ svg text {
     display: flex;
     justify-content: center;
     overflow: hidden;
-    border: 1px solid var(--color-6);;
+    border: 1px solid var(--color-6);
     border-radius: 4px 4px 0 0;
-    width: 90%; /* flexbox overrides width property. have to define width here too */
+    width: 90%;
     margin: 5em auto 0 auto;
     background:; /* this fixes white-space */
 }
@@ -710,7 +703,7 @@ svg text {
     background: rgba(255, 255, 255, 0);
     color: var(--color-6);
     text-align: center;
-    font-size: 18px; /*  make label text responsive [] */
+    font-size: 18px;
 }
 
 .activated {
@@ -740,7 +733,6 @@ svg text {
 }
 
 .activity-label option {
-    /* remove default padding for option text */
     margin: 0;
     padding: 0;
 }
@@ -748,11 +740,9 @@ svg text {
 .activity-submit {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    /* closing transition */
     transform: scale(1, 0);
     transform-origin: top;
     transition: transform 500ms ease-in-out 10ms;
-    /* grid contains text input + submit button */
     margin: 0 auto 1rem auto;
     border: 1px solid var(--color-6);;
     border-top: 4px solid var(--color-3);
@@ -780,7 +770,6 @@ svg text {
 .activity-submit button {
     grid-column: 3 / 4;
     transition: .7s;
-    /* remove default border */
     border: none;
     border-top: 1px solid var(--color-3);
     border-left: 1px solid var(--color-6);
@@ -798,7 +787,6 @@ svg text {
 }
 
 .activity-submit.collapse {
-    /* transition for un-collapsing activity-submit */
     transform: scale(1, 1);
     transform-origin: top;
     transition: transform 500ms ease-in-out 10ms;
@@ -808,7 +796,6 @@ svg text {
 /* form-container stuff */
 .form-container {
     display: none;
-    /* javascript changes display value on button click */
     flex-direction: column;
     align-items: center;
     position: fixed;
@@ -933,7 +920,6 @@ svg text {
 }
 
 .manage-form-scroll > div {
-    /* container for each activity in form */
     border-bottom: 1px solid lightgray;
     padding: .25rem .5rem .5rem .5rem;
 }
@@ -1050,7 +1036,6 @@ svg text {
 }
 
 .profile-quote-content {
-    /* we can use 'clamp()' to set a min, desired, and max font size! */
     position: absolute;
     justify-self: center;
     margin: auto;
@@ -1171,7 +1156,6 @@ svg text {
 }
 
 .profile-post button {
-    /* fit button to div (can style more later) */
     border: 0;
     padding: 0;
     width: 100%;
@@ -1315,7 +1299,6 @@ svg text {
 }
 
 .profile-image-edit {
-    /* will take size of form */
     width: 20%;
 }
 
@@ -1727,7 +1710,6 @@ svg text {
 ===== support.html =====
 ========================
 */
-/* re-use register.html styles where possible  */
 
 .support-container {
     margin: 0 auto;
