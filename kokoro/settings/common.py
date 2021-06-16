@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'kokoro_app',
     # Need to include config path for signals to work
     'users.apps.UsersConfig',
-
     # including config path for signals
     'notifications.apps.NotificationsConfig',
 
@@ -183,3 +182,5 @@ warnings.filterwarnings(
     'error', r"DateTimeField .* received a naive datetime",
     RuntimeWarning, r'django\.db\.models\.fields',
 )
+
+print("Applying base settings...")
