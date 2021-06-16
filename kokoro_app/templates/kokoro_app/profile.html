@@ -80,7 +80,7 @@
                 <span class="perfect-soul font-large">{{ user.perfectbalance.perfect_soul }}</span>
             </div>
         {% endif %}
-        {% if already_friends %}
+        {% if already_friends or user == request.user %}
             <div class="profile-contact">
                 {% for info in contact_info %}
                     <span>{{ info }}</span>
