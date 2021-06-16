@@ -260,10 +260,8 @@ def profile_form_handler(request):
 
             # timezone the user selected
             user_timezone_form = ProfileTimezoneForm(request.POST, instance=request.user.profiletimezone)
-            # check validity
+            # check validity and save
             if user_timezone_form.is_valid():
-                print("VALID TZ")
-                # save form (working)
                 user_timezone_form.save()
 
             return redirect('/profile')

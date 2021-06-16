@@ -142,7 +142,7 @@ class ProfileImage(models.Model):
 
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    image = models.ImageField(default='default.jpg', upload_to='profile_images')
+    image = models.ImageField(default='profile_images/default.jpg', upload_to='profile_images')
 
     def __str__(self):
 
