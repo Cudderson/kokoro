@@ -5,6 +5,7 @@ from django.utils.crypto import get_random_string
 from django.db import IntegrityError
 from django.http import Http404
 from django.core.mail import send_mail
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote, ProfileImage, \
@@ -182,7 +183,7 @@ def edit_profile(request):
     utc_timezone = datetime.datetime.now(tz=pytz.UTC)
 
     # get user's saved time zone
-    user_timezone_object = ProfileTimezone.objects.get(owner__exact=user.id)
+    user_timezone_object = user.profiletimezone
     # convert to string
     user_timezone_string = str(user_timezone_object)
     # convert utc_timezone to user timezone (with offset)
@@ -190,28 +191,31 @@ def edit_profile(request):
 
     # retrieve user-related objects as placeholders
     try:
-        bio_placeholder = ProfileBio.objects.get(owner=request.user)
-    except Exception as e:
+        bio_placeholder = user.profilebio
+    except ObjectDoesNotExist:
         bio_placeholder = None
     try:
-        perfect_placeholder_queryset = PerfectBalance.objects.get(owner=request.user)
-    except Exception as e:
+        perfect_placeholder_queryset = user.perfectbalance
+    except ObjectDoesNotExist:
         perfect_placeholder_queryset = None
     try:
-        display_name_placeholder = ProfileDisplayName.objects.get(owner=request.user)
-    except Exception as e:
+        display_name_placeholder = user.profiledisplayname
+    except ObjectDoesNotExist:
         display_name_placeholder = None
     try:
-        quote_placeholder_queryset = ProfileQuote.objects.get(owner=request.user)
-    except Exception as e:
+        quote_placeholder_queryset = user.profilequote
+    except ObjectDoesNotExist:
         quote_placeholder_queryset = None
     try:
-        contact_info = ContactInfo.objects.get(owner=request.user)
-    except Exception as e:
+        contact_info = user.contactinfo
+    except ObjectDoesNotExist:
         contact_info = None
 
     # Everyone has an image by default
-    profile_image_placeholder = ProfileImage.objects.get(owner=request.user)
+    try:
+        profile_image_placeholder = user.profileimage
+    except ObjectDoesNotExist:
+        profile_image_placeholder = None
 
     # Forms for editing profile
     display_name_form = ProfileDisplayNameForm(instance=display_name_placeholder)
