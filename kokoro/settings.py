@@ -196,6 +196,10 @@ warnings.filterwarnings(
     RuntimeWarning, r'django\.db\.models\.fields',
 )
 
+# ensure csrf cookie and session cookie sent over HTTPS
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
 # heroku settings
 import django_heroku
 django_heroku.settings(locals())
