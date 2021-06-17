@@ -87,9 +87,7 @@ header {
     margin: 0;
     padding: 0;
     width: 100%;
-    /*background: var(--color-1);*/
-    /* testing changes reflect on mobile */
-    background-color: red;
+    background: var(--color-1);
     text-align: center;
 
 }
@@ -104,7 +102,10 @@ nav {
     left: 0;
     transform: scale(1, 0);
     transform-origin: top;
-    transition: transform 400ms ease-in-out;
+    transition: transform 400ms ease-in-out 0s;
+    -webkit-transform: scale(1, 0);
+    -webkit-transform-origin: top;
+    webkit-transition: transform 400ms ease-in-out 0s;
     border-bottom: 2px solid var(--color-5);
     width: 100%;
     background: var(--color-1);
@@ -124,7 +125,8 @@ nav li {
 
 nav a {
     opacity: 0;
-    transition: opacity 150ms ease-in-out; /* no delay for link fade */
+    transition: opacity 150ms ease-in-out 0s;
+    -webkit-transition: opacity 150ms ease-in-out 0s;
     color: var(--color-5);
     font-size: 1rem;
     text-decoration: none;
@@ -137,11 +139,13 @@ nav a:hover, nav a:focus {
 
 .nav-toggle:checked ~ nav {
     transform: scale(1, 1);
+    -webkit-transform: scale(1, 1);
 }
 
 .nav-toggle:checked ~ nav a {
     opacity: 1;
     transition: opacity 250ms ease-in-out 250ms; /* <-- delay */
+    -webkit-transition: opacity 250ms ease-in-out 250ms; /* <-- delay */
 }
 
 /* don't display checkbox */
@@ -212,6 +216,7 @@ nav a:hover, nav a:focus {
 
 .nav-search + button[type=submit] {
     transition: .5s;
+    -webkit-transition: .5s;
     border: 1px solid var(--color-5);
     border-left: 0px;
     border-radius: 0px 12px 12px 0px;
@@ -221,6 +226,7 @@ nav a:hover, nav a:focus {
 
 .nav-search + button[type=submit]:hover, .nav-search + button[type=submit]:focus {
     transition: .5s;
+    -webkit-transition: .5s;
     border-color: var(--color-3);
     background-color: var(--color-3);
     color: white; /* same for both themes */
@@ -288,6 +294,8 @@ nav a:hover, nav a:focus {
         display: block;
         transform: scale(0, 1);
         transition: transform ease-in-out 250ms;
+        -webkit-transform: scale(0, 1);
+        -webkit-transition: transform ease-in-out 250ms;
         border-radius: 4px;
         height: 5px;
         background: var(--color-3);
@@ -295,6 +303,7 @@ nav a:hover, nav a:focus {
 
     nav a:hover::before, nav a:focus::before {
         transform: scale(1, 1);
+        -webkit-transform: scale(1, 1);
     }
 }
 
@@ -355,6 +364,8 @@ nav a:hover, nav a:focus {
     display: block;
     transform: scale(0, 1);
     transition: transform ease-in-out 250ms;
+    -webkit-transform: scale(0, 1);
+    -webkit-transition: transform ease-in-out 250ms;
     border-radius: 4px;
     height: 5px;
     background: var(--color-3);
@@ -362,10 +373,12 @@ nav a:hover, nav a:focus {
 
 .dropdown-btn:hover::before, .dropdown-btn:focus::before {
     transform: scale(1, 1);
+    -webkit-transform: scale(1, 1);
 }
 
 .greeting:focus::before {
     transform: scale(1, 1);
+    -webkit-transform: scale(1, 1);
 }
 
 .drop-noti {
@@ -430,6 +443,7 @@ nav a:hover, nav a:focus {
 .index-btn {
     display: block;
     transition: .5s;
+    -webkit-transition: .5s;
     margin-top: .5rem;
     border: 3px solid #49BB49;
     border-radius: 24px;
@@ -581,6 +595,7 @@ nav a:hover, nav a:focus {
     left: 0;
     /* give perspective to shadow */
     transform: perspective(2rem) rotateX(20deg) scale(1, .2);
+    -webkit-transform: perspective(2rem) rotateX(20deg) scale(1, .2);
     filter: blur(3em) brightness(0.75);
     margin: 0 auto;
     width: 100%;
@@ -592,7 +607,8 @@ nav a:hover, nav a:focus {
 
 .text-1, .text-2, .text-3 {
     transition: 1s;
-    fill: var(--color-6);;
+    -webkit-transition: 1s;
+    fill: var(--color-6);
     font-size: 20px;
 }
 
@@ -632,6 +648,7 @@ nav a:hover, nav a:focus {
 .tri-1:focus + .text-1{
     opacity: 100%;
     transition: 1.5s;
+    -webkit-transition: 1.5s;
 }
 
 .tri-2:hover, .tri-2:focus {
@@ -642,6 +659,7 @@ nav a:hover, nav a:focus {
 .tri-2:focus + .text-2 {
     opacity: 100%;
     transition: 1.5s;
+    -webkit-transition: 1.5s;
 }
 
 .tri-3:hover, .tri-3:focus {
@@ -653,10 +671,12 @@ nav a:hover, nav a:focus {
 .tri-3:focus + .text-3 {
     opacity: 100%;
     transition: 1.5s;
+    -webkit-transition: 1.5s;
 }
 
 .tri {
     transition: .7s;
+    -webkit-transition: .7s;
 }
 
 .completed_act {
@@ -700,6 +720,7 @@ svg text {
 .activity-label {
     flex-grow: 1;
     transition: 1s;
+    -webkit-transition: 1s;
     padding: 10px 10px 10px 10px;
     cursor: pointer;
     background: rgba(255, 255, 255, 0);
@@ -727,6 +748,7 @@ svg text {
 
 .activity-label:hover {
     transition: 1s;
+    -webkit-transition: 1s;
     background: rgba(74, 187, 73, 1); /* this makes hover work even after selection */
 }
 
@@ -745,6 +767,9 @@ svg text {
     transform: scale(1, 0);
     transform-origin: top;
     transition: transform 500ms ease-in-out 10ms;
+    -webkit-transform: scale(1, 0);
+    -webkit-transform-origin: top;
+    -webkit-transition: transform 500ms ease-in-out 10ms;
     margin: 0 auto 1rem auto;
     border: 1px solid var(--color-6);;
     border-top: 4px solid var(--color-3);
@@ -772,6 +797,7 @@ svg text {
 .activity-submit button {
     grid-column: 3 / 4;
     transition: .7s;
+    -webkit-transition: .7s;
     border: none;
     border-top: 1px solid var(--color-3);
     border-left: 1px solid var(--color-6);
@@ -784,6 +810,7 @@ svg text {
 
 .activity-submit button:hover, .activity-submit button:focus {
     transition: .7s;
+    -webkit-transition: .7s;
     border-top: 1px solid var(--color-6);
     background: var(--color-3);
 }
@@ -792,6 +819,9 @@ svg text {
     transform: scale(1, 1);
     transform-origin: top;
     transition: transform 500ms ease-in-out 10ms;
+    -webkit-transform: scale(1, 1);
+    -webkit-transform-origin: top;
+    -webkit-transition: transform 500ms ease-in-out 10ms;
 }
 /* end home.html Daily Activity Form */
 
@@ -1126,6 +1156,7 @@ svg text {
 
 .write-post-btn-submit, .friendship-btn-submit {
     transition: .5s;
+    -webkit-transition: .5s;
     border: 1px solid var(--color-5);
     border-radius: 16px;
     padding: .25em 1em;
@@ -1240,6 +1271,7 @@ svg text {
 .edit-profile-form-container > form > button {
     display: block;
     transition: .5s;
+    -webkit-transition: .5s;
     margin-bottom: 3rem;
     border: none;
     border-radius: 4px;
@@ -1252,6 +1284,7 @@ svg text {
 .edit-profile-form-container > form > button:hover,
 .edit-profile-form-container > form > button:focus {
     transition: .5s;
+    -webkit-transition: .5s;
     background-color: #49BB49;
     outline: none;
 }
@@ -1470,6 +1503,7 @@ svg text {
 
 .request-btn {
     transition: .5s;
+    -webkit-transition: 5s;
     margin-top: .125rem;
     border: 1px solid var(--color-5);
     border-radius: 16px;
@@ -1481,6 +1515,7 @@ svg text {
 
 .request-btn:hover, .request-btn:focus {
     transition: .5s;
+    -webkit-transition: .5s;
     border-color: var(--color-3);
     background-color: var(--color-3);
     color: white;
@@ -1564,6 +1599,7 @@ svg text {
 .cancel-request-form > button:hover,
 .remove-friend-form > button:hover {
     transition: .5s;
+    -webkit-transition: .5s;
     border-color: var(--color-4);
     background-color: var(--color-4);
     color: white;
@@ -1891,6 +1927,7 @@ svg text {
     .index-btn {
         display: block;
         transition: .5s;
+        -webkit-transition: .5s;
         margin-top: .5rem;
         border: 4px solid #003000;
         border-radius: 8px;
@@ -1905,6 +1942,7 @@ svg text {
     .index-btn:hover,
     .index-btn:focus {
         transition: .5s;
+        -webkit-transition: .5s;
         border-color: #49BB49;
         background: #96FFA1;
         outline: none;
@@ -1918,6 +1956,7 @@ svg text {
 
     .support-link-btn {
         transition: .5s;
+        -webkit-transition: .5s;
         border: none;
         border-radius: 24px;
         padding: .25rem 0;
@@ -1930,6 +1969,7 @@ svg text {
 
     .support-link-btn:hover, .support-link-btn:focus {
         transition: .5s;
+        -webkit-transition: .5s;
         background: #96FFA1;
     }
 
@@ -2011,6 +2051,7 @@ svg text {
         display: inline-block;
         z-index: 1;
         transform: perspective(6rem) rotateX(20deg) scale(1, .2);
+        -webkit-transform: perspective(6rem) rotateX(20deg) scale(1, .2);
     }
 
     .svg-container > div::before {
@@ -2020,6 +2061,7 @@ svg text {
         left: -175%;
         display: block;
         transform: perspective(6rem) rotateX(20deg) scale(1, .15);
+        -webkit-transform: perspective(6rem) rotateX(20deg) scale(1, .15);
         margin: 0 auto;
         width: 120%;
         height: 100%;
@@ -2086,6 +2128,7 @@ svg text {
     .activity-card-content {
         opacity: 0;
         transition: opacity .7s ease-in-out;
+        -webkit-transition: opacity .7s ease-in-out;
         padding: .5em 0 .5em .5em;
     }
 
@@ -2148,6 +2191,7 @@ svg text {
 
     .view-acts-desktop, .help-icon-container-desktop {
         transition: 1s;
+        -webkit-transition: 1s;
         border: 1px solid var(--color-5);
         border-radius: 15px;
         padding: .25em 1.25em;
@@ -2159,9 +2203,10 @@ svg text {
 
     .view-acts-desktop:hover, .help-icon-container-desktop:hover,
     .view-acts-desktop:focus, .help-icon-container-desktop:focus {
-        background-color: var(--color-3);
         transition: .7s;
+        -webkit-transition: .7s;
         border: 1px solid var(--color-3);
+        background-color: var(--color-3);
         color: white; /* same for both themes */
         outline: none;
     }
@@ -2221,6 +2266,7 @@ svg text {
 
     .edit-profile-or-friendship-btn {
         transition: .5s;
+        -webkit-transition: .5s;
         border: 1px solid var(--color-5);
         border-radius: 16px;
         background-color: var(--color-1);
@@ -2231,6 +2277,7 @@ svg text {
 
     .edit-profile-or-friendship-btn:hover, .edit-profile-or-friendship-btn:focus {
         transition: .5s;
+        -webkit-transition: .5s;
         border-color: var(--color-3);
         background-color: var(--color-3);
         color: white; /* both themes */
@@ -2253,6 +2300,7 @@ svg text {
 
     .friendship-btn-submit, .write-post-btn-submit {
         transition: .5s;
+        -webkit-transition: .5s;
         border: 1px solid var(--color-5);
         border-radius: 16px;
         background-color: var(--color-1);
@@ -2263,6 +2311,7 @@ svg text {
     .friendship-btn-submit:hover, .write-post-btn-submit:hover,
     .friendship-btn-submit:focus, .write-post-btn-submit:focus {
         transition: .5s;
+        -webkit-transition: .5s;
         border-color: var(--color-3);
         background-color: var(--color-3);
         color: white; /* same for both themes */
