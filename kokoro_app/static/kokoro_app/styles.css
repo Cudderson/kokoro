@@ -45,7 +45,7 @@ html, button {
 
 body {
     margin: 0;
-    padding-top: 85.5px; /* header height = 80px (depends on logo size)*/
+    padding-top: 0;
     background-image: var(--svg-green-wave); /* getwaves.io */
     background-size: cover;
     background-position: 0px -60px;
@@ -80,7 +80,7 @@ body {
 ===============
 */
 header {
-    position: fixed;
+    position: relative;
     z-index: 999;
     top: 0;
     left: 0;
@@ -1838,6 +1838,14 @@ svg text {
 
 /* special query for index.html */
 @media screen and (min-width: 770px) {
+
+    header {
+        position: fixed;
+    }
+
+    body {
+        padding-top: 85.5px; /* header height = 80px (depends on logo size)*/
+    }
 
     .hero-container {
         display: grid;
