@@ -3,4 +3,3 @@
 kokoro_env/
 __pycache__
 *.env
-/media
