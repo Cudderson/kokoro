@@ -44,8 +44,9 @@ html, button {
 }
 
 body {
+    z-index: -999;
     margin: 0;
-    padding-top: 85.5px; /* header height = 80px (depends on logo size)*/
+    margin-top: 100px;
     background-image: var(--svg-green-wave); /* getwaves.io */
     background-size: cover;
     background-position: 0px -60px;
@@ -80,14 +81,16 @@ body {
 ===============
 */
 header {
-    position: fixed;
+    position: relative;
     z-index: 999;
     top: 0;
     left: 0;
     margin: 0;
     padding: 0;
     width: 100%;
-    background: var(--color-1);
+    /*background: var(--color-1);*/
+    /* testing changes reflect on mobile */
+    background: red;
     text-align: center;
 
 }
@@ -1838,6 +1841,14 @@ svg text {
 
 /* special query for index.html */
 @media screen and (min-width: 770px) {
+
+    header {
+        position: fixed;
+    }
+
+    body {
+        padding-top: 85.5px; /* header height = 80px (depends on logo size)*/
+    }
 
     .hero-container {
         display: grid;
