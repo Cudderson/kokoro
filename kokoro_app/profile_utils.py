@@ -49,7 +49,7 @@ def remove_current_profile_image(current_image):
 
     try:
         # do not remove default image from media/profile_images
-        if current_image_media != 'media/profile_images/default.jpg':
+        if current_image_media != 'media/profile_images/default.png':
             # remove current_image from media directory
             os.remove(current_image_media)
             return 0
