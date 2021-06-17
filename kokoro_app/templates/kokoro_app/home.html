@@ -129,11 +129,11 @@
             {% csrf_token %}
             <div class="activity-select"> <!--flexbox-->
                 <input tabindex="1" onclick="collapse()" class="activity-radio" type="radio" name="activity" value="mind" required="" id="id_activity_1">
-                <label class="activity-label mind-label" for="id_activity_1">{{ activity_form.activity.1 }}</label>
+                <label class="activity-label mind-label" for="id_activity_1">Mind</label>
                 <input tabindex="2" onclick="collapse()" class="activity-radio" type="radio" name="activity" value="body" required="" id="id_activity_2">
-                <label class="activity-label body-label" for="id_activity_2">{{ activity_form.activity.2 }}</label>
+                <label class="activity-label body-label" for="id_activity_2">Body</label>
                 <input tabindex="3" onclick="collapse()" class="activity-radio" type="radio" name="activity" value="soul" required="" id="id_activity_3">
-                <label class="activity-label soul-label" for="id_activity_3">{{ activity_form.activity.3 }}</label>
+                <label class="activity-label soul-label" for="id_activity_3">Soul</label>
             </div>
             <div class="activity-submit">
                   <input type="text" name="description" maxlength="100" required="" id="id_description" placeholder="Describe your activity...">
