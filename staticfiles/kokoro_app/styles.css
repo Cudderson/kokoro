@@ -594,10 +594,14 @@ nav a:hover, nav a:focus {
     content: "";
     top: 65%;
     left: 0;
-    /* give perspective to shadow */
-    transform: perspective(2rem) rotateX(20deg) scale(1, .2);
+    /* give perspective to shadow (original) */
+    /*transform: perspective(2rem) rotateX(20deg) scale(1, .2);
     -webkit-transform: perspective(2rem) rotateX(20deg) scale(1, .2);
-    filter: blur(3em) brightness(0.75);
+    filter: blur(3em) brightness(0.75);*/
+    /* testing mobile */
+    transform: perspective(1rem) rotateX(10deg) scale(1, 2);
+    -webkit-transform: perspective(1rem) rotateX(10deg) scale(1, 2);
+    filter: blur(1rem) brightness(0.75);
     margin: 0 auto;
     width: 100%;
     height: 100%;
