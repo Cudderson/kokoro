@@ -1722,7 +1722,7 @@ svg text {
     margin-bottom: 2rem;
     border: 1px solid var(--color-8);
     border-radius: 4px;
-    padding-left: 0;
+    padding-left: .5rem;
     width: 100%;
     background-color: var(--color-1);
     font-family: 'Playfair Display', serif;
