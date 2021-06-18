@@ -36,9 +36,9 @@
         </div>
         <div class="profile-name-grid">
             {% if user.profiledisplayname.display_name %}
-                <span class="profile-display-name font-xl">{{ user.profiledisplayname.display_name }}</span>
+                <span class="profile-display-name">{{ user.profiledisplayname.display_name }}</span>
             {% else %}
-                <span class="profile-display-name font-xl">{{ user.username }}</span>
+                <span class="profile-display-name">{{ user.username }}</span>
             {% endif %}
             {% if user == request.user %}
                 <form class="edit-profile-form" action="{% url 'kokoro_app:edit_profile' %}" method="get">
@@ -67,7 +67,7 @@
                     {% endif %}
                 {% endif %}
             {% endif %}
-            <span class="profile-username font-med">@{{ user }}</span>
+            <span class="profile-username font-large">@{{ user }}</span>
         </div>
         <div class="profile-biography font-large">
             <span>{{ user.profilebio.biography }}</span>
@@ -75,9 +75,9 @@
         {% if user.perfectbalance.perfect_mind %}
             <div class="perfect-balance-header font-large">Perfect Balance</div>
             <div class="profile-perfect-balance">
-                <span class="perfect-mind font-large">{{ user.perfectbalance.perfect_mind }}</span><br>
-                <span class="perfect-body font-large">{{ user.perfectbalance.perfect_body }}</span><br>
-                <span class="perfect-soul font-large">{{ user.perfectbalance.perfect_soul }}</span>
+                <span class="perfect-mind font-small">{{ user.perfectbalance.perfect_mind }}</span><br>
+                <span class="perfect-body font-small">{{ user.perfectbalance.perfect_body }}</span><br>
+                <span class="perfect-soul font-small">{{ user.perfectbalance.perfect_soul }}</span>
             </div>
         {% endif %}
         {% if already_friends or user == request.user %}

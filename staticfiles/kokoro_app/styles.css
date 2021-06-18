@@ -1152,7 +1152,7 @@ svg text {
 
 .profile-contact {
     margin-top: .5rem;
-    font-size: 15px;
+    font-size: 18px;
     color: var(--color-11);
 }
 
@@ -2251,7 +2251,7 @@ svg text {
     }
 
     .profile-display-name {
-        font-size: var(--font-2xl);
+        font-size: 28px;
     }
 
     .profile-username {
