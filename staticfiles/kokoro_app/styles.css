@@ -793,14 +793,14 @@ svg text {
     border-top: 1px solid var(--color-3);
     border-radius: 0px 0px 0px 4px;
     padding: 10px 10px 10px 10px;
-    padding-left: .2rem;
+    padding-left: .5rem;
     background-color: rgba(255, 255, 255, .15);
     font-size: 16px;
     font-family: 'Playfair Display', serif;
     outline: none;
 }
 
-.activity-submit input:placeholder {
+.activity-submit input::placeholder {
     color: #111;
 }
 
