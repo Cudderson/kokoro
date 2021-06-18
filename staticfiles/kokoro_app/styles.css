@@ -496,6 +496,7 @@ nav a:hover, nav a:focus {
 */
 
 .home-grid-master {
+    z-index: 1; /* create stacking context */
     display: block;
     margin-top: 2px;
 }
@@ -594,6 +595,7 @@ nav a:hover, nav a:focus {
     content: "";
     top: 65%;
     left: 0;
+    z-index: -1; /* don't allow pseudo-element to shine-through help-form */
     /* give perspective to shadow (original) */
     /*transform: perspective(2rem) rotateX(20deg) scale(1, .2);
     -webkit-transform: perspective(2rem) rotateX(20deg) scale(1, .2);
