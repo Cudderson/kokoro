@@ -1008,16 +1008,13 @@ svg text {
     background: var(--color-svg-shadow);
     cursor: pointer;
     font-weight: bold;
+    font-size: 36px;
+    text-align: center;
 }
 
 .close-form span {
     /* for the 'x' close symbol */
-    width: 3rem;
-    height: 3rem;
-    line-height: 2.4rem; /* match div height to vertically center */
-    text-align: center;
-    font-size: 4rem;
-    font-weight: bold;
+    display: block;
 }
 /* end close-form */
 
