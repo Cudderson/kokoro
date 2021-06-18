@@ -1168,6 +1168,7 @@ svg text {
     padding: .25em 1em;
     background-color: var(--color-1);
     color: var(--color-5);
+    font-size: 16px;
 }
 
 .profile-post-label {
