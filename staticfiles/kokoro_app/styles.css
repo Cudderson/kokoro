@@ -1003,9 +1003,8 @@ svg text {
     align-self: flex-end;
     margin: .5em .5em .5em .5em;
     border-radius: 4px;
-    width: 3rem;
-    height: 3rem;
     background: var(--color-svg-shadow);
+    padding: 1rem;
     cursor: pointer;
     font-weight: bold;
     font-size: 36px;
