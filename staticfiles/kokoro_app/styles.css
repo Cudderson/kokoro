@@ -599,11 +599,11 @@ nav a:hover, nav a:focus {
     -webkit-transform: perspective(2rem) rotateX(20deg) scale(1, .2);
     filter: blur(3em) brightness(0.75);*/
     /* testing mobile */
-    transform: perspective(4rem) rotateX(10deg) scale(1, .2);
-    -webkit-transform: perspective(4rem) rotateX(10deg) scale(1, .2);
+    transform: perspective(1rem) rotateX(10deg) scale(1, .2);
+    -webkit-transform: perspective(1rem) rotateX(10deg) scale(1, .2);
     /*filter: blur(3rem) brightness(0.75);*/
     margin: 0 auto;
-    width: 100%;
+    width: 50%;
     height: 100%;
     background: var(--color-svg-shadow);
     pointer-events: none;
