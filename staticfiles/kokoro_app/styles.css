@@ -219,6 +219,7 @@ nav a:hover, nav a:focus {
 .nav-search + button[type=submit] {
     transition: .5s;
     -webkit-transition: .5s;
+    margin-left: -4px;
     border: 1px solid var(--color-5);
     border-left: 0px;
     border-radius: 0px 12px 12px 0px;
