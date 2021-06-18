@@ -1002,10 +1002,12 @@ svg text {
 .close-form {
     align-self: flex-end;
     margin: .5em .5em .5em .5em;
+    border: none;
     background: rgba(0, 0, 0, 0);
     cursor: pointer;
+    outline: none;
     font-weight: bold;
-    font-size: 40px;
+    font-size: 50px;
     text-align: center;
     color: white;
 }
