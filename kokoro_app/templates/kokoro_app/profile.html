@@ -75,9 +75,9 @@
         {% if user.perfectbalance.perfect_mind %}
             <div class="perfect-balance-header font-large">Perfect Balance</div>
             <div class="profile-perfect-balance">
-                <span class="perfect-mind font-small">{{ user.perfectbalance.perfect_mind }}</span><br>
-                <span class="perfect-body font-small">{{ user.perfectbalance.perfect_body }}</span><br>
-                <span class="perfect-soul font-small">{{ user.perfectbalance.perfect_soul }}</span>
+                <span class="perfect-mind font-med">{{ user.perfectbalance.perfect_mind }}</span><br>
+                <span class="perfect-body font-med">{{ user.perfectbalance.perfect_body }}</span><br>
+                <span class="perfect-soul font-med">{{ user.perfectbalance.perfect_soul }}</span>
             </div>
         {% endif %}
         {% if already_friends or user == request.user %}

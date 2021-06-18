@@ -1104,6 +1104,7 @@ svg text {
     font-weight: bold;
     word-break: break-word;
     color: var(--color-3);
+    font-size: 30px;
 }
 
 .profile-username {
@@ -2251,7 +2252,7 @@ svg text {
     }
 
     .profile-display-name {
-        font-size: 28px;
+        font-size: var(--font-2xl);
     }
 
     .profile-username {
