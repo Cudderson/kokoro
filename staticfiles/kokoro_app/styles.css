@@ -1005,15 +1005,12 @@ svg text {
     border-radius: 4px;
     background: var(--color-svg-shadow);
     padding: 1rem;
+    width: 3rem;
+    height: 3rem;
     cursor: pointer;
     font-weight: bold;
     font-size: 36px;
     text-align: center;
-}
-
-.close-form span {
-    /* for the 'x' close symbol */
-    display: block;
 }
 /* end close-form */
 
