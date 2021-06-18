@@ -498,6 +498,7 @@ nav a:hover, nav a:focus {
 */
 
 .home-grid-master {
+    position: relative;
     z-index: 1; /* create stacking context */
     display: block;
     margin-top: 2px;
