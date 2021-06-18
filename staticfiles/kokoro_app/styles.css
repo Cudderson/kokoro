@@ -197,6 +197,7 @@ nav a:hover, nav a:focus {
     padding: .3em .75em;
     padding-right: 0;
     width: 75%;
+    height: 28px;
     background: var(--color-1);
     color: var(--color-5);
 }
@@ -223,6 +224,7 @@ nav a:hover, nav a:focus {
     border-radius: 0px 12px 12px 0px;
     padding: .29em 1em;
     vertical-align: bottom;
+    height: 28px;
 }
 
 .nav-search + button[type=submit]:hover, .nav-search + button[type=submit]:focus {
