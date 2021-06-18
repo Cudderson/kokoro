@@ -1145,10 +1145,12 @@ svg text {
     margin-top: 1rem;
     margin-bottom: .25rem;
     color: var(--color-3);
+    font-size: 18px;
 }
 
 .perfect-mind, .perfect-body, .perfect-soul {
     color: var(--color-5);
+    font-size: 15px;
 }
 
 .profile-contact {
@@ -2301,6 +2303,11 @@ svg text {
     .perfect-balance-header {
         margin-top: 1.5em;
         font-weight: 600;
+        font-size: 21px;
+    }
+
+    .perfect-mind, .perfect-body, .perfect-soul {
+        font-size: 18px;
     }
 
     .profile-contact span {
