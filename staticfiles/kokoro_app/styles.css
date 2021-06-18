@@ -599,8 +599,8 @@ nav a:hover, nav a:focus {
     -webkit-transform: perspective(2rem) rotateX(20deg) scale(1, .2);
     filter: blur(3em) brightness(0.75);*/
     /* testing mobile */
-    transform: perspective(3rem) rotateX(10deg) scale(1, .2);
-    -webkit-transform: perspective(3rem) rotateX(10deg) scale(1, .2);
+    transform: perspective(1rem) rotateX(30deg) scale(1, .2);
+    -webkit-transform: perspective(1rem) rotateX(30deg) scale(1, .2);
     filter: blur(3rem) brightness(0.75);
     margin: 0 auto;
     width: 100%;
