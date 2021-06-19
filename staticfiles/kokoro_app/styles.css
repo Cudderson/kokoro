@@ -747,7 +747,7 @@ svg text {
 
 .activated {
     border-bottom: 1px solid var(--color-3);
-    /* background: var(--color-3); maybe don't need this */
+    background: rgba(73, 187, 73, 1); /* same for both themes */
 }
 
 .activated-submit {
