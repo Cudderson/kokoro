@@ -742,7 +742,7 @@ svg text {
 .activity-label:hover {
     transition: 1s;
     -webkit-transition: 1s;
-    background: rgba(74, 187, 73, 1); /* this makes hover work even after selection */
+    background: rgba(73, 187, 73, 1); /* this makes hover work even after selection (49BB49) */
 }
 
 .activated {
@@ -782,7 +782,7 @@ svg text {
     -webkit-transition: transform 500ms ease-in-out 10ms;
     margin: 0 auto 1rem auto;
     border: 1px solid var(--color-6);
-    border-top: 4px solid var(--color-3);
+    border-top: 4px solid rgba(73, 187, 73, 1); /* same for both themes */
     border-radius: 0 0 4px 4px;
     width: 90%;
 }
