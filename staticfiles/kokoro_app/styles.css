@@ -739,9 +739,15 @@ svg text {
     font-size: 18px;
 }
 
+.activity-label:hover {
+    transition: 1s;
+    -webkit-transition: 1s;
+    background: rgba(74, 187, 73, 1); /* this makes hover work even after selection */
+}
+
 .activated {
     border-bottom: 1px solid var(--color-3);
-    background: var(--color-3);
+    /* background: var(--color-3); maybe don't need this */
 }
 
 .activated-submit {
@@ -754,12 +760,6 @@ svg text {
 
 .soul-label {
     border-radius: 0px 4px 0px 0px;
-}
-
-.activity-label:hover {
-    transition: 1s;
-    -webkit-transition: 1s;
-    background: rgba(74, 187, 73, 1); /* this makes hover work even after selection */
 }
 
 .activity-label + .activity-radio + .activity-label {
@@ -781,7 +781,7 @@ svg text {
     -webkit-transform-origin: top;
     -webkit-transition: transform 500ms ease-in-out 10ms;
     margin: 0 auto 1rem auto;
-    border: 1px solid var(--color-6);;
+    border: 1px solid var(--color-6);
     border-top: 4px solid var(--color-3);
     border-radius: 0 0 4px 4px;
     width: 90%;
@@ -801,7 +801,7 @@ svg text {
 }
 
 .activity-submit input::placeholder {
-    color: #111;
+    color: #999;
 }
 
 .activity-submit input:focus {
