@@ -46,7 +46,6 @@ html, button {
 body {
     z-index: -999;
     margin: 0;
-    margin-top: 100px;
     background-image: var(--svg-green-wave); /* getwaves.io */
     background-size: cover;
     background-position: 0px -60px;
@@ -88,9 +87,7 @@ header {
     margin: 0;
     padding: 0;
     width: 100%;
-    /*background: var(--color-1);*/
-    /* testing changes reflect on mobile */
-    background: red;
+    background: var(--color-1);
     text-align: center;
 
 }
@@ -105,7 +102,10 @@ nav {
     left: 0;
     transform: scale(1, 0);
     transform-origin: top;
-    transition: transform 400ms ease-in-out;
+    transition: transform 400ms ease-in-out 0s;
+    -webkit-transform: scale(1, 0);
+    -webkit-transform-origin: top;
+    webkit-transition: transform 400ms ease-in-out 0s;
     border-bottom: 2px solid var(--color-5);
     width: 100%;
     background: var(--color-1);
@@ -114,6 +114,7 @@ nav {
 
 nav ul {
     margin: 0;
+    margin-top: 20px;
     padding: 0;
     list-style: none;
 }
@@ -125,7 +126,8 @@ nav li {
 
 nav a {
     opacity: 0;
-    transition: opacity 150ms ease-in-out; /* no delay for link fade */
+    transition: opacity 150ms ease-in-out 0s;
+    -webkit-transition: opacity 150ms ease-in-out 0s;
     color: var(--color-5);
     font-size: 1rem;
     text-decoration: none;
@@ -138,11 +140,13 @@ nav a:hover, nav a:focus {
 
 .nav-toggle:checked ~ nav {
     transform: scale(1, 1);
+    -webkit-transform: scale(1, 1);
 }
 
 .nav-toggle:checked ~ nav a {
     opacity: 1;
     transition: opacity 250ms ease-in-out 250ms; /* <-- delay */
+    -webkit-transition: opacity 250ms ease-in-out 250ms; /* <-- delay */
 }
 
 /* don't display checkbox */
@@ -193,6 +197,7 @@ nav a:hover, nav a:focus {
     padding: .3em .75em;
     padding-right: 0;
     width: 75%;
+    height: 28px;
     background: var(--color-1);
     color: var(--color-5);
 }
@@ -213,15 +218,19 @@ nav a:hover, nav a:focus {
 
 .nav-search + button[type=submit] {
     transition: .5s;
+    -webkit-transition: .5s;
+    margin-left: -4px;
     border: 1px solid var(--color-5);
     border-left: 0px;
     border-radius: 0px 12px 12px 0px;
     padding: .29em 1em;
     vertical-align: bottom;
+    height: 28px;
 }
 
 .nav-search + button[type=submit]:hover, .nav-search + button[type=submit]:focus {
     transition: .5s;
+    -webkit-transition: .5s;
     border-color: var(--color-3);
     background-color: var(--color-3);
     color: white; /* same for both themes */
@@ -289,6 +298,8 @@ nav a:hover, nav a:focus {
         display: block;
         transform: scale(0, 1);
         transition: transform ease-in-out 250ms;
+        -webkit-transform: scale(0, 1);
+        -webkit-transition: transform ease-in-out 250ms;
         border-radius: 4px;
         height: 5px;
         background: var(--color-3);
@@ -296,6 +307,7 @@ nav a:hover, nav a:focus {
 
     nav a:hover::before, nav a:focus::before {
         transform: scale(1, 1);
+        -webkit-transform: scale(1, 1);
     }
 }
 
@@ -356,6 +368,8 @@ nav a:hover, nav a:focus {
     display: block;
     transform: scale(0, 1);
     transition: transform ease-in-out 250ms;
+    -webkit-transform: scale(0, 1);
+    -webkit-transition: transform ease-in-out 250ms;
     border-radius: 4px;
     height: 5px;
     background: var(--color-3);
@@ -363,10 +377,12 @@ nav a:hover, nav a:focus {
 
 .dropdown-btn:hover::before, .dropdown-btn:focus::before {
     transform: scale(1, 1);
+    -webkit-transform: scale(1, 1);
 }
 
 .greeting:focus::before {
     transform: scale(1, 1);
+    -webkit-transform: scale(1, 1);
 }
 
 .drop-noti {
@@ -431,6 +447,7 @@ nav a:hover, nav a:focus {
 .index-btn {
     display: block;
     transition: .5s;
+    -webkit-transition: .5s;
     margin-top: .5rem;
     border: 3px solid #49BB49;
     border-radius: 24px;
@@ -470,7 +487,7 @@ nav a:hover, nav a:focus {
 }
 
 .hero-caption {
-    margin-bottom: 6rem;
+    margin-bottom: 4rem;
     font-size: 18px;
     color: #96FFA1;
 }
@@ -482,6 +499,8 @@ nav a:hover, nav a:focus {
 */
 
 .home-grid-master {
+    position: relative;
+    z-index: 1; /* create stacking context */
     display: block;
     margin-top: 2px;
 }
@@ -580,20 +599,26 @@ nav a:hover, nav a:focus {
     content: "";
     top: 65%;
     left: 0;
-    /* give perspective to shadow */
-    transform: perspective(2rem) rotateX(20deg) scale(1, .2);
-    filter: blur(3em) brightness(0.75);
+    z-index: -1; /* don't allow pseudo-element to shine-through help-form */
+    /* give perspective to shadow (original) */
+    /*transform: perspective(2rem) rotateX(20deg) scale(1, .2);
+    -webkit-transform: perspective(2rem) rotateX(20deg) scale(1, .2);
+    filter: blur(3em) brightness(0.75);*/
+    /* testing mobile */
+    transform: perspective(1rem) rotateX(10deg) scale(.9, .2);
+    -webkit-transform: perspective(1rem) rotateX(10deg) scale(.9, .2);
+    filter: blur(2rem) brightness(0.75);
     margin: 0 auto;
     width: 100%;
     height: 100%;
     background: var(--color-svg-shadow);
     pointer-events: none;
-    z-index: -1;
 }
 
 .text-1, .text-2, .text-3 {
     transition: 1s;
-    fill: var(--color-6);;
+    -webkit-transition: 1s;
+    fill: var(--color-6);
     font-size: 20px;
 }
 
@@ -633,6 +658,7 @@ nav a:hover, nav a:focus {
 .tri-1:focus + .text-1{
     opacity: 100%;
     transition: 1.5s;
+    -webkit-transition: 1.5s;
 }
 
 .tri-2:hover, .tri-2:focus {
@@ -643,6 +669,7 @@ nav a:hover, nav a:focus {
 .tri-2:focus + .text-2 {
     opacity: 100%;
     transition: 1.5s;
+    -webkit-transition: 1.5s;
 }
 
 .tri-3:hover, .tri-3:focus {
@@ -654,10 +681,12 @@ nav a:hover, nav a:focus {
 .tri-3:focus + .text-3 {
     opacity: 100%;
     transition: 1.5s;
+    -webkit-transition: 1.5s;
 }
 
 .tri {
     transition: .7s;
+    -webkit-transition: .7s;
 }
 
 .completed_act {
@@ -701,6 +730,7 @@ svg text {
 .activity-label {
     flex-grow: 1;
     transition: 1s;
+    -webkit-transition: 1s;
     padding: 10px 10px 10px 10px;
     cursor: pointer;
     background: rgba(255, 255, 255, 0);
@@ -709,13 +739,19 @@ svg text {
     font-size: 18px;
 }
 
+.activity-label:hover {
+    transition: 1s;
+    -webkit-transition: 1s;
+    background: rgba(73, 187, 73, 1); /* this makes hover work even after selection (49BB49) */
+}
+
 .activated {
-    border-bottom: 1px solid var(--color-3);
-    background: var(--color-3);
+    border-bottom: 1px solid rgba(73, 187, 73, 1);
+    background: rgba(73, 187, 73, 1); /* same for both themes */
 }
 
 .activated-submit {
-    border-bottom: 1px solid var(--color-3);
+    border-bottom: 1px solid rgba(73, 187, 73, 1); /* same for both themes */
 }
 
 .mind-label {
@@ -724,11 +760,6 @@ svg text {
 
 .soul-label {
     border-radius: 0px 4px 0px 0px;
-}
-
-.activity-label:hover {
-    transition: 1s;
-    background: rgba(74, 187, 73, 1); /* this makes hover work even after selection */
 }
 
 .activity-label + .activity-radio + .activity-label {
@@ -746,9 +777,12 @@ svg text {
     transform: scale(1, 0);
     transform-origin: top;
     transition: transform 500ms ease-in-out 10ms;
+    -webkit-transform: scale(1, 0);
+    -webkit-transform-origin: top;
+    -webkit-transition: transform 500ms ease-in-out 10ms;
     margin: 0 auto 1rem auto;
-    border: 1px solid var(--color-6);;
-    border-top: 4px solid var(--color-3);
+    border: 1px solid var(--color-6);
+    border-top: 4px solid rgba(73, 187, 73, 1); /* same for both themes */
     border-radius: 0 0 4px 4px;
     width: 90%;
 }
@@ -759,11 +793,15 @@ svg text {
     border-top: 1px solid var(--color-3);
     border-radius: 0px 0px 0px 4px;
     padding: 10px 10px 10px 10px;
-    padding-left: .8rem; /* gives placeholder text padding */
+    padding-left: .5rem;
     background-color: rgba(255, 255, 255, .15);
     font-size: 16px;
     font-family: 'Playfair Display', serif;
     outline: none;
+}
+
+.activity-submit input::placeholder {
+    color: #333;
 }
 
 .activity-submit input:focus {
@@ -773,6 +811,7 @@ svg text {
 .activity-submit button {
     grid-column: 3 / 4;
     transition: .7s;
+    -webkit-transition: .7s;
     border: none;
     border-top: 1px solid var(--color-3);
     border-left: 1px solid var(--color-6);
@@ -785,6 +824,7 @@ svg text {
 
 .activity-submit button:hover, .activity-submit button:focus {
     transition: .7s;
+    -webkit-transition: .7s;
     border-top: 1px solid var(--color-6);
     background: var(--color-3);
 }
@@ -793,6 +833,9 @@ svg text {
     transform: scale(1, 1);
     transform-origin: top;
     transition: transform 500ms ease-in-out 10ms;
+    -webkit-transform: scale(1, 1);
+    -webkit-transform-origin: top;
+    -webkit-transition: transform 500ms ease-in-out 10ms;
 }
 /* end home.html Daily Activity Form */
 
@@ -962,23 +1005,15 @@ svg text {
 /* 'X' symbol for closing form */
 .close-form {
     align-self: flex-end;
-    margin: .5em .5em .5em .5em;
-    border-radius: 4px;
-    width: 3rem;
-    height: 3rem;
-    background: var(--color-svg-shadow);
+    margin: .5rem .5rem .5rem .5rem;
+    border: none;
+    background: rgba(0, 0, 0, 0);
     cursor: pointer;
+    outline: none;
     font-weight: bold;
-}
-
-.close-form span {
-    /* for the 'x' close symbol */
-    width: 3rem;
-    height: 3rem;
-    line-height: 2.4rem; /* match div height to vertically center */
+    font-size: 50px;
     text-align: center;
-    font-size: 4rem;
-    font-weight: bold;
+    color: white;
 }
 /* end close-form */
 
@@ -1069,6 +1104,7 @@ svg text {
     font-weight: bold;
     word-break: break-word;
     color: var(--color-3);
+    font-size: 30px;
 }
 
 .profile-username {
@@ -1109,15 +1145,17 @@ svg text {
     margin-top: 1rem;
     margin-bottom: .25rem;
     color: var(--color-3);
+    font-size: 18px;
 }
 
 .perfect-mind, .perfect-body, .perfect-soul {
     color: var(--color-5);
+    font-size: 15px;
 }
 
 .profile-contact {
     margin-top: .5rem;
-    font-size: 15px;
+    font-size: 18px;
     color: var(--color-11);
 }
 
@@ -1127,11 +1165,13 @@ svg text {
 
 .write-post-btn-submit, .friendship-btn-submit {
     transition: .5s;
+    -webkit-transition: .5s;
     border: 1px solid var(--color-5);
     border-radius: 16px;
     padding: .25em 1em;
     background-color: var(--color-1);
     color: var(--color-5);
+    font-size: 15px;
 }
 
 .profile-post-label {
@@ -1241,6 +1281,7 @@ svg text {
 .edit-profile-form-container > form > button {
     display: block;
     transition: .5s;
+    -webkit-transition: .5s;
     margin-bottom: 3rem;
     border: none;
     border-radius: 4px;
@@ -1253,6 +1294,7 @@ svg text {
 .edit-profile-form-container > form > button:hover,
 .edit-profile-form-container > form > button:focus {
     transition: .5s;
+    -webkit-transition: .5s;
     background-color: #49BB49;
     outline: none;
 }
@@ -1471,6 +1513,7 @@ svg text {
 
 .request-btn {
     transition: .5s;
+    -webkit-transition: .5s;
     margin-top: .125rem;
     border: 1px solid var(--color-5);
     border-radius: 16px;
@@ -1482,6 +1525,7 @@ svg text {
 
 .request-btn:hover, .request-btn:focus {
     transition: .5s;
+    -webkit-transition: .5s;
     border-color: var(--color-3);
     background-color: var(--color-3);
     color: white;
@@ -1565,6 +1609,7 @@ svg text {
 .cancel-request-form > button:hover,
 .remove-friend-form > button:hover {
     transition: .5s;
+    -webkit-transition: .5s;
     border-color: var(--color-4);
     background-color: var(--color-4);
     color: white;
@@ -1681,6 +1726,7 @@ svg text {
     margin-bottom: 2rem;
     border: 1px solid var(--color-8);
     border-radius: 4px;
+    padding-left: .5rem;
     width: 100%;
     background-color: var(--color-1);
     font-family: 'Playfair Display', serif;
@@ -1892,6 +1938,7 @@ svg text {
     .index-btn {
         display: block;
         transition: .5s;
+        -webkit-transition: .5s;
         margin-top: .5rem;
         border: 4px solid #003000;
         border-radius: 8px;
@@ -1906,6 +1953,7 @@ svg text {
     .index-btn:hover,
     .index-btn:focus {
         transition: .5s;
+        -webkit-transition: .5s;
         border-color: #49BB49;
         background: #96FFA1;
         outline: none;
@@ -1919,6 +1967,7 @@ svg text {
 
     .support-link-btn {
         transition: .5s;
+        -webkit-transition: .5s;
         border: none;
         border-radius: 24px;
         padding: .25rem 0;
@@ -1931,6 +1980,7 @@ svg text {
 
     .support-link-btn:hover, .support-link-btn:focus {
         transition: .5s;
+        -webkit-transition: .5s;
         background: #96FFA1;
     }
 
@@ -2012,6 +2062,7 @@ svg text {
         display: inline-block;
         z-index: 1;
         transform: perspective(6rem) rotateX(20deg) scale(1, .2);
+        -webkit-transform: perspective(6rem) rotateX(20deg) scale(1, .2);
     }
 
     .svg-container > div::before {
@@ -2021,6 +2072,7 @@ svg text {
         left: -175%;
         display: block;
         transform: perspective(6rem) rotateX(20deg) scale(1, .15);
+        -webkit-transform: perspective(6rem) rotateX(20deg) scale(1, .15);
         margin: 0 auto;
         width: 120%;
         height: 100%;
@@ -2087,6 +2139,7 @@ svg text {
     .activity-card-content {
         opacity: 0;
         transition: opacity .7s ease-in-out;
+        -webkit-transition: opacity .7s ease-in-out;
         padding: .5em 0 .5em .5em;
     }
 
@@ -2149,6 +2202,7 @@ svg text {
 
     .view-acts-desktop, .help-icon-container-desktop {
         transition: 1s;
+        -webkit-transition: 1s;
         border: 1px solid var(--color-5);
         border-radius: 15px;
         padding: .25em 1.25em;
@@ -2160,9 +2214,10 @@ svg text {
 
     .view-acts-desktop:hover, .help-icon-container-desktop:hover,
     .view-acts-desktop:focus, .help-icon-container-desktop:focus {
-        background-color: var(--color-3);
         transition: .7s;
+        -webkit-transition: .7s;
         border: 1px solid var(--color-3);
+        background-color: var(--color-3);
         color: white; /* same for both themes */
         outline: none;
     }
@@ -2222,6 +2277,7 @@ svg text {
 
     .edit-profile-or-friendship-btn {
         transition: .5s;
+        -webkit-transition: .5s;
         border: 1px solid var(--color-5);
         border-radius: 16px;
         background-color: var(--color-1);
@@ -2232,6 +2288,7 @@ svg text {
 
     .edit-profile-or-friendship-btn:hover, .edit-profile-or-friendship-btn:focus {
         transition: .5s;
+        -webkit-transition: .5s;
         border-color: var(--color-3);
         background-color: var(--color-3);
         color: white; /* both themes */
@@ -2246,6 +2303,11 @@ svg text {
     .perfect-balance-header {
         margin-top: 1.5em;
         font-weight: 600;
+        font-size: 21px;
+    }
+
+    .perfect-mind, .perfect-body, .perfect-soul {
+        font-size: 18px;
     }
 
     .profile-contact span {
@@ -2254,6 +2316,7 @@ svg text {
 
     .friendship-btn-submit, .write-post-btn-submit {
         transition: .5s;
+        -webkit-transition: .5s;
         border: 1px solid var(--color-5);
         border-radius: 16px;
         background-color: var(--color-1);
@@ -2264,6 +2327,7 @@ svg text {
     .friendship-btn-submit:hover, .write-post-btn-submit:hover,
     .friendship-btn-submit:focus, .write-post-btn-submit:focus {
         transition: .5s;
+        -webkit-transition: .5s;
         border-color: var(--color-3);
         background-color: var(--color-3);
         color: white; /* same for both themes */
