@@ -3,8 +3,10 @@ from django import forms
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote,\
                     ProfileImage, ProfileTimezone, ContactInfo, ProfilePost
 
+from cloudinary.forms import CloudinaryFileField
 
 # Create forms based on defined models
+
 
 class ActivityForm(forms.ModelForm):
     class Meta:
@@ -38,6 +40,15 @@ class ProfileQuoteForm(forms.ModelForm):
 
 
 class ProfileImageForm(forms.ModelForm):
+    image = CloudinaryFileField(
+        options={
+            'crop': 'thumb',
+            'width': 200,
+            'height': 200,
+            'folder': 'kokoro_images',
+        }
+    )
+
     class Meta:
         model = ProfileImage
         fields = ['image']
