@@ -44,6 +44,7 @@ class ProfileImageForm(forms.ModelForm):
         options={
             # change upload settings when needed
             'crop': 'thumb',
+            'gravity': 'face',
             'width': 200,
             'height': 200,
             'folder': 'kokoro_images',
