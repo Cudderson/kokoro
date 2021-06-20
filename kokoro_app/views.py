@@ -327,17 +327,18 @@ def profile_form_handler(request):
                 pass
 
             try:
-                # remove image from cloudinary
-                cloudinary.uploader.destroy(request.user.profileimage.image.url)
+                # remove image from cloudinary (required param == public id of cloudinary image)
+                cloudinary.uploader.destroy(request.user.profileimage.image.public_id)
             except Exception as e:
-                pass
+                print(e)
 
             # get form data
             profile_image_submitted = ProfileImageForm(request.POST, request.FILES, instance=request.user.profileimage)
             # check validity
             if profile_image_submitted.is_valid():
 
-                profile_image_submitted.save()
+                y = profile_image_submitted.save()
+                print(y)
 
                 return redirect('/profile')
 

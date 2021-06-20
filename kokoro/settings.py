@@ -46,7 +46,8 @@ elif os.getenv('DEBUG') == 'FALSE':
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    SECURE_HSTS_SECONDS = 3600
+    # one year
+    SECURE_HSTS_SECONDS = 31556952
 
 
 ALLOWED_HOSTS = [
