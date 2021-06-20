@@ -320,8 +320,8 @@ def profile_form_handler(request):
                 # get User's current Profile Image and remove/delete
                 current_image = request.user.profileimage
                 profile_utils.remove_current_profile_image(current_image)
-            except ObjectDoesNotExist:
-                # user doesn't have profile image
+            except Exception as e:
+                # user doesn't have profile image (probably)
                 pass
 
             # get form data
