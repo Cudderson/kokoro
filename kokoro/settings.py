@@ -31,15 +31,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Load Django Secret Key from environment variables
 SECRET_KEY = os.getenv('KOKORO_SECRET_KEY')
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.getenv('DEBUG') == 'TRUE':
+    # development
     DEBUG = True
 elif os.getenv('DEBUG') == 'FALSE':
+    # production settings
     DEBUG = False
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
 
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
+    '.herokuapp.com'
 ]
 
 # Application definition
