@@ -3,6 +3,7 @@
 {% block content %}
 
 {% load tz %}
+{% load cloudinary %}
 {% localtime off %}
 <div class="profile-wrapper">
     <!-- container grid holding all-grids -->
@@ -10,7 +11,8 @@
         <!-- this grid contains profile_photo and profile_quote -->
         <div class="profile-grid-header">
             <div class="profile-image">
-                <img src="{{user.profileimage.image.url}}" alt="{{ user }}'s profile photo">
+                <!-- get profile image from cloudinary -->
+                {% cloudinary user.profileimage.image.url %}
             </div>
             <div class="profile-quote-container">
                 {% if user.profilequote.quote %}
