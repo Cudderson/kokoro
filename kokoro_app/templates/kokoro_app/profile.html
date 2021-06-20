@@ -11,8 +11,11 @@
         <!-- this grid contains profile_photo and profile_quote -->
         <div class="profile-grid-header">
             <div class="profile-image">
-                <!-- get profile image from cloudinary -->
-                {% cloudinary user.profileimage.image %}
+                {% if user.profileimage.image %}
+                    <!-- get profile image from cloudinary -->
+                    {% cloudinary user.profileimage.image %}
+                {% else  %}
+                    {% cloudinary 'default.png' %}
             </div>
             <div class="profile-quote-container">
                 {% if user.profilequote.quote %}
