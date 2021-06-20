@@ -43,9 +43,9 @@ class ProfileImageForm(forms.ModelForm):
     image = CloudinaryFileField(
         options={
             # change upload settings when needed
-            # 'crop': 'thumb',
-            # 'width': 200,
-            # 'height': 200,
+            'crop': 'thumb',
+            'width': 200,
+            'height': 200,
             'folder': 'kokoro_images',
         }
     )
