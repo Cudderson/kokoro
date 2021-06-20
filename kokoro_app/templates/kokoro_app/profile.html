@@ -15,7 +15,7 @@
                     <!-- get profile image from cloudinary -->
                     {% cloudinary user.profileimage.image %}
                 {% else  %}
-                    {% cloudinary 'default' %}
+                    {% cloudinary 'https://res.cloudinary.com/getkokoro/image/upload/v1624223175/kokoro_images/default.png' type="fetch" %}
                 {% endif %}
             </div>
             <div class="profile-quote-container">
