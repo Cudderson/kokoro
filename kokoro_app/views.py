@@ -328,7 +328,7 @@ def profile_form_handler(request):
 
             try:
                 # remove image from cloudinary
-                cloudinary.uploader.destroy(request.user.profileimage.image)
+                cloudinary.uploader.destroy(request.user.profileimage.image.url)
             except Exception as e:
                 pass
 
