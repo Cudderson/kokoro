@@ -16,6 +16,7 @@
                     {% cloudinary user.profileimage.image %}
                 {% else  %}
                     {% cloudinary 'default.png' %}
+                {% endif %}
             </div>
             <div class="profile-quote-container">
                 {% if user.profilequote.quote %}
