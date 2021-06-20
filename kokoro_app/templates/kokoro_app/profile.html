@@ -15,7 +15,7 @@
                     <!-- get profile image from cloudinary -->
                     {% cloudinary user.profileimage.image %}
                 {% else  %}
-                    {% cloudinary 'default.png' %}
+                    {% cloudinary 'default' %}
                 {% endif %}
             </div>
             <div class="profile-quote-container">
