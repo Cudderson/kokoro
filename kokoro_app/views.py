@@ -8,6 +8,8 @@ from django.core.mail import send_mail
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 
+import cloudinary
+
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote, ProfileImage, \
                     ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, User, PinnedProfilePost,\
                     FriendshipRequest, Friendships
@@ -322,6 +324,12 @@ def profile_form_handler(request):
                 profile_utils.remove_current_profile_image(current_image)
             except Exception as e:
                 # user doesn't have profile image (probably)
+                pass
+
+            try:
+                # remove image from cloudinary
+                cloudinary.uploader.destroy(request.user.profileimage.image)
+            except Exception as e:
                 pass
 
             # get form data
