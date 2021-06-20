@@ -42,9 +42,10 @@ class ProfileQuoteForm(forms.ModelForm):
 class ProfileImageForm(forms.ModelForm):
     image = CloudinaryFileField(
         options={
-            'crop': 'thumb',
-            'width': 200,
-            'height': 200,
+            # change upload settings when needed
+            # 'crop': 'thumb',
+            # 'width': 200,
+            # 'height': 200,
             'folder': 'kokoro_images',
         }
     )
