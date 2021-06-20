@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 
 
 # Create your models here.
@@ -142,7 +143,8 @@ class ProfileImage(models.Model):
 
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    image = models.ImageField(default='profile_images/default.png', upload_to='profile_images')
+    # image = models.ImageField(default='profile_images/default.png', upload_to='profile_images')
+    image = CloudinaryField('image')
 
     def __str__(self):
 

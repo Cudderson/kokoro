@@ -15,6 +15,10 @@ import os
 from dotenv import load_dotenv
 import warnings
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 # Access env variables
 load_dotenv()
 
@@ -69,6 +73,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # cloudinary media storage
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -153,6 +160,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+
+cloudinary.config(
+    cloud_name=os.getenv('KOKORO_CLOUD_NAME'),
+    api_key=os.getenv('KOKORO_CLOUDINARY_API_KEY'),
+    api_secret=os.getenv('KOKORO_CLOUDINARY_API_SECRET'),
+)
 
 # for prod
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
