@@ -212,16 +212,12 @@ for email_var in EMAIL_VARS:
 if EMAIL_SETUP_SUCCESSFUL:
     print('Email Setup Successful!')
 else:
-    print("ERROR: Couldn't retrieve email setup variables")
+    print("ERROR: Couldn't retrieve email setup variables!")
 
 warnings.filterwarnings(
     'error', r"DateTimeField .* received a naive datetime",
     RuntimeWarning, r'django\.db\.models\.fields',
 )
-
-# ensure csrf cookie and session cookie sent over HTTPS
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
 
 # heroku settings
 import django_heroku
