@@ -749,6 +749,7 @@ def support(request):
                 # requires: subject, message, from_email, recipient list
                 mail_sent = send_mail(subject, message, sent_from, recipients)
             except Exception as e:
+                print("ERROR", e)
                 raise Http404("Something went wrong while preparing your report. Please try again later.")
 
             # send_mail() returns 0 or 1, representing the amount of emails that were sent
