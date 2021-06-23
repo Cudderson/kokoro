@@ -215,7 +215,7 @@ for email_var in EMAIL_VARS:
 
 if EMAIL_SETUP_SUCCESSFUL:
     print('Email Setup Successful!')
-    print(EMAIL_VARS)
+    print(f"EMAIL_VARS = {EMAIL_VARS}")
 else:
     print("ERROR: Couldn't retrieve email setup variables!")
 
