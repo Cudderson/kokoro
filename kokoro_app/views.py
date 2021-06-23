@@ -780,7 +780,7 @@ def support(request):
                     print(response.headers)
                     return render(request, 'kokoro_app/support_success.html')
                 except Exception as e:
-                    print(e)
+                    print(f"ERROR MESSAGE: {e}")
 
             except Exception as e:
                 print("ERROR", type(e), e)
