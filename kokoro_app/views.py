@@ -750,19 +750,44 @@ def support(request):
                 # mail_sent = send_mail(subject, message, sent_from, recipients)
 
                 # trying new approach (using EMAIL_HOST_USER as from_email)
-                mail_sent = send_mail(subject, message, os.environ.get('KOKORO_EMAIL_HOST_USER'), recipients)
-                print(f"Mail sent: {mail_sent}")
+                # mail_sent = send_mail(subject, message, os.environ.get('KOKORO_EMAIL_HOST_USER'), recipients)
+                # print(f"Mail sent: {mail_sent}")
+            # except Exception as e:
+            #     print("ERROR", type(e), e)
+            #     raise Http404("Something went wrong while preparing your report. Please try again later.")
+
+            # send_mail() returns 0 or 1, representing the amount of emails that were sent
+            # if mail_sent == 1:
+            #     successful, render support_success.html
+            #     return render(request, 'kokoro_app/support_success.html')
+
+                # using SendGrid's Python Library
+                # https://github.com/sendgrid/sendgrid-python
+                from sendgrid import SendGridAPIClient
+                from sendgrid.helpers.mail import Mail, Content
+
+                email_message = Mail(
+                    from_email=os.getenv('KOKORO_EMAIL_HOST_USER'),
+                    to_emails=os.getenv('KOKORO_EMAIL_HOST_USER'),
+                    subject=subject,
+                    plain_text_content=message
+                )
+                try:
+                    sg = SendGridAPIClient(os.getenv('KOKORO_EMAIL_HOST_PASSWORD'))
+                    response = sg.send(email_message)
+                    print(response.status_code)
+                    print(response.body)
+                    print(response.headers)
+                    return render(request, 'kokoro_app/support_success.html')
+                except Exception as e:
+                    print(e)
+
             except Exception as e:
                 print("ERROR", type(e), e)
                 raise Http404("Something went wrong while preparing your report. Please try again later.")
 
-            # send_mail() returns 0 or 1, representing the amount of emails that were sent
-            if mail_sent == 1:
-                # successful, render support_success.html
-                return render(request, 'kokoro_app/support_success.html')
-
-            else:
-                raise Http404("Something went wrong while sending your report. Please try again later.", mail_sent)
+            # else:
+            #     raise Http404("Something went wrong while sending your report. Please try again later.")
         else:
             raise Http404("Your report was not valid.")
 

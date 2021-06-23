@@ -194,7 +194,6 @@ LOGIN_URL = 'users:login'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ.get('KOKORO_EMAIL_HOST')
 EMAIL_USE_TLS = True
-# EMAIL_PORT = os.environ.get('KOKORO_EMAIL_PORT')
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get('KOKORO_EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('KOKORO_EMAIL_HOST_PASSWORD')
@@ -215,7 +214,6 @@ for email_var in EMAIL_VARS:
 
 if EMAIL_SETUP_SUCCESSFUL:
     print('Email Setup Successful!')
-    print(f"EMAIL_VARS = {EMAIL_VARS}")
 else:
     print("ERROR: Couldn't retrieve email setup variables!")
 
