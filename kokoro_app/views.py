@@ -751,6 +751,7 @@ def support(request):
 
                 # trying new approach (using EMAIL_HOST_USER as from_email)
                 mail_sent = send_mail(subject, message, os.environ.get('KOKORO_EMAIL_HOST_USER'), recipients)
+                print(f"Mail sent: {mail_sent}")
             except Exception as e:
                 print("ERROR", type(e), e)
                 raise Http404("Something went wrong while preparing your report. Please try again later.")

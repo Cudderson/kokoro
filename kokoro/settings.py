@@ -198,7 +198,6 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get('KOKORO_EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('KOKORO_EMAIL_HOST_PASSWORD')
-ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 EMAIL_VARS = [
     EMAIL_HOST,
@@ -216,6 +215,7 @@ for email_var in EMAIL_VARS:
 
 if EMAIL_SETUP_SUCCESSFUL:
     print('Email Setup Successful!')
+    print(EMAIL_VARS)
 else:
     print("ERROR: Couldn't retrieve email setup variables!")
 
