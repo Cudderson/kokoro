@@ -733,6 +733,8 @@ def support(request):
 
     elif request.method == 'POST':
 
+        print('POST')
+
         # get submitted form
         submitted_support_report = SupportReportForm(data=request.POST)
 
@@ -742,13 +744,16 @@ def support(request):
             try:
                 submitted_support_report.full_clean()
                 submitted_support_report.save()
+                print('report saved!')
                 return render(request, 'kokoro_app/support_success.html')
 
             except Exception as e:
+                print('1', e)
                 raise Http404("Something went wrong while sending your report. Please try again later.")
         else:
             raise Http404("Your report was not valid.")
 
     # method != GET or POST
     else:
+        print(2)
         raise Http404("Something went wrong.")

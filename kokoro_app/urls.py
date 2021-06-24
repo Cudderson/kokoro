@@ -55,5 +55,7 @@ urlpatterns = [
     path('remove_friendship_handler/', views.remove_friendship_handler, name='remove_friendship_handler'),
 
     # Support page for contacting kokoro
-    path('support/', views.support, name='support')
+    path('support/', views.support, name='support'),
+
+    path('support_success/', views.support, name='support_success'),
 ]
