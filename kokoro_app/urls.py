@@ -56,6 +56,4 @@ urlpatterns = [
 
     # Support page for contacting kokoro
     path('support/', views.support, name='support'),
-
-    path('support_success/', views.support, name='support_success'),
 ]
