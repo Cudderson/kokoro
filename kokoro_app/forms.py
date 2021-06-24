@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote,\
-                    ProfileImage, ProfileTimezone, ContactInfo, ProfilePost
+                    ProfileImage, ProfileTimezone, ContactInfo, ProfilePost, SupportReport
 
 from cloudinary.forms import CloudinaryFileField
 
@@ -74,15 +74,11 @@ class ProfilePostForm(forms.ModelForm):
         fields = ['headline', 'content']
 
 
-class SupportEmailForm(forms.Form):
+class SupportReportForm(forms.ModelForm):
     """
-    Form for sending an email to kokoro support
+    Form for sending a support/help report to kokoro
     """
 
-    sent_from = forms.EmailField()
-
-    username = forms.CharField(max_length=150)
-
-    subject = forms.CharField(max_length=100)
-
-    message = forms.CharField(widget=forms.Textarea)
+    class Meta:
+        model = SupportReport
+        fields = ['subject', 'body', 'contact_email', 'username']

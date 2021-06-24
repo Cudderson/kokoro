@@ -249,3 +249,21 @@ class FriendshipRequest(models.Model):
 
     def __str__(self):
         return f'Pending Request from {self.from_user} to {self.to_user}'
+
+
+class SupportReport(models.Model):
+    """
+    Represents a report for a user that wants to contact kokoro
+    """
+
+    # allow null owner entry for users that can't login or don't have account
+    username = models.CharField(max_length=150, blank=True, default='')
+
+    subject = models.CharField(max_length=100)
+
+    body = models.TextField()
+
+    contact_email = models.EmailField()
+
+    def __str__(self):
+        return f'{self.subject}'

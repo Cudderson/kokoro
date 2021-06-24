@@ -53,10 +53,8 @@ elif os.getenv('DEBUG') == 'FALSE':
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    '.herokuapp.com',
     '*.herokuapp.com',
     'getkokoro.herokuapp.com',
-    '*',
 ]
 
 # Application definition

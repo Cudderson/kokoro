@@ -14,15 +14,15 @@
         <br>
         <form action="{% url 'kokoro_app:support' %}" method="post">
             {% csrf_token %}
-            <span class="register-help">{{ support_form.subject.label }}</span>
-            <span class="register-field">{{ support_form.subject }}</span>
-            <span class="register-help">{{ support_form.message.label }}</span>
-            <span class="register-field post-form-content">{{ support_form.message }}</span>
-            <span class="register-help">{{ support_form.username.label }}</span>
-            <span class="register-field">{{ support_form.username }}</span>
+            <span class="register-help">{{ support_report_form.subject.label }}</span>
+            <span class="register-field">{{ support_report_form.subject }}</span>
+            <span class="register-help">{{ support_report_form.body.label }}</span>
+            <span class="register-field post-form-content">{{ support_report_form.body }}</span>
+            <span class="register-help">{{ support_report_form.username.label }}   (Leave blank if you are not registered with kokoro)</span>
+            <span class="register-field">{{ support_report_form.username }}</span>
             <span class="register-help">Your Email Address:</span>
-            <span class="register-field">{{ support_form.sent_from }}</span>
-            <span class="register-error">{{ support_form.sent_from.errors }}</span>
+            <span class="register-field">{{ support_report_form.contact_email }}</span>
+            <span class="register-error">{{ support_report_form.contact_email.errors }}</span>
             <button class="request-btn register-btn font-xl" type="submit">Submit Report</button>
         </form>
     </div>

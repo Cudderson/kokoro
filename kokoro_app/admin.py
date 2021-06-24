@@ -4,7 +4,7 @@ from django.contrib import admin
 
 from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, ProfileQuote, \
                     ProfileImage, ProfileTimezone, BalanceStreak, ContactInfo, ProfilePost, PinnedProfilePost,\
-                    FriendshipRequest, Friendships
+                    FriendshipRequest, Friendships, SupportReport
 
 admin.site.register(Activity)
 admin.site.register(PerfectBalance)
@@ -18,6 +18,7 @@ admin.site.register(ContactInfo)
 admin.site.register(PinnedProfilePost)
 admin.site.register(Friendships)
 admin.site.register(FriendshipRequest)
+admin.site.register(SupportReport)
 
 
 class ProfilePostAdmin(admin.ModelAdmin):

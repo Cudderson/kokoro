@@ -16,7 +16,7 @@ from .models import Activity, PerfectBalance, ProfileBio, ProfileDisplayName, Pr
 
 from .forms import ActivityForm, PerfectBalanceForm, ProfileBioForm, ProfileDisplayNameForm, \
                    ProfileQuoteForm, ProfileImageForm, ProfileTimezoneForm, ContactInfoForm, \
-                   ProfilePostForm, SupportEmailForm
+                   ProfilePostForm, SupportReportForm
 
 from . import balance, profile_utils, friendship_utils
 import pytz
@@ -720,81 +720,35 @@ def remove_friendship_handler(request):
 def support(request):
     """
     Page for contacting kokoro
-    :param request: http get data
-    :return: render of support.html
+    :param request: http data
+    :return: render of either support.html or support_success.html
     """
+    if request.method == 'GET':
+        # blank form
+        support_report_form = SupportReportForm()
 
-    context = {}
+        return render(request, 'kokoro_app/support.html', context={
+            'support_report_form': support_report_form,
+        })
 
-    if request.method == 'POST':
+    elif request.method == 'POST':
+
+        # get submitted form
+        submitted_support_report = SupportReportForm(data=request.POST)
 
         # validate form
-        submitted_support_form = SupportEmailForm(data=request.POST)
+        if submitted_support_report.is_valid():
 
-        if submitted_support_form.is_valid():
             try:
-                # get data from submitted form
-                sent_from = submitted_support_form.cleaned_data['sent_from']
-                subject = submitted_support_form.cleaned_data['subject']
-                username = submitted_support_form.cleaned_data['username']
-                message = submitted_support_form.cleaned_data['message']
-                message = f'{message} || From: @{username}/{sent_from}'
-                recipient = os.environ.get('KOKORO_EMAIL_HOST_USER')
-                recipients = [recipient]
-            except Exception as e:
-                raise Http404("Something went wrong while processing your report. Please try again later.", e)
-
-            # Send Email
-            try:
-                # requires: subject, message, from_email, recipient list
-                # mail_sent = send_mail(subject, message, sent_from, recipients)
-
-                # trying new approach (using EMAIL_HOST_USER as from_email)
-                # mail_sent = send_mail(subject, message, os.environ.get('KOKORO_EMAIL_HOST_USER'), recipients)
-                # print(f"Mail sent: {mail_sent}")
-            # except Exception as e:
-            #     print("ERROR", type(e), e)
-            #     raise Http404("Something went wrong while preparing your report. Please try again later.")
-
-            # send_mail() returns 0 or 1, representing the amount of emails that were sent
-            # if mail_sent == 1:
-            #     successful, render support_success.html
-            #     return render(request, 'kokoro_app/support_success.html')
-
-                # using SendGrid's Python Library
-                # https://github.com/sendgrid/sendgrid-python
-                from sendgrid import SendGridAPIClient
-                from sendgrid.helpers.mail import Mail, Content
-
-                email_message = Mail(
-                    from_email=os.getenv('KOKORO_EMAIL_HOST_USER'),
-                    to_emails=os.getenv('KOKORO_EMAIL_HOST_USER'),
-                    subject=subject,
-                    plain_text_content=message
-                )
-                try:
-                    sg = SendGridAPIClient(os.getenv('KOKORO_EMAIL_HOST_PASSWORD'))
-                    response = sg.send(email_message)
-                    print(response.status_code)
-                    print(response.body)
-                    print(response.headers)
-                    return render(request, 'kokoro_app/support_success.html')
-                except Exception as e:
-                    print(f"ERROR MESSAGE: {e.message}")
+                submitted_support_report.full_clean()
+                submitted_support_report.save()
+                return render(request, 'kokoro_app/support_success.html')
 
             except Exception as e:
-                print("ERROR", type(e), e)
-                raise Http404("Something went wrong while preparing your report. Please try again later.")
-
-            # else:
-            #     raise Http404("Something went wrong while sending your report. Please try again later.")
+                raise Http404("Something went wrong while sending your report. Please try again later.")
         else:
             raise Http404("Your report was not valid.")
 
-    elif request.method == 'GET':
-        # instantiate blank form
-        support_form = SupportEmailForm()
-
-        context['support_form'] = support_form
-
-    return render(request, 'kokoro_app/support.html', context)
+    # method != GET or POST
+    else:
+        raise Http404("Something went wrong.")
