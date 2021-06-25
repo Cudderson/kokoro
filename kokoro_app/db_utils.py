@@ -32,3 +32,7 @@ def delete_obsolete_activities():
     except Exception as e:
         print('No activities were deleted: ', e)
         return 1
+
+
+# called on initial load
+delete_obsolete_activities()
