@@ -4,7 +4,6 @@ from django.utils.text import slugify
 from django.utils.crypto import get_random_string
 from django.db import IntegrityError
 from django.http import Http404
-from django.core.mail import send_mail
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 
