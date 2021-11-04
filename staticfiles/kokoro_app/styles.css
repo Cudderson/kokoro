@@ -2013,7 +2013,7 @@ svg text {
     }
 
     html {
-        background: #96FFA1;
+        background: var(--color-svg-shadow);
     }
 
     body {
